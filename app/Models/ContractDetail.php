@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ContractDetail extends Model
 {
     use HasFactory;
+    use HasFactory;
+    public function renter(){
+        return $this->belongsTo(Renter::class);
+    }
+    public function house(){
+        return $this->belongsTo(House::class);
+    }
 }

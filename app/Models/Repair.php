@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Repair extends Model
 {
     use HasFactory;
+    public function house(){
+        return $this->belongsTo(House::class);
+    }
 }

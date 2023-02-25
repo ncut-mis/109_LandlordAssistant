@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ManagerList extends Model
 {
     use HasFactory;
+    public function manager(){
+        return $this->belongsTo(Manager::class);
+    }
+    public function location(){
+        return $this->belongsTo(Location::class);
+    }
 }

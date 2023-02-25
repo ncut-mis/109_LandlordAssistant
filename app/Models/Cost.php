@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cost extends Model
 {
     use HasFactory;
+    public function house(){
+        return $this->belongsTo(House::class);
+    }
+    public function payment(){
+        return $this->hasMany(Payment::class);
+    }
 }
