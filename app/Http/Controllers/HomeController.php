@@ -38,6 +38,15 @@ class HomeController extends Controller
         return view('houses.show');
     }
 
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function help()
+    {
+        return view('help');
+    }
     /**
      * Show the form for editing the specified resource.
      */
