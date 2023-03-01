@@ -35,7 +35,7 @@ class HomeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('houses.show');
     }
 
     /**
