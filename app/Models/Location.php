@@ -17,4 +17,10 @@ class Location extends Model
     public function owner(){
         return $this->belongsTo(Owner::class);
     }
+    protected $fillable = [
+        'id',
+       
+        'name',
+
+    ];
 }

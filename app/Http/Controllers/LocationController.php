@@ -13,7 +13,9 @@ class LocationController extends Controller
      */
     public function index()
     {
-        //
+        return view('owners.home.index', [
+            'locations' => Location::with('user')->latest()->get(),
+        ]);
     }
 
     /**
@@ -29,7 +31,20 @@ class LocationController extends Controller
      */
     public function store(StoreLocationRequest $request)
     {
-        //
+        $validated = $request->validate([
+        'message' => 'required|string|max:255',
+
+            ]);
+        auth()->user()->locations()->create($validated);
+        $location= new Location();
+        $location->user_id=$request->user()->id;
+        $location->message=$validated['message'];
+        $location->save();
+       /* Location::create([
+            'user_id'=>$request->user()->id,
+            'message'=>$validated['message'],
+        ]);*/
+       return redirect()->route('owners.home.index');
     }
 
     /**
