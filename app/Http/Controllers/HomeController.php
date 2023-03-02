@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\House;
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,9 +12,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $houses = House::all();
-        return view('index', compact('houses'));
-//        return view('index');
+        $houses = House::with('image')->get(); // 預先載入 image 關聯
+        $view_data = [
+            'houses' => $houses,
+        ];
+        return view('index', $view_data);
     }
 
     public function renters_index()
