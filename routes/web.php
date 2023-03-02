@@ -56,6 +56,7 @@ Route::get('login', [AuthenticatedSessionController::class, 'create']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
 
 //會員查看個人資料
+Route::get('users/{user}',[UserProfileController::class,'index'])->name('users.index');
 // 3-8-1 會員(房東/租客)修改會員資料
 Route::get('users/{user}/edit', [UserProfileController::class, 'edit'])->name('users.edit');
 Route::patch('users/{user}', [UserProfileController::class, 'update'])->name('users.update');
@@ -180,7 +181,8 @@ Route::get('owners/houses/repairs/{repair}', [RepairController::class, 'show'])-
 // 3-9-30 會員(房東)更新報修狀態
 Route::patch('owners/houses/repairs/{repair}', [RepairController::class, 'update_status'])->name('houses.repairs.update');
 
-
+//會員(租客)查看首頁
+Route::get('renters/houses',[HomeController::class,'renters_index'])->name('renters.houses.index');
 // 3-10-1 會員(租客)查看公告
 Route::get('renters/houses/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
 
