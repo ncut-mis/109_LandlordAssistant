@@ -20,6 +20,7 @@ use \App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\RepairController;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,12 @@ use App\Http\Controllers\RepairController;
 */
 // 3-7-1 訪客/會員瀏覽平台首頁
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+//關於我們
+Route::get('about',[HomeController::class,'about'])->name('home.about');
+
+//幫助
+Route::get('help',[HomeController::class,'help'])->name('home.help');
 
 // 3-7-2 訪客/會員查詢出租房屋(地區)
 Route::get('houses/search', [HouseController::class, 'search'])->name('houses.search');
@@ -47,6 +54,8 @@ Route::get('houses/{house}', [HouseController::class, 'show'])->name('houses.sho
 Route::get('login', [AuthenticatedSessionController::class, 'create']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
 
+//會員查看個人資料
+//Route::get('user',[Userpr])
 // 3-8-1 會員(房東/租客)修改會員資料
 Route::get('users/{user}/edit', [UserProfileController::class, 'edit'])->name('users.edit');
 Route::patch('users/{user}', [ProfileInformationController::class, 'update'])->name('users.update');
