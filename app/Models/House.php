@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class House extends Model
 {
+
     use HasFactory;
+
     public function owner(){
         return $this->belongsTo(Owner::class);
     }
@@ -38,4 +40,5 @@ class House extends Model
     public function device(){
         return $this->hasMany(Device::class);
     }
+
 }

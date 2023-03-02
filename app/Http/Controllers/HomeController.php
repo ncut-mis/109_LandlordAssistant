@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\House;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,7 +11,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $houses = House::all();
+        return view('index', compact('houses'));
+//        return view('index');
     }
 
     /**
