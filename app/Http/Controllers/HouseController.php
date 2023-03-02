@@ -24,6 +24,10 @@ class HouseController extends Controller
         //
     }
 
+    public function advance_search_create()
+    {
+        //
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -40,6 +44,15 @@ class HouseController extends Controller
         //
     }
 
+    public function advance_search(House $house)
+    {
+        //
+    }
+
+    public function by_status(House $house)
+    {
+        //查看某狀態房屋資訊
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -48,6 +61,10 @@ class HouseController extends Controller
         //
     }
 
+    public function publish_edit(House $house)
+    {
+        //
+    }
     /**
      * Update the specified resource in storage.
      */
@@ -56,6 +73,15 @@ class HouseController extends Controller
         //
     }
 
+    public function publish_update()
+    {
+        //
+    }
+
+    public function unpublish_update(House $house)
+    {
+
+    }
     /**
      * Remove the specified resource from storage.
      */
