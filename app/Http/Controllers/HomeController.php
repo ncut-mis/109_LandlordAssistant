@@ -16,6 +16,10 @@ class HomeController extends Controller
 //        return view('index');
     }
 
+    public function renters_index()
+    {
+        return view('renters.home.index');
+    }
     /**
      * Show the form for creating a new resource.
      */

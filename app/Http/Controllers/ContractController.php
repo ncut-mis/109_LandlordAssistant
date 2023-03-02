@@ -40,6 +40,10 @@ class ContractController extends Controller
         //
     }
 
+    public function owners_show(Contract $contract)
+    {
+
+    }
     /**
      * Show the form for editing the specified resource.
      */

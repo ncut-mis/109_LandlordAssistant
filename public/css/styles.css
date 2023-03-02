@@ -302,8 +302,10 @@ svg {
 }
 
 table {
-  caption-side: bottom;
-  border-collapse: collapse;
+    border: 0;
+    background-color: var(--bs-dark);
+    caption-side: bottom;
+    border-collapse: collapse;
 }
 
 caption {
@@ -314,8 +316,7 @@ caption {
 }
 
 th {
-  text-align: inherit;
-  text-align: -webkit-match-parent;
+  text-align: center;
 }
 
 thead,
@@ -1969,7 +1970,7 @@ progress {
   margin-bottom: 1rem;
   color: #212529;
   vertical-align: top;
-  border-color: #dee2e6;
+  border-color: var(--bs-dark);
 }
 .table > :not(caption) > * > * {
   padding: 0.5rem 0.5rem;
@@ -7465,6 +7466,16 @@ textarea.form-control-lg {
   padding-left: 3rem !important;
 }
 
+.px-6 {
+    padding-right: 3.5rem !important;
+    padding-left: 3.5rem !important;
+}
+
+.px-7 {
+    padding-right: 4rem !important;
+    padding-left: 4rem !important;
+}
+
 .py-0 {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -11286,3 +11297,27 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.center{
+    text-align: center;
+}
+
+.main {
+    width: 80%;
+    margin: 20px auto;
+    /*box-shadow: 10px 10px 15px rgba(27, 31, 49, 0.6);*/
+    border: 0px;
+}
+
+
+.borderbox{
+    border-top:4.5px white solid;
+    border-right:4.5px white solid;
+    border-left:4.5px white solid;
+    border-bottom:4.5px white solid;
+}
+
+.table-layout{
+    table-layout:fixed
+}
+

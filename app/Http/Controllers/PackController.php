@@ -16,6 +16,10 @@ class PackController extends Controller
         //
     }
 
+    public function owners_index()
+    {
+        //
+    }
     /**
      * Show the form for creating a new resource.
      */
