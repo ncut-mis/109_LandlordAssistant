@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cost;
-use App\Http\Requests\StoreCostRequest;
-use App\Http\Requests\UpdateCostRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserProfileRequest;
+use App\Http\Requests\UpdateUserProfileRequest;
+use App\Models\User;
 
-class CostController extends Controller
+class UserProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('users.index');
     }
 
     /**
@@ -24,26 +25,18 @@ class CostController extends Controller
         //
     }
 
-    public function owners_create()
-    {
-        //
-    }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCostRequest $request)
+    public function store(StoreUserProfileRequest $request)
     {
         //
     }
 
-    public function owners_store(StoreCostRequest $request)
-    {
-        //
-    }
     /**
      * Display the specified resource.
      */
-    public function show(Cost $cost)
+    public function show(User $user)
     {
         //
     }
@@ -51,7 +44,7 @@ class CostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cost $cost)
+    public function edit(User $user)
     {
         //
     }
@@ -59,7 +52,7 @@ class CostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCostRequest $request, Cost $cost)
+    public function update(UpdateUserProfileRequest $request, User $user)
     {
         //
     }
@@ -67,7 +60,7 @@ class CostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cost $cost)
+    public function destroy(User $user)
     {
         //
     }
