@@ -13,8 +13,8 @@ return new class extends Migration
     {
 		Schema::create('houses', function (Blueprint $table) {
             $table->id(); //編號
-            $table->integer('address'); //地址
-            $table->integer('name'); //房屋名稱
+            $table->string('address'); //地址
+            $table->string('name'); //房屋名稱
             $table->string('introduce'); //介紹
             $table->string('lease_status'); //租賃狀態
             $table->string('people'); //可住人數
