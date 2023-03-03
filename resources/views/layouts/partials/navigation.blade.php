@@ -10,7 +10,7 @@
             <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{url('owners/houses')}}">房東</a></li>
+                        <li><a class="dropdown-item" href="{{url('owners')}}">房東</a></li>
 {{--                        <li><hr class="dropdown-divider" /></li>--}}
                         <li><a class="dropdown-item" href="{{url('renters/houses')}}">租客</a></li>
                         <li><a class="dropdown-item" href="{{url('users/1')}}">個人資料</a></li><!--尚未連接資料庫-->

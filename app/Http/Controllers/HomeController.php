@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     public function owners_index()
     {
-        return view('owners.home.index');
+        return view('owners.index');
     }
     /**
      * Show the form for creating a new resource.
