@@ -78,7 +78,8 @@ Route::get('users/owners/{owner}', [OwnerController::class, 'index'])->name('own
 // 3-8-6 會員登出(預設應該已經有)
 Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
 
-
+//查看房東首頁
+Route::get('owners/houses',[HomeController::class,'owners_index'])->name('owners.houses.index');
 // 3-9-1 會員(房東)新增地點
 Route::post('owners/locations', [LocationController::class, 'store'])->name('owners.locations.store');
 
