@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ManagerListSeeder extends Seeder
+class NowRenterSeeder extends Seeder
 {
     /**
      * Run the database seeds.

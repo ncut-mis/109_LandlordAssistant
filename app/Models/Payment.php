@@ -11,4 +11,5 @@ class Payment extends Model
     public function cost(){
         return $this->belongsTo(Cost::class);
     }
+
 }

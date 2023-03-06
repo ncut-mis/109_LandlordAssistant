@@ -11,4 +11,12 @@ class Repair extends Model
     public function house(){
         return $this->belongsTo(House::class);
     }
+
+    public function renter(){
+        return $this->belongsTo(Renter::class);
+    }
+
+    public function repairs_return(){
+        return $this->hasMany(RepairsReturn::class);
+    }
 }

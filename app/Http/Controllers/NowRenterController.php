@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ManagerList;
-use App\Http\Requests\StoreManagerListRequest;
-use App\Http\Requests\UpdateManagerListRequest;
+use App\Models\NowRenter;
+use App\Http\Requests\StoreNowRenterRequest;
+use App\Http\Requests\UpdateNowRenterRequest;
 
-class ManagerListController extends Controller
+class NowRenterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class ManagerListController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreManagerListRequest $request)
+    public function store(StoreNowRenterRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class ManagerListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ManagerList $managerList)
+    public function show(NowRenter $nowRenter)
     {
         //
     }
@@ -43,7 +43,7 @@ class ManagerListController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ManagerList $managerList)
+    public function edit(NowRenter $nowRenter)
     {
         //
     }
@@ -51,7 +51,7 @@ class ManagerListController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateManagerListRequest $request, ManagerList $managerList)
+    public function update(UpdateNowRenterRequest $request, NowRenter $nowRenter)
     {
         //
     }
@@ -59,7 +59,7 @@ class ManagerListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ManagerList $managerList)
+    public function destroy(NowRenter $nowRenter)
     {
         //
     }

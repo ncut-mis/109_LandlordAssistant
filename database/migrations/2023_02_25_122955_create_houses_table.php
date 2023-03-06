@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('square_meters'); //坪數
             $table->string('type'); //類型(雅房、分租套房、獨立套房、整層住家)
             $table->integer('floor'); //樓層
+            $table->string('status');//狀態
+            $table->string('represent');//代理人
             $table->unsignedBigInteger('location_id'); //地點編號
             $table->foreign('location_id')->references('id')->on('locations');
             $table->unsignedBigInteger('owner_id'); //房東編號

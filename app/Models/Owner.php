@@ -14,4 +14,12 @@ class Owner extends Model
     public function location(){
         return $this->hasMany(Location::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function post(){
+        return $this->hasMany(Post::class);
+    }
 }
