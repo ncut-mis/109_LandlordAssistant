@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); //編號
 			$table->unsignedBigInteger('cost_id'); //租屋費用編號
             $table->foreign('cost_id')->references('id')->on('costs');
-            $table->integer('name'); //費用名稱
+            $table->string('name'); //費用名稱
             $table->integer('amount'); //金額
             $table->string('payment_status'); //狀態
             $table->date('start_date'); //開始日期

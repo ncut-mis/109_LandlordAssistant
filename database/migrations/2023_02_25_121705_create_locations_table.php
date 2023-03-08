@@ -13,8 +13,8 @@ return new class extends Migration
     {
 		Schema::create('locations', function (Blueprint $table) {
             $table->id(); //編號
-            $table->unsignedBigInteger('user_id'); //會員編號
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('owner_id'); //房東編號
+            $table->foreign('owner_id')->references('id')->on('owners');
             $table->string('name'); //地點名稱
             $table->timestamps();
         });

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id(); //編號
             $table->unsignedBigInteger('location_id'); //地點編號
             $table->foreign('location_id')->references('id')->on('locations');
-            $table->unsignedBigInteger('user_id'); //會員編號
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('owner_id'); //房東編號
+            $table->foreign('owner_id')->references('id')->on('owners');
             $table->string('content'); //內容
             $table->string('title'); //標題
             $table->date('date'); //日期
