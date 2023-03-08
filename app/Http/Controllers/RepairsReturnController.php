@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contract;
-use App\Http\Requests\StoreContractRequest;
-use App\Http\Requests\UpdateContractRequest;
+use App\Models\RepairsReturn;
+use App\Http\Requests\StoreRepairsReturnRequest;
+use App\Http\Requests\UpdateRepairsReturnRequest;
 
-class ContractController extends Controller
+class RepairsReturnController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class ContractController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreContractRequest $request)
+    public function store(StoreRepairsReturnRequest $request)
     {
         //
     }
@@ -35,19 +35,15 @@ class ContractController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Contract $contract)
+    public function show(RepairsReturn $repairsReturn)
     {
         //
     }
 
-    public function owners_show(Contract $contract)
-    {
-
-    }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Contract $contract)
+    public function edit(RepairsReturn $repairsReturn)
     {
         //
     }
@@ -55,7 +51,7 @@ class ContractController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateContractRequest $request, Contract $contract)
+    public function update(UpdateRepairsReturnRequest $request, RepairsReturn $repairsReturn)
     {
         //
     }
@@ -63,7 +59,7 @@ class ContractController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contract $contract)
+    public function destroy(RepairsReturn $repairsReturn)
     {
         //
     }

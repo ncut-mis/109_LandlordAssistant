@@ -11,12 +11,19 @@ class Renter extends Model
     public function contract(){
         return $this->hasMany(Contract::class);
     }
-    public function users()
-    {
-        return $this->belongsToMany(Contract::class);
+    public function users(){
+        return $this->belongsTo(User::class);
     }
-    public function contract_detail()
-    {
+
+    public function contract_detail(){
         return $this->hasMany(ContractDetail::class);
+    }
+
+    public function repair(){
+        return $this->hasMany(Repair::class);
+    }
+
+    public function now_renter(){
+        return $this->hasMany(NowRenter::class);
     }
 }

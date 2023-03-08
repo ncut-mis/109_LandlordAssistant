@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Manager extends Model
 {
     use HasFactory;
-    public function manager_list(){
-        return $this->hasMany(ManagerList::class);
+    public function post(){
+        return $this->hasMany(Post::class);
     }
 }

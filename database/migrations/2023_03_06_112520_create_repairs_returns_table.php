@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-		Schema::create('phones', function (Blueprint $table) {
-            $table->id(); //編號
-            $table->unsignedBigInteger('user_id'); //會員編號
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('phone'); //電話
-            $table->timestamps();
+        Schema::create('repairs_returns', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('repair_id');
+            $table->foreign('repair_id')->references('id')->on('repairs');
+            $table->string('content');
+            $table->date('date');
         });
-
     }
 
     /**
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('repairs_returns');
     }
 };

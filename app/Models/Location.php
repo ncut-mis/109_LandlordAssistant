@@ -11,15 +11,17 @@ class Location extends Model
     public function post(){
         return $this->hasMany(Post::class);
     }
-    public function manager_list(){
-        return $this->hasMany(ManagerList::class);
-    }
+
     public function owner(){
         return $this->belongsTo(Owner::class);
     }
+
+    public function house(){
+        return $this->hasMany(House::class);
+    }
     protected $fillable = [
         'id',
-       
+
         'name',
 
     ];
