@@ -42,8 +42,9 @@ class House extends Model
         return $this->hasMany(Device::class);
     }
 
+
     public function now_renter(){
-        return $this->belongsToMany(NowRenter::class);
+        return $this->belongsToMany(Renter::class,'now_renter','renter_id','house_id');
     }
 
 }

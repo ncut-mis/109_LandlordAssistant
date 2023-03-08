@@ -78,4 +78,8 @@ class User extends Authenticatable
     public function phone(){
         return $this->hasMany(Phone::class);
     }
+
+    public function carry_on(){
+        return $this->morphTo(); //繼承(父)
+    }
 }

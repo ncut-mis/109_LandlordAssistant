@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Renter extends Model
 {
     use HasFactory;
-    public function contract(){
-        return $this->hasMany(Contract::class);
-    }
     public function users(){
         return $this->belongsTo(User::class);
     }
@@ -24,6 +21,10 @@ class Renter extends Model
     }
 
     public function now_renter(){
-        return $this->hasMany(NowRenter::class);
+        return $this->belongsToMany(House::class,'now_renter','renter_id','house_id');
+    }
+
+    public function user(){
+        return $this->morphMany(User::class,'carry_on'); //繼承(子)
     }
 }
