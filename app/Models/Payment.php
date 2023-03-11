@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    public function cost(){
-        return $this->belongsTo(Cost::class);
+    public function expense(){
+        return $this->belongsTo(Expense::class);
     }
 
+    public function renter(){
+        return $this->belongsTo(Renter::class);
+    }
 }

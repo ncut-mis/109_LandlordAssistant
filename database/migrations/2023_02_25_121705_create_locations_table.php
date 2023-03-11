@@ -14,8 +14,7 @@ return new class extends Migration
 		Schema::create('locations', function (Blueprint $table) {
             $table->id(); //編號
             $table->unsignedBigInteger('owner_id'); //房東編號
-            $table->foreign('owner_id')->references('id')->on('owners');
-            $table->string('name'); //地點名稱
+            $table->foreign('owner_id')->references('id')->on('owners')->onUpdate('cascade');
             $table->timestamps();
         });
 

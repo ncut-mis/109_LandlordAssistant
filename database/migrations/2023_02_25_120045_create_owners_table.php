@@ -13,8 +13,8 @@ return new class extends Migration
     {
 		Schema::create('owners', function (Blueprint $table) {
             $table->id(); //編號
-            $table->unsignedBigInteger('user_id'); //會員編號
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id'); //使用者編號
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 

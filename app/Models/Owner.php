@@ -8,22 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Owner extends Model
 {
     use HasFactory;
-    public function house(){
+    public function houses(){
         return $this->hasMany(House::class);
     }
-    public function location(){
+    public function locations(){
         return $this->hasMany(Location::class);
     }
 
-    //public function user(){
-    //    return $this->belongsTo(User::class);
-    //}
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
-    public function post(){
+    public function posts(){
         return $this->hasMany(Post::class);
     }
 
-    public function user(){
-        return $this->morphMany(User::class,'carry_on'); //繼承(子)
-    }
+    //public function user(){
+    //    return $this->morphMany(User::class,'carry_on'); //繼承(子)
+    //}
 }

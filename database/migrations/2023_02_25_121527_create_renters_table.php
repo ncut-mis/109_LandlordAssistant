@@ -14,7 +14,7 @@ return new class extends Migration
 		Schema::create('renters', function (Blueprint $table) {
             $table->id(); //編號
             $table->unsignedBigInteger('user_id'); //會員編號
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 

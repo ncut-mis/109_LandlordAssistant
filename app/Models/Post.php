@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    public function manager(){
-        return $this->belongsTo(Manager::class);
+    public function owner(){
+        return $this->belongsTo(Owner::class);
     }
     public function location(){
         return $this->belongsTo(Location::class);

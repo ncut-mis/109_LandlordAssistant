@@ -14,8 +14,8 @@ return new class extends Migration
 		Schema::create('images', function (Blueprint $table) {
             $table->id(); //編號
             $table->unsignedBigInteger('house_id'); //房屋編號
-            $table->foreign('house_id')->references('id')->on('houses');
-            $table->string('image'); //圖片
+            $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('image'); //圖片路徑
             $table->timestamps();
         });
 

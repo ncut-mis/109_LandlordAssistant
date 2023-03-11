@@ -59,27 +59,21 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function post(){
-        return $this->hasMany(Post::class);
-    }
 
     public function owner(){
-        return $this->belongsTo(Owner::class);
+        return $this->hasOne(Owner::class);
     }
 
     public function renter(){
-        return $this->belongsTo(Renter::class);
+        return $this->hasOne(Renter::class);
     }
 
-    public function manager(){
-        return $this->belongsTo(Manager::class);
+    public function admin(){
+        return $this->hasOne(Admin::class);
     }
 
-    public function phone(){
-        return $this->hasMany(Phone::class);
-    }
 
-    public function carry_on(){
-        return $this->morphTo(); //繼承(父)
-    }
+    //public function carry_on(){
+    //    return $this->morphTo(); //繼承(父)
+    //}
 }

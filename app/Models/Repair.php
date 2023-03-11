@@ -16,7 +16,7 @@ class Repair extends Model
         return $this->belongsTo(Renter::class);
     }
 
-    public function repairs_return(){
-        return $this->hasMany(RepairsReturn::class);
+    public function repair_replies(){
+        return $this->hasMany(RepairReply::class);
     }
 }
