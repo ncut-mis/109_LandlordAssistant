@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     use HasFactory;
-    public function post(){
+    public function posts(){
         return $this->hasMany(Post::class);
     }
 
@@ -16,7 +16,7 @@ class Location extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function house(){
+    public function houses(){
         return $this->hasMany(House::class);
     }
     protected $fillable = [

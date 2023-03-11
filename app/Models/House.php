@@ -14,37 +14,36 @@ class House extends Model
         return $this->belongsTo(Owner::class);
     }
 
-    public function contract_detail(){
-        return $this->hasMany(ContractDetail::class);
+    public function contracts(){
+        return $this->hasMany(Contract::class);
     }
 
     public function location(){
         return $this->belongsTo(Location::class);
     }
 
-    public function repair(){
+    public function repairs(){
         return $this->hasMany(Repair::class);
     }
 
-    public function cost(){
-        return $this->hasMany(Cost::class);
+    public function expenses(){
+        return $this->hasMany(Expense::class);
     }
 
-    public function image(){
+    public function images(){
         return $this->hasMany(Image::class);
     }
 
-    public function feature(){
+    public function features(){
         return $this->hasMany(Feature::class);
     }
 
-    public function device(){
-        return $this->hasMany(Device::class);
+    public function furnishings(){
+        return $this->hasMany(Furnish::class);
     }
 
-
-    public function now_renter(){
-        return $this->belongsToMany(Renter::class,'now_renter','renter_id','house_id');
+    public function signatories(){
+        return $this->hasMany(Signatory::class);
     }
 
 }

@@ -13,11 +13,11 @@ return new class extends Migration
     {
 		Schema::create('payments', function (Blueprint $table) {
             $table->id(); //編號
-			$table->unsignedBigInteger('cost_id'); //租屋費用編號
-            $table->foreign('cost_id')->references('id')->on('costs');
-            $table->string('name'); //費用名稱
-            $table->integer('amount'); //金額
-            $table->string('payment_status'); //狀態
+            $table->unsignedBigInteger('renter_id');//租客編號
+            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade');
+			$table->unsignedBigInteger('expense_id'); //租屋費用編號
+            $table->foreign('expense_id')->references('id')->on('expenses')->onUpdate('cascade');
+            $table->boolean('payment_status'); //狀態
             $table->date('start_date'); //開始日期
             $table->date('payment_deadline'); //繳費期限
             $table->string('payment_way'); //繳納方式(暫定:現金、轉帳)

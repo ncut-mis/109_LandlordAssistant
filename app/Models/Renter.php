@@ -8,23 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Renter extends Model
 {
     use HasFactory;
-    public function users(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 
-    public function contract_detail(){
-        return $this->hasMany(ContractDetail::class);
+    public function contracts(){
+        return $this->hasMany(Contract::class);
     }
 
-    public function repair(){
+    public function repairs(){
         return $this->hasMany(Repair::class);
     }
 
-    public function now_renter(){
-        return $this->belongsToMany(House::class,'now_renter','renter_id','house_id');
+    public function signatories(){ //租客有可能同時租兩間房 故擁有多筆signatories
+        return $this->hasMany(Signatory::class);
     }
 
-    public function user(){
-        return $this->morphMany(User::class,'carry_on'); //繼承(子)
+    public function payments(){
+        return $this->hasMany(Payment::class);
     }
+
+    //public function user(){
+    //    return $this->morphMany(User::class,'carry_on'); //繼承(子)
+    //}
 }
