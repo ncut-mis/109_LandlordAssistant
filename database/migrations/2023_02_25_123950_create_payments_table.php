@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade');
 			$table->unsignedBigInteger('expense_id'); //租屋費用編號
             $table->foreign('expense_id')->references('id')->on('expenses')->onUpdate('cascade');
-            $table->boolean('payment_status'); //狀態
+            $table->boolean('status'); //狀態(已繳、未繳)
             $table->date('start_date'); //開始日期
-            $table->date('payment_deadline'); //繳費期限
-            $table->string('payment_way'); //繳納方式(暫定:現金、轉帳)
-            $table->date('payment_date'); //繳費日期
+            $table->date('deadline'); //繳費期限
+            $table->string('method'); //繳納方式(暫定:現金、轉帳)
+            $table->date('date'); //繳費日期
             $table->timestamps();
         });
 

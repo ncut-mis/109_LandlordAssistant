@@ -11,4 +11,8 @@ class Admin extends Model
     public function system_posts(){
         return $this->hasMany(SystemPost::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

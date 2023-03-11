@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id(); //編號
             $table->unsignedBigInteger('owner_id'); //房東編號
             $table->foreign('owner_id')->references('id')->on('owners')->onUpdate('cascade');
+            $table->string('name');//地點名稱
             $table->timestamps();
         });
 

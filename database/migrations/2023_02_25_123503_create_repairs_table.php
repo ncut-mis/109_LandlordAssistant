@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade');
             $table->unsignedBigInteger('house_id'); //房屋編號
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('status'); //狀態
+            $table->string('status'); //狀態(未維修、已維修、維修中)
             $table->string('content'); //內容
             $table->date('date'); //日期
             $table->timestamps();
