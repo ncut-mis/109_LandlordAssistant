@@ -2,21 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContractController;
-use App\Http\Controllers\ContractDetailController;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CostController;
-use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\FurnishController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\ManagerController;
-use App\Http\Controllers\ManagerListController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\PackController;
 use App\Http\Controllers\PaymentController;
-use \App\Http\Controllers\PhoneController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\RepairController;
@@ -116,14 +112,14 @@ Route::patch('owners/locations/{location}/posts/{post}', [PostController::class,
 Route::delete('owners/locations/{location}/posts/{post}', [PostController::class, 'destroy'])->name('owners.locations.posts.destroy');
 
 // 3-9-11 會員(房東)查看管理員
-Route::get('owners/locations/{location}/managers', [ManagerController::class, 'index'])->name('owners.locations.managers.index');
+Route::get('owners/locations/{location}/managers', [AdminController::class, 'index'])->name('owners.locations.managers.index');
 
 // 3-9-12 會員(房東)新增管理員
-Route::get('owners/locations/{location}/managers/create', [ManagerController::class, 'create'])->name('owners.locations.managers.create');
-Route::post('owners/locations/{location}/managers', [ManagerController::class, 'store'])->name('owners.locations.managers.store');
+Route::get('owners/locations/{location}/managers/create', [AdminController::class, 'create'])->name('owners.locations.managers.create');
+Route::post('owners/locations/{location}/managers', [AdminController::class, 'store'])->name('owners.locations.managers.store');
 
 // 3-9-13會員(房東)刪除管理員
-Route::delete('owners/locations/{location}/managers/{manager}', [ManagerController::class, 'destroy'])->name('owners.locations.managers.destroy');
+Route::delete('owners/locations/{location}/managers/{manager}', [AdminController::class, 'destroy'])->name('owners.locations.managers.destroy');
 
 // 3-9-14 會員(房東)刊登房屋(excel顏色不一樣)
 Route::get('owners/houses/publish/{publish}/edit', [HouseController::class, 'publish_edit'])->name('owner.publish.edit');
@@ -148,30 +144,16 @@ Route::delete('owners/houses/contracts/{contract}', [ContractController::class, 
 // 3-9-20 會員(房東)查看合約書
 Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'owners_show'])->name('houses.contracts.show');
 
-// 3-9-21 會員(房東)檢視信件代收
-Route::get('owners/houses/{house}/packs', [PackController::class, 'owners_index'])->name('houses.packs.index');
-
-// 3-9-22 會員(房東)新增信件代收
-Route::get('owners/houses/{house}/packs/create', [PackController::class, 'create'])->name('houses.packs.create');
-Route::post('owners/houses/{house}/packs', [PackController::class, 'store'])->name('houses.packs.store');
-
-// 3-9-23 會員(房東)編輯信件代收
-Route::get('owners/houses/packs/{pack}/edit', [PackController::class, 'edit'])->name('houses.packs.edit');
-Route::patch('owners/houses/packs/{pack}', [PackController::class, 'update'])->name('houses.packs.update');
-
-// 3-9-24 會員(房東)刪除信件代收
-Route::delete('owners/houses/packs/{pack}', [PackController::class, 'destroy'])->name('houses.packs.destroy');
-
 // 3-9-25 會員(房東)新增費用資訊
-Route::get('owners/houses/{house}/costs/create', [CostController::class, 'owners_create'])->name('houses.costs.create');
-Route::post('owners/houses/{house}/costs', [CostController::class, 'owners_store'])->name('houses.costs.store');
+Route::get('owners/houses/{house}/costs/create', [ExpenseController::class, 'owners_create'])->name('houses.costs.create');
+Route::post('owners/houses/{house}/costs', [ExpenseController::class, 'owners_store'])->name('houses.costs.store');
 
 // 3-9-26 會員(房東)修改費用資訊
-Route::get('owners/houses/costs/{cost}/edit', [CostController::class, 'edit'])->name('houses.costs.edit');
-Route::patch('owners/houses/costs/{cost}', [CostController::class, 'update'])->name('houses.costs.update');
+Route::get('owners/houses/costs/{cost}/edit', [ExpenseController::class, 'edit'])->name('houses.costs.edit');
+Route::patch('owners/houses/costs/{cost}', [ExpenseController::class, 'update'])->name('houses.costs.update');
 
 // 3-9-27 會員(房東)刪除費用資訊
-Route::delete('owners/houses/costs/{cost}', [CostController::class, 'destroy'])->name('houses.costs.destroy');
+Route::delete('owners/houses/costs/{cost}', [ExpenseController::class, 'destroy'])->name('houses.costs.destroy');
 
 // 3-9-28會員(房東)查看報修訊息
 Route::get('owners/houses/{house}/repairs', [RepairController::class, 'owners_index'])->name('houses.repairs.index');
@@ -187,18 +169,15 @@ Route::get('renters/houses',[HomeController::class,'renters_index'])->name('rent
 // 3-10-1 會員(租客)查看公告
 Route::get('renters/houses/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
 
-// 3-10-2 會員(租客)查看信件
-Route::get('renters/houses/packs', [PackController::class, 'index'])->name('renters.houses.packs.index');
-
 // 3-10-3 會員(租客)查看合約
 Route::get('renters/houses/contracts/{contract}', [ContractController::class, 'show'])->name('renters.houses.contracts.show');
 
 // 3-10-4 會員(租客)查看費用資訊
-Route::get('renters/houses/costs', [CostController::class, 'index'])->name('renters.houses.costs.index');
+Route::get('renters/houses/costs', [ExpenseController::class, 'index'])->name('renters.houses.costs.index');
 
 // 3-10-5 會員(租客)進行繳費
-Route::get('costs/create', [CostController::class, 'create'])->name('costs.create');
-Route::post('costs', [CostController::class, 'store'])->name('costs.store');
+Route::get('costs/create', [ExpenseController::class, 'create'])->name('costs.create');
+Route::post('costs', [ExpenseController::class, 'store'])->name('costs.store');
 
 // 3-10-6 會員(租客)查看報修訊息
 Route::get('renters/houses/repairs', [RepairController::class, 'index'])->name('renters.houses.repairs.index');
