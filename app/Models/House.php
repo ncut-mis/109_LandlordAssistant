@@ -45,5 +45,16 @@ class House extends Model
     public function signatories(){
         return $this->hasMany(Signatory::class);
     }
-
+	
+	protected $fillable = [
+        'id',
+        'address',
+        'introduce',
+        'name',
+        'furnish',
+        'amount',
+        'feature',
+		'location_id',
+		'owner_id'
+    ];
 }

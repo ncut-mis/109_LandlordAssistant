@@ -11,4 +11,12 @@ class Furnish extends Model
     public function house(){
         return $this->belongsTo(House::class);
     }
+	
+	protected $table = 'furnishings';
+	
+	protected $fillable = [
+        'id',
+		'house_id',
+		'furnish'
+	];
 }

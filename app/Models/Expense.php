@@ -11,4 +11,9 @@ class Expense extends Model
     public function payments(){
         return $this->hasMany(Payment::class);
     }
+	protected $fillable = [
+        'id',
+        'house_id',
+        'amount',
+	];
 }

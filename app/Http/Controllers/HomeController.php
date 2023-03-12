@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\House;
 use App\Models\Image;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +27,15 @@ class HomeController extends Controller
 
     public function owners_index()
     {
-        return view('owners.index');
+		//房東管理頁面首頁
+		/*$locations = Location::all();
+		$houses = $locations->houses;*/
+		$locations = Location::with('houses')->get();
+
+		$locations_data = [
+            'locations' => $locations,
+        ];
+        return view('owners.index',$locations_data);
     }
     /**
      * Show the form for creating a new resource.

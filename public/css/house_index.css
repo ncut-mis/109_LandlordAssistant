@@ -12,6 +12,9 @@
   justify-content: flex-start;
   align-items: center;
 }
+.row_create_house input {
+  width: 300px;
+}
 .column {
   padding: 20px;
 }

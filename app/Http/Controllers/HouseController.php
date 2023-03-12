@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
+use App\Models\Location;
+use App\Models\Furnish;
+use App\Models\Expense;
+use App\Models\Feature;
 use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
+use Illuminate\Http\Request;
 
 class HouseController extends Controller
 {
@@ -19,9 +24,13 @@ class HouseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($location)
     {
-        //
+		$locations = Location::find($location);
+		$locations_data = [
+            'locations' => $locations,
+        ];
+        return view('owners.locations.houses.create',$locations_data);
     }
 
     public function advance_search_create()
@@ -31,9 +40,49 @@ class HouseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreHouseRequest $request)
+    public function store(Request $request,$location)
     {
-        //
+        $validatedData = $request->validate([
+        'name' => 'required|max:255',
+        'address' => 'required|max:255',
+        'furnish' => 'required|max:255',
+		]);
+		
+		$l = Location::find($location);
+		$owner_id = $l->owner->id;
+		// 建立 House 資料
+		$house = House::create([
+            'name' => $validatedData['name'],
+            'address' => $validatedData['address'],
+			'introduce' => $request->introduce,
+			'location_id' => $location,
+			'owner_id' => $owner_id,
+        ]);
+		$house_id = $house->id;
+		// 建立 Furnish 資料
+        $furnish = new Furnish([
+            'house_id' => $house_id,
+            'furnish' => $validatedData['furnish'],
+        ]);
+		// 透過關聯存取資料庫
+        $house->furnishings()->save($furnish);
+
+		// 建立 Expense 資料
+        $expense = new Expense([
+            'house_id' => $house_id,
+            'amount' => $request->amount,
+        ]);
+		// 透過關聯存取資料庫
+        $house->expenses()->save($expense);
+
+		// 建立 Feature 資料
+        $feature = new Feature([
+            'house_id' => $house_id,
+            'feature' => $request->feature,
+        ]);
+		// 透過關聯存取資料庫
+        $house->features()->save($feature);
+		return redirect()->route('owners.houses.index')->with('success', '儲存成功！');
     }
 
     /**
