@@ -48,6 +48,8 @@ class HouseController extends Controller
         'furnish' => 'required|max:255',
 		]);
 		
+		//狀態等房屋底下的尚未全部可儲存
+		
 		$l = Location::find($location);
 		$owner_id = $l->owner->id;
 		// 建立 House 資料
@@ -105,9 +107,20 @@ class HouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(House $house)
+    public function edit(Location $location, House $house)
     {
-        //
+		$furnish = $house->furnishings;
+		$amount = $house->expenses;
+		$feature = $house->features;
+		$locations_data = [
+            'locations' => $location,
+            'houses' => $house,
+            'amount' => $amount,
+            'furnish' => $furnish,
+            'feature' => $feature,
+			
+        ];
+        return view('owners.locations.houses.edit',$locations_data);
     }
 
     public function publish_edit(House $house)
@@ -117,9 +130,42 @@ class HouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHouseRequest $request, House $house)
+    public function update(Request $request, Location $location, House $house)
     {
-        //
+		//初步版本，尚未全部可修改
+		
+		// 從請求中獲取表單提交的數據
+		$data = $request->only([
+			'name',
+			'address',
+			'introduce'
+		]);
+		$house->update($data);
+		
+		// 更新房屋信息
+		if ($house->expenses !== null) {
+			foreach ($house->expenses as $expense) {
+				$expense->amount = $request->amount;
+				$expense->save();
+			}
+		}
+
+		if ($house->furnishings !== null) {
+			foreach ($house->furnishings as $furnishing) {
+				$furnishing->furnish = $request->furnish;
+				$furnishing->save();
+			}
+		}
+
+		if ($house->feature !== null) {
+			foreach ($house->feature as $feature) {
+				$feature->feature = $request->feature;
+				$feature->save();
+			}
+		}
+
+		// 重定向到房屋管理頁面
+		return redirect()->route('owners.houses.index', [$location->id, $house->id])->with('success', '修改成功！');
     }
 
     public function publish_update()
@@ -134,8 +180,12 @@ class HouseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(House $house)
+    public function destroy(Location $location, House $house)
     {
-        //
+        if (!$house) {
+			return redirect()->back()->with('error', '房屋找不到');
+		}
+		$house->delete();
+		return redirect()->back()->with('success', '房屋刪除成功');
     }
 }

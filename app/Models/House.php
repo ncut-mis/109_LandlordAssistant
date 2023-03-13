@@ -55,6 +55,7 @@ class House extends Model
         'amount',
         'feature',
 		'location_id',
-		'owner_id'
+		'owner_id',
+		'house_id'
     ];
 }
