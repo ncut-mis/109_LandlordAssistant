@@ -20,31 +20,34 @@
 					<div class="row">
 						<div class="left-column" style="width:22%;">地址</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="address" required>
+							<input type="text" name="address" value="{{ $houses->address }}" required>
 						</div>
 					</div><hr>			
 					<div class="row">
 						<div class="left-column" style="width:22%;">設備</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="furnish" required>
+							<input type="text" name="furnish" 
+								value="@foreach($furnish as $furnish){{ $furnish->furnish }} @endforeach" required>
 						</div>
 					</div><hr>		
 					<div class="row">
 						<div class="left-column" style="width:22%;">租金</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="amount">
+							<input type="text" name="amount" 
+								value="@foreach($amount as $amount){{ $amount->amount }}@endforeach">
 						</div>
 					</div><hr>		
 					<div class="row">
 						<div class="left-column" style="width:22%;">特色</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="feature">
+							<input type="text" name="feature" 
+								value="@foreach($feature as $feature){{ $feature->feature }}@endforeach">
 						</div>
 					</div><hr>		
 					<div class="row">
 						<div class="left-column" style="width:22%;">介紹</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="introduce">
+							<input type="text" name="introduce" value="{{ $houses->introduce }}">
 						</div>
 					</div><hr>
 					<div class="row">
