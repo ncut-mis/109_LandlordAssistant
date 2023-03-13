@@ -35,7 +35,7 @@ class HomeController extends Controller
 		$locations_data = [
             'locations' => $locations,
         ];
-        return view('owners.index',$locations_data);
+        return view('owners.home.index',$locations_data);
     }
     /**
      * Show the form for creating a new resource.
