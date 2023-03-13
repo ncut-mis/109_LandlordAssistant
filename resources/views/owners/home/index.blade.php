@@ -65,23 +65,34 @@
 				</div>
 			</div>
 			<div class="house collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
-				@foreach ($location->houses as $house) 
 				<div class="row">
 					<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
 					<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
 				</div>
+				@foreach ($location->houses as $house) 
 				<div class="row">
 					<div class="row_house">
 						<div class="column">{{ $house->name }}</div>
 						<div class="column">放狀態</div>
-						<div class="column"><button type="button" class="btn btn-outline-primary">編輯</button></div>
-						<div class="column"><button type="button" class="btn btn-outline-danger">刪除</button></div>
 						<div class="column">
-								<button class="btn btn-primary" type="button" 
-								data-bs-toggle="collapse" data-bs-target="#collapseWidthExample1" aria-expanded="false" 
-								aria-controls="collapseWidthExample1">
-								按鈕
-								</button>
+							<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
+								@csrf
+								<button type="submit" class="btn btn-outline-primary">編輯</button>
+							</form>
+						</div>
+						<div class="column">
+							<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+								@csrf
+								@method('DELETE')
+								<button type="submit" class="btn btn-outline-danger">刪除</button>
+							</form>
+						</div>
+						<div class="column">
+							<button class="btn btn-primary" type="button" 
+							data-bs-toggle="collapse" data-bs-target="#collapseWidthExample1" aria-expanded="false" 
+							aria-controls="collapseWidthExample1">
+							按鈕
+							</button>
 						</div>
 					</div>
 					<div class="collapse collapse-horizontal" id="collapseWidthExample1">

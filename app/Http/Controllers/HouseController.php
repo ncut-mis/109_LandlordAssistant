@@ -105,9 +105,13 @@ class HouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(House $house)
+    public function edit(Location $location, House $house)
     {
-        //
+		$locations_data = [
+            'locations' => $location,
+            'houses' => $house,
+        ];
+        return view('owners.locations.houses.edit',$locations_data);
     }
 
     public function publish_edit(House $house)
@@ -117,9 +121,23 @@ class HouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateHouseRequest $request, House $house)
+    public function update(Request $request, Location $location, House $house)
     {
-        //
+		// 從請求中獲取表單提交的數據
+		$data = $request->only([
+			'name',
+			'address',
+			'furnish',
+			'amount',
+			'feature',
+			'introduce'
+		]);
+
+		// 更新房屋信息
+		$house->update($data);
+
+		// 重定向到房屋管理頁面
+		return redirect()->route('owners.houses.show', [$location->id, $house->id]);
     }
 
     public function publish_update()
@@ -134,8 +152,12 @@ class HouseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(House $house)
+    public function destroy(Location $location, House $house)
     {
-        //
+        if (!$house) {
+			return redirect()->back()->with('error', '房屋找不到');
+		}
+		$house->delete();
+		return redirect()->back()->with('success', '房屋刪除成功');
     }
 }
