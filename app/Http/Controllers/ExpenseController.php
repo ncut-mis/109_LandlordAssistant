@@ -11,9 +11,9 @@ class ExpenseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function owners_index()
     {
-        //
+        return view('owners.locations.houses.expenses.index');
     }
 
     /**

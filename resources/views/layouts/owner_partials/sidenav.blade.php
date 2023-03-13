@@ -21,6 +21,9 @@
                     </div>
                     報修系統
                 </a>
+                <a class="nav-link">
+                    ---進入某一房屋後---
+                </a>
 {{--                進入某一房屋後--}}
                 <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon">
@@ -38,9 +41,9 @@
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
-                    信件
+                    租客資訊
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url('owners/houses/1/expenses')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
@@ -50,7 +53,7 @@
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
-                    報修
+                    報修紀錄
                 </a>
                 <a class="nav-link" href="#">
                     <div class="sb-nav-link-icon">
