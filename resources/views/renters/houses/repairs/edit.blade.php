@@ -7,8 +7,9 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <form method="post" action="{{route('renters.houses.repairs.store')}}">
+    <form method="POST" action="{{route('renters.houses.repairs.update',$repairs->id)}}">
         @csrf
+        @method('PATCH')
         <div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
             <div class="location" style="padding: 20px;border: 1px solid #ccc;width:800px">
                 <div class="row">
@@ -18,9 +19,9 @@
                     <div class="row">
                         <div class="left-column" style="width:22%;">請選擇房屋：</div>
                         <div class="right-column" style="width:78%;">
-                            <select class="custom-select"  name="id">
-                                @foreach($house as  $houses)
-                                    <option value="{{$houses->id}}">{{$houses->name}}</option>
+                            <select class="custom-select"  name="house_id">
+                                @foreach($houses as  $house)
+                                    <option value="{{$house->id}}">{{$house->name}}</option>
                                 @endforeach
                             </select></div>
                     </div>
@@ -35,15 +36,15 @@
                     <div class="row">
                         <div class="left-column" style="width:22%;">說明</div>
                         <div class="right-column" style="width:78%;">
-                            <textarea name="contents" style="width:78%;"
-                                      placeholder="請詳細說明需要維修的物品狀況"></textarea>
+                            <textarea name="content" style="width:78%;"
+                                      placeholder="請詳細說明需要維修的物品狀況">{{$repairs->content}}</textarea>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="left-column" style="width:50%;text-align:right">
                             <button class="btn btn-primary" type="submit">
-                                確定報修
+                                更改
                             </button>
                         </div>
                         <div class="right-column" style="width:50%;text-align:left">

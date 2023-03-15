@@ -61,7 +61,7 @@ class RepairController extends Controller
             'content' => $request->contents,
             'date' => null,
         ]);
-        return redirect()->route('renters.houses.repairs.index');
+        return redirect()->route('renters.houses.repairs.index')->with('success', '申請成功！');
 
     }
 
@@ -78,7 +78,14 @@ class RepairController extends Controller
      */
     public function edit(Repair $repair)
     {
-        //
+        $house = House::whereHas('contracts',function ($q){
+            $q->where('renter_id','=',1);
+        })->get();
+        $edit_data=[
+            'repairs'=>$repair,
+            'houses'=>$house,
+        ];
+        return view('renters.houses.repairs.edit',$edit_data);
     }
 
     /**
@@ -86,7 +93,12 @@ class RepairController extends Controller
      */
     public function update(UpdateRepairRequest $request, Repair $repair)
     {
-        //
+        $data=$request->only([
+           'house_id',
+            'content'
+        ]);
+        $repair->update($data);
+        return redirect()->route('renters.houses.repairs.index')->with('success', '修改成功！');
     }
 
     public function update_status(UpdateRepairRequest $request, Repair $repair)
@@ -98,6 +110,7 @@ class RepairController extends Controller
      */
     public function destroy(Repair $repair)
     {
-        //
+        $repair->delete();
+        return redirect()->back()->with('success', '刪除成功');
     }
 }

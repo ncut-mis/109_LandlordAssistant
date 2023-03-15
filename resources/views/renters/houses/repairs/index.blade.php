@@ -64,8 +64,15 @@
                                     更改
                                 </button>
                                 <ul class="dropdown-menu location" style="text-align:center;">
-                                    <li><a class="dropdown-item" href="#">修改內容</a></li>
-                                    <li><a class="dropdown-item" href="#">取消報修</a></li>
+                                    <form action="{{route('renters.houses.repairs.edit',$repair -> id)}}" method="GET">
+                                        @csrf
+                                    <li><button class="dropdown-item">修改內容</button></li>
+                                    </form>
+                                    <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                    <li><button class="dropdown-item" >取消報修</button></li>
+                                    </form>
                                 </ul>
                             </div>
                         </div>
