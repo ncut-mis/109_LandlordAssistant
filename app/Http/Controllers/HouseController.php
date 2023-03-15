@@ -118,7 +118,7 @@ class HouseController extends Controller
             'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
-			
+            'owner_id' => $location->owner_id,
         ];
         return view('owners.locations.houses.edit',$locations_data);
     }

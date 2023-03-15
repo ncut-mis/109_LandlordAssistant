@@ -57,7 +57,7 @@
 							</button>
 						</div>
 						<div class="center-column" style="width:50%;text-align:left">
-							<a class="btn btn-danger" href="{{ route('owners.houses.index') }}">返回</a>
+							<a class="btn btn-danger" href="{{ route('owners.home.index',$owner_id) }}">返回</a>
 						</div>
 					</div>
 				</div>
