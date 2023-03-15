@@ -18,10 +18,22 @@ class OwnerController extends Controller
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/
-        $locations = Location::with('houses')->get();
-
+        //抓取全部地點
+		$locations = Location::with('houses')->get();
+        //抓取出租中地點
+		$for_rent = Location::whereHas('houses', function ($query) {
+                $query->where('lease_status', '出租中');})->with('houses')->get();
+        //抓取已刊登地點
+		$listed = Location::whereHas('houses', function ($query) {
+                $query->where('lease_status', '已刊登');})->with('houses')->get();
+        //抓取閒置地點
+		$vacancy = Location::whereHas('houses', function ($query) {
+                $query->where('lease_status', '閒置');})->with('houses')->get();
         $locations_data = [
             'locations' => $locations,
+            'for_rent' => $for_rent,
+            'listed' => $listed,
+            'vacancy' => $vacancy,
         ];
         return view('owners.home.index',$locations_data);
     }
