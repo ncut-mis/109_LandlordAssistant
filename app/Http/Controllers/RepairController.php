@@ -13,6 +13,7 @@ class RepairController extends Controller
      */
     public function index()
     {
+        return view('renters.houses.repairs.index');
         //
     }
 

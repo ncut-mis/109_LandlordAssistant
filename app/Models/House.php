@@ -30,7 +30,7 @@ class House extends Model
         return $this->hasMany(Expense::class);
     }
 
-    public function images(){
+    public function image(){
         return $this->hasMany(Image::class);
     }
 
@@ -45,7 +45,7 @@ class House extends Model
     public function signatories(){
         return $this->hasMany(Signatory::class);
     }
-	
+
 	protected $fillable = [
         'id',
         'address',
