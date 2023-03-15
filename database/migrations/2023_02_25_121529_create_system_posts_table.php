@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('system_posts', function (Blueprint $table) {
             $table->id();//編號
             $table->unsignedBigInteger('admin_id');//管理員
-            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('set null')->onUpdate('cascade');
             $table->string('title');//標題
             $table->string('content');//內容
             $table->date('date');//日期

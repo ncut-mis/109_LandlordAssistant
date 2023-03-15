@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();//編號
             $table->unsignedBigInteger('renter_id');//租客編號
-            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade');
+            $table->foreign('renter_id')->references('id')->on('renters')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('house_id');//房屋編號
-            $table->foreign('house_id')->references('id')->on('houses')->onUpdate('cascade');
+            $table->foreign('house_id')->references('id')->on('houses')->onDelete('set null')->onUpdate('cascade');
             $table->string('path');//合約檔案路徑
             $table->date('start_date');//起始日
             $table->date('end_date');//到期日
