@@ -25,18 +25,6 @@ class HomeController extends Controller
         return view('renters.home.index');
     }
 
-    public function owners_index()
-    {
-		//房東管理頁面首頁
-		/*$locations = Location::all();
-		$houses = $locations->houses;*/
-		$locations = Location::with('houses')->get();
-
-		$locations_data = [
-            'locations' => $locations,
-        ];
-        return view('owners.home.index',$locations_data);
-    }
     /**
      * Show the form for creating a new resource.
      */

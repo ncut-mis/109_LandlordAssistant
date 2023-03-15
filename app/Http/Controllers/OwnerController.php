@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Owner;
 use App\Http\Requests\StoreOwnerRequest;
 use App\Http\Requests\UpdateOwnerRequest;
@@ -14,7 +15,15 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        return view('owners.home.index');
+        //房東管理頁面首頁
+        /*$locations = Location::all();
+        $houses = $locations->houses;*/
+        $locations = Location::with('houses')->get();
+
+        $locations_data = [
+            'locations' => $locations,
+        ];
+        return view('owners.home.index',$locations_data);
     }
 
     /**
