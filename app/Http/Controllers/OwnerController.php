@@ -13,7 +13,7 @@ class OwnerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($owner)
     {
         //房東管理頁面首頁
         /*$locations = Location::all();
@@ -59,7 +59,8 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-        //
+        
+        return view('owners.houses.show');
     }
 
     /**
