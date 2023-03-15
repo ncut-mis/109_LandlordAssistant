@@ -21,6 +21,12 @@
                     </div>
                     報修系統
                 </a>
+                <a class="nav-link" href="{{url('/')}}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    回到租屋網首頁
+                </a>
                 <a class="nav-link">
                     ---進入某一房屋後---
                 </a>
