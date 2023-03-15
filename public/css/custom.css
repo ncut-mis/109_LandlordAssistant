@@ -12,7 +12,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-.row_create_house input {
+.row_create input {
   width: 300px;
 }
 .column {
@@ -53,4 +53,10 @@
 }
 .collapsed-content .column {
   width: 25%;
+}
+.left-column {
+    width:22%;
+}
+.right-column {
+    width:78%;
 }

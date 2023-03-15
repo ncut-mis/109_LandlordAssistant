@@ -1,5 +1,5 @@
 @extends('layouts.owner_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
 	<form method="post" action="{{ route('owners.locations.houses.store',$locations->id) }}">
@@ -9,7 +9,7 @@
 				<div class="row">
 					<div class="left-column"><h2>{{ $locations->name }}</h2></div>
 				</div>
-				<div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
+				<div class="house row_create" style="padding: 20px;border: 1px solid #ccc;">
 					<div class="row">
 						<div class="left-column" style="width:22%;">房屋名稱</div>
 						<div class="right-column" style="width:78%;">
@@ -21,25 +21,25 @@
 						<div class="right-column" style="width:78%;">
 							<input type="text" name="address" required>
 						</div>
-					</div><hr>			
+					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:22%;">設備</div>
 						<div class="right-column" style="width:78%;">
 							<input type="text" name="furnish" required>
 						</div>
-					</div><hr>		
+					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:22%;">租金</div>
 						<div class="right-column" style="width:78%;">
 							<input type="text" name="amount">
 						</div>
-					</div><hr>		
+					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:22%;">特色</div>
 						<div class="right-column" style="width:78%;">
 							<input type="text" name="feature">
 						</div>
-					</div><hr>		
+					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:22%;">介紹</div>
 						<div class="right-column" style="width:78%;">

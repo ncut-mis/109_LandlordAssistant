@@ -59,8 +59,10 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-        
-        return view('owners.houses.show');
+        $owner_id = [
+            'owner_id' => $house->owner_id,
+        ];
+        return view('owners.houses.show',$owner_id);
     }
 
     /**

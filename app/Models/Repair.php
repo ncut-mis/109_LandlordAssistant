@@ -19,4 +19,11 @@ class Repair extends Model
     public function repair_replies(){
         return $this->hasMany(RepairReply::class);
     }
+    protected $fillable = [
+        'renter_id',
+        'house_id',
+        'status',
+        'content',
+        'date',
+    ];
 }

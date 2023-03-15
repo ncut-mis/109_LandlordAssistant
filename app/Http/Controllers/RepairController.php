@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
+use App\Models\House;
+use App\Models\Renter;
 use App\Models\Repair;
+use App\Models\User;
 use App\Http\Requests\StoreRepairRequest;
 use App\Http\Requests\UpdateRepairRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RepairController extends Controller
 {
@@ -13,7 +19,14 @@ class RepairController extends Controller
      */
     public function index()
     {
-        return view('renters.houses.repairs.index');
+        $houses = House::whereHas('repairs',function ($q){
+            $q->where('renter_id','=',1);
+        })->with('repairs')->get();
+        $view_data = [
+            'houses' => $houses,
+        ];
+
+        return view('renters.houses.repairs.index',$view_data);
         //
     }
 
@@ -26,7 +39,14 @@ class RepairController extends Controller
      */
     public function create()
     {
-        //
+        $house = House::whereHas('contracts',function ($q){
+            $q->where('renter_id','=',1);
+        })->get();
+
+        $view_data = [
+            'house' => $house,
+        ];
+        return view('renters.houses.repairs.create',$view_data);
     }
 
     /**
@@ -34,7 +54,15 @@ class RepairController extends Controller
      */
     public function store(StoreRepairRequest $request)
     {
-        //
+        $repair=Repair::create([
+            'renter_id' =>1 ,
+            'house_id' => $request->id,
+            'status' => '未維修',
+            'content' => $request->contents,
+            'date' => null,
+        ]);
+        return redirect()->route('renters.houses.repairs.index');
+
     }
 
     /**

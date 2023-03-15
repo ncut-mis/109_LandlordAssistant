@@ -75,30 +75,32 @@
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
-								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
-									<div class="column">
-										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
-											@csrf
-											<button type="submit" class="btn btn-outline-primary">編輯</button>
-										</form>
+								<a href="{{ route('owners.houses.show', $house->id) }}">
+									<div class="row_house">
+										<div class="column">{{ $house->name }}</div>
+										<div class="column">放狀態</div>
+										<div class="column">
+											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
+												@csrf
+												<button type="submit" class="btn btn-outline-primary">編輯</button>
+											</form>
+										</div>
+										<div class="column">
+											<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+												@csrf
+												@method('DELETE')
+												<button type="submit" class="btn btn-outline-danger">刪除</button>
+											</form>
+										</div>
+										<div class="column">
+											<button class="btn btn-primary" type="button"
+											data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
+											aria-controls="collapseWidthExample{{ $house->id }}">
+											按鈕
+											</button>
+										</div>
 									</div>
-									<div class="column">
-										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
-											@csrf
-											@method('DELETE')
-											<button type="submit" class="btn btn-outline-danger">刪除</button>
-										</form>
-									</div>
-									<div class="column">
-										<button class="btn btn-primary" type="button"
-										data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
-										aria-controls="collapseWidthExample{{ $house->id }}">
-										按鈕
-										</button>
-									</div>
-								</div>
+								</a>
 								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
 									<div class="collapsed-content">
 										<div class="row">
