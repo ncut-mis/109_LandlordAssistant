@@ -59,7 +59,7 @@
 							<li><a class="dropdown-item" href="#">刪除地點</a></li>
 							<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 							<hr>
-							<li><a class="dropdown-item" href="#">公告</a></li>
+							<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 						</ul>
 					</div>
 				</div>
@@ -69,7 +69,7 @@
 					<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
 					<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
 				</div>
-				@foreach ($location->houses as $house) 
+				@foreach ($location->houses as $house)
 				<div class="row">
 					<div class="row_house">
 						<div class="column">{{ $house->name }}</div>
@@ -88,8 +88,8 @@
 							</form>
 						</div>
 						<div class="column">
-							<button class="btn btn-primary" type="button" 
-							data-bs-toggle="collapse" data-bs-target="#collapseWidthExample1" aria-expanded="false" 
+							<button class="btn btn-primary" type="button"
+							data-bs-toggle="collapse" data-bs-target="#collapseWidthExample1" aria-expanded="false"
 							aria-controls="collapseWidthExample1">
 							按鈕
 							</button>

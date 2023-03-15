@@ -13,19 +13,22 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     public function owners_index()
     {
+        $posts = Post::orderBy('created_at', 'DESC')->get();
 
+        $data = ['posts' => $posts];
+        return view('owners.locations.posts.index', $data);
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+       // return view('owners.locations.posts.create');
     }
 
     /**
