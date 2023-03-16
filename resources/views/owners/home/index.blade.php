@@ -75,10 +75,16 @@
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
-								<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 									<div class="row_house">
-										<div class="column">{{ $house->name }}</div>
-										<div class="column">{{ $house->lease_status }}</div>
+										
+										<div class="column">
+											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+											{{ $house->name }}</a>
+										</div>
+										<div class="column">
+											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+											{{ $house->lease_status }}</a>
+										</div>
 										<div class="column">
 											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 												@csrf
@@ -100,7 +106,7 @@
 											</button>
 										</div>
 									</div>
-								</a>
+								
 								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
 									<div class="collapsed-content">
 										<div class="row">
@@ -153,8 +159,14 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">{{ $house->lease_status }}</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -228,8 +240,14 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">{{ $house->lease_status }}</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -303,8 +321,14 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">{{ $house->lease_status }}</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf

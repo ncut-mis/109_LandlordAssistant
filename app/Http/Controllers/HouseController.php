@@ -27,8 +27,10 @@ class HouseController extends Controller
     public function create($location)
     {
 		$locations = Location::find($location);
+		$owner_id = $locations->owner->id;
 		$locations_data = [
             'locations' => $locations,
+            'owner_id' => $owner_id,
         ];
         return view('owners.locations.houses.create',$locations_data);
     }
@@ -45,7 +47,7 @@ class HouseController extends Controller
         $validatedData = $request->validate([
         'name' => 'required|max:255',
         'address' => 'required|max:255',
-        'furnish' => 'required|max:255',
+        'furnish.*' => 'required|max:255',
 		]);
 		
 		//狀態等房屋底下的尚未全部可儲存
@@ -60,14 +62,21 @@ class HouseController extends Controller
 			'location_id' => $location,
 			'owner_id' => $owner_id,
         ]);
+		
 		$house_id = $house->id;
+		// 取得所有設備值
+		//$furnishes = $request->input('furnish');
 		// 建立 Furnish 資料
-        $furnish = new Furnish([
-            'house_id' => $house_id,
-            'furnish' => $validatedData['furnish'],
-        ]);
+		foreach($request->furnish as $furnish) {
+			$newFurnish = new Furnish([
+				'house_id' => $house_id,
+				'furnish' => $furnish,
+			]);
+			$house->furnishings()->save($newFurnish);
+		}
+
 		// 透過關聯存取資料庫
-        $house->furnishings()->save($furnish);
+        //$house->furnishings()->save($furnish);
 
 		// 建立 Expense 資料
         $expense = new Expense([
@@ -78,13 +87,17 @@ class HouseController extends Controller
         $house->expenses()->save($expense);
 
 		// 建立 Feature 資料
-        $feature = new Feature([
-            'house_id' => $house_id,
-            'feature' => $request->feature,
-        ]);
+		foreach($request->feature as $feature) {
+			$newFurnish = new Feature([
+				'house_id' => $house_id,
+				'feature' => $feature,
+			]);
+			$house->furnishings()->save($newFurnish);
+		}
+        
 		// 透過關聯存取資料庫
-        $house->features()->save($feature);
-		return redirect()->route('owners.houses.index')->with('success', '儲存成功！');
+        //$house->features()->save($feature);
+		return redirect()->route('owners.home.index',$owner_id)->with('success', '儲存成功！');
     }
 
     /**
@@ -165,7 +178,7 @@ class HouseController extends Controller
 		}
 
 		// 重定向到房屋管理頁面
-		return redirect()->route('owners.houses.index', [$location->id, $house->id])->with('success', '修改成功！');
+		return redirect()->route('owners.home.index', [$location->id, $house->id])->with('success', '修改成功！');
     }
 
     public function publish_update()
