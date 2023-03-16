@@ -1,5 +1,5 @@
 @extends('layouts.owner_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
 @if(Session::has('success'))
@@ -75,10 +75,10 @@
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
-								<a href="{{ route('owners.houses.show', $house->id) }}">
+								<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 									<div class="row_house">
 										<div class="column">{{ $house->name }}</div>
-										<div class="column">放狀態</div>
+										<div class="column">{{ $house->lease_status }}</div>
 										<div class="column">
 											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 												@csrf
@@ -154,7 +154,7 @@
 							<div class="row">
 								<div class="row_house">
 									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">{{ $house->lease_status }}</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -229,7 +229,7 @@
 							<div class="row">
 								<div class="row_house">
 									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">{{ $house->lease_status }}</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -304,7 +304,7 @@
 							<div class="row">
 								<div class="row_house">
 									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">{{ $house->lease_status }}</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf

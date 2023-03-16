@@ -59,10 +59,13 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-        $owner_id = [
-            'owner_id' => $house->owner_id,
+		$image = House::whereHas('image')->find($house->id);        
+		$data = [
+            'house' => $house,
+            'image' => $image,
+			
         ];
-        return view('owners.houses.show',$owner_id);
+        return view('owners.houses.show',$data);
     }
 
     /**
