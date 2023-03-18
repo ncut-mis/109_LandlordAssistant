@@ -78,29 +78,93 @@
 								<div class="row bg-dark text-white py-2 mx-1">
 									<div class="col-8 fw-bold">
 										<div class="row bg-dark text-white py-2" style="font-size: 3rem;">
-											{{ $house->name }}<hr class="text-white-50">
+											房屋名稱：{{ $house->name }}<hr class="text-white-50">
 										</div>
-										{{--以下內容待修改--}}
 										<div class="row bg-dark text-white py-2">
-											<div class="fs-4">
-												<button type="button" class="btn btn-outline-light btn-sm">有車位</button>
-												<button type="button" class="btn btn-outline-light btn-sm">有陽台</button>
-												<hr class="text-white-50">
+											<div class="col-2">
+												地址：
+											</div>
+											<div class="col">
+												{{ $house->address }}
 											</div>
 										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												介紹：
+											</div>
+											<div class="col">
+												{{ $house->introduce }}
+											</div>
+										</div>
+										{{--以下內容待修改--}}
+										
 										<div class="row bg-dark text-white py-2">
 											<div class="fs-4" style="white-space: nowrap;">
 												<div class="fs-4">
-													<span class="text-danger">9,999</span>　元/月
+													<div class="col-2">
+														<span class="text-danger">{{ number_format($house->expenses->value('amount')) }}</span>　元/月
+														　　繳納區間：{{ $house->expenses->value('interval') }}月一次
+													</div>
 												</div>
-												<hr class="text-white-50">
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="fs-4">
-												<button type="button" class="btn btn-outline-light btn-sm">冰箱</button>
-												<button type="button" class="btn btn-outline-light btn-sm">洗衣機</button>
-												<hr class="text-white-50">
+											<div class="col-2">
+												可住人數：
+											</div>
+											<div class="col-2">
+												{{ $house->num_renter }}
+											</div>
+											<div class="col-2">
+												最短租期：
+											</div>
+											<div class="col-2">
+												{{ $house->min_period }}
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												格局：
+											</div>
+											<div class="col-2">
+												{{ $house->pattern }}　間
+											</div>
+											<div class="col-2">
+												坪數：
+											</div>
+											<div class="col-2">
+												{{ $house->size }}
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												類型：
+											</div>
+											<div class="col-2">
+												{{ $house->type }}　
+											</div>
+											<div class="col-2">
+												樓層：
+											</div>
+											<div class="col-2">
+												{{ $house->floor }}
+											</div>
+										</div>
+										<hr class="text-white-50">
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												特色<p>
+												@foreach($house->features as $features)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
+												@endforeach
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												設備<p>
+												@foreach($house->furnishings as $furnishings)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
+												@endforeach
 											</div>
 										</div>
 									</div>

@@ -7,6 +7,10 @@ use App\Models\Owner;
 use App\Http\Requests\StoreOwnerRequest;
 use App\Http\Requests\UpdateOwnerRequest;
 use App\Models\House;
+use App\Models\Feature;
+use App\Models\Furnish;
+use App\Models\Image;
+use App\Models\Expense;
 
 class OwnerController extends Controller
 {
@@ -59,11 +63,16 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
+		$furnishings = House::whereHas('furnishings')->find($house->id);        
+		$features = House::whereHas('features')->find($house->id);        
 		$image = House::whereHas('image')->find($house->id);        
+		$expenses = House::whereHas('expenses')->find($house->id);        
 		$data = [
+            'furnishings' => $furnishings,
+            'features' => $features,
             'house' => $house,
             'image' => $image,
-			
+            'expenses' => $expenses,
         ];
         return view('owners.houses.show',$data);
     }

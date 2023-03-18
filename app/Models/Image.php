@@ -11,4 +11,9 @@ class Image extends Model
     public function house(){
         return $this->belongsTo(House::class);
     }
+	protected $fillable = [
+        'id',
+		'house_id',
+		'image'
+    ];
 }

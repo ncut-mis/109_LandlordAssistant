@@ -49,6 +49,7 @@ class House extends Model
 	protected $fillable = [
         'id',
         'address',
+        'lease_status',
         'introduce',
         'name',
         'furnish',
@@ -56,6 +57,13 @@ class House extends Model
         'feature',
 		'location_id',
 		'owner_id',
-		'house_id'
+		'house_id',
+		'image',
+		'num_renter',
+		'min_period',
+		'pattern',
+		'size',
+		'type',
+		'floor',
     ];
 }
