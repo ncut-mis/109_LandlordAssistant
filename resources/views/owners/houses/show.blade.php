@@ -102,8 +102,8 @@
 											<div class="fs-4" style="white-space: nowrap;">
 												<div class="fs-4">
 													<div class="col-2">
-														<span class="text-danger">{{ number_format($house->expenses->value('amount')) }}</span>　元/月
-														　　繳納區間：{{ $house->expenses->value('interval') }}月一次
+														<span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元/月
+														　　繳納區間：{{ $expenses->value('interval') }}月一次
 													</div>
 												</div>
 											</div>
@@ -152,18 +152,18 @@
 										</div>
 										<hr class="text-white-50">
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2">
-												特色<p>
-												@foreach($house->features as $features)
-													<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
+											<div class="col-2" style="white-space: nowrap;">
+												設備<p>
+												@foreach($furnishings as $furnishings)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
 												@endforeach
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2">
-												設備<p>
-												@foreach($house->furnishings as $furnishings)
-													<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
+											<div class="col-2" style="white-space: nowrap;">
+												特色<p>
+												@foreach($features as $features)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
 												@endforeach
 											</div>
 										</div>

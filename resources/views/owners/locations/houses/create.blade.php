@@ -4,46 +4,66 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).ready(function() {
-  // 增加設備輸入欄位
-  $(".add-more").click(function(){
-    var html = '<div class="input-group"><input type="text" name="furnish[]" style="width:100px" required><button type="button" class="btn btn-danger btn-sm remove">刪除</button></div>';
-    $(".input-group:last").after(html);
-  });  
-  // 增加特色輸入欄位
-  $(".add-feature-more").click(function(){
-    var html = '<div class="feature-group"><input type="text" name="feature[]" style="width:100px"><button type="button" class="btn btn-danger btn-sm remove">刪除</button></div>';
-    $(".feature-group:last").after(html);
-  });
-  
-  // 刪除設備輸入欄位
-  $(".furnish-container").on("click",".remove",function(){
-    $(this).parents(".input-group").remove();
-  });  
-  // 刪除特色輸入欄位
-  $(".feature-container").on("click",".remove",function(){
-    $(this).parents(".feature-group").remove();
-  });
-});
+    $(function() {
+        // 新增特色
+        $('.add-feature').click(function() {
+            var featureInput = $('#feature-input');
+            var feature = featureInput.val();
+            if (feature) {
+                // 將特色顯示成按鈕形式
+				var newFeatureButton = '<div class="feature-input-group"><input type="hidden" name="features[]" value="' + feature + '"><button type="button" class="btn btn-outline-dark btn-sm feature-button">' + feature + '</button><button type="button" class="btn btn-outline-danger btn-sm delete-feature">刪除</button>&nbsp;<div>';
+                $('.feature-list .input-group').append(newFeatureButton);
+                // 清空輸入框
+                featureInput.val('');
+            }
+        });
 
-$(document).ready(function() {
-    // 動態增加圖片路徑
-    $('.add-image').click(function() {
-        var template = '<div class="input-group"><input type="file" name="image[]" class="form-control"><span class="input-group-addon"><a href="#" class="remove-image"><i class="fa fa-remove"></i></a></span></div>';
-        $('.image-container').append(template);
+        // 刪除特色
+        $(document).on('click', '.delete-feature', function() {
+            $(this).prev().remove(); // 刪除特色按鈕
+            $(this).prev().remove(); // 刪除隱藏的 input 元素
+            $(this).remove(); // 刪除刪除按鈕
+        });
     });
+	
+	$(function() {
+		// 新增設備
+		$('.add-furnish').click(function() {
+			var furnishInput = $('#furnish-input');
+			var furnish = furnishInput.val();
+			if (furnish) {
+				// 將設備顯示成 input 形式
+				var newFurnishInput = $('<div class="furnish-input-group"><input type="hidden" name="furnishings[]" value="' + furnish + '"><button type="button" class="btn btn-outline-dark btn-sm">' + furnish + '</button><button type="button" class="btn btn-outline-danger btn-sm delete-furnish">刪除</button>&nbsp;</div>');
+				$('.furnish-list .input-group').append(newFurnishInput);
+				// 清空輸入框
+				furnishInput.val('');
+			}
+		});
 
-    // 刪除圖片路徑
-    $('.image-container').on('click', '.remove-image', function() {
-        var inputGroup = $(this).parents('.input-group');
-		var previewImage = inputGroup.prev('.preview-image');
-		inputGroup.remove();
-		previewImage.hide();
-		if($('.preview-image:visible').length == 0){
-			$('.preview-image-container').hide();
-		}
+		// 刪除設備
+		$(document).on('click', '.delete-furnish', function() {
+			$(this).parent().remove(); // 刪除整個 div 包含設備 input 元素和刪除按鈕
+		});
+	});	
+
+	$(document).ready(function() {
+		// 動態增加圖片路徑
+		$('.add-image').click(function() {
+			var template = '<div class="input-group"><input type="file" name="image[]" class="form-control"><span class="input-group-addon"><a href="#" class="remove-image"><i class="fa fa-remove"></i></a></span></div>';
+			$('.image-container').append(template);
+		});
+
+		// 刪除圖片路徑
+		$('.image-container').on('click', '.remove-image', function() {
+			var inputGroup = $(this).parents('.input-group');
+			var previewImage = inputGroup.prev('.preview-image');
+			inputGroup.remove();
+			previewImage.hide();
+			if($('.preview-image:visible').length == 0){
+				$('.preview-image-container').hide();
+			}
+		});
 	});
-});
 
 // 預覽圖片
 function showPreviewImage(input) {
@@ -178,22 +198,31 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 					<div class="row">
 						<div class="first-column" style="width:22%;">設備</div>
 						<div class="second-column" style="width:28%;">
-							<div class="input-group">
-								<input type="text" name="furnish[]" style="width:100px" required>
-								<button type="button" class="btn btn-danger btn-sm remove">刪除</button>
+							<div class="furnish-list">
+								<div class="input-group">
+									<div class="furnish-input-group">
+										
+									</div>
+								</div>
 							</div>
-							<div class="add-more-container">
-								<button type="button" class="btn btn-success btn-sm add-more">增加</button>
+							<div>
+								<input type="text" name="furnish"style="width:100px" id="furnish-input">
+								<button type="button" class="btn btn-success btn-sm add-furnish">新增</button>
 							</div>
 						</div>
+						
 						<div class="third-column" style="width:22%;">特色</div>
-						<div class="fourth-container" style="width:28%;">
-							<div class="feature-group">
-								<input type="text" name="feature[]" style="width:100px">
-								<button type="button" class="btn btn-danger btn-sm remove">刪除</button>
+						<div class="fourth-column" style="width:28%;">
+							<div class="feature-list">
+								<div class="input-group">
+									<div class="furnish-input-group">
+										
+									</div>
+								</div>
 							</div>
-							<div class="add-more-container">
-								<button type="button" class="btn btn-success btn-sm add-feature-more">增加</button>
+							<div>
+								<input type="text" name="feature"style="width:100px" id="feature-input">
+								<button type="button" class="btn btn-success btn-sm add-feature">新增</button>
 							</div>
 						</div>
 					</div><hr>

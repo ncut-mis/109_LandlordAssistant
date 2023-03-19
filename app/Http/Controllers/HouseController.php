@@ -103,17 +103,6 @@ class HouseController extends Controller
         }
 		
 		$house_id = $house->id;
-		// 取得所有設備值
-		//$furnishes = $request->input('furnish');
-		// 建立 Furnish 資料
-		foreach($request->furnish as $furnish) {
-			$newFurnish = new Furnish([
-				'house_id' => $house_id,
-				'furnish' => $furnish,
-			]);
-			// 透過關聯存取資料庫
-			$house->furnishings()->save($newFurnish);
-		}
 
 		// 建立 Expense 資料
         $expense = new Expense([
@@ -125,14 +114,29 @@ class HouseController extends Controller
 		// 透過關聯存取資料庫
         $house->expenses()->save($expense);
 
+
+		// 建立 Furnish 資料
+		if ($request->furnishings !== null) {
+			// 新增特色
+			foreach ($request->furnishings as $furnish) {
+				$newFurnish = new Furnish([
+					'house_id' => $house->id,
+					'furnish' => $furnish,
+				]);
+				$house->furnishings()->save($newFurnish);
+			}
+		}
+		
 		// 建立 Feature 資料
-		foreach($request->feature as $feature) {
-			$newFurnish = new Feature([
-				'house_id' => $house_id,
-				'feature' => $feature,
-			]);
-			// 透過關聯存取資料庫
-			$house->furnishings()->save($newFurnish);
+		if ($request->features !== null) {
+			// 新增特色
+			foreach ($request->features as $feature) {
+				$newFeature = new Feature([
+					'house_id' => $house->id,
+					'feature' => $feature,
+				]);
+				$house->features()->save($newFeature);
+			}
 		}
         
 		return redirect()->route('owners.home.index',$owner_id)->with('success', '儲存成功！');
@@ -183,35 +187,76 @@ class HouseController extends Controller
      */
     public function update(Request $request, Location $location, House $house)
     {
-		//初步版本，尚未全部可修改
-		
 		// 從請求中獲取表單提交的數據
 		$data = $request->only([
 			'name',
 			'address',
-			'introduce'
+			'introduce',
+			'num_renter',
+			'min_period',
+			'pattern',
+			'size',
+			'type',
+			'floor',
 		]);
 		$house->update($data);
 		
-		// 更新房屋信息
+		// 更新租屋費用信息
 		if ($house->expenses !== null) {
 			foreach ($house->expenses as $expense) {
 				$expense->amount = $request->amount;
+				$expense->interval = $request->interval;
 				$expense->save();
 			}
 		}
-
-		if ($house->furnishings !== null) {
-			foreach ($house->furnishings as $furnishing) {
-				$furnishing->furnish = $request->furnish;
-				$furnishing->save();
+		//更新設備
+		if ($request->furnishings !== null) {
+			// 新增設備
+			foreach ($request->furnishings as $furnish) {
+				// 檢查設備是否已經存在
+				if (!$house->furnishings()->where('furnish', $furnish)->exists()) {
+					// 不存在重複的設備，可以新增
+					$newFurnish = new Furnish([
+						'house_id' => $house->id,
+						'furnish' => $furnish,
+					]);
+					$house->furnishings()->save($newFurnish);
+				}
+			}
+			// 檢查設備是否需要刪除
+				//獲取所有設備
+			$existingFurnishings = $house->furnishings()->pluck('furnish')->all();
+				//找出那些設備不在 $request->furnishings 集合中的設備
+			$furnishingsToDelete = array_diff($existingFurnishings, $request->furnishings);
+			foreach ($furnishingsToDelete as $furnishToDelete) {
+				$house->furnishings()->where('furnish', $furnishToDelete)->delete();
 			}
 		}
+		
+		//更新特色
+		if ($request->features !== null) {
+			// 新增特色
+			foreach ($request->features as $feature) {
+				// 檢查特色是否已經存在
+				if (!$house->features()->where('feature', $feature)->exists()) {
+					// 不存在重複的特色，可以新增
+					$newFeature = new Feature([
+						'house_id' => $house->id,
+						'feature' => $feature,
+					]);
+					$house->features()->save($newFeature);
+				}
+			}
 
-		if ($house->feature !== null) {
-			foreach ($house->feature as $feature) {
-				$feature->feature = $request->feature;
-				$feature->save();
+			// 檢查特色是否需要刪除
+				//獲取所有特色
+			$existingFeatures = $house->features()->pluck('feature')->all();
+			//dump($existingFeatures);
+				//找出那些特色不在 $request->features 集合中的特色
+			$featuresToDelete = array_diff($existingFeatures, $request->features);
+			//dd($featuresToDelete);
+			foreach ($featuresToDelete as $featureToDelete) {
+				$house->features()->where('feature', $featureToDelete)->delete();
 			}
 		}
 

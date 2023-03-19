@@ -63,10 +63,10 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-		$furnishings = House::whereHas('furnishings')->find($house->id);        
-		$features = House::whereHas('features')->find($house->id);        
-		$image = House::whereHas('image')->find($house->id);        
-		$expenses = House::whereHas('expenses')->find($house->id);        
+		$furnishings = $house->furnishings;        
+		$features = $house->features;        
+		$image = $house->image;        
+		$expenses = $house->expenses;        
 		$data = [
             'furnishings' => $furnishings,
             'features' => $features,
