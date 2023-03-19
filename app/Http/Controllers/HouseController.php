@@ -201,6 +201,70 @@ class HouseController extends Controller
 		]);
 		$house->update($data);
 		
+		// 檢查照片是否需要刪除
+		if ($request->images !== null) {
+			//獲取所有照片
+			foreach ($request->images as $image) {
+						dump($image);
+				$existingImage = $house->image()->pluck('image')->all();
+						dump($existingImage);
+
+					//找出那些照片不在 $request->images 集合中的照片
+				$imagesToDelete = array_diff($existingImage, $request->images);
+						dump($imagesToDelete);
+				if($imagesToDelete !== null){
+					foreach ($imagesToDelete as $imageToDelete) {
+						$house->image()->where('image', $imageToDelete)->delete();
+					}
+				}else{
+					$house->image()->where('image', $imageToDelete)->delete();
+				}
+			}
+		}else{
+			$house->image()->delete();
+		}
+		//dd($request->file('image'));
+
+		//更新照片
+		if ($request->file('image') !== null) {
+			// 新增照片
+			foreach ($request->file('image') as $key => $image) {
+				// 不存在照片的設備，可以新增
+				//影像圖檔名稱
+				$file_name = $request->id.'_'.uniqid().'.'.$image->getClientOriginalExtension();
+				//把檔案存到公開的資料夾
+				$file_path = public_path('image/'.$file_name);
+				dump($file_name);
+
+				move_uploaded_file($image->getPathname(), $file_path);
+				$newImage = new Image([
+					'house_id' => $house->id,
+					'image' => $file_name,
+				]);
+				
+
+				$house->image()->save($newImage);
+			}
+		}
+		
+		/*foreach($request->file('image') as $key => $image) {
+			//影像圖檔名稱
+			$file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
+            //把檔案存到公開的資料夾
+			$file_path = public_path('image/'.$file_name);
+			move_uploaded_file($image->getPathname(), $file_path);
+
+			//$file_path = $image->move(public_path('image'), $image);
+			//$path = $image->storeAs('public/images', $image->getClientOriginalName());
+			//$relativePath = str_replace('public', '/storage', $path);
+			$imageModel = new Image([
+				'house_id' => $house->id,
+				'image' => $file_name,
+			]);
+			//dd($imageModel);
+            $house->image()->save($imageModel);
+        }*/
+		
 		// 更新租屋費用信息
 		if ($house->expenses !== null) {
 			foreach ($house->expenses as $expense) {

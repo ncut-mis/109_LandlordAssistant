@@ -2,6 +2,7 @@
 <link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
     $(function() {
@@ -45,10 +46,99 @@
 			$(this).parent().remove(); // 刪除整個 div 包含設備 input 元素和刪除按鈕
 		});
 	});	
+	
+	$(function() {
+		// 設定計數器和圖片陣列
+		var count = 0;
+		var images = [];
+
+		// 預覽現有圖片
+		$('.preview-image').each(function() {
+			var src = $(this).attr('src');
+			if (src != '') {
+				$(this).show();
+			}
+		});
+		// 預覽圖片
+		function showPreviewImage(input) {
+			var preview = $(input).closest('.image-container').find('.preview-image')[0];
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					preview.src = e.target.result;
+					preview.style.display = 'block';
+				}
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				preview.src = "";
+				preview.style.display = 'none';
+			}
+		}
+		// 刪除現有圖片
+		$('.remove-existing-image').click(function() {
+			  const imageContainer = $(this).parent();
+			  imageContainer.remove();
+		});
+		// 刪除新圖片
+		$('.remove-image').click(function() {
+			  var index = $(this).closest('.image-container').index();
+			  $(this).closest('.image-container').remove();
+			  images.splice(index, 1);
+		});
+		$('.image-container').on('click', '.remove-image', function() {
+			var inputGroup = $(this).parents('.input-group');
+			var previewImage = inputGroup.prev('.preview-image');
+			inputGroup.remove();
+			previewImage.hide();
+			if($('.preview-image:visible').length == 0){
+				$('.preview-image-container').hide();
+			}
+		});
+
+		// 新增圖片
+		$('.add-image').click(function() {
+			var html = '<div class="row image-container">' +
+				'<div class="col-md-12">' +
+				'<div class="preview-image-container">' +
+				'<img class="preview-image" id="preview-image-' + count + '" src="" alt="預覽圖片" style="display: none; width: 100%; max-width: 300px; margin-top: 10px;">' +
+				'</div>' +
+				'<div class="input-group">' +
+				'<input type="file" name="image[]" class="form-control">' +
+				'<span class="input-group-addon">' +
+				'<a href="#" class="remove-image"><i class="fa fa-remove"></i></a>' +
+				'</span>' +
+				'</div>' +
+				'</div>' +
+				'</div>';
+			$('.add-more-container').before(html);
+			count++;
+		});
+
+		$(document).ready(function() {
+			  var count = 0;
+			  var images = [];		  
+		});
+
+		// 送出表單時回傳圖片陣列
+		$('form').submit(function() {
+			console.log(images);
+		});
+	});
+	
+	$(document).ready(function() {
+		// 綁定所有刪除按鈕的點擊事件
+		$('.remove-existing-image').click(function() {
+			// 取得被刪除的圖片容器元素
+			const imageContainer = $(this).parent();
+			// 從DOM中刪除圖片容器元素
+			imageContainer.remove();
+		});
+	});
+	
 </script>
 
 @section('page-content')
-    <form method="POST" action="{{ route('owners.locations.houses.update', [$locations->id, $houses->id]) }}">
+    <form method="POST" action="{{ route('owners.locations.houses.update', [$locations->id, $houses->id]) }}" enctype="multipart/form-data">
 		@csrf
 		@method('PATCH')
 		<div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
@@ -56,6 +146,41 @@
 				<div class="row">
 					<div class="left-column"><h2>{{ $locations->name }}</h2></div>
 				</div>
+				<div class="container" style="overflow-y: auto;padding: 20px;">
+					<div class="row" style="white-space: nowrap;">
+						<div class="col-md-3 item" style="margin-right: 5px;">
+							@foreach($houses->image as $image)
+								<div class="image-container" style="position: relative; display: inline-block;">
+									<input type="hidden" name="images[]" value="{{ $image->image }}">
+									<img src="{{ asset('image/'.$image->image) }}" alt="123" class="img-fluid">
+									<button type="button" class="btn btn-danger remove-existing-image" style="position: absolute; top: 0; right: 0;"><i class="fa fa-remove"></i></button>
+								</div>
+							@endforeach
+						</div>								
+					</div>
+				</div>
+				<div class="row">
+					<div class="row image-container">
+						<div class="col-md-12">
+							<div class="preview-image-container">
+								<img class="preview-image" id="preview-image-0" src="" alt="預覽圖片" style="display: none; width: 100%; max-width: 300px; margin-top: 10px;">
+							</div>
+							<div class="input-group">
+								<input type="file" name="image[]" class="form-control">
+								<span class="input-group-addon">
+									<a href="#" class="remove-image"><i class="fa fa-remove"></i></a>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row add-more-container">
+					  <div class="col-md-12">
+						<button class="btn btn-primary add-image" type="button"><i class="fa fa-plus"></i> 新增圖片</button>
+					  </div>
+					</div>
+				</div>
+				
+				
 				<div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
 					<div class="row">
 						<div class="left-column" style="width:22%;">房屋名稱</div>
