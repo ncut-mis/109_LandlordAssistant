@@ -6,6 +6,10 @@
     <div class="alert alert-success">
         {{ Session::get('success') }}
     </div>
+@elseif(Session::has('error'))
+    <div class="alert alert-danger">
+        {{ Session::get('error') }}
+    </div>
 @endif
 <form method="post" action="{{ route('owners.locations.store')}}" enctype="multipart/form-data">
 
@@ -116,6 +120,7 @@
 												@csrf
 												@method('DELETE')
 												<button type="submit" class="btn btn-outline-danger">刪除</button>
+												{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 											</form>
 										</div>
 										<div class="column">
@@ -213,6 +218,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -309,6 +315,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -405,6 +412,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">

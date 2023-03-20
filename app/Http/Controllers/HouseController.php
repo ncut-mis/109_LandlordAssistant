@@ -392,7 +392,12 @@ class HouseController extends Controller
         if (!$house) {
 			return redirect()->back()->with('error', '房屋找不到');
 		}
-		$house->delete();
-		return redirect()->back()->with('success', '房屋刪除成功');
+		if($house->lease_status !== "出租中"){
+			$house->delete();
+			return redirect()->back()->with('success', '房屋刪除成功');
+		}else{
+			return redirect()->back()->with('error', '房屋刪除失敗');
+		}
+		
     }
 }
