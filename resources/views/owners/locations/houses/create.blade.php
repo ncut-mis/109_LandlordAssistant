@@ -25,7 +25,7 @@
             $(this).remove(); // 刪除刪除按鈕
         });
     });
-	
+
 	$(function() {
 		// 新增設備
 		$('.add-furnish').click(function() {
@@ -44,7 +44,7 @@
 		$(document).on('click', '.delete-furnish', function() {
 			$(this).parent().remove(); // 刪除整個 div 包含設備 input 元素和刪除按鈕
 		});
-	});	
+	});
 
 	$(document).ready(function() {
 		// 動態增加圖片路徑
@@ -129,7 +129,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 					<div class="row">
 						<div class="left-column" style="width:22%;">房屋名稱</div>
 						<div class="right-column" style="width:78%;">
-							<input type="text" name="name" required>
+							<input type="text" name="name"  required>
 						</div>
 					</div><hr>
 					<div class="row">
@@ -144,7 +144,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							<textarea name="introduce" rows="5" cols="50"></textarea>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">租金</div>
 						<div class="second-column" style="width:28%;">
@@ -155,7 +155,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							<input type="text" name="interval" style="width:100px" placeholder="月" pattern="[0-9]*" title="只能輸入數字">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">可住人數</div>
 						<div class="second-column" style="width:28%;">
@@ -166,7 +166,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							<input type="text" name="min_period" style="width:100px" placeholder="月">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">格局</div>
 						<div class="second-column" style="width:28%;">
@@ -177,7 +177,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							<input type="text" name="size" style="width:100px">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">類型</div>
 						<div class="second-column" style="width:28%;">
@@ -194,14 +194,14 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							<input type="text" name="floor" style="width:100px">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">設備</div>
 						<div class="second-column" style="width:28%;">
 							<div class="furnish-list">
 								<div class="input-group">
 									<div class="furnish-input-group">
-										
+
 									</div>
 								</div>
 							</div>
@@ -210,13 +210,13 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								<button type="button" class="btn btn-success btn-sm add-furnish">新增</button>
 							</div>
 						</div>
-						
+
 						<div class="third-column" style="width:22%;">特色</div>
 						<div class="fourth-column" style="width:28%;">
 							<div class="feature-list">
 								<div class="input-group">
 									<div class="furnish-input-group">
-										
+
 									</div>
 								</div>
 							</div>

@@ -19,6 +19,7 @@ class OwnerController extends Controller
      */
     public function index($owner)
     {
+
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/
@@ -38,6 +39,7 @@ class OwnerController extends Controller
             'for_rent' => $for_rent,
             'listed' => $listed,
             'vacancy' => $vacancy,
+            'owner_id'=>$owner,
         ];
         return view('owners.home.index',$locations_data);
     }
@@ -63,10 +65,10 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-		$furnishings = $house->furnishings;        
-		$features = $house->features;        
-		$image = $house->image;        
-		$expenses = $house->expenses;        
+		$furnishings = $house->furnishings;
+		$features = $house->features;
+		$image = $house->image;
+		$expenses = $house->expenses;
 		$data = [
             'furnishings' => $furnishings,
             'features' => $features,
