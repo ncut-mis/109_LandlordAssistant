@@ -81,9 +81,24 @@
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 											{{ $house->name }}</a>
 										</div>
-										<div class="column">
+										<div class="column" style="width:35%">
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 											{{ $house->lease_status }}</a>
+										</div>
+										
+										<div class="column" style="width:15%">
+											<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+												@csrf
+												@method('PATCH')
+												
+												@if ($house->lease_status == '閒置')
+													<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+												@elseif ($house->lease_status == '已刊登')
+													<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+												@else
+													<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+												@endif
+											</form>
 										</div>
 										<div class="column">
 											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
@@ -163,9 +178,24 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}</a>
 									</div>
-									<div class="column">
+									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
+									</div>
+									
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+											
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
 									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
@@ -244,9 +274,24 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}</a>
 									</div>
-									<div class="column">
+									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
+									</div>
+									
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+											
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
 									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
@@ -325,9 +370,24 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}</a>
 									</div>
-									<div class="column">
+									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
+									</div>
+									
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+										
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
 									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
