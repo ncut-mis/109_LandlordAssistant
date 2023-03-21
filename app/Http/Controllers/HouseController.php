@@ -57,17 +57,53 @@ class HouseController extends Controller
 			'address.max' => '地址不得超過255個字元。',
 			'furnish.*.required' => '請輸入設備。',
 			'furnish.*.max' => '設備不得超過255個字元。',
-		]);;
+		]);
 		
 		//狀態等房屋底下的尚未全部可儲存
 		
 		$l = Location::find($location);
 		$owner_id = $l->owner->id;
+
+		if(isset($_REQUEST['publish'])){
+			$validatedData1 = $request->validate([
+				'name' => 'required',
+				'address' => 'required',
+				'introduce' => 'required',
+				'amount' => 'required',
+				'interval' => 'required',
+				'num_renter' => 'required',
+				'min_period' => 'required',
+				'pattern' => 'required',
+				'size' => 'required',
+				'type' => 'required',
+				'floor' => 'required',
+				'furnishings' => 'required',
+				'features' => 'required',
+			],[
+				'name.required' => '請輸入房屋名稱。',
+				'address.required' => '請輸入地址。',
+				'introduce.required' => '請輸入介紹。',
+				'amount.required' => '請輸入金額。',
+				'interval.required' => '請輸入繳納區間。',
+				'num_renter.required' => '請輸入可住人數。',
+				'min_period.required' => '請輸入最短租期。',
+				'pattern.required' => '請輸入格局。',
+				'size.required' => '請輸入坪數。',
+				'type.required' => '請輸入類型。',
+				'floor.required' => '請輸入樓層。',
+				'furnishings.required' => '請輸入設備。',
+				'features.required' => '請輸入特色。',
+			]);
+			$lease_status = "已刊登";
+		}else if(isset($_REQUEST['unpublish'])){
+			$lease_status = "閒置";
+		}
+
 		// 建立 House 資料
 		$house = House::create([
             'name' => $validatedData['name'],
             'address' => $validatedData['address'],
-			'lease_status' => "閒置",
+			'lease_status' => $lease_status,
 			'introduce' => $request->introduce,
 			'num_renter' => $request->num_renter,
 			'min_period' => $request->min_period,
@@ -84,24 +120,25 @@ class HouseController extends Controller
 		//        foreach($request->file('image') as $image){
 
 		//foreach($request->image as $key => $image) {
-		foreach($request->file('image') as $key => $image) {
-			//影像圖檔名稱
-			$file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
-            //把檔案存到公開的資料夾
-			$file_path = public_path('image/'.$file_name);
-			move_uploaded_file($image->getPathname(), $file_path);
+		if($request->file('image') != null){
+			foreach($request->file('image') as $key => $image) {
+				//影像圖檔名稱
+				$file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
+				//把檔案存到公開的資料夾
+				$file_path = public_path('image/'.$file_name);
+				move_uploaded_file($image->getPathname(), $file_path);
 
-			//$file_path = $image->move(public_path('image'), $image);
-			//$path = $image->storeAs('public/images', $image->getClientOriginalName());
-			//$relativePath = str_replace('public', '/storage', $path);
-			$imageModel = new Image([
-				'house_id' => $house->id,
-				'image' => $file_name,
-			]);
-			//dd($imageModel);
-            $house->image()->save($imageModel);
-        }
-		
+				//$file_path = $image->move(public_path('image'), $image);
+				//$path = $image->storeAs('public/images', $image->getClientOriginalName());
+				//$relativePath = str_replace('public', '/storage', $path);
+				$imageModel = new Image([
+					'house_id' => $house->id,
+					'image' => $file_name,
+				]);
+				//dd($imageModel);
+				$house->image()->save($imageModel);
+			}
+		}	
 		$house_id = $house->id;
 
 		// 建立 Expense 資料
@@ -163,7 +200,7 @@ class HouseController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Location $location, House $house)
-    {
+    {		
 		$furnish = $house->furnishings;
 		$amount = $house->expenses;
 		$feature = $house->features;
@@ -187,7 +224,6 @@ class HouseController extends Controller
      */
     public function update(Request $request, Location $location, House $house)
     {
-		// 從請求中獲取表單提交的數據
 		$data = $request->only([
 			'name',
 			'address',
@@ -199,19 +235,31 @@ class HouseController extends Controller
 			'type',
 			'floor',
 		]);
+		
+		if(isset($_REQUEST['publish']) || isset($_REQUEST['unpublish'])){
+			if(isset($_REQUEST['publish'])){
+				$lease_status = "已刊登";
+			}else if(isset($_REQUEST['unpublish'])){
+				$lease_status = "閒置";
+			}
+			// 從請求中獲取表單提交的數據
+			$data = array_merge(
+				['lease_status' => $lease_status],$data
+			);
+		}
+		//dd($data);
 		$house->update($data);
 		
 		// 檢查照片是否需要刪除
 		if ($request->images !== null) {
 			//獲取所有照片
 			foreach ($request->images as $image) {
-						dump($image);
+						//dump($image);
 				$existingImage = $house->image()->pluck('image')->all();
-						dump($existingImage);
-
+						//dump($existingImage);
 					//找出那些照片不在 $request->images 集合中的照片
 				$imagesToDelete = array_diff($existingImage, $request->images);
-						dump($imagesToDelete);
+						//dump($imagesToDelete);
 				if($imagesToDelete !== null){
 					foreach ($imagesToDelete as $imageToDelete) {
 						$house->image()->where('image', $imageToDelete)->delete();
@@ -234,8 +282,7 @@ class HouseController extends Controller
 				$file_name = $request->id.'_'.uniqid().'.'.$image->getClientOriginalExtension();
 				//把檔案存到公開的資料夾
 				$file_path = public_path('image/'.$file_name);
-				dump($file_name);
-
+				//dump($file_name);
 				move_uploaded_file($image->getPathname(), $file_path);
 				$newImage = new Image([
 					'house_id' => $house->id,
@@ -345,7 +392,12 @@ class HouseController extends Controller
         if (!$house) {
 			return redirect()->back()->with('error', '房屋找不到');
 		}
-		$house->delete();
-		return redirect()->back()->with('success', '房屋刪除成功');
+		if($house->lease_status !== "出租中"){
+			$house->delete();
+			return redirect()->back()->with('success', '房屋刪除成功');
+		}else{
+			return redirect()->back()->with('error', '房屋刪除失敗');
+		}
+		
     }
 }

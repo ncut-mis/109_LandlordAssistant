@@ -29,15 +29,15 @@
 .column:nth-child(2) {
   width: 50%;
 }
-.column:nth-child(3),
-.column:nth-child(4){
+.column:nth-child(4),
+.column:nth-child(5){
   width: 10%;
 }
-.column:nth-child(5) {
+.column:nth-child(6) {
   width: 10%;
   position: relative;
 }
-.column:nth-child(5) button {
+.column:nth-child(6) button {
   top: 50%;
   left: 50%;
   transform: translate(0%, -20%);

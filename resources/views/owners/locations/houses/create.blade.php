@@ -228,12 +228,12 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:33%;text-align:right">
-							<button class="btn btn-primary" type="submit">
+							<button class="btn btn-primary" type="submit" name="unpublish" value="閒置">
 								儲存
 							</button>
 						</div>
 						<div class="center-column" style="width:34%;text-align:center">
-							<button class="btn btn-danger">
+							<button class="btn btn-danger" type="submit" name="publish" value="已刊登">
 								刊登房屋
 							</button>
 						</div>
