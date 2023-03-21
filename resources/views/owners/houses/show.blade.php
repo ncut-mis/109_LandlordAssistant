@@ -58,8 +58,8 @@
 								</li>
 							</ul>
 						</div>
-						
-					</div>		
+
+					</div>
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab"
@@ -70,7 +70,7 @@
 									@foreach($house->image as $image)
 										<img src="{{ asset('image/'.$image->image) }}" alt="123" class="img-fluid">
 									@endforeach
-								</div>								
+								</div>
 							</div>
 						</div>
 						<header class="bg-dark py-5">
@@ -97,7 +97,7 @@
 											</div>
 										</div>
 										{{--以下內容待修改--}}
-										
+
 										<div class="row bg-dark text-white py-2">
 											<div class="fs-4" style="white-space: nowrap;">
 												<div class="fs-4">
@@ -225,7 +225,8 @@
 					</div>
 					<div class="tab-pane fade" id="home-contract" role="tabpanel" aria-labelledby="home-contract-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
-						111
+                        <a class="btn btn-danger text-center" href="{{ route('houses.contracts.create', $house->id) }}">上傳合約</a>
+
 					</div>
 					<div class="tab-pane fade" id="home-pack" role="tabpanel" aria-labelledby="home-pack-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
@@ -243,7 +244,7 @@
 						<a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</form>
 @endsection

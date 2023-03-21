@@ -81,7 +81,7 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 									<div class="row_house">
-
+{{--                                        名稱超連結房屋資訊--}}
 										<div class="column">
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 											{{ $house->name }}</a>
