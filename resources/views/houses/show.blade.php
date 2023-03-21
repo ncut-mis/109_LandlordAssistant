@@ -19,7 +19,7 @@
 {{--            需要改寫成迴圈型態顯示圖片--}}
 {{--            @foreach()--}}
             <div class="col-md-3 item">
-                <img src="01.jpg" alt="123" class="img-responsive">
+                <img src="image/4211228.jpg" alt="123" class="img-responsive">
             </div>
             <div class="col-md-3">
                 <img src="02.jpg" alt="456" class="img-responsive">
