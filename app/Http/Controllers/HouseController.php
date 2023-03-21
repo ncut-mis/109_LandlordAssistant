@@ -47,9 +47,9 @@ class HouseController extends Controller
         'address' => 'required|max:255',
         'furnish' => 'required|max:255',
 		]);
-
+		
 		//狀態等房屋底下的尚未全部可儲存
-
+		
 		$l = Location::find($location);
 		$owner_id = $l->owner->id;
 		// 建立 House 資料
@@ -118,7 +118,7 @@ class HouseController extends Controller
             'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
-
+			
         ];
         return view('owners.locations.houses.edit',$locations_data);
     }
@@ -133,7 +133,7 @@ class HouseController extends Controller
     public function update(Request $request, Location $location, House $house)
     {
 		//初步版本，尚未全部可修改
-
+		
 		// 從請求中獲取表單提交的數據
 		$data = $request->only([
 			'name',
@@ -141,7 +141,7 @@ class HouseController extends Controller
 			'introduce'
 		]);
 		$house->update($data);
-
+		
 		// 更新房屋信息
 		if ($house->expenses !== null) {
 			foreach ($house->expenses as $expense) {

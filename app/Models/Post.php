@@ -11,18 +11,13 @@ class Post extends Model
     protected $table = 'posts';
 
     protected $fillable = [
-        'id',
         'location_id',
         'user_id',
         'title',
         'content',
         'date'
     ];
-    protected $casts = [
-        'title' => 'string',
-        'content' => 'string',
-        'date'=>'date',
-    ];
+
     public function owner(){
         return $this->belongsTo(Owner::class);
     }
