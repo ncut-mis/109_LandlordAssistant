@@ -5,11 +5,15 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">公告管理</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">公告一覽表</li>
+            <li class="breadcrumb-item active">新增公告</li>
         </ol>
-        <form action="{{route('owners.locations.posts.store')}}" method="post" role="form">
+        @if(isset($location))
+       <form action="{{route('owners.locations.posts.store',$location->pluck('id')->first())}}" method="post" role="form">
             @method('post')
             @csrf
+{{--           <div class="row">--}}
+{{--               <div class="left-column"><h2>{{ $locations->name }}</h2></div>--}}
+{{--           </div>--}}
             <div class="form-group">
                 <label for="title" class="form-label">標題</label>
                 <input id="title" name="title" type="text" class="form-control" value="{{old('title')}}" placeholder="請輸入公告標題">
@@ -20,11 +24,13 @@
             </div>
             <div class="form-group">
                 <label for="date" class="form-label">日期</label>
+                <input id="date" name="date" type="date" class="form-control" >
             </div>
             <div class="text-right">
                 <button class="btn btn-primary btn-sm" type="submit">儲存</button>
             </div>
         </form>
+        @endif
     </div>
 @endsection
 
