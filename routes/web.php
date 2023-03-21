@@ -155,8 +155,8 @@ Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'ow
 Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
 
 // 3-9-25 會員(房東)新增費用資訊
-Route::get('owners/houses/{house}/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
-Route::post('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
+Route::get('owners/houses/1/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
+Route::post('owners/houses/1/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
 
 // 3-9-26 會員(房東)修改費用資訊
 Route::get('owners/houses/costs/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');

@@ -1,11 +1,12 @@
 @extends('layouts.owner_master')
-<link href="{{ 'css/house_index.css' }}" rel="stylesheet">
+<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
 @section('title', '某一房屋下的費用')
 @section('page-content')
+    @foreach($houses as $house)
     <div class="from-group mb-3 px-3 py-2">
-        <div class="left-column" style="width:90%;padding: 20px;"><h2>{房屋名稱}費用</h2></div>
+        <div class="left-column" style="width:90%;padding: 20px;"><h2>{{$house->name}}費用</h2></div>
     </div>
-
+    @endforeach
     <div class="house" style="padding: 20px;border: 1px solid #ccc;">
         {{--    vv費用種類按鈕vv    --}}
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -60,32 +61,38 @@
                     未繳費
                 </button>
             </li>
+            <li class="py-2 px-3">||</li>
+            <li class="nav-item" role="presentation">
+                <a href="{{route('houses.expenses.create')}}"><button type="button" class="btn btn-primary">新增費用</button></a>
+            </li>
         </ul>
         {{--    ^^費用種類按鈕^^    --}}
 
         <div class="container-fluid px-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <table id="datatablesSimple">
+                    <table class="table" id="datatablesSimple">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th scope="col" style="text-align: center;width: 10%">期間</th>
+                            <th scope="col" style="text-align: center;width: 10%">費用類型</th>
+                            <th scope="col" style="text-align: center;width: 10%">金額</th>
+                            <th scope="col" style="text-align: center;width: 10%">狀態</th>
+
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach ($houses as $key => $house)
+                            @foreach($house->expenses as $expense)
                         <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                            <td style="text-align: center">每 {{$expense->interval}} 個月繳交</td>
+                            <td style="text-align: center">{{$expense->type}}</td>
+                            <td style="text-align: center">{{$expense->amount}} 元</td>
+                            <td style="text-align: center">還要關聯應繳款項</td>
                         </tr>
+                            @endforeach
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
