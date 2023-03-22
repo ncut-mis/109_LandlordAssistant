@@ -13,19 +13,22 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     public function owners_index()
     {
+        $posts = Post::orderBy('created_at', 'DESC')->get();
 
+        $data = ['posts' => $posts];
+        return view('owners.locations.posts.index', $data);
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+       // return view('owners.locations.posts.create');
     }
 
     /**
@@ -47,17 +50,25 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Location $location, Post $post)
+
     {
-        //
+        return view('owners.locations.posts.edit', compact('location', 'post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Location $location, Post $post,Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|min:2|max:50',
+            'content' => 'required',
+        ]);
+
+        $post->update($request->all());
+
+        return redirect()->route('owners.locations.posts.index', $location);
     }
 
     /**

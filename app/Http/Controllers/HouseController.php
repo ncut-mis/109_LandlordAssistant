@@ -138,7 +138,7 @@ class HouseController extends Controller
 				//dd($imageModel);
 				$house->image()->save($imageModel);
 			}
-		}	
+		}
 		$house_id = $house->id;
 
 		// 建立 Expense 資料
@@ -163,7 +163,7 @@ class HouseController extends Controller
 				$house->furnishings()->save($newFurnish);
 			}
 		}
-		
+
 		// 建立 Feature 資料
 		if ($request->features !== null) {
 			// 新增特色
@@ -175,7 +175,7 @@ class HouseController extends Controller
 				$house->features()->save($newFeature);
 			}
 		}
-        
+
 		return redirect()->route('owners.home.index',$owner_id)->with('success', '儲存成功！');
     }
 
@@ -200,7 +200,7 @@ class HouseController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Location $location, House $house)
-    {		
+    {
 		$furnish = $house->furnishings;
 		$amount = $house->expenses;
 		$feature = $house->features;
@@ -210,7 +210,15 @@ class HouseController extends Controller
             'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
+<<<<<<< HEAD
+			
+=======
+
+
+
             'owner_id' => $location->owner_id,
+
+>>>>>>> origin/master
         ];
         return view('owners.locations.houses.edit',$locations_data);
     }
@@ -224,6 +232,13 @@ class HouseController extends Controller
      */
     public function update(Request $request, Location $location, House $house)
     {
+<<<<<<< HEAD
+		//初步版本，尚未全部可修改
+		
+		// 從請求中獲取表單提交的數據
+=======
+
+>>>>>>> origin/master
 		$data = $request->only([
 			'name',
 			'address',
@@ -235,7 +250,7 @@ class HouseController extends Controller
 			'type',
 			'floor',
 		]);
-		
+
 		if(isset($_REQUEST['publish']) || isset($_REQUEST['unpublish'])){
 			if(isset($_REQUEST['publish'])){
 				$lease_status = "已刊登";
@@ -249,7 +264,11 @@ class HouseController extends Controller
 		}
 		//dd($data);
 		$house->update($data);
+<<<<<<< HEAD
 		
+		// 更新房屋信息
+=======
+
 		// 檢查照片是否需要刪除
 		if ($request->images !== null) {
 			//獲取所有照片
@@ -288,12 +307,12 @@ class HouseController extends Controller
 					'house_id' => $house->id,
 					'image' => $file_name,
 				]);
-				
+
 
 				$house->image()->save($newImage);
 			}
 		}
-		
+
 		/*foreach($request->file('image') as $key => $image) {
 			//影像圖檔名稱
 			$file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
@@ -311,8 +330,10 @@ class HouseController extends Controller
 			//dd($imageModel);
             $house->image()->save($imageModel);
         }*/
-		
+
 		// 更新租屋費用信息
+
+>>>>>>> origin/master
 		if ($house->expenses !== null) {
 			foreach ($house->expenses as $expense) {
 				$expense->amount = $request->amount;
@@ -343,7 +364,7 @@ class HouseController extends Controller
 				$house->furnishings()->where('furnish', $furnishToDelete)->delete();
 			}
 		}
-		
+
 		//更新特色
 		if ($request->features !== null) {
 			// 新增特色
@@ -398,6 +419,6 @@ class HouseController extends Controller
 		}else{
 			return redirect()->back()->with('error', '房屋刪除失敗');
 		}
-		
+
     }
 }

@@ -75,6 +75,7 @@
 									<li><a class="dropdown-item" href="#">公告</a></li>
 								</ul>
 							</div>
+
 						</div>
 					</div>
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
@@ -85,7 +86,7 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 									<div class="row_house">
-
+{{--                                        名稱超連結房屋資訊--}}
 										<div class="column">
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 											{{ $house->name }}</a>
@@ -94,12 +95,12 @@
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 											{{ $house->lease_status }}</a>
 										</div>
-										
+
 										<div class="column" style="width:15%">
 											<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
 												@csrf
 												@method('PATCH')
-												
+
 												@if ($house->lease_status == '閒置')
 													<button type="submit" class="btn btn-warning" name="publish">刊登</button>
 												@elseif ($house->lease_status == '已刊登')
@@ -192,12 +193,12 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
-									
+
 									<div class="column" style="width:15%">
 										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
 											@csrf
 											@method('PATCH')
-											
+
 											@if ($house->lease_status == '閒置')
 												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
 											@elseif ($house->lease_status == '已刊登')
@@ -289,12 +290,12 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
-									
+
 									<div class="column" style="width:15%">
 										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
 											@csrf
 											@method('PATCH')
-											
+
 											@if ($house->lease_status == '閒置')
 												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
 											@elseif ($house->lease_status == '已刊登')
@@ -386,12 +387,12 @@
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
-									
+
 									<div class="column" style="width:15%">
 										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
 											@csrf
 											@method('PATCH')
-										
+
 											@if ($house->lease_status == '閒置')
 												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
 											@elseif ($house->lease_status == '已刊登')

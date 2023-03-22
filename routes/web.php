@@ -104,7 +104,7 @@ Route::patch('owners/locations/{location}/houses/{house}', [HouseController::cla
 Route::delete('owners/locations/{location}/houses/{house}', [HouseController::class, 'destroy'])->name('owners.locations.houses.destroy');
 
 // 3-9-7 會員(房東)查看公告
-Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
+Route::get('owners/locations/1/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
 
 // 3-9-8 會員(房東)新增公告
 Route::get('owners/locations/{location}/posts/create', [PostController::class, 'create'])->name('owners.locations.posts.create');
