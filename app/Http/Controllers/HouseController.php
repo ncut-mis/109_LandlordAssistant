@@ -58,9 +58,9 @@ class HouseController extends Controller
 			'furnish.*.required' => '請輸入設備。',
 			'furnish.*.max' => '設備不得超過255個字元。',
 		]);
-		
+
 		//狀態等房屋底下的尚未全部可儲存
-		
+
 		$l = Location::find($location);
 		$owner_id = $l->owner->id;
 
@@ -210,15 +210,7 @@ class HouseController extends Controller
             'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
-<<<<<<< HEAD
-			
-=======
-
-
-
             'owner_id' => $location->owner_id,
-
->>>>>>> origin/master
         ];
         return view('owners.locations.houses.edit',$locations_data);
     }
@@ -232,13 +224,7 @@ class HouseController extends Controller
      */
     public function update(Request $request, Location $location, House $house)
     {
-<<<<<<< HEAD
-		//初步版本，尚未全部可修改
-		
 		// 從請求中獲取表單提交的數據
-=======
-
->>>>>>> origin/master
 		$data = $request->only([
 			'name',
 			'address',
@@ -264,10 +250,6 @@ class HouseController extends Controller
 		}
 		//dd($data);
 		$house->update($data);
-<<<<<<< HEAD
-		
-		// 更新房屋信息
-=======
 
 		// 檢查照片是否需要刪除
 		if ($request->images !== null) {
@@ -333,7 +315,6 @@ class HouseController extends Controller
 
 		// 更新租屋費用信息
 
->>>>>>> origin/master
 		if ($house->expenses !== null) {
 			foreach ($house->expenses as $expense) {
 				$expense->amount = $request->amount;

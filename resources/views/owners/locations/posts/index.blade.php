@@ -38,7 +38,6 @@
                             <button class="btn btn-sm btn-danger" type="submit">刪除</button>
                         </form>
 
-<<<<<<< HEAD
 {{--            @foreach($locations as $location)--}}
 {{--                <h2>{{ $location->name }}</h2>--}}
                 @foreach(  $location -> posts as $post)
@@ -58,12 +57,6 @@
                     </tr>
                 @endforeach
 {{--            @endforeach--}}
-=======
-                    </td>
-
-                </tr>
-            @endforeach
->>>>>>> origin/master
             </tbody>
         </table>
     </div>
