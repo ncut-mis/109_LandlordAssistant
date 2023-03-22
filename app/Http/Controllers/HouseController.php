@@ -6,6 +6,7 @@ use App\Models\House;
 use App\Models\Location;
 use App\Models\Furnish;
 use App\Models\Expense;
+use App\Models\Image;
 use App\Models\Feature;
 use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
@@ -303,7 +304,7 @@ class HouseController extends Controller
         }
         //dd($data);
         $house->update($data);
-
+//dd($request->images);
         // 檢查照片是否需要刪除
         if ($request->images !== null) {
             //獲取所有照片
@@ -375,6 +376,29 @@ class HouseController extends Controller
                 $expense->save();
             }
         }
+
+        // 檢查設備是否需要刪除
+//        dd($request->furnishings);
+        if ($request->furnishings !== null) {
+            //獲取所有照片
+            foreach ($request->furnishings as $furnish) {
+                $existingFurnishings = $house->furnishings()->pluck('furnish')->all();
+                    //dump($existingFurnishings);
+                //找出那些設備不在 $request->furnishings 集合中的設備
+                $furnishingsToDelete = array_diff($existingFurnishings, $request->furnishings);
+                    //dd($furnishingsToDelete);
+                if($furnishingsToDelete !== null){
+                    foreach ($furnishingsToDelete as $furnishToDelete) {
+                        $house->furnishings()->where('furnish', $furnishToDelete)->delete();
+                    }
+                }else{
+                    $house->furnishings()->where('furnish', $furnishToDelete)->delete();
+                }
+            }
+        }else{
+            $house->furnishings()->delete();
+        }
+
         //更新設備
         if ($request->furnishings !== null) {
             // 新增設備
@@ -389,16 +413,39 @@ class HouseController extends Controller
                     $house->furnishings()->save($newFurnish);
                 }
             }
-            // 檢查設備是否需要刪除
-            //獲取所有設備
-            $existingFurnishings = $house->furnishings()->pluck('furnish')->all();
-            //找出那些設備不在 $request->furnishings 集合中的設備
-            $furnishingsToDelete = array_diff($existingFurnishings, $request->furnishings);
-            foreach ($furnishingsToDelete as $furnishToDelete) {
-                $house->furnishings()->where('furnish', $furnishToDelete)->delete();
-            }
         }
 
+
+        // 檢查特色是否需要刪除
+        if ($request->features !== null) {
+            //獲取所有特色
+            foreach ($request->features as $feature) {
+                $existingFeatures = $house->features()->pluck('feature')->all();
+             //   dump($existingFeatures);
+                //找出那些特色不在 $request->features 集合中的特色
+                $featuresToDelete = array_diff($existingFeatures, $request->features);
+              //  dd($featuresToDelete);
+                if($featuresToDelete !== null){
+                    foreach ($featuresToDelete as $featureToDelete) {
+                        $house->features()->where('feature', $featureToDelete)->delete();
+                    }
+                }else{
+                    $house->features()->where('feature', $featureToDelete)->delete();
+                }
+            }
+        }else{
+            $house->features()->delete();
+        }
+        // 檢查特色是否需要刪除
+        //獲取所有特色
+       /* $existingFeatures = $house->features()->pluck('feature')->all();
+        //dump($existingFeatures);
+        //找出那些特色不在 $request->features 集合中的特色
+        $featuresToDelete = array_diff($existingFeatures, $request->features);
+        //dd($featuresToDelete);
+        foreach ($featuresToDelete as $featureToDelete) {
+            $house->features()->where('feature', $featureToDelete)->delete();
+        }*/
         //更新特色
         if ($request->features !== null) {
             // 新增特色
@@ -412,17 +459,6 @@ class HouseController extends Controller
                     ]);
                     $house->features()->save($newFeature);
                 }
-            }
-
-            // 檢查特色是否需要刪除
-            //獲取所有特色
-            $existingFeatures = $house->features()->pluck('feature')->all();
-            //dump($existingFeatures);
-            //找出那些特色不在 $request->features 集合中的特色
-            $featuresToDelete = array_diff($existingFeatures, $request->features);
-            //dd($featuresToDelete);
-            foreach ($featuresToDelete as $featureToDelete) {
-                $house->features()->where('feature', $featureToDelete)->delete();
             }
         }
 
