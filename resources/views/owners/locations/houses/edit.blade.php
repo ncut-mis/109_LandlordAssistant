@@ -26,7 +26,7 @@
             $(this).remove(); // 刪除刪除按鈕
         });
     });
-	
+
 	$(function() {
 		// 新增設備
 		$('.add-furnish').click(function() {
@@ -45,8 +45,8 @@
 		$(document).on('click', '.delete-furnish', function() {
 			$(this).parent().remove(); // 刪除整個 div 包含設備 input 元素和刪除按鈕
 		});
-	});	
-	
+	});
+
 	$(function() {
 		// 設定計數器和圖片陣列
 		var count = 0;
@@ -116,7 +116,7 @@
 
 		$(document).ready(function() {
 			  var count = 0;
-			  var images = [];		  
+			  var images = [];
 		});
 
 		// 送出表單時回傳圖片陣列
@@ -124,7 +124,7 @@
 			console.log(images);
 		});
 	});
-	
+
 	$(document).ready(function() {
 		// 綁定所有刪除按鈕的點擊事件
 		$('.remove-existing-image').click(function() {
@@ -134,7 +134,7 @@
 			imageContainer.remove();
 		});
 	});
-	
+
 </script>
 
 @section('page-content')
@@ -156,7 +156,7 @@
 									<button type="button" class="btn btn-danger remove-existing-image" style="position: absolute; top: 0; right: 0;"><i class="fa fa-remove"></i></button>
 								</div>
 							@endforeach
-						</div>								
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -179,8 +179,7 @@
 					  </div>
 					</div>
 				</div>
-				
-				
+
 				<div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
 					<div class="row">
 						<div class="left-column" style="width:22%;">房屋名稱</div>
@@ -197,40 +196,40 @@
 					<div class="row">
 						<div class="left-column" style="width:22%;">介紹</div>
 						<div class="right-column" style="width:78%;">
-							<textarea name="introduce" rows="5" cols="50">{{ $houses->value('introduce') }}</textarea>
+							<textarea name="introduce" rows="5" cols="50">{{ $houses->introduce }}</textarea>
 						</div>
-					</div><hr>	
+					</div><hr>
 
 					<div class="row">
 						<div class="first-column" style="width:22%;">租金</div>
 						<div class="second-column" style="width:28%;">
-							<input type="text" name="amount" style="width:100px" 
+							<input type="text" name="amount" style="width:100px"
 								value="{{ $amount->value('amount') }}" pattern="[0-9]*" title="只能輸入數字">
 						</div>
 						<div class="third-column" style="width:22%;">繳納區間</div>
 						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="interval" style="width:100px" 
+							<input type="text" name="interval" style="width:100px"
 								value="{{ $amount->value('interval') }}" placeholder="月" pattern="[0-9]*" title="只能輸入數字">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">可住人數</div>
 						<div class="second-column" style="width:28%;">
-							<input type="text" name="num_renter" style="width:100px" 
+							<input type="text" name="num_renter" style="width:100px"
 								value="{{ $houses->num_renter }}" pattern="[0-9]*" title="只能輸入數字">
 						</div>
 						<div class="third-column" style="width:22%;">最短租期</div>
 						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="min_period" style="width:100px" 
+							<input type="text" name="min_period" style="width:100px"
 								value="{{ $houses->min_period }}" placeholder="月">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">格局</div>
 						<div class="second-column" style="width:28%;">
-							<input type="text" name="pattern" style="width:100px" 
+							<input type="text" name="pattern" style="width:100px"
 								value="{{ $houses->pattern }}" placeholder="房間數量">
 						</div>
 						<div class="third-column" style="width:22%;">坪數</div>
@@ -239,7 +238,7 @@
 								value="{{ $houses->size }}">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:22%;">類型</div>
 						<div class="second-column" style="width:28%;">
@@ -256,7 +255,7 @@
 							<input type="text" name="floor" style="width:100px" value="{{ $houses->floor }}">
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="left-column" style="width:22%;">設備</div>
 						<div class="right-column" style="width:78%;">
@@ -280,7 +279,7 @@
 							</div>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="left-column" style="width:22%;">特色</div>
 						<div class="right-column" style="width:78%;">
@@ -304,7 +303,7 @@
 							</div>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="left-column" style="width:50%;text-align:right">
 							<button class="btn btn-primary" type="submit">
