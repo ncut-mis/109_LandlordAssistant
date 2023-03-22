@@ -36,7 +36,7 @@
                     <td>
                         <a class="btn btn-sm btn-primary" href="{{route('owners.locations.posts.edit',[$location->id, $post->id])}}">編輯</a>
                         /
-                        <form action="#" method="POST" style="display: inline-block">
+                        <form action="{{route('owners.locations.posts.destroy',  ['location' => $location->id, 'post' => $post->id])}}" method="POST" style="display: inline-block">
                             {{method_field('DELETE')}}
                             {{csrf_field()}}
                             <button class="btn btn-sm btn-danger" type="submit">刪除</button>
