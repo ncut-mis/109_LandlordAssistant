@@ -238,14 +238,37 @@ class HouseController extends Controller
 
         if(isset($_REQUEST['publish']) || isset($_REQUEST['unpublish'])){
             if(isset($_REQUEST['publish'])){
-                $lease_status = "已刊登";
+                $house = House::where('id', $house->id)
+                    ->whereNotNull('introduce')
+                    ->whereNotNull('lease_status')
+                    ->whereNotNull('num_renter')
+                    ->whereNotNull('min_period')
+                    ->whereNotNull('pattern')
+                    ->whereNotNull('size')
+                    ->whereNotNull('type')
+                    ->whereNotNull('floor')
+                    ->first();
+                if ($house) {
+                    // 沒有 NULL 值
+                    $lease_status = "已刊登";
+                    $data = array_merge(
+                        ['lease_status' => $lease_status],$data
+                    );
+                    $house->update($data);
+                    return redirect()->back()->with('success', '刊登成功!');
+                } else {
+                    // 有 NULL
+                    return redirect()->back()->with('error', '刊登失敗，請完善資料');
+                }
             }else if(isset($_REQUEST['unpublish'])){
                 $lease_status = "閒置";
+                $data = array_merge(
+                    ['lease_status' => $lease_status],$data
+                );
+                $house->update($data);
+                return redirect()->back()->with('success', '取消刊登成功!');
             }
             // 從請求中獲取表單提交的數據
-            $data = array_merge(
-                ['lease_status' => $lease_status],$data
-            );
         }
         //dd($data);
         $house->update($data);
