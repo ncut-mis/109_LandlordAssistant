@@ -41,10 +41,26 @@
                             {{csrf_field()}}
                             <button class="btn btn-sm btn-danger" type="submit">刪除</button>
                         </form>
-                    </td>
-                </tr>
-            @endforeach
-            {{--            @endforeach--}}
+
+{{--            @foreach($locations as $location)--}}
+{{--                <h2>{{ $location->name }}</h2>--}}
+                @foreach(  $location -> posts as $post)
+                    <tr>
+{{--                        <td >{{ $location->id }}</td>--}}
+                        <td>{{ $post->title }}</td>
+                        <td>{{ $post->content }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{{route('owners.locations.posts.edit',[$location->id, $post->id])}}">編輯</a>
+                            /
+                            <form action="#" method="POST" style="display: inline-block">
+                                {{method_field('DELETE')}}
+                                {{csrf_field()}}
+                                <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+{{--            @endforeach--}}
             </tbody>
         </table>
     </div>
