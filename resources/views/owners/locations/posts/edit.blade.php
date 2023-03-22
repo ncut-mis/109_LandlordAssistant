@@ -8,11 +8,7 @@
             <li class="breadcrumb-item active">修改公告</li>
         </ol>
         @if(isset($location))
-<<<<<<< HEAD
             <form action="{{ route('owners.locations.posts.update', [$location->id, $post->id]) }}" method="post" role="form">
-=======
-            <form action="owners/locations/{{$location->id}}/posts/{{$post->id}}" method="post" role="form">
->>>>>>> origin/master
                 @method('patch')
                 @csrf
                 {{--           <div class="row">--}}
@@ -24,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content" class="form-label">內容</label>
-                    <textarea id="content" name="content" class="form-control" rows="10" value="{{old('content',$post->content)}}"></textarea>
+                    <textarea id="content" name="content" class="form-control" rows="10">{{old('content',$post->content)}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="date" class="form-label">日期</label>

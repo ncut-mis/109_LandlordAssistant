@@ -34,7 +34,7 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->content }}</td>
                     <td>
-                        <a class="btn btn-sm btn-primary" href="#">編輯</a>
+                        <a class="btn btn-sm btn-primary" href="{{route('owners.locations.posts.edit',[$location->id, $post->id])}}">編輯</a>
                         /
                         <form action="#" method="POST" style="display: inline-block">
                             {{method_field('DELETE')}}

@@ -72,7 +72,7 @@
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
-									<li><a class="dropdown-item" href="#">公告</a></li>
+									<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 								</ul>
 							</div>
 
