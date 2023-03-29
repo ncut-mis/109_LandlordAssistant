@@ -152,14 +152,14 @@ Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'ow
 
 //--------------------------------
 // 3-9- 會員(房東)查看費用資訊
-Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
+Route::get('owners/houses/2/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
 
 // 3-9-25 會員(房東)新增費用資訊
-Route::get('owners/houses/1/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
-Route::post('owners/houses/1/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
+Route::get('owners/houses/2/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
+Route::post('owners/houses/2/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
 
 // 3-9-26 會員(房東)修改費用資訊
-Route::get('owners/houses/costs/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');
+Route::get('owners/houses/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');
 Route::patch('owners/houses/expenses/{expense}', [ExpenseController::class, 'update'])->name('houses.expenses.update');
 
 // 3-9-27 會員(房東)刪除費用資訊
