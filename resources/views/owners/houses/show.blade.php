@@ -1,5 +1,5 @@
 @extends('layouts.owner_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
@@ -58,21 +58,18 @@
 								</li>
 							</ul>
 						</div>
-						
-					</div>		
+
+					</div>
 				</div>
 				<div class="tab-content">
 					<div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
-						<div class="container">
-							<div class="row card h-15">
-					{{--            需要改寫成迴圈型態顯示圖片--}}
-					{{--            @foreach()--}}
-								<div class="col-md-3 item">
-									<img src="{{ asset('image/4211228.jpg') }}" alt="123" class="img-fluid">
-								</div>
-								<div class="col-md-3">
-									<img src="{{ asset('image/4211229.jpg') }}" alt="456" class="img-fluid">
+						<div class="container" style="overflow-y: auto;padding: 20px;">
+							<div class="row" style="white-space: nowrap;">
+								<div class="col-md-3 item" style="margin-right: 5px;">
+									@foreach($house->image as $image)
+										<img src="{{ asset('image/'.$image->image) }}" alt="123" class="img-fluid">
+									@endforeach
 								</div>
 							</div>
 						</div>
@@ -81,28 +78,93 @@
 								<div class="row bg-dark text-white py-2 mx-1">
 									<div class="col-8 fw-bold">
 										<div class="row bg-dark text-white py-2" style="font-size: 3rem;">
-											標題<hr class="text-white-50">
+											房屋名稱：{{ $house->name }}<hr class="text-white-50">
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="fs-4">
-												<button type="button" class="btn btn-outline-light btn-sm">有車位</button>
-												<button type="button" class="btn btn-outline-light btn-sm">有陽台</button>
-												<hr class="text-white-50">
+											<div class="col-2">
+												地址：
+											</div>
+											<div class="col">
+												{{ $house->address }}
 											</div>
 										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												介紹：
+											</div>
+											<div class="col">
+												{{ $house->introduce }}
+											</div>
+										</div>
+										{{--以下內容待修改--}}
+
 										<div class="row bg-dark text-white py-2">
 											<div class="fs-4" style="white-space: nowrap;">
 												<div class="fs-4">
-													<span class="text-danger">9,999</span>　元/月
+													<div class="col-2">
+														<span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元/月
+														　　繳納區間：{{ $expenses->value('interval') }}月一次
+													</div>
 												</div>
-												<hr class="text-white-50">
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="fs-4">
-												<button type="button" class="btn btn-outline-light btn-sm">冰箱</button>
-												<button type="button" class="btn btn-outline-light btn-sm">洗衣機</button>
-												<hr class="text-white-50">
+											<div class="col-2">
+												可住人數：
+											</div>
+											<div class="col-2">
+												{{ $house->num_renter }}
+											</div>
+											<div class="col-2">
+												最短租期：
+											</div>
+											<div class="col-2">
+												{{ $house->min_period }}
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												格局：
+											</div>
+											<div class="col-2">
+												{{ $house->pattern }}　間
+											</div>
+											<div class="col-2">
+												坪數：
+											</div>
+											<div class="col-2">
+												{{ $house->size }}
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2">
+												類型：
+											</div>
+											<div class="col-2">
+												{{ $house->type }}　
+											</div>
+											<div class="col-2">
+												樓層：
+											</div>
+											<div class="col-2">
+												{{ $house->floor }}
+											</div>
+										</div>
+										<hr class="text-white-50">
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2" style="white-space: nowrap;">
+												設備<p>
+												@foreach($furnishings as $furnishings)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
+												@endforeach
+											</div>
+										</div>
+										<div class="row bg-dark text-white py-2">
+											<div class="col-2" style="white-space: nowrap;">
+												特色<p>
+												@foreach($features as $features)
+													<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
+												@endforeach
 											</div>
 										</div>
 									</div>
@@ -156,7 +218,6 @@
 												電話<hr>
 											</div>
 										</div>
-										
 									</div>
 								</div>
 							</div>
@@ -164,7 +225,8 @@
 					</div>
 					<div class="tab-pane fade" id="home-contract" role="tabpanel" aria-labelledby="home-contract-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
-						111
+                        <a class="btn btn-danger text-center" href="{{ route('houses.contracts.create', $house->id) }}">上傳合約</a>
+
 					</div>
 					<div class="tab-pane fade" id="home-pack" role="tabpanel" aria-labelledby="home-pack-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
@@ -179,10 +241,10 @@
 						444
 					</div>
 					<div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
-						<a class="btn btn-danger text-center" href="">返回</a>
+						<a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</form>
 @endsection

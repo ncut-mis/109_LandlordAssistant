@@ -21,8 +21,9 @@ class Location extends Model
     }
     protected $fillable = [
         'id',
-
+        'owner_id',
         'name',
+
 
     ];
 }

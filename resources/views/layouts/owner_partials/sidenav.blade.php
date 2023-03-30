@@ -49,7 +49,7 @@
                     </div>
                     租客資訊
                 </a>
-                <a class="nav-link" href="{{url('owners/houses/1/expenses')}}">
+                <a class="nav-link" href="{{url('owners/houses/2/expenses')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>

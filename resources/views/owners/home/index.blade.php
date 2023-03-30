@@ -6,12 +6,21 @@
     <div class="alert alert-success">
         {{ Session::get('success') }}
     </div>
+@elseif(Session::has('error'))
+    <div class="alert alert-danger">
+        {{ Session::get('error') }}
+    </div>
 @endif
+<form method="post" action="{{ route('owners.locations.store')}}" enctype="multipart/form-data">
+
+    @csrf
     <div class="from-group mb-3 px-3 py-2">
         <label for="content" class="form-label">新增出租地點</label>
-        <input type="text" class="input-group-sm">
-        <button type="button" class="btn btn-dark btn-sm">新增</button>
+        <input type="text" class="input-group-sm" name="name" required>
+        <input type="hidden" name="owner" value="{{ $owner_id }}">
+        <button type="submit" class="btn btn-dark btn-sm">新增</button>
     </div>
+    </form>
 	<div class="house" style="padding: 20px;border: 1px solid #ccc;">
       	<ul class="nav nav-house mb-3" id="house-tab" role="tablist">
 			<li class="nav-item" role="presentation">
@@ -59,13 +68,14 @@
 									按鈕
 								</button>
 								<ul class="dropdown-menu location" style="text-align:center;">
-									<li><a class="dropdown-item" href="#">修改地點</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
-									<li><a class="dropdown-item" href="#">公告</a></li>
+									<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 								</ul>
 							</div>
+
 						</div>
 					</div>
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
@@ -75,10 +85,31 @@
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
-								<a href="{{ route('owners.houses.show', $house->id) }}">
 									<div class="row_house">
-										<div class="column">{{ $house->name }}</div>
-										<div class="column">放狀態</div>
+{{--                                        名稱超連結房屋資訊--}}
+										<div class="column">
+											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+											{{ $house->name }}</a>
+										</div>
+										<div class="column" style="width:35%">
+											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+											{{ $house->lease_status }}</a>
+										</div>
+
+										<div class="column" style="width:15%">
+											<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+												@csrf
+												@method('PATCH')
+
+												@if ($house->lease_status == '閒置')
+													<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+												@elseif ($house->lease_status == '已刊登')
+													<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+												@else
+													<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+												@endif
+											</form>
+										</div>
 										<div class="column">
 											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 												@csrf
@@ -90,6 +121,7 @@
 												@csrf
 												@method('DELETE')
 												<button type="submit" class="btn btn-outline-danger">刪除</button>
+												{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 											</form>
 										</div>
 										<div class="column">
@@ -100,7 +132,7 @@
 											</button>
 										</div>
 									</div>
-								</a>
+
 								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
 									<div class="collapsed-content">
 										<div class="row">
@@ -153,8 +185,29 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column" style="width:35%">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
+
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -166,6 +219,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -228,8 +282,29 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column" style="width:35%">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
+
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -241,6 +316,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -303,8 +379,29 @@
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">{{ $house->name }}</div>
-									<div class="column">放狀態</div>
+									<div class="column">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->name }}</a>
+									</div>
+									<div class="column" style="width:35%">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
+									</div>
+
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
+									</div>
 									<div class="column">
 										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
 											@csrf
@@ -316,6 +413,7 @@
 											@csrf
 											@method('DELETE')
 											<button type="submit" class="btn btn-outline-danger">刪除</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">

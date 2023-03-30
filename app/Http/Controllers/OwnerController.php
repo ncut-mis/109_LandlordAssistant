@@ -7,6 +7,10 @@ use App\Models\Owner;
 use App\Http\Requests\StoreOwnerRequest;
 use App\Http\Requests\UpdateOwnerRequest;
 use App\Models\House;
+use App\Models\Feature;
+use App\Models\Furnish;
+use App\Models\Image;
+use App\Models\Expense;
 
 class OwnerController extends Controller
 {
@@ -15,6 +19,7 @@ class OwnerController extends Controller
      */
     public function index($owner)
     {
+
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/
@@ -22,18 +27,29 @@ class OwnerController extends Controller
 		$locations = Location::with('houses')->get();
         //抓取出租中地點
 		$for_rent = Location::whereHas('houses', function ($query) {
-                $query->where('lease_status', '出租中');})->with('houses')->get();
-        //抓取已刊登地點
+            $query->where('lease_status', '出租中');
+        })->with(['houses' => function ($query) {
+            $query->where('lease_status', '出租中');
+        }])->get();
+		//抓取已刊登地點
 		$listed = Location::whereHas('houses', function ($query) {
-                $query->where('lease_status', '已刊登');})->with('houses')->get();
-        //抓取閒置地點
+            $query->where('lease_status', '已刊登');
+        })->with(['houses' => function ($query) {
+            $query->where('lease_status', '已刊登');
+        }])->get();
+		//抓取閒置地點
 		$vacancy = Location::whereHas('houses', function ($query) {
-                $query->where('lease_status', '閒置');})->with('houses')->get();
-        $locations_data = [
+            $query->where('lease_status', '閒置');
+        })->with(['houses' => function ($query) {
+            $query->where('lease_status', '閒置');
+        }])->get();
+		
+		$locations_data = [
             'locations' => $locations,
             'for_rent' => $for_rent,
             'listed' => $listed,
             'vacancy' => $vacancy,
+            'owner_id'=>$owner,
         ];
         return view('owners.home.index',$locations_data);
     }
@@ -59,10 +75,18 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-        $owner_id = [
-            'owner_id' => $house->owner_id,
+		$furnishings = $house->furnishings;
+		$features = $house->features;
+		$image = $house->image;
+		$expenses = $house->expenses;
+		$data = [
+            'furnishings' => $furnishings,
+            'features' => $features,
+            'house' => $house,
+            'image' => $image,
+            'expenses' => $expenses,
         ];
-        return view('owners.houses.show',$owner_id);
+        return view('owners.houses.show',$data);
     }
 
     /**
