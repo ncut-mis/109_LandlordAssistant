@@ -1,5 +1,5 @@
 @extends('layouts.owner_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
 @if(Session::has('success'))
@@ -348,5 +348,5 @@
 				@endforeach
 			</div>
 		</div>
-	</div>	
+	</div>
 @endsection
