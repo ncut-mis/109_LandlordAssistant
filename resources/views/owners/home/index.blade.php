@@ -153,7 +153,7 @@ $('.collapse').collapse();
 											)
 											@else
 												<span class="badge btn-warning text-dark">
-													資料不齊全
+													資料不完整
 												</span>
 											@endif
 										</div>
@@ -271,7 +271,7 @@ $('.collapse').collapse();
 										)
 										@else
 											<span class="badge btn-warning text-dark">
-												資料不齊全
+												資料不完整
 											</span>
 										@endif
 									</div>
@@ -388,7 +388,7 @@ $('.collapse').collapse();
 										)
 										@else
 											<span class="badge btn-warning text-dark">
-												資料不齊全
+												資料不完整
 											</span>
 										@endif
 									</div>
@@ -505,7 +505,7 @@ $('.collapse').collapse();
 										)
 										@else
 											<span class="badge btn-warning text-dark">
-												資料不齊全
+												資料不完整
 											</span>
 										@endif
 									</div>
