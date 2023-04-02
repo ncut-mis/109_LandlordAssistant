@@ -88,6 +88,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 	<button onclick="scrollToTop()" class="scroll-to-top">
 	  <i class="fas fa-chevron-up"></i>
 	</button>
+	
 	<form method="post" action="{{ route('owners.locations.houses.store',$locations->id) }}" enctype="multipart/form-data">
 		@csrf
 		<div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
@@ -169,7 +170,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 						<div class="first-column" style="width:30%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">可住</span>
-								<input type="text" class="form-control" name="num_renter"
+								<input type="text" class="form-control" name="num_renter" style="text-align:right"
 									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">人</span>
 							</div>
