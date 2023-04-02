@@ -66,6 +66,7 @@ class HouseController extends Controller
 
         if(isset($_REQUEST['publish'])){
             $validatedData1 = $request->validate([
+                'image' => 'required',
                 'name' => 'required',
                 'address' => 'required',
                 'introduce' => 'required',
@@ -80,6 +81,7 @@ class HouseController extends Controller
                 'furnishings' => 'required',
                 'features' => 'required',
             ],[
+                'image.required' => '請添加圖片。',
                 'name.required' => '請輸入房屋名稱。',
                 'address.required' => '請輸入地址。',
                 'introduce.required' => '請輸入介紹。',
@@ -471,7 +473,7 @@ class HouseController extends Controller
             $house->delete();
             return redirect()->back()->with('success', '房屋刪除成功');
         }else{
-            return redirect()->back()->with('error', '房屋刪除失敗');
+            return redirect()->back()->with('error', '該房屋正在出租中，不能刪除');
         }
     }
 }

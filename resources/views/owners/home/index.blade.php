@@ -2,14 +2,15 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
-@if(Session::has('success'))
-    <div class="alert alert-success">
-        {{ Session::get('success') }}
-    </div>
-@elseif(Session::has('error'))
-    <div class="alert alert-danger">
-        {{ Session::get('error') }}
-    </div>
+@if (session('success'))
+    <script>
+        alert('{{ session('success') }}');
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        alert('{{ session('error') }}');
+    </script>
 @endif
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -43,9 +44,20 @@ function scrollToTop() {
       behavior: 'smooth'
     });
   }
-  
-{{-- 初始化 Bootstrap 的 collapse 插件 --}}
-$('.collapse').collapse();
+
+//刪除跳窗
+function confirmDelete(event, houseId) {
+	event.preventDefault(); // 防止表單預設提交行為
+    const leaseStatus = event.target.getAttribute('data-lease-status');
+    if (leaseStatus === "出租中") {
+        alert("該房屋正在出租中，不能刪除");
+    } else {
+        if (confirm('確定要刪除嗎？')) {
+            document.getElementById('delete-form-' + houseId).submit(); // 提交表單
+        }
+    }
+}
+
 </script>
 	
 {{-- 回到最上面的按鈕 --}}
@@ -168,7 +180,21 @@ $('.collapse').collapse();
 												@method('PATCH')
 
 												@if ($house->lease_status == '閒置')
-													<button type="submit" class="btn btn-warning" name="publish">刊登</button>
+													<button type="submit" class="btn btn-warning" name="publish"
+														@if ($house->introduce && $house->lease_status && $house->num_renter &&
+														$house->min_period && $house->pattern && $house->size &&
+														$house->type && $house->floor &&
+														$house->expenses->filter(function ($expense) {
+															return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+														})->count() !== 0 &&
+														$house->image->whereNotNull('image')->count() !== 0 &&
+														$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+														$house->features->whereNotNull('feature')->count() !== 0
+														)
+														@else
+															disabled
+														@endif
+													>刊登</button>
 												@elseif ($house->lease_status == '已刊登')
 													<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
 												@else
@@ -183,10 +209,14 @@ $('.collapse').collapse();
 											</form>
 										</div>
 										<div class="column">
-											<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+											<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
 												@csrf
 												@method('DELETE')
-												<button type="submit" class="btn btn-outline-danger">刪除</button>
+												<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+												<button type="submit" class="btn btn-outline-danger" 
+													data-lease-status="{{ $house->lease_status }}" 
+													onclick="confirmDelete(event, {{ $house->id }})">刪除
+												</button>
 												{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 											</form>
 										</div>
@@ -301,11 +331,15 @@ $('.collapse').collapse();
 										</form>
 									</div>
 									<div class="column">
-										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
 											@csrf
 											@method('DELETE')
-											<button type="submit" class="btn btn-outline-danger">刪除</button>
-											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+											<button type="submit" class="btn btn-outline-danger" 
+												data-lease-status="{{ $house->lease_status }}" 
+												onclick="confirmDelete(event, {{ $house->id }})">刪除
+											</button>
+											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -418,11 +452,15 @@ $('.collapse').collapse();
 										</form>
 									</div>
 									<div class="column">
-										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
 											@csrf
 											@method('DELETE')
-											<button type="submit" class="btn btn-outline-danger">刪除</button>
-											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+											<button type="submit" class="btn btn-outline-danger" 
+												data-lease-status="{{ $house->lease_status }}" 
+												onclick="confirmDelete(event, {{ $house->id }})">刪除
+											</button>
+											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
@@ -535,11 +573,15 @@ $('.collapse').collapse();
 										</form>
 									</div>
 									<div class="column">
-										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST">
+										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
 											@csrf
 											@method('DELETE')
-											<button type="submit" class="btn btn-outline-danger">刪除</button>
-											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+											<button type="submit" class="btn btn-outline-danger" 
+												data-lease-status="{{ $house->lease_status }}" 
+												onclick="confirmDelete(event, {{ $house->id }})">刪除
+											</button>
+											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column">
