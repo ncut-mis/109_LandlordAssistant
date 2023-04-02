@@ -250,37 +250,21 @@ class HouseController extends Controller
                     ->whereNotNull('floor')
                     ->first();
                 $v_expense = $house->expenses
-                    ->whereNotNull('introduce')
-                    ->whereNotNull('lease_status')
-                    ->whereNotNull('num_renter')
-                    ->whereNotNull('min_period')
-                    ->whereNotNull('pattern')
-                    ->whereNotNull('size')
                     ->whereNotNull('type')
-                    ->whereNotNull('floor')
+                    ->whereNotNull('amount')
+                    ->whereNotNull('interval')
                     ->first();
-                $v_furnish = $house->expenses
-                    ->whereNotNull('introduce')
-                    ->whereNotNull('lease_status')
-                    ->whereNotNull('num_renter')
-                    ->whereNotNull('min_period')
-                    ->whereNotNull('pattern')
-                    ->whereNotNull('size')
-                    ->whereNotNull('type')
-                    ->whereNotNull('floor')
+				$v_image = $house->image
+                    ->whereNotNull('image')
+                    ->first();
+                $v_furnish = $house->furnishings
+                    ->whereNotNull('furnish')
                     ->first();
                 $v_feature = $house->features
-                    ->whereNotNull('introduce')
-                    ->whereNotNull('lease_status')
-                    ->whereNotNull('num_renter')
-                    ->whereNotNull('min_period')
-                    ->whereNotNull('pattern')
-                    ->whereNotNull('size')
-                    ->whereNotNull('type')
-                    ->whereNotNull('floor')
+                    ->whereNotNull('feature')
                     ->first();
 
-                if ($v_house && $v_expense && $v_furnish && $v_feature) {
+                if ($v_house && $v_expense && $v_furnish && $v_feature && $v_image) {
                     // 沒有 NULL 值
                     $lease_status = "已刊登";
                     $data = array_merge(

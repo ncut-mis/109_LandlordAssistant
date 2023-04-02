@@ -57,7 +57,7 @@ class PostController extends Controller
         ]);
 //        真實用戶
 //        $post->user_id = auth()->user()->id;
-        $post->user_id = 1;
+        $post->owner_id = 1;
         $location->posts()->save($post);
 
 //        $request->merge(['location_id' => $location->id]);

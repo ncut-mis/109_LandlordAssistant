@@ -11,8 +11,49 @@
         {{ Session::get('error') }}
     </div>
 @endif
-<form method="post" action="{{ route('owners.locations.store')}}" enctype="multipart/form-data">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+  }
+  
+  .scroll-to-top:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+  
+  .scroll-to-top i {
+    font-size: 20px;
+    color: #333;
+  }
+</style>
+<script>
+function scrollToTop() {
+    // 滾動到頁面頂部
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+  
+{{-- 初始化 Bootstrap 的 collapse 插件 --}}
+$('.collapse').collapse();
+</script>
+	
+{{-- 回到最上面的按鈕 --}}
+<button onclick="scrollToTop()" class="scroll-to-top">
+  <i class="fas fa-chevron-up"></i>
+</button>
 
+<form method="post" action="{{ route('owners.locations.store')}}" enctype="multipart/form-data">
     @csrf
     <div class="from-group mb-3 px-3 py-2">
         <label for="content" class="form-label">新增出租地點</label>
@@ -60,15 +101,20 @@
 						<hr>
 					@endif
 					<div class="row">
-						<div class="left-column" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
-						aria-expanded="false" aria-controls="houses{{ $key }}" style="width:90%;padding: 20px;"><h2>{{ $location->name }}</h2></div>
+						<div class="left-column" style="width:90%;padding: 20px;">
+							<h2 style="display: inline;">{{ $location->name }}　</h2>
+							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
+							</button>
+						</div>
 						<div class="right-column" style="width:10%;padding: 20px;">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									按鈕
+									設定
 								</button>
 								<ul class="dropdown-menu location" style="text-align:center;">
-                                        <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
@@ -78,18 +124,38 @@
 
 						</div>
 					</div>
+
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
-						<div class="row">
-							<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
-							<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
-						</div>
+						@if(count($location->houses)>0)
+							<div class="row">
+								<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
+								<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
+							</div>
+						@else
+							還沒有房屋哦
+						@endif
 						@foreach ($location->houses as $house)
 							<div class="row">
 									<div class="row_house">
 {{--                                        名稱超連結房屋資訊--}}
 										<div class="column">
-											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
-											{{ $house->name }}</a>
+											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit; text-decoration: none;">
+											{{ $house->name }}　</a>
+											@if ($house->introduce && $house->lease_status && $house->num_renter &&
+												$house->min_period && $house->pattern && $house->size &&
+												$house->type && $house->floor &&
+												$house->expenses->filter(function ($expense) {
+													return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+												})->count() !== 0 &&
+												$house->image->whereNotNull('image')->count() !== 0 &&
+												$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+												$house->features->whereNotNull('feature')->count() !== 0
+											)
+											@else
+												<span class="badge btn-warning text-dark">
+													資料不齊全
+												</span>
+											@endif
 										</div>
 										<div class="column" style="width:35%">
 											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
@@ -160,19 +226,24 @@
 						<hr>
 					@endif
 					<div class="row">
-						<div class="left-column" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
-							 aria-expanded="false" aria-controls="houses{{ $key }}" style="width:90%;padding: 20px;"><h2>{{ $location->name }}</h2></div>
+						<div class="left-column" style="width:90%;padding: 20px;">
+							<h2 style="display: inline;">{{ $location->name }}　</h2>
+							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
+							</button>
+						</div>
 						<div class="right-column" style="width:10%;padding: 20px;">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									按鈕
+									設定
 								</button>
 								<ul class="dropdown-menu location" style="text-align:center;">
-									<li><a class="dropdown-item" href="#">修改地點</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
-									<li><a class="dropdown-item" href="#">公告</a></li>
+									<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 								</ul>
 							</div>
 						</div>
@@ -187,7 +258,22 @@
 								<div class="row_house">
 									<div class="column">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
-										{{ $house->name }}</a>
+										{{ $house->name }}　</a>
+										@if ($house->introduce && $house->lease_status && $house->num_renter &&
+											$house->min_period && $house->pattern && $house->size &&
+											$house->type && $house->floor &&
+											$house->expenses->filter(function ($expense) {
+												return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+											})->count() !== 0 &&
+											$house->image->whereNotNull('image')->count() !== 0 &&
+											$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+											$house->features->whereNotNull('feature')->count() !== 0
+										)
+										@else
+											<span class="badge btn-warning text-dark">
+												資料不齊全
+											</span>
+										@endif
 									</div>
 									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
@@ -257,19 +343,24 @@
 						<hr>
 					@endif
 					<div class="row">
-						<div class="left-column" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
-							 aria-expanded="false" aria-controls="houses{{ $key }}" style="width:90%;padding: 20px;"><h2>{{ $location->name }}</h2></div>
+						<div class="left-column" style="width:90%;padding: 20px;">
+							<h2 style="display: inline;">{{ $location->name }}　</h2>
+							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
+							</button>
+						</div>
 						<div class="right-column" style="width:10%;padding: 20px;">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									按鈕
+									設定
 								</button>
 								<ul class="dropdown-menu location" style="text-align:center;">
-									<li><a class="dropdown-item" href="#">修改地點</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
-									<li><a class="dropdown-item" href="#">公告</a></li>
+									<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 								</ul>
 							</div>
 						</div>
@@ -284,7 +375,22 @@
 								<div class="row_house">
 									<div class="column">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
-										{{ $house->name }}</a>
+										{{ $house->name }}　</a>
+										@if ($house->introduce && $house->lease_status && $house->num_renter &&
+											$house->min_period && $house->pattern && $house->size &&
+											$house->type && $house->floor &&
+											$house->expenses->filter(function ($expense) {
+												return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+											})->count() !== 0 &&
+											$house->image->whereNotNull('image')->count() !== 0 &&
+											$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+											$house->features->whereNotNull('feature')->count() !== 0
+										)
+										@else
+											<span class="badge btn-warning text-dark">
+												資料不齊全
+											</span>
+										@endif
 									</div>
 									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
@@ -354,19 +460,24 @@
 						<hr>
 					@endif
 					<div class="row">
-						<div class="left-column" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
-							 aria-expanded="false" aria-controls="houses{{ $key }}" style="width:90%;padding: 20px;"><h2>{{ $location->name }}</h2></div>
+						<div class="left-column" style="width:90%;padding: 20px;">
+							<h2 style="display: inline;">{{ $location->name }}　</h2>
+							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
+							</button>
+						</div>
 						<div class="right-column" style="width:10%;padding: 20px;">
 							<div class="btn-group">
 								<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-									按鈕
+									設定
 								</button>
 								<ul class="dropdown-menu location" style="text-align:center;">
-									<li><a class="dropdown-item" href="#">修改地點</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
 									<li><a class="dropdown-item" href="#">刪除地點</a></li>
 									<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 									<hr>
-									<li><a class="dropdown-item" href="#">公告</a></li>
+									<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>
 								</ul>
 							</div>
 						</div>
@@ -381,7 +492,22 @@
 								<div class="row_house">
 									<div class="column">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
-										{{ $house->name }}</a>
+										{{ $house->name }}　</a>
+										@if ($house->introduce && $house->lease_status && $house->num_renter &&
+											$house->min_period && $house->pattern && $house->size &&
+											$house->type && $house->floor &&
+											$house->expenses->filter(function ($expense) {
+												return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+											})->count() !== 0 &&
+											$house->image->whereNotNull('image')->count() !== 0 &&
+											$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+											$house->features->whereNotNull('feature')->count() !== 0
+										)
+										@else
+											<span class="badge btn-warning text-dark">
+												資料不齊全
+											</span>
+										@endif
 									</div>
 									<div class="column" style="width:35%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">

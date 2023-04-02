@@ -44,12 +44,13 @@ class OwnerController extends Controller
             $query->where('lease_status', '閒置');
         }])->get();
 		
+				
 		$locations_data = [
             'locations' => $locations,
             'for_rent' => $for_rent,
             'listed' => $listed,
             'vacancy' => $vacancy,
-            'owner_id'=>$owner,
+            'owner_id' => $owner,
         ];
         return view('owners.home.index',$locations_data);
     }
