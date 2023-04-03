@@ -92,7 +92,7 @@
 											<div class="col-2">
 												介紹：
 											</div>
-											<div class="col">
+											<div class="col-9">
 												{{ $house->introduce }}
 											</div>
 										</div>
@@ -102,57 +102,49 @@
 											<div class="fs-4" style="white-space: nowrap;">
 												<div class="fs-4">
 													<div class="col-2">
-														<span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元/月
-														　　繳納區間：{{ $expenses->value('interval') }}月一次
+														每
+														@if( $expenses->value('interval') == 12)
+															年繳
+														@elseif( $expenses->value('interval') == 6)
+															半年繳
+														@elseif( $expenses->value('interval') == 3)
+															季繳
+														@elseif( $expenses->value('interval') == 1)
+															月繳
+														@endif
+														一次　
+														<span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元　　
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2">
-												可住人數：
+											<div class="col-4">
+												可住　{{ $house->num_renter }}人
 											</div>
-											<div class="col-2">
-												{{ $house->num_renter }}
-											</div>
-											<div class="col-2">
-												最短租期：
-											</div>
-											<div class="col-2">
-												{{ $house->min_period }}
+											<div class="col-4">
+												最短租　{{ $house->min_period }}個月
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2">
-												格局：
+											<div class="col-4">
+												房間　{{ $house->pattern }}　間
 											</div>
-											<div class="col-2">
-												{{ $house->pattern }}　間
-											</div>
-											<div class="col-2">
-												坪數：
-											</div>
-											<div class="col-2">
-												{{ $house->size }}
+											<div class="col-4">
+												房間　{{ $house->size }}坪
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2">
-												類型：
+											<div class="col-4">
+												類型：　{{ $house->type }}　
 											</div>
-											<div class="col-2">
-												{{ $house->type }}　
-											</div>
-											<div class="col-2">
-												樓層：
-											</div>
-											<div class="col-2">
-												{{ $house->floor }}
+											<div class="col-4">
+												第　{{ $house->floor }}層
 											</div>
 										</div>
 										<hr class="text-white-50">
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2" style="white-space: nowrap;">
+											<div class="col-9" style="white-space: nowrap;">
 												設備<p>
 												@foreach($furnishings as $furnishings)
 													<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
@@ -160,7 +152,7 @@
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-2" style="white-space: nowrap;">
+											<div class="col-9" style="white-space: nowrap;">
 												特色<p>
 												@foreach($features as $features)
 													<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
@@ -178,46 +170,20 @@
 											</div>
 											<hr class="text-white-50">
 										</div>
-										<div class="row bg-dark py-2 mx-1 text-white-50">
-											<div class="col fw-bold">
-												租客<hr>
+										@if(!$renters_data->isEmpty())
+											@foreach($renters_data as $renters_data)
+											<div class="row bg-dark py-2 mx-1 text-white-50">
+												<div class="col fw-bold">
+													{{ $renters_data->name }}<hr>
+												</div>
+												<div class="col fw-bold">
+													{{ $renters_data->phone }}<hr>
+												</div>
 											</div>
-											<div class="col fw-bold">
-												電話<hr>
-											</div>
-										</div>
-										<div class="row bg-dark py-2 mx-1 text-white-50">
-											<div class="col fw-bold">
-												租客<hr>
-											</div>
-											<div class="col fw-bold">
-												電話<hr>
-											</div>
-										</div>
-										<div class="row bg-dark py-2 mx-1 text-white-50">
-											<div class="col fw-bold">
-												租客<hr>
-											</div>
-											<div class="col fw-bold">
-												電話<hr>
-											</div>
-										</div>
-										<div class="row bg-dark py-2 mx-1 text-white-50">
-											<div class="col fw-bold">
-												租客<hr>
-											</div>
-											<div class="col fw-bold">
-												電話<hr>
-											</div>
-										</div>
-										<div class="row bg-dark py-2 mx-1 text-white-50">
-											<div class="col fw-bold">
-												租客<hr>
-											</div>
-											<div class="col fw-bold">
-												電話<hr>
-											</div>
-										</div>
+											@endforeach
+										@else
+											尚無資料
+										@endif
 									</div>
 								</div>
 							</div>
@@ -240,9 +206,9 @@
 					 style="padding: 20px;border: 1px solid #ccc;">
 						444
 					</div>
-					<div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
-						<a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
-					</div>
+				</div>
+				<div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
+					<a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
 				</div>
 			</div>
 		</div>
