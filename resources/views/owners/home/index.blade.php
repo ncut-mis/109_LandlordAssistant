@@ -140,109 +140,88 @@ function confirmDelete(event, houseId) {
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
 						@if(count($location->houses)>0)
 							<div class="row">
-								<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
-								<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
+								<div class="left-column" style="width:20%;padding: 15px;">房屋名稱</div>
+								<div class="right-column" style="width:30%;padding: 20px;">狀態</div>
 							</div>
 						@else
 							還沒有房屋哦
 						@endif
 						@foreach ($location->houses as $house)
 							<div class="row">
-									<div class="row_house">
+								<div class="row_house">
 {{--                                        名稱超連結房屋資訊--}}
-										<div class="column">
-											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit; text-decoration: none;">
-											{{ $house->name }}　</a>
-											@if ($house->introduce && $house->lease_status && $house->num_renter &&
-												$house->min_period && $house->pattern && $house->size &&
-												$house->type && $house->floor &&
-												$house->expenses->filter(function ($expense) {
-													return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-												})->count() !== 0 &&
-												$house->image->whereNotNull('image')->count() !== 0 &&
-												$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
-												$house->features->whereNotNull('feature')->count() !== 0
-											)
-											@else
-												<span class="badge btn-warning text-dark">
-													資料不完整
-												</span>
-											@endif
-										</div>
-										<div class="column" style="width:35%">
-											<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
-											{{ $house->lease_status }}</a>
-										</div>
-
-										<div class="column" style="width:15%">
-											<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
-												@csrf
-												@method('PATCH')
-
-												@if ($house->lease_status == '閒置')
-													<button type="submit" class="btn btn-warning" name="publish"
-														@if ($house->introduce && $house->lease_status && $house->num_renter &&
-														$house->min_period && $house->pattern && $house->size &&
-														$house->type && $house->floor &&
-														$house->expenses->filter(function ($expense) {
-															return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-														})->count() !== 0 &&
-														$house->image->whereNotNull('image')->count() !== 0 &&
-														$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
-														$house->features->whereNotNull('feature')->count() !== 0
-														)
-														@else
-															disabled
-														@endif
-													>刊登</button>
-												@elseif ($house->lease_status == '已刊登')
-													<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
-												@else
-													<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
-												@endif
-											</form>
-										</div>
-										<div class="column">
-											<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
-												@csrf
-												<button type="submit" class="btn btn-outline-primary">編輯</button>
-											</form>
-										</div>
-										<div class="column">
-											<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
-												@csrf
-												@method('DELETE')
-												<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-												<button type="submit" class="btn btn-outline-danger" 
-													data-lease-status="{{ $house->lease_status }}" 
-													onclick="confirmDelete(event, {{ $house->id }})">刪除
-												</button>
-												{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
-											</form>
-										</div>
-										<div class="column">
-											<button class="btn btn-primary" type="button"
-											data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
-											aria-controls="collapseWidthExample{{ $house->id }}">
-											按鈕
-											</button>
-										</div>
+									<div class="column" style="width:20%">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit; text-decoration: none;">
+										{{ $house->name }}　</a>
+										@if ($house->introduce && $house->lease_status && $house->num_renter &&
+											$house->min_period && $house->pattern && $house->size &&
+											$house->type && $house->floor &&
+											$house->expenses->filter(function ($expense) {
+												return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+											})->count() !== 0 &&
+											$house->image->whereNotNull('image')->count() !== 0 &&
+											$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+											$house->features->whereNotNull('feature')->count() !== 0
+										)
+										@else
+											<span class="badge btn-warning text-dark">
+												資料不完整
+											</span>
+										@endif
+									</div>
+									<div class="column" style="width:30%">
+										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
+										{{ $house->lease_status }}</a>
 									</div>
 
-								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
-									<div class="collapsed-content">
-										<div class="row">
-											<div class="column">期間</div>
-											<div class="column">費用類型</div>
-											<div class="column">總金額</div>
-											<div class="column">狀態</div>
-										</div>
-										<div class="row_list">
-											<div class="column">1</div>
-											<div class="column">2</div>
-											<div class="column">456</div>
-											<div class="column">456</div>
-										</div>
+									<div class="column" style="width:15%">
+										<form action="{{ route('owners.locations.houses.update', [$location->id, $house->id]) }}" method="POST">
+											@csrf
+											@method('PATCH')
+
+											@if ($house->lease_status == '閒置')
+												<button type="submit" class="btn btn-warning" name="publish"
+													@if ($house->introduce && $house->lease_status && $house->num_renter &&
+													$house->min_period && $house->pattern && $house->size &&
+													$house->type && $house->floor &&
+													$house->expenses->filter(function ($expense) {
+														return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
+													})->count() !== 0 &&
+													$house->image->whereNotNull('image')->count() !== 0 &&
+													$house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+													$house->features->whereNotNull('feature')->count() !== 0
+													)
+													@else
+														disabled
+													@endif
+												>刊登</button>
+											@elseif ($house->lease_status == '已刊登')
+												<button type="submit" class="btn btn-danger" name="unpublish">取消刊登</button>
+											@else
+												<button type="submit" class="btn btn-success" name="rent" disabled>出租中</button>
+											@endif
+										</form>
+									</div>
+									<div class="column">
+										<form action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
+											@csrf
+											<button type="submit" class="btn btn-outline-primary">編輯</button>
+										</form>
+									</div>
+									<div class="column">
+										<form action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}" method="POST" id="delete-form-{{ $house->id }}">
+											@csrf
+											@method('DELETE')
+											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+											<button type="submit" class="btn btn-outline-danger" 
+												data-lease-status="{{ $house->lease_status }}" 
+												onclick="confirmDelete(event, {{ $house->id }})">刪除
+											</button>
+											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+										</form>
+									</div>
+									<div class="column" style="width:15%;transform: translate(0%, -10%);">
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -280,13 +259,13 @@ function confirmDelete(event, houseId) {
 					</div>
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
 						<div class="row">
-							<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
-							<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
+							<div class="left-column" style="width:20%;padding: 15px;">房屋名稱</div>
+							<div class="right-column" style="width:30%;padding: 20px;">狀態</div>
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">
+									<div class="column" style="width:20%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}　</a>
 										@if ($house->introduce && $house->lease_status && $house->num_renter &&
@@ -305,7 +284,7 @@ function confirmDelete(event, houseId) {
 											</span>
 										@endif
 									</div>
-									<div class="column" style="width:35%">
+									<div class="column" style="width:30%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
@@ -342,28 +321,8 @@ function confirmDelete(event, houseId) {
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
-									<div class="column">
-										<button class="btn btn-primary" type="button"
-												data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
-												aria-controls="collapseWidthExample{{ $house->id }}">
-											按鈕
-										</button>
-									</div>
-								</div>
-								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
-									<div class="collapsed-content">
-										<div class="row">
-											<div class="column">期間</div>
-											<div class="column">費用類型</div>
-											<div class="column">總金額</div>
-											<div class="column">狀態</div>
-										</div>
-										<div class="row_list">
-											<div class="column">1</div>
-											<div class="column">2</div>
-											<div class="column">456</div>
-											<div class="column">456</div>
-										</div>
+									<div class="column" style="width:15%;transform: translate(0%, -10%);">
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -401,13 +360,13 @@ function confirmDelete(event, houseId) {
 					</div>
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
 						<div class="row">
-							<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
-							<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
+							<div class="left-column" style="width:20%;padding: 15px;">房屋名稱</div>
+							<div class="right-column" style="width:30%;padding: 20px;">狀態</div>
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">
+									<div class="column" style="width:20%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}　</a>
 										@if ($house->introduce && $house->lease_status && $house->num_renter &&
@@ -426,7 +385,7 @@ function confirmDelete(event, houseId) {
 											</span>
 										@endif
 									</div>
-									<div class="column" style="width:35%">
+									<div class="column" style="width:30%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
@@ -463,28 +422,8 @@ function confirmDelete(event, houseId) {
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
-									<div class="column">
-										<button class="btn btn-primary" type="button"
-												data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
-												aria-controls="collapseWidthExample{{ $house->id }}">
-											按鈕
-										</button>
-									</div>
-								</div>
-								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
-									<div class="collapsed-content">
-										<div class="row">
-											<div class="column">期間</div>
-											<div class="column">費用類型</div>
-											<div class="column">總金額</div>
-											<div class="column">狀態</div>
-										</div>
-										<div class="row_list">
-											<div class="column">1</div>
-											<div class="column">2</div>
-											<div class="column">456</div>
-											<div class="column">456</div>
-										</div>
+									<div class="column" style="width:15%;transform: translate(0%, -10%);">
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -522,13 +461,13 @@ function confirmDelete(event, houseId) {
 					</div>
 					<div class="fade tab-pane collapse" style="padding: 20px;border: 1px solid #ccc;" id="houses{{ $key }}">
 						<div class="row">
-							<div class="left-column" style="width:20%;padding: 20px;">房屋名稱</div>
-							<div class="right-column" style="width:80%;padding: 20px;">狀態</div>
+							<div class="left-column" style="width:20%;padding: 15px;">房屋名稱</div>
+							<div class="right-column" style="width:30%;padding: 20px;">狀態</div>
 						</div>
 						@foreach ($location->houses as $house)
 							<div class="row">
 								<div class="row_house">
-									<div class="column">
+									<div class="column" style="width:20%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->name }}　</a>
 										@if ($house->introduce && $house->lease_status && $house->num_renter &&
@@ -547,7 +486,7 @@ function confirmDelete(event, houseId) {
 											</span>
 										@endif
 									</div>
-									<div class="column" style="width:35%">
+									<div class="column" style="width:30%">
 										<a href="{{ route('owners.houses.show', $house->id) }}" style="color: inherit;  text-decoration: none;">
 										{{ $house->lease_status }}</a>
 									</div>
@@ -584,28 +523,8 @@ function confirmDelete(event, houseId) {
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
-									<div class="column">
-										<button class="btn btn-primary" type="button"
-												data-bs-toggle="collapse" data-bs-target="#collapseWidthExample{{ $house->id }}" aria-expanded="false"
-												aria-controls="collapseWidthExample{{ $house->id }}">
-											按鈕
-										</button>
-									</div>
-								</div>
-								<div class="collapse collapse-horizontal" id="collapseWidthExample{{ $house->id }}">
-									<div class="collapsed-content">
-										<div class="row">
-											<div class="column">期間</div>
-											<div class="column">費用類型</div>
-											<div class="column">總金額</div>
-											<div class="column">狀態</div>
-										</div>
-										<div class="row_list">
-											<div class="column">1</div>
-											<div class="column">2</div>
-											<div class="column">456</div>
-											<div class="column">456</div>
-										</div>
+									<div class="column" style="width:15%;transform: translate(0%, -10%);">
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
 									</div>
 								</div>
 							</div>

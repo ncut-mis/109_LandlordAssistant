@@ -4,12 +4,48 @@
 @section('page-content')
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script>
+	function scrollToTop() {
+		// 滾動到頁面頂部
+		window.scrollTo({
+		  top: 0,
+		  behavior: 'smooth'
+		});
+	}
+	
     $(function(){
         $('.masonry').masonry({
             itemSelector: '.item'
         })});
 
 </script>
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+  }
+  
+  .scroll-to-top:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+  
+  .scroll-to-top i {
+    font-size: 20px;
+    color: #333;
+  }
+</style>
+	
+{{-- 回到最上面的按鈕 --}}
+<button onclick="scrollToTop()" class="scroll-to-top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
     <form method="POST" action="">
 		@csrf
 		@method('PATCH')
@@ -119,26 +155,26 @@
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-4">
+											<div class="col-6">
 												可住　{{ $house->num_renter }}人
 											</div>
-											<div class="col-4">
+											<div class="col-6">
 												最短租　{{ $house->min_period }}個月
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-4">
+											<div class="col-6">
 												房間　{{ $house->pattern }}　間
 											</div>
-											<div class="col-4">
+											<div class="col-6">
 												房間　{{ $house->size }}坪
 											</div>
 										</div>
 										<div class="row bg-dark text-white py-2">
-											<div class="col-4">
+											<div class="col-6">
 												類型：　{{ $house->type }}　
 											</div>
-											<div class="col-4">
+											<div class="col-6">
 												第　{{ $house->floor }}層
 											</div>
 										</div>
@@ -161,7 +197,7 @@
 										</div>
 									</div>
 									<div class="col-4 fw-bold" style="padding: 20px;border: 1px solid #ccc;">
-										<div class="row bg-dark py-2 mx-1 text-white-50 fs-3">
+										<div class="row bg-dark py-2 mx-1 text-white fs-3">
 											<div class="col fw-bold">
 												租客姓名
 											</div>
@@ -172,7 +208,7 @@
 										</div>
 										@if(!$renters_data->isEmpty())
 											@foreach($renters_data as $renters_data)
-											<div class="row bg-dark py-2 mx-1 text-white-50">
+											<div class="row bg-dark py-2 mx-1 text-white">
 												<div class="col fw-bold">
 													{{ $renters_data->name }}<hr>
 												</div>
@@ -182,7 +218,9 @@
 											</div>
 											@endforeach
 										@else
-											尚無資料
+											<div class="row bg-dark py-2 mx-1 text-white">
+												尚無資料
+											</div>
 										@endif
 									</div>
 								</div>
