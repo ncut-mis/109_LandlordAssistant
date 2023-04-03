@@ -33,6 +33,31 @@
 		  behavior: 'smooth'
 		});
 	  }
+	
+	//驗證表單
+	function validateAndSubmit() {
+		const inputs = document.querySelectorAll('input, select, textarea');
+		let isValid = true;
+		//驗證每種類型的輸入都有資料
+		inputs.forEach((input) => {
+			if (!input.value) {
+				isValid = false; //有資料未填寫
+			}
+		});
+		//有資料未填寫
+		if (!isValid) {
+			const shouldSubmit = confirm('表單中有未填寫的欄位，確定要送出嗎？');
+			if (shouldSubmit) {
+				document.querySelector('form').submit(); // 送出表單
+			}else{
+				event.preventDefault(); //取消默認行為
+			}
+		} else {//資料都有填寫，則直接送出表單
+		  document.querySelector('form').submit(); // 送出表單
+		}
+	}
+
+	  
 	$(document).ready(function() {
 		// 動態增加圖片路徑
 		$('.add-image').click(function() {
@@ -337,7 +362,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 					</div><hr>
 					<div class="row">
 						<div class="left-column" style="width:33%;text-align:right">
-							<button class="btn btn-primary" type="submit" name="unpublish" value="閒置">
+							<button class="btn btn-primary" type="submit" name="unpublish" value="閒置" onclick="validateAndSubmit()">
 								儲存
 							</button>
 						</div>
@@ -346,7 +371,6 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								刊登房屋
 							</button>
 						</div>
-						{{--應該要刪除--}}
 						<div class="right-column" style="width:33%;text-align:left">
 							<a class="btn btn-secondary text-center" href="{{ route('owners.home.index',$owner_id) }}">返回</a>
 						</div>
