@@ -11,7 +11,7 @@
 		  behavior: 'smooth'
 		});
 	}
-	
+
     $(function(){
         $('.masonry').masonry({
             itemSelector: '.item'
@@ -29,18 +29,18 @@
     border-radius: 50%;
     transition: all .3s ease-in-out;
   }
-  
+
   .scroll-to-top:hover {
     background-color: #eee;
     cursor: pointer;
   }
-  
+
   .scroll-to-top i {
     font-size: 20px;
     color: #333;
   }
 </style>
-	
+
 {{-- 回到最上面的按鈕 --}}
 <button onclick="scrollToTop()" class="scroll-to-top">
   <i class="fas fa-chevron-up"></i>
@@ -230,25 +230,33 @@
 					<div class="tab-pane fade" id="home-contract" role="tabpanel" aria-labelledby="home-contract-tab"
 					 style="padding: 20px;border: 1px solid #ccc;">
                         <a class="btn btn-danger text-center" href="{{ route('houses.contracts.create', $house->id) }}">上傳合約</a>
+                        @php
+                            $a=0;
+                        @endphp
+                        @foreach($contract as $contract)
 
-					</div>
-					<div class="tab-pane fade" id="home-pack" role="tabpanel" aria-labelledby="home-pack-tab"
-					 style="padding: 20px;border: 1px solid #ccc;">
-						222
-					</div>
-					<div class="tab-pane fade" id="home-expense" role="tabpanel" aria-labelledby="home-expense-tab"
-					 style="padding: 20px;border: 1px solid #ccc;">
-						333
-					</div>
-					<div class="tab-pane fade" id="home-repair" role="tabpanel" aria-labelledby="home-repair-tab"
-					 style="padding: 20px;border: 1px solid #ccc;">
-						444
-					</div>
-				</div>
-				<div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
-					<a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
-				</div>
-			</div>
-		</div>
-	</form>
-@endsection
+                           <a href="{{asset('contracts/'.$contract->path)}}" target='_blank'>預覽合約{{$a+=1}}</a>
+
+                        @endforeach
+
+                        </div>
+                        <div class="tab-pane fade" id="home-pack" role="tabpanel" aria-labelledby="home-pack-tab"
+                         style="padding: 20px;border: 1px solid #ccc;">
+                            222
+                        </div>
+                        <div class="tab-pane fade" id="home-expense" role="tabpanel" aria-labelledby="home-expense-tab"
+                         style="padding: 20px;border: 1px solid #ccc;">
+                            333
+                        </div>
+                        <div class="tab-pane fade" id="home-repair" role="tabpanel" aria-labelledby="home-repair-tab"
+                         style="padding: 20px;border: 1px solid #ccc;">
+                            444
+                        </div>
+                    </div>
+                    <div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
+                        <a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    @endsection
