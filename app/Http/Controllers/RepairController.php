@@ -19,14 +19,32 @@ class RepairController extends Controller
      */
     public function index()
     {
-        $houses = House::whereHas('repairs',function ($q){
-            $q->where('renter_id','=',1);
+        $houses = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
         })->with('repairs')->get();
+        $unrepair = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '未維修');
+        }])->get();
+        $inrepair = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '維修中');
+        }])->get();
+        $finsh = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '已維修');
+        }])->get();
         $view_data = [
             'houses' => $houses,
+            'unrepair' => $unrepair,
+            'inrepair' => $inrepair,
+            'finsh' => $finsh,
         ];
 
-        return view('renters.houses.repairs.index',$view_data);
+        return view('renters.houses.repairs.index', $view_data);
         //
     }
 
@@ -34,19 +52,20 @@ class RepairController extends Controller
     {
         //
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $house = House::whereHas('contracts',function ($q){
-            $q->where('renter_id','=',1);
+        $house = House::whereHas('contracts', function ($q) {
+            $q->where('renter_id', '=', 1);
         })->get();
 
         $view_data = [
             'house' => $house,
         ];
-        return view('renters.houses.repairs.create',$view_data);
+        return view('renters.houses.repairs.create', $view_data);
     }
 
     /**
@@ -54,8 +73,8 @@ class RepairController extends Controller
      */
     public function store(StoreRepairRequest $request)
     {
-        $repair=Repair::create([
-            'renter_id' =>1 ,
+        $repair = Repair::create([
+            'renter_id' => 1,
             'house_id' => $request->id,
             'status' => '未維修',
             'content' => $request->contents,
@@ -78,14 +97,14 @@ class RepairController extends Controller
      */
     public function edit(Repair $repair)
     {
-        $house = House::whereHas('contracts',function ($q){
-            $q->where('renter_id','=',1);
+        $house = House::whereHas('contracts', function ($q) {
+            $q->where('renter_id', '=', 1);
         })->get();
-        $edit_data=[
-            'repairs'=>$repair,
-            'houses'=>$house,
+        $edit_data = [
+            'repairs' => $repair,
+            'houses' => $house,
         ];
-        return view('renters.houses.repairs.edit',$edit_data);
+        return view('renters.houses.repairs.edit', $edit_data);
     }
 
     /**
@@ -93,8 +112,8 @@ class RepairController extends Controller
      */
     public function update(UpdateRepairRequest $request, Repair $repair)
     {
-        $data=$request->only([
-           'house_id',
+        $data = $request->only([
+            'house_id',
             'content'
         ]);
         $repair->update($data);
@@ -105,6 +124,7 @@ class RepairController extends Controller
     {
         //
     }
+
     /**
      * Remove the specified resource from storage.
      */
