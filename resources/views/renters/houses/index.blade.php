@@ -42,10 +42,9 @@
                                             <button class="dropdown-item">查看公告</button>
                                         </li>
                                     </form>
-                                    <form action=""
-                                          method="POST">
+                                    <form action="{{ route('renters.houses.repairs.in.house.create', $house->id) }}"
+                                          method="GET">
                                         @csrf
-                                        @method('DELETE')
                                         <li>
                                             <button class="dropdown-item">報修</button>
                                         </li>

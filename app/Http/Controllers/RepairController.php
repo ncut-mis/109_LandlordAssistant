@@ -61,11 +61,20 @@ class RepairController extends Controller
         $house = House::whereHas('contracts', function ($q) {
             $q->where('renter_id', '=', 1);
         })->get();
-
         $view_data = [
             'house' => $house,
         ];
         return view('renters.houses.repairs.create', $view_data);
+    }
+
+    public function create_in_house($house)
+    {
+        $house = House::find($house);
+        $view_data = [
+            'house' => $house,
+        ];
+        return view('renters.houses.repairs.create',$view_data);
+
     }
 
     /**

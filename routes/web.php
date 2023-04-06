@@ -197,6 +197,7 @@ Route::get('renters/houses/repairs', [RepairController::class, 'index'])->name('
 
 // 3-10-7 會員(租客)新增報修訊息
 Route::get('renters/houses/repairs/create', [RepairController::class, 'create'])->name('renters.houses.repairs.create');
+Route::get('renters/houses/{house}/repairs/create',[RepairController::class,'create_in_house'])->name('renters.houses.repairs.in.house.create');
 Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name('renters.houses.repairs.store');
 
 // 3-10-8 會員(租客)修改報修訊息
