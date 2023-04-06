@@ -176,7 +176,7 @@ Route::get('owners/houses/repairs/{repair}', [RepairController::class, 'show'])-
 Route::patch('owners/houses/repairs/{repair}', [RepairController::class, 'update_status'])->name('houses.repairs.update');
 
 //會員(租客)查看首頁
-Route::get('renters/houses',[HomeController::class,'renters_index'])->name('renters.houses.index');
+Route::get('renters/houses',[RenterController::class,'index'])->name('renters.houses.index');
 // 3-10-1 會員(租客)查看公告
 Route::get('renters/houses/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
 

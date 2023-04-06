@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Renter;
+use App\Models\House;
 use App\Http\Requests\StoreRenterRequest;
 use App\Http\Requests\UpdateRenterRequest;
 
@@ -13,7 +14,13 @@ class RenterController extends Controller
      */
     public function index()
     {
-        return view('renters.home.index');
+        $houses = House::whereHas('contracts', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with('repairs')->get();
+        $view_data = [
+            'houses' => $houses,
+        ];
+        return view('renters.houses.index',$view_data);
     }
 
     /**
