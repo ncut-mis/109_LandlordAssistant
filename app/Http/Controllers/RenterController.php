@@ -42,9 +42,31 @@ class RenterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Renter $renter)
+    public function show(House $house)
     {
-        //
+        $contracts = $house->contracts; // 取得房屋的所有合約
+        $renters = $contracts->map(function ($contract) {
+            return $contract->renter; // 取得每個合約的租客
+        });
+        $renters_data = $renters->map(function ($renter) {
+            return $renter->user; // 取得每個租客的使用者資料
+        });
+
+        $furnishings = $house->furnishings;
+        $features = $house->features;
+        $image = $house->image;
+        $expenses = $house->expenses;
+
+        $data = [
+            'contract' =>$contracts,
+            'renters_data' => $renters_data,
+            'furnishings' => $furnishings,
+            'features' => $features,
+            'house' => $house,
+            'image' => $image,
+            'expenses' => $expenses,
+        ];
+        return view('renters.houses.show',$data);
     }
 
     /**

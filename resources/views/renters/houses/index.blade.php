@@ -25,10 +25,10 @@
                                 結束日期：{{$contract -> end_date}}
                             @endforeach
                         </div>
-                        <div class="right-column" style="width:20%;padding: 20px;">
-                            <button type="button" class="btn btn-outline-primary">
-                                詳細資訊
-                            </button>&emsp;
+                        <div class="column" style="width:10%;padding: 20px;">
+                            <a class="btn btn-primary" href="{{ route('renters.houses.show', $house->id) }}">詳細資訊</a>&emsp;
+                        </div>
+                            <div class="right-column" style="width:10%;padding: 20px;">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-danger dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
