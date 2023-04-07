@@ -3,9 +3,9 @@
 @section('title', '公告頁面')
 @section('page-content')
     <div class="container">
-        <h1>公告列表 - {{ $location->name }}</h1>
+        <h1>公告列表</h1>
 
-        @if ($location->posts->count() > 0)
+        @if ($posts->count() > 0)
             <table class="table">
                 <thead>
                 <tr>
@@ -14,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($location->posts as $post)
+                @foreach ($posts as $post)
                     <tr>
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->content }}</td>

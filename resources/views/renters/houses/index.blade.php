@@ -35,7 +35,7 @@
                                     其他選項
                                 </button>&emsp;
                                 <ul class="dropdown-menu location" style="min-width:6.8rem">
-                                    <form action=""
+                                    <form action="{{ route('renters.houses.posts.index', $house->id) }}"
                                           method="GET">
                                         @csrf
                                         <li>
