@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\House;
+use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
@@ -14,7 +15,9 @@ class ExpenseController extends Controller
      */
     public function owners_index()
     {
-        $houses = House::with('expenses')->get();
+        $houses = House::with(['expenses'=> function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->get();
         $houses_data = [
             'houses' => $houses,
         ];
@@ -27,7 +30,10 @@ class ExpenseController extends Controller
      */
     public function owners_create()
     {
-        $houses = House::with('expenses')->get();
+        $houses = House::whereHas('expenses',function ($e){
+            $e ->where('house_id','=',2); //2為當時點進去的房間id
+        })->get();
+
         $houses_data = [
             'houses' => $houses,
         ];
@@ -37,27 +43,14 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function owners_store(StoreExpenseRequest $request, $house)
+    public function owners_store(Request $request)
     {
-        // 驗證輸入資料
-        $validatedData = $request->validate([
-            'type' => 'required|max:255',
-            'amount' => 'required|numeric',
-            'interval' => 'required|numeric',
+        $expense = Expense::create([
+            'house_id' => 2,
+            'type' => $request->type,
+            'amount' => $request->amount,
+            'interval' => $request->interval,
         ]);
-
-        // 建立新的 Expense 實例並設定屬性值
-        $l = House::find('expense');
-        $house_id = $l->houses->id;
-        $expense = new Expense();
-        $expense->house_id =
-        $expense->type = $validatedData['type'];
-        $expense->amount = $validatedData['amount'];
-        $expense->interval = $validatedData['interval'];
-
-        // 將實例存入資料庫
-        $expense->save();
-
         // 返回頁面或其他操作
         return redirect()->route('houses.expenses.index')->with('success', '費用新增成功！');;
     }
@@ -79,15 +72,29 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        //
+        $houses = House::whereHas('expenses', function ($q){
+            $q->where('house_id','=',2);
+        })->get();
+
+        $houses_data = [
+            'houses' => $houses,
+            'expenses'=> $expense,
+        ];
+        return view('owners.locations.houses.expenses.edit',$houses_data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExpenseRequest $request, Expense $expense)
+    public function update(Request $request, Expense $expense)
     {
-        //
+        $data=$request->only([
+            'type',
+            'amount',
+            'interval'
+        ]);
+        $expense->update($data);
+        return redirect()->route('houses.expenses.index')->with('success', '修改成功！');
     }
 
     /**
@@ -95,6 +102,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+        return redirect()->back()->with('success', '刪除成功！');
     }
 }

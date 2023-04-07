@@ -41,27 +41,7 @@ class LocationController extends Controller
             'name' => $validatedData['name'],
             'owner_id' => $request->owner,
         ]);
-//        $location = new Location();
-//        $location->name = $request->input('name');
-//        $location->owner_id = $request->input('owner_id');
-//        $location->save();
 
-//        Location::create([
-//            'id'=>$request->id,
-//            'introduce'=>$request->introduce,
-//            'shelf_status'=>$request->shelf_status,
-//            'people'=>$request->people,
-//            'amount'=>$request->amount,
-//        ]);
-//        auth()->user()->locations()->create($validated);
-//        $location= new Location();
-//        $location->user_id=$request->user()->id;
-//        $location->message=$validated['message'];
-//        $location->save();
-       /* Location::create([
-            'user_id'=>$request->user()->id,
-            'message'=>$validated['message'],
-        ]);*/
 
         return redirect()->route('owners.home.index',$owner_id)->with('success', '新增成功！');
     }

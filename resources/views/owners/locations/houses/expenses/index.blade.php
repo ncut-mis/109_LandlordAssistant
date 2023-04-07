@@ -2,6 +2,11 @@
 <link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
 @section('title', '某一房屋下的費用')
 @section('page-content')
+    @if(Session::has('success'))
+    <div class="alert alert-success">
+        {{ Session::get('success') }}
+    </div>
+    @endif
     @foreach($houses as $house)
     <div class="from-group mb-3 px-3 py-2">
         <div class="left-column" style="width:90%;padding: 20px;"><h2>{{$house->name}}費用</h2></div>
@@ -89,6 +94,16 @@
                             <td style="text-align: center">{{$expense->type}}</td>
                             <td style="text-align: center">{{$expense->amount}} 元</td>
                             <td style="text-align: center">還要關聯應繳款項</td>
+                            <td style="text-align: right;width: 5%">
+                                    @csrf
+                                    <a class="btn btn-secondary" href="{{route('houses.expenses.edit',$expense -> id)}}">修改</a>
+                            </td>
+                            <td style="text-align: right;width: 3%">
+                                <form action="{{route('houses.expenses.destroy',$expense -> id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger">刪除</button>
+                                </form></td>
                         </tr>
                             @endforeach
                         @endforeach

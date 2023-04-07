@@ -1,52 +1,40 @@
 @extends('layouts.owner_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-
+<style>
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+  }
+  
+  .scroll-to-top:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+  
+  .scroll-to-top i {
+    font-size: 20px;
+    color: #333;
+  }
+</style>
 <script>
-    $(function() {
-        // 新增特色
-        $('.add-feature').click(function() {
-            var featureInput = $('#feature-input');
-            var feature = featureInput.val();
-            if (feature) {
-                // 將特色顯示成按鈕形式
-				var newFeatureButton = '<div class="feature-input-group"><input type="hidden" name="features[]" value="' + feature + '"><button type="button" class="btn btn-outline-dark btn-sm feature-button">' + feature + '</button><button type="button" class="btn btn-outline-danger btn-sm delete-feature">刪除</button>&nbsp;<div>';
-                $('.feature-list .input-group').append(newFeatureButton);
-                // 清空輸入框
-                featureInput.val('');
-            }
-        });
-
-        // 刪除特色
-        $(document).on('click', '.delete-feature', function() {
-            $(this).prev().remove(); // 刪除特色按鈕
-            $(this).prev().remove(); // 刪除隱藏的 input 元素
-            $(this).remove(); // 刪除刪除按鈕
-        });
-    });
-	
-	$(function() {
-		// 新增設備
-		$('.add-furnish').click(function() {
-			var furnishInput = $('#furnish-input');
-			var furnish = furnishInput.val();
-			if (furnish) {
-				// 將設備顯示成 input 形式
-				var newFurnishInput = $('<div class="furnish-input-group"><input type="hidden" name="furnishings[]" value="' + furnish + '"><button type="button" class="btn btn-outline-dark btn-sm">' + furnish + '</button><button type="button" class="btn btn-outline-danger btn-sm delete-furnish">刪除</button>&nbsp;</div>');
-				$('.furnish-list .input-group').append(newFurnishInput);
-				// 清空輸入框
-				furnishInput.val('');
-			}
+	function scrollToTop() {
+		// 滾動到頁面頂部
+		window.scrollTo({
+		  top: 0,
+		  behavior: 'smooth'
 		});
+	  }
 
-		// 刪除設備
-		$(document).on('click', '.delete-furnish', function() {
-			$(this).parent().remove(); // 刪除整個 div 包含設備 input 元素和刪除按鈕
-		});
-	});	
-	
 	$(function() {
 		// 設定計數器和圖片陣列
 		var count = 0;
@@ -116,7 +104,7 @@
 
 		$(document).ready(function() {
 			  var count = 0;
-			  var images = [];		  
+			  var images = [];
 		});
 
 		// 送出表單時回傳圖片陣列
@@ -124,7 +112,7 @@
 			console.log(images);
 		});
 	});
-	
+
 	$(document).ready(function() {
 		// 綁定所有刪除按鈕的點擊事件
 		$('.remove-existing-image').click(function() {
@@ -134,10 +122,15 @@
 			imageContainer.remove();
 		});
 	});
-	
+
 </script>
 
 @section('page-content')
+	{{-- 回到最上面的按鈕 --}}
+	<button onclick="scrollToTop()" class="scroll-to-top">
+	  <i class="fas fa-chevron-up"></i>
+	</button>
+	
     <form method="POST" action="{{ route('owners.locations.houses.update', [$locations->id, $houses->id]) }}" enctype="multipart/form-data">
 		@csrf
 		@method('PATCH')
@@ -156,152 +149,275 @@
 									<button type="button" class="btn btn-danger remove-existing-image" style="position: absolute; top: 0; right: 0;"><i class="fa fa-remove"></i></button>
 								</div>
 							@endforeach
-						</div>								
-					</div>
-				</div>
-				<div class="row">
-					<div class="row image-container">
-						<div class="col-md-12">
-							<div class="preview-image-container">
-								<img class="preview-image" id="preview-image-0" src="" alt="預覽圖片" style="display: none; width: 100%; max-width: 300px; margin-top: 10px;">
-							</div>
-							<div class="input-group">
-								<input type="file" name="image[]" class="form-control">
-								<span class="input-group-addon">
-									<a href="#" class="remove-image"><i class="fa fa-remove"></i></a>
-								</span>
-							</div>
 						</div>
 					</div>
-					<div class="row add-more-container">
-					  <div class="col-md-12">
-						<button class="btn btn-primary add-image" type="button"><i class="fa fa-plus"></i> 新增圖片</button>
-					  </div>
-					</div>
 				</div>
-				
-				
 				<div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
 					<div class="row">
-						<div class="left-column" style="width:22%;">房屋名稱</div>
-						<div class="right-column" style="width:78%;">
-							<input type="text" name="name" value="{{ $houses->name }}" required >
+						<div class="row image-container">
+							<div class="col-md-12">
+								<div class="preview-image-container">
+									<img class="preview-image" id="preview-image-0" src="" alt="預覽圖片" style="display: none; width: 100%; max-width: 300px; margin-top: 10px;">
+								</div>
+								<div class="input-group">
+									<input type="file" name="image[]" class="form-control">
+									<span class="input-group-addon">
+										<a href="#" class="remove-image"><i class="fa fa-remove"></i></a>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="row add-more-container">
+							<div class="col-md-12">
+								<button class="btn btn-primary add-image" type="button"><i class="fa fa-plus"></i> 新增圖片</button>
+							</div>
+						</div>
+					</div>
+					<p>
+					<div class="row">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="inputGroup-sizing-default">房屋名稱</span>
+							<input type="text" class="form-control" name="name" value="{{ $houses->name }}"
+								required aria-describedby="inputGroup-sizing-default">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="inputGroup-sizing-default">地址</span>
+							<input type="text" class="form-control" name="address" value="{{ $houses->address }}"
+								required aria-describedby="inputGroup-sizing-default">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="inputGroup-sizing-default">介紹</span>
+							<textarea class="form-control" name="introduce" rows="5" cols="50"
+								aria-describedby="inputGroup-sizing-default">{{ $houses->introduce }}</textarea>
 						</div>
 					</div><hr>
+					
 					<div class="row">
-						<div class="left-column" style="width:22%;">地址</div>
-						<div class="right-column" style="width:78%;">
-							<input type="text" name="address" value="{{ $houses->address }}" required>
+						<div class="first-column" style="width:50%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">每</span>
+								<select class="form-select" id="inputGroupSelect01" name="interval" style="text-align:center">
+									<option value="" disabled selected>--選擇區間--</option>
+									<option value="12" {{ $amount->value('interval') == '12' ? 'selected' : '' }}>年繳</option>
+									<option value="6" {{ $amount->value('interval') == '6' ? 'selected' : '' }}>半年繳</option>
+									<option value="3" {{ $amount->value('interval') == '3' ? 'selected' : '' }}>季繳</option>
+									<option value="1" {{ $amount->value('interval') == '1' ? 'selected' : '' }}>月繳</option>
+								</select>
+								<span class="input-group-text" id="inputGroup-sizing-default">一次</span>
+							</div>
+						</div> 
+						<div class="second-column" style="width:40%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">租金</span>
+								<span class="input-group-text">$</span>
+								<input type="text" class="form-control" name="amount" value="{{ $amount->value('amount') }}"
+									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+							</div>
 						</div>
-					</div><hr>
+					</div>
 					<div class="row">
-						<div class="left-column" style="width:22%;">介紹</div>
-						<div class="right-column" style="width:78%;">
-							<textarea name="introduce" rows="5" cols="50">{{ $houses->value('introduce') }}</textarea>
+						<div class="first-column" style="width:30%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">可住</span>
+								<input type="text" class="form-control" name="num_renter" value="{{ $houses->num_renter }}"
+									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+								<span class="input-group-text" id="inputGroup-sizing-default">人</span>
+							</div>
+						</div> 
+						<div class="second-column" style="width:40%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">最短租</span>
+								<input type="text" class="form-control" name="min_period" value="{{ $houses->min_period }}"
+									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+								<span class="input-group-text" id="inputGroup-sizing-default">個月</span>
+							</div>
+						</div> 
+						<div class="third-column" style="width:30%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">房間</span>
+								<input type="text" class="form-control" name="pattern" value="{{ $houses->pattern }}"
+									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+								<span class="input-group-text" id="inputGroup-sizing-default">間</span>
+							</div>
 						</div>
-					</div><hr>	
+					</div>
+					
+					<div class="row">
+						<div class="first-column" style="width:30%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">房間</span>
+								<input type="text" class="form-control" name="size" value="{{ $houses->size }}"
+									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+								<span class="input-group-text" id="inputGroup-sizing-default">坪</span>
+							</div>
+						</div> 
+						<div class="second-column" style="width:40%;">
+							<div class="input-group mb-3">
+								<label class="input-group-text" for="inputGroupSelect01">類型</label>
+									<select class="form-select" id="inputGroupSelect01" name="type" style="text-align:center">
+										<option value="" disabled selected>--請選擇--</option>
+										<option value="雅房" {{ $houses->type == '雅房' ? 'selected' : '' }}>雅房</option>
+										<option value="分租套房" {{ $houses->type == '分租套房' ? 'selected' : '' }}>分租套房</option>
+										<option value="獨立套房" {{ $houses->type == '獨立套房' ? 'selected' : '' }}>獨立套房</option>
+										<option value="整層住家" {{ $houses->type == '整層住家' ? 'selected' : '' }}>整層住家</option>
+									</select>
+							</div>
+						</div>
+						<div class="third-column" style="width:30%;">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">第</span>
+								<input type="text" class="form-control" name="floor"  value="{{ $houses->floor }}"
+									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
+								<span class="input-group-text" id="inputGroup-sizing-default">層</span>
+							</div>
+						</div> 
+					</div>
 
 					<div class="row">
-						<div class="first-column" style="width:22%;">租金</div>
-						<div class="second-column" style="width:28%;">
-							<input type="text" name="amount" style="width:100px" 
-								value="{{ $amount->value('amount') }}" pattern="[0-9]*" title="只能輸入數字">
-						</div>
-						<div class="third-column" style="width:22%;">繳納區間</div>
-						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="interval" style="width:100px" 
-								value="{{ $amount->value('interval') }}" placeholder="月" pattern="[0-9]*" title="只能輸入數字">
-						</div>
-					</div><hr>
-					
-					<div class="row">
-						<div class="first-column" style="width:22%;">可住人數</div>
-						<div class="second-column" style="width:28%;">
-							<input type="text" name="num_renter" style="width:100px" 
-								value="{{ $houses->num_renter }}" pattern="[0-9]*" title="只能輸入數字">
-						</div>
-						<div class="third-column" style="width:22%;">最短租期</div>
-						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="min_period" style="width:100px" 
-								value="{{ $houses->min_period }}" placeholder="月">
-						</div>
-					</div><hr>
-					
-					<div class="row">
-						<div class="first-column" style="width:22%;">格局</div>
-						<div class="second-column" style="width:28%;">
-							<input type="text" name="pattern" style="width:100px" 
-								value="{{ $houses->pattern }}" placeholder="房間數量">
-						</div>
-						<div class="third-column" style="width:22%;">坪數</div>
-						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="size" style="width:100px"
-								value="{{ $houses->size }}">
-						</div>
-					</div><hr>
-					
-					<div class="row">
-						<div class="first-column" style="width:22%;">類型</div>
-						<div class="second-column" style="width:28%;">
-							<select name="type">
-							    <option value="" disabled selected>--請選擇--</option>
-								<option value="雅房" {{ $houses->type == '雅房' ? 'selected' : '' }}>雅房</option>
-								<option value="分租套房" {{ $houses->type == '分租套房' ? 'selected' : '' }}>分租套房</option>
-								<option value="獨立套房" {{ $houses->type == '獨立套房' ? 'selected' : '' }}>獨立套房</option>
-								<option value="整層住家" {{ $houses->type == '整層住家' ? 'selected' : '' }}>整層住家</option>
-							</select>
-						</div>
-						<div class="third-column" style="width:22%;">樓層</div>
-						<div class="fourth-column" style="width:28%;">
-							<input type="text" name="floor" style="width:100px" value="{{ $houses->floor }}">
-						</div>
-					</div><hr>
-					
-					<div class="row">
-						<div class="left-column" style="width:22%;">設備</div>
-						<div class="right-column" style="width:78%;">
-							<div class="furnish-list">
-								<div class="input-group">
-									@foreach($furnish as $furnish)
-										<div class="furnish-input-group">
-											<input type="hidden" name="furnishings[]" value="{{ $furnish->furnish }}">
-											<button type="button" class="btn btn-outline-dark btn-sm">
-												{{ $furnish->furnish }}
-											</button><button type="button" class="btn btn-outline-danger btn-sm delete-furnish">
-												刪除
-											</button>&nbsp;
-										</div>
-									@endforeach
-								</div>
+						<div class="first-column" style="width:50%;">
+							<div class="input-group mb-3" style="height:20px;">
+								<span class="input-group-text" id="inputGroup-sizing-default">設備</span>
 							</div>
 							<div>
-								<input type="text" name="furnish" id="furnish-input">
-								<button type="button" class="btn btn-success btn-sm add-furnish">新增</button>
-							</div>
-						</div>
-					</div><hr>
-					
-					<div class="row">
-						<div class="left-column" style="width:22%;">特色</div>
-						<div class="right-column" style="width:78%;">
-							<div class="feature-list">
-								<div class="input-group">
-									@foreach($feature as $feature)
-										<div class="furnish-input-group">
-											<input type="hidden" name="features[]" value="{{ $feature->feature }}">
-											<button type="button" class="btn btn-outline-dark btn-sm feature-button">
-												{{ $feature->feature }}
-											</button><button type="button" class="btn btn-outline-danger btn-sm delete-feature">
-												刪除
-											</button>&nbsp;
+								@php
+									$furnish_array = [];
+									foreach ($furnish as $furnish) {
+										$furnish_array[] = $furnish->furnish;
+									}
+								@endphp
+								<div class="input-group mb-3" style="height:20px">	
+
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冷氣"
+											style="width:20px;transform: translate(50%, 10%);" {{ in_array('冷氣', $furnish_array) ? 'checked' : '' }}>									
+									</div>
+									<input type="text" class="form-control" disabled value="冷氣">
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="電風扇"
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('電風扇', $furnish_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="電風扇">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">
+										<div class="input-group-text">
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="熱水器" 
+												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('熱水器', $furnish_array) ? 'checked' : '' }}>
 										</div>
-									@endforeach
+										<input type="text" class="form-control" disabled value="熱水器">
+									
+										<div class="input-group-text">
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="洗衣機" 
+												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('洗衣機', $furnish_array) ? 'checked' : '' }}>
+										</div>
+										<input type="text" class="form-control" disabled value="洗衣機">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">	
+										<div class="input-group-text">
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冰箱" 
+												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('冰箱', $furnish_array) ? 'checked' : '' }}>
+										</div>
+										<input type="text" class="form-control" disabled value="冰箱">
+									
+										<div class="input-group-text">
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="網路" 
+												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('網路', $furnish_array) ? 'checked' : '' }}>
+										</div>
+										<input type="text" class="form-control" disabled value="網路">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">	
+										<div class="input-group-text">
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="天然瓦斯" 
+												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('天然瓦斯', $furnish_array) ? 'checked' : '' }}>
+										</div>
+										<input type="text" class="form-control" disabled value="天然瓦斯">
 								</div>
 							</div>
-							<div>
-								<input type="text" name="feature" id="feature-input">
-								<button type="button" class="btn btn-success btn-sm add-feature">新增</button>
+						</div>
+						
+						<div class="second-column" style="width:50%;">
+							<div class="input-group mb-3" style="height:20px;">
+								<span class="input-group-text" id="inputGroup-sizing-default">特色</span>
 							</div>
+							<div>
+								@php
+									$feature_array = [];
+									foreach ($feature as $feature) {
+										$feature_array[] = $feature->feature;
+									}
+								@endphp
+								<div class="input-group mb-3" style="height:20px">	
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可養寵物"
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可養寵物', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="可養寵物">
+								
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可開伙" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可開伙', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="可開伙">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有管理員" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有管理員', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="有管理員">
+								
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="垃圾代收" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('垃圾代收', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="垃圾代收">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">	
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可報稅" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可報稅', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="可報稅">
+								
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可入籍" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可入籍', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="可入籍">
+								</div>
+
+								<div class="input-group mb-3" style="height:20px">	
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有車位" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有車位', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="有車位">
+								
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有電梯" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有電梯', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="有電梯">
+								</div>
+								
+								<div class="input-group mb-3" style="height:20px">	
+									<div class="input-group-text">
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有陽台" 
+											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有陽台', $feature_array) ? 'checked' : '' }}>
+									</div>
+									<input type="text" class="form-control" disabled value="有陽台">
+								</div>		
+							</div>									
 						</div>
 					</div><hr>
 					

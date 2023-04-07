@@ -2,6 +2,7 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '報修頁面')
 @section('page-content')
+
     @if(Session::has('success'))
         <div class="alert alert-success">
             {{ Session::get('success') }}

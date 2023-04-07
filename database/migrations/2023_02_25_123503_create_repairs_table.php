@@ -14,7 +14,7 @@ return new class extends Migration
 		Schema::create('repairs', function (Blueprint $table) {
             $table->id(); //編號
             $table->unsignedBigInteger('renter_id');//租客編號
-            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade')->onDelete('set default')->default(999);
+            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade')->onDelete('restrict');
             $table->unsignedBigInteger('house_id'); //房屋編號
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status'); //狀態(未維修、已維修、維修中)

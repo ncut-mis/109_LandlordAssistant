@@ -1,6 +1,6 @@
-@extends('layouts.owner_master')
+@extends('layouts.renter_master')
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-@section('title', '房東管理頁面')
+@section('title', '房屋資訊')
 @section('page-content')
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script>
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
-                        <a class="btn btn-danger text-center" href="{{ route('owners.home.index',$house->owner_id) }}">返回</a>
+                        <a class="btn btn-danger text-center" href="{{ route('renters.houses.index') }}">返回</a>
                     </div>
                 </div>
             </div>
