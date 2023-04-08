@@ -120,7 +120,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<a class="btn btn-primary" href="{{ route('owners.locations.houses.index',[$owner_id,$location->id]) }}">進入地點</a>
+							<a class="btn btn-primary" href="{{ route('owners.locations.houses.show',[$owner_id,$location->id]) }}">進入地點</a>
 						</div>
 					</div>
 				@endforeach
@@ -134,7 +134,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<a class="btn btn-primary" href="{{ route('owners.locations.houses.index',[$owner_id,$location->id]) }}">進入地點</a>
+							<a class="btn btn-primary" href="{{ route('owners.locations.houses.show',[$owner_id,$location->id]) }}">進入地點</a>
 						</div>
 					</div>
 				@endforeach
@@ -148,7 +148,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<a class="btn btn-primary" href="{{ route('owners.locations.houses.index',[$owner_id,$location->id]) }}">進入地點</a>
+							<a class="btn btn-primary" href="{{ route('owners.locations.houses.show',[$owner_id,$location->id]) }}">進入地點</a>
 						</div>
 					</div>
 				@endforeach
@@ -162,7 +162,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<a class="btn btn-primary" href="{{ route('owners.locations.houses.index',[$owner_id,$location->id]) }}">進入地點</a>
+							<a class="btn btn-primary" href="{{ route('owners.locations.houses.show',[$owner_id,$location->id]) }}">進入地點</a>
 						</div>
 					</div>
 				@endforeach

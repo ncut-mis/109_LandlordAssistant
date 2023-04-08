@@ -19,25 +19,7 @@ class HouseController extends Controller
      */
     public function index($owner, Location $location)
     {
-		//抓取全部房屋
-		$houses = $location->houses;
-        //抓取出租中房屋
-		$for_rent = $location->houses->where('lease_status', '出租中');
-		//抓取已刊登房屋
-		$listed = $location->houses->where('lease_status', '已刊登');
-		//抓取閒置房屋
-		$vacancy = $location->houses->where('lease_status', '閒置');
-
-
-		$data = [
-            'owner_id' => $owner,
-            'location' => $location,
-            'houses' => $houses,
-            'for_rent' => $for_rent,
-            'listed' => $listed,
-            'vacancy' => $vacancy,
-        ];
-		return view('owners.locations.houses.index',$data);
+		//
     }
 
     /**
@@ -206,25 +188,27 @@ class HouseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(House $house)
+    public function show($owner, Location $location)
     {
-		$owner = $house->owner;
-		$owner_data = $owner->user;
-		$furnishings = $house->furnishings;
-		$features = $house->features;
-		$image = $house->image;
-		$expenses = $house->expenses;
-		//$image
+		//抓取全部房屋
+		$houses = $location->houses;
+        //抓取出租中房屋
+		$for_rent = $location->houses->where('lease_status', '出租中');
+		//抓取已刊登房屋
+		$listed = $location->houses->where('lease_status', '已刊登');
+		//抓取閒置房屋
+		$vacancy = $location->houses->where('lease_status', '閒置');
+
+
 		$data = [
-			'house' => $house,
-			'owner' => $owner,
-			'owner_data' => $owner_data,
-            'furnishings' => $furnishings,
-            'features' => $features,
-            'image' => $image,
-            'expenses' => $expenses,
-		];
-		return view('houses.show',$data);
+            'owner_id' => $owner,
+            'location' => $location,
+            'houses' => $houses,
+            'for_rent' => $for_rent,
+            'listed' => $listed,
+            'vacancy' => $vacancy,
+        ];
+		return view('owners.locations.houses.show',$data);
     }
 
     public function advance_search(House $house)

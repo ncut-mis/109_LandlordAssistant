@@ -67,7 +67,7 @@
 	<div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
 		<div class="location" style="padding: 20px;border: 1px solid #ccc;width:1200px">
 			<div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
-				<a class="btn btn-outline-secondary text-center" href="{{ route('owners.locations.houses.index',[$house->owner_id, $location_id]) }}">返回</a>
+				<a class="btn btn-outline-secondary text-center" href="{{ route('owners.locations.houses.show',[$house->owner_id, $location_id]) }}">返回</a>
 				<div class="row">
 					<div class="column" style="width:50%;text-align:right">
 						<ul class="nav nav-home mb-3" id="home-tab" role="tablist">
@@ -271,4 +271,4 @@
 		</div>
 	</div>
 </form>
-    @endsection
+@endsection

@@ -51,7 +51,7 @@ Route::get('houses/advance_search/create', [HouseController::class, 'advance_sea
 Route::get('houses/advance_search', [HouseController::class, 'advance_search'])->name('houses.advance_search');
 
 // 3-7-4 訪客/會員查看租屋資訊
-Route::get('houses/{house}', [HouseController::class, 'show'])->name('houses.show');
+Route::get('houses/{house}', [HomeController::class, 'show'])->name('houses.show');
 
 // 3-7-6 訪客登入(預設應該已經有)
 Route::get('login', [AuthenticatedSessionController::class, 'create']);
@@ -92,8 +92,8 @@ Route::patch('owners/locations/{location}', [LocationController::class, 'update'
 // 3-9-3 會員(房東)刪除地點
 Route::delete('owners/locations/{location}', [LocationController::class, 'destroy'])->name('owners.locations.destroy');
 
-//會員(房東)查看某地點下的房屋
-Route::get('users/owners/{owner}/locations/{location}/houses', [HouseController::class, 'index'])->name('owners.locations.houses.index');
+//會員(房東)進入某地點下查看房屋
+Route::get('users/owners/{owner}/locations/{location}/houses', [HouseController::class, 'show'])->name('owners.locations.houses.show');
 
 // 3-9-4 會員(房東)新增房屋
 Route::get('owners/locations/{location}/houses/create', [HouseController::class, 'create'])->name('owners.locations.houses.create');

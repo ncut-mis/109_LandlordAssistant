@@ -40,9 +40,25 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(House $house)
     {
-        return view('houses.show');
+        $owner = $house->owner;
+		$owner_data = $owner->user;
+		$furnishings = $house->furnishings;
+		$features = $house->features;
+		$image = $house->image;
+		$expenses = $house->expenses;
+		//$image
+		$data = [
+			'house' => $house,
+			'owner' => $owner,
+			'owner_data' => $owner_data,
+            'furnishings' => $furnishings,
+            'features' => $features,
+            'image' => $image,
+            'expenses' => $expenses,
+		];
+		return view('houses.show',$data);
     }
 
     public function about()
