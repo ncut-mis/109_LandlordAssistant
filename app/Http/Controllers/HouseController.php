@@ -17,9 +17,27 @@ class HouseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($owner, Location $location)
     {
+		//抓取全部房屋
+		$houses = $location->houses;
+        //抓取出租中房屋
+		$for_rent = $location->houses->where('lease_status', '出租中');
+		//抓取已刊登房屋
+		$listed = $location->houses->where('lease_status', '已刊登');
+		//抓取閒置房屋
+		$vacancy = $location->houses->where('lease_status', '閒置');
 
+
+		$data = [
+            'owner_id' => $owner,
+            'location' => $location,
+            'houses' => $houses,
+            'for_rent' => $for_rent,
+            'listed' => $listed,
+            'vacancy' => $vacancy,
+        ];
+		return view('owners.locations.houses.index',$data);
     }
 
     /**

@@ -78,6 +78,7 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
+		$location = $house->location;
 		$contracts = $house->contracts; // 取得房屋的所有合約
 		$renters = $contracts->map(function ($contract) {
 			return $contract->renter; // 取得每個合約的租客
@@ -93,6 +94,7 @@ class OwnerController extends Controller
 
 		$data = [
             'contract' =>$contracts,
+            'location_id' =>$location->id,
 			'renters_data' => $renters_data,
             'furnishings' => $furnishings,
             'features' => $features,

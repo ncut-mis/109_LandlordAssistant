@@ -92,6 +92,9 @@ Route::patch('owners/locations/{location}', [LocationController::class, 'update'
 // 3-9-3 會員(房東)刪除地點
 Route::delete('owners/locations/{location}', [LocationController::class, 'destroy'])->name('owners.locations.destroy');
 
+//會員(房東)查看某地點下的房屋
+Route::get('users/owners/{owner}/locations/{location}/houses', [HouseController::class, 'index'])->name('owners.locations.houses.index');
+
 // 3-9-4 會員(房東)新增房屋
 Route::get('owners/locations/{location}/houses/create', [HouseController::class, 'create'])->name('owners.locations.houses.create');
 Route::post('owners/locations/{location}/houses', [HouseController::class, 'store'])->name('owners.locations.houses.store');
