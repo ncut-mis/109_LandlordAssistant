@@ -25,12 +25,12 @@
     border-radius: 50%;
     transition: all .3s ease-in-out;
   }
-  
+
   .scroll-to-top:hover {
     background-color: #eee;
     cursor: pointer;
   }
-  
+
   .scroll-to-top i {
     font-size: 20px;
     color: #333;
@@ -59,7 +59,7 @@ function confirmDelete(event, houseId) {
 }
 
 </script>
-	
+
 {{-- 回到最上面的按鈕 --}}
 <button onclick="scrollToTop()" class="scroll-to-top">
   <i class="fas fa-chevron-up"></i>
@@ -116,7 +116,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
 								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
 							</button>
 						</div>
@@ -213,15 +213,15 @@ function confirmDelete(event, houseId) {
 											@csrf
 											@method('DELETE')
 											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-											<button type="submit" class="btn btn-outline-danger" 
-												data-lease-status="{{ $house->lease_status }}" 
+											<button type="submit" class="btn btn-outline-danger"
+												data-lease-status="{{ $house->lease_status }}"
 												onclick="confirmDelete(event, {{ $house->id }})">刪除
 											</button>
 											{{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column" style="width:15%;transform: translate(0%, -10%);">
-										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -238,7 +238,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
 								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
 							</button>
 						</div>
@@ -314,15 +314,15 @@ function confirmDelete(event, houseId) {
 											@csrf
 											@method('DELETE')
 											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-											<button type="submit" class="btn btn-outline-danger" 
-												data-lease-status="{{ $house->lease_status }}" 
+											<button type="submit" class="btn btn-outline-danger"
+												data-lease-status="{{ $house->lease_status }}"
 												onclick="confirmDelete(event, {{ $house->id }})">刪除
 											</button>
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column" style="width:15%;transform: translate(0%, -10%);">
-										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -339,7 +339,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
 								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
 							</button>
 						</div>
@@ -415,15 +415,15 @@ function confirmDelete(event, houseId) {
 											@csrf
 											@method('DELETE')
 											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-											<button type="submit" class="btn btn-outline-danger" 
-												data-lease-status="{{ $house->lease_status }}" 
+											<button type="submit" class="btn btn-outline-danger"
+												data-lease-status="{{ $house->lease_status }}"
 												onclick="confirmDelete(event, {{ $house->id }})">刪除
 											</button>
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column" style="width:15%;transform: translate(0%, -10%);">
-										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}">房屋資訊</a>
 									</div>
 								</div>
 							</div>
@@ -440,7 +440,7 @@ function confirmDelete(event, houseId) {
 						<div class="left-column" style="width:90%;padding: 20px;">
 							<h2 style="display: inline;">{{ $location->name }}　</h2>
 							<span class="translate-middle badge rounded-pill bg-secondary" style="transform: translate(-50%, -50%);">{{ count($location->houses) }}間</span>
-							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}" 
+							<button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#houses{{ $key }}"
 								aria-expanded="false" aria-controls="houses{{ $key }}">展開房屋
 							</button>
 						</div>
@@ -516,15 +516,15 @@ function confirmDelete(event, houseId) {
 											@csrf
 											@method('DELETE')
 											<input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-											<button type="submit" class="btn btn-outline-danger" 
-												data-lease-status="{{ $house->lease_status }}" 
+											<button type="submit" class="btn btn-outline-danger"
+												data-lease-status="{{ $house->lease_status }}"
 												onclick="confirmDelete(event, {{ $house->id }})">刪除
 											</button>
 											{{--<button type="submit" class="btn btn-outline-danger" onclick="confirmDelete(event)" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
 										</form>
 									</div>
 									<div class="column" style="width:15%;transform: translate(0%, -10%);">
-										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}}">房屋資訊</a>
+										<a class="btn btn-primary" href="{{ route('owners.houses.show', $house->id) }}">房屋資訊</a>
 									</div>
 								</div>
 							</div>

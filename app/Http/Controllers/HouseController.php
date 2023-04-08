@@ -143,15 +143,19 @@ class HouseController extends Controller
         }
         $house_id = $house->id;
 
-        // 建立 Expense 資料
-        $expense = new Expense([
-            'house_id' => $house_id,
-            'type' => "租金",
-            'amount' => $request->amount,
-            'interval' => $request->interval,
-        ]);
-        // 透過關聯存取資料庫
+
+
+            // 建立 Expense 資料
+            $expense = new Expense([
+                'house_id' => $house_id,
+                'type' => "租金",
+                'amount' => $request->amount,
+                'interval' => $request->interval,
+            ]);
+            // 透過關聯存取資料庫
         $house->expenses()->save($expense);
+
+
 
 
         // 建立 Furnish 資料

@@ -13,9 +13,16 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($location_id)
     {
+        $location = Location::with(['posts' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->findOrFail($location_id);
 
+        return view('renters.houses.posts.index', [
+            'location' => $location,
+            'posts' => $location->posts
+        ]);
     }
 
     public function owners_index($location_id)

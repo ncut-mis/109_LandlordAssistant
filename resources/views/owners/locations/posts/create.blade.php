@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="date" class="form-label">日期</label>
-                    <input id="date" name="date" type="date" class="form-control" >
+                    <input id="date" name="date" type="date" class="form-control" value="{{ date('Y-m-d') }}">
                 </div>
                 <div class="text-right">
                     <button class="btn btn-primary btn-sm" type="submit">儲存</button>

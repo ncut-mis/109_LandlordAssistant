@@ -45,8 +45,8 @@ class OwnerController extends Controller
         })->with(['houses' => function ($query) {
             $query->where('lease_status', '閒置');
         }])->get();
-		
-				
+
+
 		$locations_data = [
             'locations' => $locations,
             'for_rent' => $for_rent,
@@ -85,12 +85,14 @@ class OwnerController extends Controller
 		$renters_data = $renters->map(function ($renter) {
 			return $renter->user; // 取得每個租客的使用者資料
 		});
-		
+
 		$furnishings = $house->furnishings;
 		$features = $house->features;
 		$image = $house->image;
 		$expenses = $house->expenses;
+
 		$data = [
+            'contract' =>$contracts,
 			'renters_data' => $renters_data,
             'furnishings' => $furnishings,
             'features' => $features,

@@ -9,7 +9,7 @@
                     </div>
                     房屋資訊
                 </a>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{url('renters/houses/posts')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                     費用
                 </a>
-                <a class="nav-link" href="{{url('renters/houses/repairs')}}">
+                <a class="nav-link" href="{{route('renters.houses.repairs.index')}}">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>

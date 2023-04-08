@@ -176,9 +176,11 @@ Route::get('owners/houses/repairs/{repair}', [RepairController::class, 'show'])-
 Route::patch('owners/houses/repairs/{repair}', [RepairController::class, 'update_status'])->name('houses.repairs.update');
 
 //會員(租客)查看首頁
-Route::get('renters/houses',[HomeController::class,'renters_index'])->name('renters.houses.index');
+Route::get('renters/houses',[RenterController::class,'index'])->name('renters.houses.index');
+//會員(租客)查看單一房屋
+Route::get('renters/houses/{house}',[RenterController::class,'show'])->name('renters.houses.show');
 // 3-10-1 會員(租客)查看公告
-Route::get('renters/houses/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
+Route::get('renters/houses/{location_id}/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
 
 // 3-10-3 會員(租客)查看合約
 Route::get('renters/houses/contracts/{contract}', [ContractController::class, 'show'])->name('renters.houses.contracts.show');
@@ -195,6 +197,7 @@ Route::get('renters/houses/repairs', [RepairController::class, 'index'])->name('
 
 // 3-10-7 會員(租客)新增報修訊息
 Route::get('renters/houses/repairs/create', [RepairController::class, 'create'])->name('renters.houses.repairs.create');
+Route::get('renters/houses/{house}/repairs/create',[RepairController::class,'create_in_house'])->name('renters.houses.repairs.in.house.create');
 Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name('renters.houses.repairs.store');
 
 // 3-10-8 會員(租客)修改報修訊息
