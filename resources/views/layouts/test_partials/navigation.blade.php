@@ -1,6 +1,6 @@
 <nav id="nav">
     <ul>
-        <li class="current"><a href="index.html">Home</a></li>
+        <li class="current"><a href="#">首頁</a></li>
         <li>
             <a href="#">Dropdown</a>
             <ul>
@@ -18,8 +18,8 @@
                 <li><a href="#">Veroeros feugiat</a></li>
             </ul>
         </li>
-        <li><a href="left-sidebar.html">Left Sidebar</a></li>
-        <li><a href="right-sidebar.html">Right Sidebar</a></li>
-        <li><a href="no-sidebar.html">No Sidebar</a></li>
+        <li><a href="#">Left Sidebar</a></li>
+        <li><a href="#">Right Sidebar</a></li>
+        <li><a href="#">No Sidebar</a></li>
     </ul>
 </nav>
