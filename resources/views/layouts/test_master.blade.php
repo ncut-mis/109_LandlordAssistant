@@ -33,6 +33,10 @@
 <script src="{{asset('js/breakpoints.min.js')}}"></script>
 <script src="{{asset('js/util.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/tw-city-selector.js')}}"></script>
+<script>
+    new TwCitySelector();
+</script>
 
 </body>
 </html>

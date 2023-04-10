@@ -1,25 +1,16 @@
 <nav id="nav">
     <ul>
-        <li class="current"><a href="#">首頁</a></li>
+        <li class="current"><a href="{{url('/')}}">租屋網</a></li>
         <li>
-            <a href="#">Dropdown</a>
+            <a href="#">會員中心</a>
             <ul>
-                <li><a href="#">Lorem ipsum dolor</a></li>
-                <li><a href="#">Magna phasellus</a></li>
-                <li>
-                    <a href="#">Phasellus consequat</a>
-                    <ul>
-                        <li><a href="#">Lorem ipsum dolor</a></li>
-                        <li><a href="#">Phasellus consequat</a></li>
-                        <li><a href="#">Magna phasellus</a></li>
-                        <li><a href="#">Etiam dolore nisl</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Veroeros feugiat</a></li>
+                <li><a href="{{url('users/1')}}" style="text-align: center">個人資料</a></li>
+                <li><a href="{{url('users/owners/1')}}" style="text-align: center">切換 房東 身分</a></li>
+                <li><a href="{{url('renters/houses')}}" style="text-align: center">切換 租客 身分</a></li>
+                <li><a href="#" style="text-align: center">登出</a></li>
             </ul>
-        </li>
-        <li><a href="#">Left Sidebar</a></li>
-        <li><a href="#">Right Sidebar</a></li>
-        <li><a href="#">No Sidebar</a></li>
+        <li><a href="{{url('about')}}">關於我們</a></li>
+        <li><a href="{{url('help')}}">幫助</a></li>
+        <li><a href="#">註冊/登入</a></li>
     </ul>
 </nav>
