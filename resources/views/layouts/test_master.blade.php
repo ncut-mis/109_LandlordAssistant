@@ -26,9 +26,10 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{asset('js/jquery.min.js')}}"></script>{{asset('')}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/jquery.dropotron.min.js')}}"></script>
-<script src="{{asset('js/jquery.scrolly.min.j')}}s"></script>
+<script src="{{asset('js/jquery.scrolly.min.js')}}"></script>
 <script src="{{asset('js/browser.min.js')}}"></script>
 <script src="{{asset('js/breakpoints.min.js')}}"></script>
 <script src="{{asset('js/util.js')}}"></script>

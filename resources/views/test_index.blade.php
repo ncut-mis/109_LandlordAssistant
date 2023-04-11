@@ -37,7 +37,17 @@
             max-height: 6rem;
             line-height: 1.5rem; /*行高*/
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 5;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .text-truncate2{
+            Overflow:hidden;
+            max-height: 2rem;
+            line-height: 2rem; /*行高*/
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
             text-overflow: ellipsis;
             display: block;
         }
@@ -74,7 +84,9 @@
                                     <!-- Feature -->
                                     <section class="box feature">
                                         <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img src="image/{{ $image->image }}" alt=""/></a>
+                                        <div class="col-2 text-truncate2">
                                         <h3><a href="{{ route('houses.show', $house->id) }}">{{ $house->name }}</a></h3>
+                                        </div>
                                         <div class="col-2 text-truncate">
                                         <p>
                                             {{ $house->introduce }}
@@ -86,12 +98,6 @@
                                     @endforeach
                                 @endforeach
 
-                                <div class="col-12">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button large">Do Something</a></li>
-                                        <li><a href="#" class="button alt large">Think About It</a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </section>

@@ -14,7 +14,12 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+        $id = 1; //user id
+        $users = User::find($id);
+        $data  = [
+            'users' => $users
+        ];
+        return view('users.test_index',$data);
     }
 
     /**

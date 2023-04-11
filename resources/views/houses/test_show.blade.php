@@ -30,7 +30,7 @@
                                         <p>
                                             {{ $house->introduce }}
                                         </p>
-                                        <a href="#" class="button">Continue Reading</a>
+                                        <a href="#" class="button">聯繫房東</a>
                                     </article>
 
                                 </div>
