@@ -57,6 +57,11 @@ class OwnerController extends Controller
         return view('owners.home.index',$locations_data);
     }
 
+	public function owners_index(House $house)
+    {
+		
+	}
+
     /**
      * Show the form for creating a new resource.
      */
@@ -65,10 +70,20 @@ class OwnerController extends Controller
         //
     }
 
+	public function owners_create(House $house)
+    {
+        //
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOwnerRequest $request)
+    {
+        //
+    }
+
+	public function owners_store(Request $request, House $house)
     {
         //
     }
@@ -113,10 +128,20 @@ class OwnerController extends Controller
         //
     }
 
+	public function owners_edit(House $house, $rt)
+    {
+        //
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateOwnerRequest $request, Owner $owner)
+    {
+        //
+    }    
+	
+	public function owners_update(Request $request, House $house, $rt)
     {
         //
     }
@@ -125,6 +150,11 @@ class OwnerController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Owner $owner)
+    {
+        //
+    }    
+	
+	public function owners_destroy(House $house, $rt)
     {
         //
     }
