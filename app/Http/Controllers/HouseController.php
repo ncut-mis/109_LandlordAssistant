@@ -182,7 +182,7 @@ class HouseController extends Controller
             }
         }
 
-        return redirect()->route('owners.home.index',$owner_id)->with('success', '儲存成功！');
+        return redirect()->route('owners.locations.houses.show',[$owner_id, $location])->with('success', '儲存成功！');
     }
 
     /**
@@ -470,8 +470,8 @@ class HouseController extends Controller
             }
         }
 
-        // 重定向到房屋管理頁面
-        return redirect()->route('owners.home.index', [$location->id, $house->id])->with('success', '修改成功！');
+        // 重定向到單一地點下房屋頁面
+        return redirect()->route('owners.locations.houses.show', [$location->owner->id, $location->id])->with('success', '修改成功！');
     }
 
     public function publish_update()

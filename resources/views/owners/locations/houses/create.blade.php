@@ -372,7 +372,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 							</button>
 						</div>
 						<div class="right-column" style="width:33%;text-align:left">
-							<a class="btn btn-secondary text-center" href="{{ route('owners.home.index',$owner_id) }}">返回</a>
+							<a class="btn btn-secondary text-center" href="{{ route('owners.locations.houses.show',[$owner_id, $locations->id]) }}">返回</a>
 						</div>
 					</div>
 				</div>
