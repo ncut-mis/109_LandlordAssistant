@@ -15,4 +15,9 @@ class Payment extends Model
     public function renter(){
         return $this->belongsTo(Renter::class);
     }
+
+    protected $fillable = [
+        'account_name',
+        'account'
+    ];
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Payment;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -43,17 +45,25 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Payment $payment)
+    public function edit(User $user)
     {
-        //
+        $data = [
+            'user_id' => $user->id,
+            'account_name' => $user->account_name,
+            'account' => $user->account,
+        ];
+        return view('users.payment.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaymentRequest $request, Payment $payment)
+    public function update(Request $request, User $user)
     {
-        //
+        $user->account_name = $request->account_name;
+        $user->account = $request->account;
+        $user->save();
+            return redirect()->route('users.index', $user->id)->with('success', '設定帳戶成功！');
     }
 
     /**

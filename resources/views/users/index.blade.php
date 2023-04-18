@@ -1,6 +1,16 @@
 @extends('layouts.master')
 @section('title', '個人資料')
 @section('content')
+@if (session('success'))
+    <script>
+        alert('{{ session('success') }}');
+    </script>
+@endif
+@if (session('error'))
+    <script>
+        alert('{{ session('error') }}');
+    </script>
+@endif
 <header class="py-0">
     <div class="px-4 py-3 text-dark">
     </div>
@@ -78,12 +88,12 @@
             <th class="fw-bolder">銀行帳號</th>
         </tr>
         <tr>
-            <td class="center">487</td>
-            <td class="center">5948787418</td>
+            <td class="center">{{$users->account_name}}</td>
+            <td class="center">{{$users->account}}</td>
         </tr>
         <tr>
             <td colspan="2" class="center">
-                <button type="button" class="btn btn-light btn-sm">設定帳戶</button>
+                <a class="btn btn-light btn-sm" href="{{ route('users.payment.edit',[$users->id]) }}">設定帳戶</a>
             </td>
         </tr>
     </table>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');//電話
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();//email
+            $table->string('account_name'); //銀行名稱
             $table->string('account'); //銀行帳戶
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

@@ -12,9 +12,13 @@ class UserProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($user)
     {
-        return view('users.index');
+        $users = user::find(1);
+        $data = [
+            'users' => $users,
+        ];
+        return view('users.index',$data);
     }
 
     /**

@@ -68,8 +68,8 @@ Route::get('users/{user}/payment/create', [PaymentController::class, 'create'])-
 Route::post('users/{user}/payment', [PaymentController::class, 'store'])->name('users.payment.store');
 
 // 3-8-3 會員(房東/租客)修改轉帳資訊
-Route::get('users/{user}/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('users.payment.edit');
-Route::patch('users/{user}/payment/{payment}', [PaymentController::class, 'update'])->name('users.payment.update');
+Route::get('users/{user}/payment/edit', [PaymentController::class, 'edit'])->name('users.payment.edit');
+Route::patch('users/{user}/payment', [PaymentController::class, 'update'])->name('users.payment.update');
 
 // 3-8-4 會員(房東/租客)顯示租客頁面
 Route::get('users/renters/{renter}', [RenterController::class, 'index'])->name('renters.home.index');
