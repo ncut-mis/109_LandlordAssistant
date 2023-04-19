@@ -223,6 +223,19 @@ Route::patch('renters/houses/repairs/{repair}', [RepairController::class, 'updat
 
 // 3-10-9 會員(租客)刪除報修訊息
 Route::delete('renters/houses/repairs/{repair}', [RepairController::class, 'destroy'])->name('renters.houses.repairs.destroy');
+// 系統查看公告
+Route::get('ad/posts', [SystemPostController::class, 'index'])->name('ad.posts.index');
+
+// 系統新增公告
+Route::get('ad/posts/create', [SystemPostController::class, 'create'])->name('ad.posts.create');
+Route::post('ad/posts', [SystemPostController::class, 'store'])->name('ad.posts.store');
+
+// 系統修改公告
+Route::get('ad/posts/{post}/edit', [SystemPostController::class, 'edit'])->name('ad.posts.edit');
+Route::patch('ad/posts/{post}', [SystemPostController::class, 'update'])->name('ad.posts.update');
+
+// 系統刪除公告
+Route::delete('ad/posts/{post}', [SystemPostController::class, 'destroy'])->name('ad.posts.destroy');
 
 Route::middleware([
     'auth:sanctum',

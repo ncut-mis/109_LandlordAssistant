@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\SystemPost;
 use App\Http\Requests\StoreSystemPostRequest;
 use App\Http\Requests\UpdateSystemPostRequest;
@@ -13,7 +14,9 @@ class SystemPostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = SystemPost::orderBy('created_at', 'DESC')->get();
+        $data = ['posts' => $posts];
+        return view('ad.posts.index', $data);
     }
 
     /**
@@ -21,7 +24,7 @@ class SystemPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('ad.posts.create');
     }
 
     /**
@@ -29,7 +32,19 @@ class SystemPostController extends Controller
      */
     public function store(StoreSystemPostRequest $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|max:50',
+            'content' => 'required',
+        ]);
+        $post = new SystemPost([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ]);
+//        真實用戶
+//        $post->user_id = auth()->user()->id;
+        $post->admin_id = 1;
+        $post->save();
+        return redirect()->route('ad.posts.index');
     }
 
     /**
@@ -43,24 +58,33 @@ class SystemPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SystemPost $systemPost)
+    public function edit(SystemPost $post)
     {
-        //
+        $data=[
+            'post'=>$post,
+        ];
+        return view('ad.posts.edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSystemPostRequest $request, SystemPost $systemPost)
+    public function update(UpdateSystemPostRequest $request, SystemPost $post)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|max:50',
+            'content' => 'required',
+        ]);
+        $post->update($request->all());
+        return redirect()->route('ad.posts.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SystemPost $systemPost)
+    public function destroy(SystemPost $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('ad.posts.index');
     }
 }
