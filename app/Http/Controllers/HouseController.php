@@ -48,11 +48,15 @@ class HouseController extends Controller
         //dd($request->image);
         $validatedData = $request->validate([
             'name' => 'required|max:255',
+            'county' => 'required|max:255',
+            'area' => 'required|max:255',
             'address' => 'required|max:255',
             'furnish.*' => 'required|max:255',
         ], [
             'name.required' => '請輸入房屋名稱。',
             'name.max' => '房屋名稱不得超過255個字元。',
+            'county.required' => '請輸入縣市。',
+            'area.required' => '請輸入地區。',
             'address.required' => '請輸入地址。',
             'address.max' => '地址不得超過255個字元。',
             'furnish.*.required' => '請輸入設備。',
@@ -68,6 +72,8 @@ class HouseController extends Controller
             $validatedData1 = $request->validate([
                 'image' => 'required',
                 'name' => 'required',
+                'county' => 'required',
+                'area' => 'required',
                 'address' => 'required',
                 'introduce' => 'required',
                 'amount' => 'required',
@@ -83,6 +89,8 @@ class HouseController extends Controller
             ],[
                 'image.required' => '請添加圖片。',
                 'name.required' => '請輸入房屋名稱。',
+                'county.required' => '請輸入縣市。',
+                'area.required' => '請輸入地區。',
                 'address.required' => '請輸入地址。',
                 'introduce.required' => '請輸入介紹。',
                 'amount.required' => '請輸入金額。',
@@ -104,6 +112,8 @@ class HouseController extends Controller
         // 建立 House 資料
         $house = House::create([
             'name' => $validatedData['name'],
+            'county' => $validatedData['county'],
+            'area' => $validatedData['area'],
             'address' => $validatedData['address'],
             'lease_status' => $lease_status,
             'introduce' => $request->introduce,
@@ -251,6 +261,8 @@ class HouseController extends Controller
         // 從請求中獲取表單提交的數據
         $data = $request->only([
             'name',
+            'county',
+            'area',
             'address',
             'introduce',
             'num_renter',

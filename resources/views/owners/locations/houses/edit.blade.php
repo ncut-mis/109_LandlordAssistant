@@ -15,12 +15,12 @@
     border-radius: 50%;
     transition: all .3s ease-in-out;
   }
-  
+
   .scroll-to-top:hover {
     background-color: #eee;
     cursor: pointer;
   }
-  
+
   .scroll-to-top i {
     font-size: 20px;
     color: #333;
@@ -130,7 +130,7 @@
 	<button onclick="scrollToTop()" class="scroll-to-top">
 	  <i class="fas fa-chevron-up"></i>
 	</button>
-	
+
     <form method="POST" action="{{ route('owners.locations.houses.update', [$locations->id, $houses->id]) }}" enctype="multipart/form-data">
 		@csrf
 		@method('PATCH')
@@ -181,15 +181,21 @@
 								required aria-describedby="inputGroup-sizing-default">
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="input-group mb-3">
-							<span class="input-group-text" id="inputGroup-sizing-default">地址</span>
-							<input type="text" class="form-control" name="address" value="{{ $houses->address }}"
-								required aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">縣市</span>
+                            <input type="text" class="form-control" name="county" style="width:15%" value="{{ $houses->county }}"
+                                   required aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地區</span>
+                            <input type="text" class="form-control" name="area" style="width:15%" value="{{ $houses->area }}"
+                                   required aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地址</span>
+                            <input type="text" class="form-control" name="address" style="width:46%" value="{{ $houses->address }}"
+                                   required aria-describedby="inputGroup-sizing-default">
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="inputGroup-sizing-default">介紹</span>
@@ -197,7 +203,7 @@
 								aria-describedby="inputGroup-sizing-default">{{ $houses->introduce }}</textarea>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:50%;">
 							<div class="input-group mb-3">
@@ -211,7 +217,7 @@
 								</select>
 								<span class="input-group-text" id="inputGroup-sizing-default">一次</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">租金</span>
@@ -229,7 +235,7 @@
 									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">人</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">最短租</span>
@@ -237,7 +243,7 @@
 									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">個月</span>
 							</div>
-						</div> 
+						</div>
 						<div class="third-column" style="width:30%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">房間</span>
@@ -247,7 +253,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:30%;">
 							<div class="input-group mb-3">
@@ -256,7 +262,7 @@
 									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">坪</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupSelect01">類型</label>
@@ -276,7 +282,7 @@
 									style="text-align:right" aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">層</span>
 							</div>
-						</div> 
+						</div>
 					</div>
 
 					<div class="row">
@@ -291,11 +297,11 @@
 										$furnish_array[] = $furnish->furnish;
 									}
 								@endphp
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 
 									<div class="input-group-text">
 										<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冷氣"
-											style="width:20px;transform: translate(50%, 10%);" {{ in_array('冷氣', $furnish_array) ? 'checked' : '' }}>									
+											style="width:20px;transform: translate(50%, 10%);" {{ in_array('冷氣', $furnish_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="冷氣">
 									<div class="input-group-text">
@@ -307,42 +313,42 @@
 
 								<div class="input-group mb-3" style="height:20px">
 										<div class="input-group-text">
-											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="熱水器" 
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="熱水器"
 												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('熱水器', $furnish_array) ? 'checked' : '' }}>
 										</div>
 										<input type="text" class="form-control" disabled value="熱水器">
-									
+
 										<div class="input-group-text">
-											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="洗衣機" 
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="洗衣機"
 												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('洗衣機', $furnish_array) ? 'checked' : '' }}>
 										</div>
 										<input type="text" class="form-control" disabled value="洗衣機">
 								</div>
 
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 										<div class="input-group-text">
-											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冰箱" 
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冰箱"
 												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('冰箱', $furnish_array) ? 'checked' : '' }}>
 										</div>
 										<input type="text" class="form-control" disabled value="冰箱">
-									
+
 										<div class="input-group-text">
-											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="網路" 
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="網路"
 												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('網路', $furnish_array) ? 'checked' : '' }}>
 										</div>
 										<input type="text" class="form-control" disabled value="網路">
 								</div>
 
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 										<div class="input-group-text">
-											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="天然瓦斯" 
+											<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="天然瓦斯"
 												style="width:20px;transform: translate(50%, 10%);" {{ isset($furnish_array) && in_array('天然瓦斯', $furnish_array) ? 'checked' : '' }}>
 										</div>
 										<input type="text" class="form-control" disabled value="天然瓦斯">
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="second-column" style="width:50%;">
 							<div class="input-group mb-3" style="height:20px;">
 								<span class="input-group-text" id="inputGroup-sizing-default">特色</span>
@@ -354,15 +360,15 @@
 										$feature_array[] = $feature->feature;
 									}
 								@endphp
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 									<div class="input-group-text">
 										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可養寵物"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可養寵物', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="可養寵物">
-								
+
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可開伙" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可開伙"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可開伙', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="可開伙">
@@ -370,57 +376,57 @@
 
 								<div class="input-group mb-3" style="height:20px">
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有管理員" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有管理員"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有管理員', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="有管理員">
-								
+
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="垃圾代收" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="垃圾代收"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('垃圾代收', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="垃圾代收">
 								</div>
 
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可報稅" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可報稅"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可報稅', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="可報稅">
-								
+
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可入籍" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可入籍"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('可入籍', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="可入籍">
 								</div>
 
-								<div class="input-group mb-3" style="height:20px">	
+								<div class="input-group mb-3" style="height:20px">
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有車位" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有車位"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有車位', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="有車位">
-								
+
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有電梯" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有電梯"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有電梯', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="有電梯">
 								</div>
-								
-								<div class="input-group mb-3" style="height:20px">	
+
+								<div class="input-group mb-3" style="height:20px">
 									<div class="input-group-text">
-										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有陽台" 
+										<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有陽台"
 											style="width:20px;transform: translate(50%, 10%);" {{ isset($feature_array) && in_array('有陽台', $feature_array) ? 'checked' : '' }}>
 									</div>
 									<input type="text" class="form-control" disabled value="有陽台">
-								</div>		
-							</div>									
+								</div>
+							</div>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="left-column" style="width:50%;text-align:right">
 							<button class="btn btn-primary" type="submit">

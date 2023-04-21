@@ -48,6 +48,8 @@ class House extends Model
 
 	protected $fillable = [
         'id',
+        'county',
+        'area',
         'address',
         'lease_status',
         'introduce',

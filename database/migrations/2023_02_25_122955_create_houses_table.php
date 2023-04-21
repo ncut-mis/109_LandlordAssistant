@@ -13,6 +13,8 @@ return new class extends Migration
     {
 		Schema::create('houses', function (Blueprint $table) {
             $table->id(); //編號
+            $table->string('county'); //縣市
+            $table->string('area'); //地區
             $table->string('address'); //地址
             $table->string('name'); //房屋名稱
             $table->string('introduce'); //介紹

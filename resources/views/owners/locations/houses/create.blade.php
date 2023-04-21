@@ -14,12 +14,12 @@
     border-radius: 50%;
     transition: all .3s ease-in-out;
   }
-  
+
   .scroll-to-top:hover {
     background-color: #eee;
     cursor: pointer;
   }
-  
+
   .scroll-to-top i {
     font-size: 20px;
     color: #333;
@@ -33,7 +33,7 @@
 		  behavior: 'smooth'
 		});
 	  }
-	
+
 	//驗證表單
 	function validateAndSubmit() {
 		const inputs = document.querySelectorAll('input, select, textarea');
@@ -57,7 +57,7 @@
 		}
 	}
 
-	  
+
 	$(document).ready(function() {
 		// 動態增加圖片路徑
 		$('.add-image').click(function() {
@@ -113,7 +113,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 	<button onclick="scrollToTop()" class="scroll-to-top">
 	  <i class="fas fa-chevron-up"></i>
 	</button>
-	
+
 	<form method="post" action="{{ route('owners.locations.houses.store',$locations->id) }}" enctype="multipart/form-data">
 		@csrf
 		<div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
@@ -151,15 +151,21 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								required aria-describedby="inputGroup-sizing-default">
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="input-group mb-3">
-							<span class="input-group-text" id="inputGroup-sizing-default">地址</span>
-							<input type="text" class="form-control" name="address"
+							<span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">縣市</span>
+							<input type="text" class="form-control" name="county" style="width:15%"
 								required aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地區</span>
+                            <input type="text" class="form-control" name="area" style="width:15%"
+                                   required aria-describedby="inputGroup-sizing-default">
+                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地址</span>
+                            <input type="text" class="form-control" name="address" style="width:46%"
+                                   required aria-describedby="inputGroup-sizing-default">
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="inputGroup-sizing-default">介紹</span>
@@ -167,7 +173,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								aria-describedby="inputGroup-sizing-default"></textarea>
 						</div>
 					</div><hr>
-					
+
 					<div class="row">
 						<div class="first-column" style="width:50%;">
 							<div class="input-group mb-3">
@@ -181,7 +187,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								</select>
 								<span class="input-group-text" id="inputGroup-sizing-default">一次</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">租金</span>
@@ -199,7 +205,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">人</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">最短租</span>
@@ -207,7 +213,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">個月</span>
 							</div>
-						</div> 
+						</div>
 						<div class="third-column" style="width:30%;">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-default">房間</span>
@@ -226,7 +232,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">坪</span>
 							</div>
-						</div> 
+						</div>
 						<div class="second-column" style="width:40%;">
 							<div class="input-group mb-3">
 								<label class="input-group-text" for="inputGroupSelect01">類型</label>
@@ -246,7 +252,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 								<span class="input-group-text" id="inputGroup-sizing-default">層</span>
 							</div>
-						</div> 
+						</div>
 					</div>
 
 					<div class="row">
@@ -255,12 +261,12 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								<span class="input-group-text" id="inputGroup-sizing-default">設備</span>
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冷氣" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="冷氣">
-								
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="電風扇" style="width:20px;transform: translate(50%, 10%);">
 								</div>
@@ -272,14 +278,14 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="熱水器" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="熱水器">
-								
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="洗衣機" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="洗衣機">
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="冰箱" style="width:20px;transform: translate(50%, 10%);">
 								</div>
@@ -291,25 +297,25 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 								<input type="text" class="form-control" disabled value="網路">
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="furnishings[]" value="天然瓦斯" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="天然瓦斯">
 							</div>
 						</div>
-						
+
 						<div class="second-column" style="width:50%;">
 							<div class="input-group mb-3" style="height:20px;">
 								<span class="input-group-text" id="inputGroup-sizing-default">特色</span>
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可養寵物" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="可養寵物">
-							
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可開伙" style="width:20px;transform: translate(50%, 10%);">
 								</div>
@@ -321,43 +327,43 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有管理員" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="有管理員">
-							
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="垃圾代收" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="垃圾代收">
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可報稅" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="可報稅">
-							
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="可入籍" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="可入籍">
 							</div>
 
-							<div class="input-group mb-3" style="height:20px">	
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有車位" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="有車位">
-							
+
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有電梯" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="有電梯">
 							</div>
-							
-							<div class="input-group mb-3" style="height:20px">	
+
+							<div class="input-group mb-3" style="height:20px">
 								<div class="input-group-text">
 									<input class="form-check-input mt-0" type="checkbox" name="features[]" value="有陽台" style="width:20px;transform: translate(50%, 10%);">
 								</div>
 								<input type="text" class="form-control" disabled value="有陽台">
-							</div>							
+							</div>
 						</div>
 					</div><hr>
 					<div class="row">

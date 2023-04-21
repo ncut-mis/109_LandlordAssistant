@@ -132,11 +132,11 @@
 										房屋名稱：{{ $house->name }}<hr class="text-white-50">
 									</div>
 									<div class="row bg-dark text-white py-2">
-										<div class="col-2">
+                                        <div class="col-2">
 											地址：
 										</div>
 										<div class="col">
-											{{ $house->address }}
+                                            {{ $house->county }}{{ $house->area }}{{ $house->address }}
 										</div>
 									</div>
 									<div class="row bg-dark text-white py-2">
@@ -144,7 +144,7 @@
 											介紹：
 										</div>
 										<div class="col-9">
-											{{ $house->introduce }}
+                                            @if(!empty($house->introduce)){{ $house->introduce }}@elseif(empty($house->introduce))尚未填寫 @endif
 										</div>
 									</div>
 									{{--以下內容待修改--}}
@@ -171,26 +171,26 @@
 									</div>
 									<div class="row bg-dark text-white py-2">
 										<div class="col-6">
-											可住　{{ $house->num_renter }}人
+											可住　@if(!empty($house->num_renter)){{ $house->num_renter }}@elseif(empty($house->num_renter))尚未填寫 @endif人
 										</div>
 										<div class="col-6">
-											最短租　{{ $house->min_period }}個月
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-6">
-											房間　{{ $house->pattern }}　間
-										</div>
-										<div class="col-6">
-											房間　{{ $house->size }}坪
+											最短租　@if(!empty($house->min_period)){{ $house->min_period }}@elseif(empty($house->min_period))尚未填寫 @endif個月
 										</div>
 									</div>
 									<div class="row bg-dark text-white py-2">
 										<div class="col-6">
-											類型：　{{ $house->type }}　
+											房間　@if(!empty($house->pattern)){{ $house->pattern }}@elseif(empty($house->pattern))尚未填寫 @endif　間
 										</div>
 										<div class="col-6">
-											第　{{ $house->floor }}層
+											房間　@if(!empty($house->size)){{ $house->size }}@elseif(empty($house->size))尚未填寫 @endif坪
+										</div>
+									</div>
+									<div class="row bg-dark text-white py-2">
+										<div class="col-6">
+											類型：　@if(!empty($house->type)){{ $house->type }}　@elseif(empty($house->type))尚未填寫 @endif
+										</div>
+										<div class="col-6">
+											第　@if(!empty($house->floor)){{ $house->floor }}@elseif(empty($house->floor))尚未填寫 @endif層
 										</div>
 									</div>
 									<hr class="text-white-50">
