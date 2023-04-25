@@ -59,7 +59,7 @@ class OwnerController extends Controller
 
 	public function owners_index(House $house)
     {
-		
+
 	}
 
     /**
@@ -106,7 +106,6 @@ class OwnerController extends Controller
 		$features = $house->features;
 		$image = $house->image;
 		$expenses = $house->expenses;
-
 		$data = [
             'contract' =>$contracts,
             'location_id' =>$location->id,
@@ -116,6 +115,7 @@ class OwnerController extends Controller
             'house' => $house,
             'image' => $image,
             'expenses' => $expenses,
+
         ];
         return view('owners.houses.show',$data);
     }
@@ -139,8 +139,8 @@ class OwnerController extends Controller
     public function update(UpdateOwnerRequest $request, Owner $owner)
     {
         //
-    }    
-	
+    }
+
 	public function owners_update(Request $request, House $house, $rt)
     {
         //
@@ -152,8 +152,8 @@ class OwnerController extends Controller
     public function destroy(Owner $owner)
     {
         //
-    }    
-	
+    }
+
 	public function owners_destroy(House $house, $rt)
     {
         //
