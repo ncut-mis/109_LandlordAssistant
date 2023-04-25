@@ -1,101 +1,110 @@
 @extends('layouts.master')
 @section('title', '個人資料')
 @section('content')
-@if (session('success'))
-    <script>
-        alert('{{ session('success') }}');
-    </script>
-@endif
-@if (session('error'))
-    <script>
-        alert('{{ session('error') }}');
-    </script>
-@endif
-<header class="py-0">
-    <div class="px-4 py-3 text-dark">
-    </div>
-</header>
-{{--    <table style="margin: 0 auto;">--}}
-<div class="main">
-    <table class="table text-light">
-        <tbody>
-        <tr>
-            <th class="px-1 text-light fs-3" colspan="5" style="border: 0">個人資料</th>
-        </tr>
-        <tr>
-            <td colspan="2" rowspan="3" class="center" style="border: 0"><img
-                    src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3e%3cpath fill='%23000000' d='M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z'/%3e%3c/svg%3e"
-                    alt="圖像" width="100" height="100"><br></td>
-            <th class="fw-bolder" style="border: 0">會員編號</th>
-            <td colspan="2" style="border: 0">000001</td>
-        </tr>
-        <tr>
-            <th class="fw-bolder" style="border: 0">帳號</th>
-            <td colspan="2" style="border: 0">kuri_1127</td>
-        </tr>
-        <tr>
-            <th class="fw-bolder" style="border: 0">姓名</th>
-            <td colspan="2" style="border: 0">黃佳怡</td>
-        </tr>
-        <tr>
-            <th class="fw-bolder" style="border: 0">性別</th>
-            <td style="border: 0">女</td>
-            <th class="fw-bolder" style="border: 0">電話</th>
-            <td colspan="2" style="border: 0">0919497338</td>
-        </tr>
-        <tr>
-            <th class="fw-bolder" style="border: 0">生日</th>
-            <td style="border: 0">2001/11/27</td>
-            <th class="fw-bolder" style="border: 0">信箱</th>
-            <td style="border: 0">alice266581@gmail.com</td>
-            <td style="border: 0"><button type="button" class="btn btn-light">修改個人資料</button></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="py-2"></div>
-<div class="main">
-    <table class="table text-light">
-        <tbody>
-        <tr>
-            <th class="px-1 fs-3" colspan="5" style="border: 0">安全性</th>
-        </tr>
-        <tr>
-            <th class="fw-bolder">帳號</th>
-            <td>kuri_1127</td>
-            <td><button type="button" class="btn btn-light btn-sm">更改帳號</button></td>
-        </tr>
-        <tr>
-            <th class="fw-bolder">密碼</th>
-            <td>你看不到窩</td>
-            <td>
-                <button type="button" class="btn btn-light btn-sm">更改密碼</button>
-            </td>
-        </tr>
+    <style>
+        .container-1 {
+            width: 70%;
+            margin: 50px auto;
+        }
 
-        </tbody>
-    </table>
-</div>
-<div class="py-2"></div>
-<div class="main">
-    <table class="table text-light">
-        <tbody>
-        <tr>
-            <th class="px-1 fs-3" colspan="5" style="border: 0">收付款方式</th>
-        </tr>
-        <tr>
-            <th class="fw-bolder">銀行帳戶</th>
-            <th class="fw-bolder">銀行帳號</th>
-        </tr>
-        <tr>
-            <td class="center">{{$users->account_name}}</td>
-            <td class="center">{{$users->account}}</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="center">
-                <a class="btn btn-light btn-sm" href="{{ route('users.payment.edit',[$users->id]) }}">設定帳戶</a>
-            </td>
-        </tr>
-    </table>
-</div>
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .name-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 0px;
+            margin-right: 30px;
+        }
+
+        input[type=text1] {
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 0.5em;;
+            font-size: 20px;
+            background-color: white;
+            background-position: 10px 13px;
+            background-size: 27px;
+            background-repeat: no-repeat;
+            padding: 2px 20px;
+        }
+
+        .btn1 {
+            -webkit-appearance: none;
+            display: inline-block;
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: #b1ddab;
+            color: #fff;
+            border: 0;
+            line-height: 1em;
+            border-radius: 8px;
+            outline: 0;
+            cursor: pointer;
+            -moz-transition: background-color .2s ease-in-out;
+            -webkit-transition: background-color .2s ease-in-out;
+            -o-transition: background-color .2s ease-in-out;
+            -ms-transition: background-color .2s ease-in-out;
+            transition: background-color .2s ease-in-out;
+            font-size: 1.25em;
+            padding: 0.85em 1.85em;
+            text-align: center;
+        }
+
+
+    </style>
+
+    <section id="main">
+        <div class="col-12">
+            <h2 class="major" style="margin: 0 50px"><span>個人資料</span></h2>
+
+            <div class="container-1">
+                <div class="main">
+                    <div class="name-container">
+                        <div class="avatar">
+                            <img src="{{ asset('image/userimage.png') }}" alt="Image">
+                        </div>
+                        <div class="name">
+                            <h2>{{ $users->name }}</h2>
+                            <h2>{{ $users->email }}</h2>
+                            <h2>{{ $users->phone }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="major" style="margin: 0 50px"><span>收付款方式</span></h2>
+            <div class="container-1">
+                <div class="main">
+                    <div class="col">
+                        <h2>銀行代碼　　</h2>
+                        <h2>銀行帳號　　</h2>
+                    </div>
+                    <br>
+                    <div class="col">
+                        <h2>{{ $users->account_name }}</h2>
+                        <h2>{{ $users->account }}</h2>
+                    </div>
+                </div>
+                <div class="main">
+                    <a class="btn1" href="{{ route('users.edit',$users->id) }}">修改</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
 @endsection

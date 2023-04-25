@@ -1,181 +1,180 @@
 @extends('layouts.master')
-@section('title', '主頁')
+@section('title', '房間介紹')
 @section('content')
-<style>
-  .scroll-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 10px;
-    padding: 8px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    transition: all .3s ease-in-out;
-  }
-  
-  .scroll-to-top:hover {
-    background-color: #eee;
-    cursor: pointer;
-  }
-  
-  .scroll-to-top i {
-    font-size: 20px;
-    color: #333;
-  }
-</style>
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        .cc {
+            font-size: 30px;
+            font-weight: bold;
+            display: inline-block;
+            color: rgb(194, 6, 6);
+        }
 
-<script>
-	function scrollToTop() {
-		// 滾動到頁面頂部
-		window.scrollTo({
-		  top: 0,
-		  behavior: 'smooth'
-		});
-	}
-    $(function(){
-        $('.masonry').masonry({
-            itemSelector: '.item'
-        })});
+        .bb {
+            font-size: 25px;
+            font-weight: bold;
+            display: inline-block;
+            color: rgb(168, 141, 105);
+        }
 
-</script>
-	
-{{-- 回到最上面的按鈕 --}}
-<button onclick="scrollToTop()" class="scroll-to-top">
-  <i class="fas fa-chevron-up"></i>
-</button>
+        .button4 {
+            font-size: 16px;
+            padding: 6px;
+            background-color: white;
+            color: #779d87;
+            border: 2px solid #779d87;
+            border-radius: 8px;
+            text-decoration: none;
+        }
 
-    <!-- Section-->
-<section class="py-5">
-	<div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
-		<div class="location" style="padding: 20px;border: 1px solid #ccc;width:1200px">
-			<div class="tab-content">
-				<div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab"
-				 style="padding: 20px;border: 1px solid #ccc;">
-					<div class="container" style="overflow-y: auto;padding: 20px;">
-						<div class="row" style="white-space: nowrap;">
-							<div class="col-md-3 item" style="margin-right: 5px;">
-								@foreach($house->image as $image)
-									<img src="{{ asset('image/'.$image->image) }}" alt="123" class="img-fluid">
-								@endforeach
-							</div>
-						</div>
-					</div>
-					<header class="bg-dark py-5">
-						<div class="container my-5">
-							<div class="row bg-dark text-white py-2 mx-1">
-								<div class="col-8 fw-bold">
-									<div class="row bg-dark text-white py-2" style="font-size: 3rem;">
-										房屋名稱：{{ $house->name }}<hr class="text-white-50">
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-2">
-											地址：
-										</div>
-										<div class="col">
-											{{ $house->address }}
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-2">
-											介紹：
-										</div>
-										<div class="col-9">
-											{{ $house->introduce }}
-										</div>
-									</div>
-									{{--以下內容待修改--}}
+        .button4:hover {
+            background-color: #afbbb2;
+            color: #ffffff;
+            border: 2px solid #afbbb2;
+        }
 
-									<div class="row bg-dark text-white py-2">
-										<div class="fs-4" style="white-space: nowrap;">
-											<div class="fs-4">
-												<div class="col-2">
-													每
-													@if( $expenses->value('interval') == 12)
-														年繳
-													@elseif( $expenses->value('interval') == 6)
-														半年繳
-													@elseif( $expenses->value('interval') == 3)
-														季繳
-													@elseif( $expenses->value('interval') == 1)
-														月繳
-													@endif
-													一次　
-													<span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元　　
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-6">
-											可住　{{ $house->num_renter }}人
-										</div>
-										<div class="col-6">
-											最短租　{{ $house->min_period }}個月
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-6">
-											房間　{{ $house->pattern }}　間
-										</div>
-										<div class="col-6">
-											房間　{{ $house->size }}坪
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-6">
-											類型：　{{ $house->type }}　
-										</div>
-										<div class="col-6">
-											第　{{ $house->floor }}層
-										</div>
-									</div>
-									<hr class="text-white-50">
-									<div class="row bg-dark text-white py-2">
-										<div class="col-9" style="white-space: nowrap;">
-											設備<p>
-											@foreach($furnishings as $furnishings)
-												<button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
-											@endforeach
-										</div>
-									</div>
-									<div class="row bg-dark text-white py-2">
-										<div class="col-9" style="white-space: nowrap;">
-											特色<p>
-											@foreach($features as $features)
-												<button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
-											@endforeach
-										</div>
-									</div>
-								</div>
-								<div class="col-4 fw-bold" style="padding: 20px;">
-									<div class="row bg-dark mx-1 text-white">
-										<div class="col fs-3">
-											房東姓名
-										</div>
-										<div class="col fs-3">
-											{{ $owner_data->name }}
-										</div>
-									</div><hr>
-									<div class="row bg-dark mx-1 text-white">
-										<div class="col">
-											聯絡方式
-										</div>
-										<div class="col">
-											{{ $owner_data->phone }}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</header>
-				</div>
-			</div>
-			<div class="column d-flex justify-content-center align-items-center" style="padding: 20px;border: 1px solid #ccc;">
-				<a class="btn btn-danger text-center" href="{{ route('home.index') }}">返回</a>
-			</div>
-		</div>
-	</div>
-</section>
+        .main {
+            width: 60%;
+            margin: 50px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .avatar img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 0px;
+            margin-right: 30px;
+        }
+    </style>
+
+    <section id="main">
+        <div class="container">
+            <div class="col-12">
+
+                <!-- Blog -->
+                <section class="box blog">
+                    <h2 class="major"><span>{{ $house->name }}</span></h2>
+                    <div>
+                        <div class="row">
+                            <div class="col-9 col-12-medium">
+                                <div class="content">
+
+                                    <!-- Featured Post -->
+                                    <article class="box post">
+                                        <header>
+                                            <h3>{{ $house->county }} {{ $house->area }} {{ $house->address }}</h3>
+                                            <h2>
+                                                <a style="font-size: xxx-large; color: #b02a37">${{ number_format($expenses->value('amount')) }}</a>/月
+                                                <div class="bb">
+                                                    @if( $expenses->value('interval') == 12)
+                                                        ｜年繳
+                                                    @elseif( $expenses->value('interval') == 6)
+                                                        ｜半年繳
+                                                    @elseif( $expenses->value('interval') == 3)
+                                                        ｜季繳
+                                                    @elseif( $expenses->value('interval') == 1)
+                                                        ｜月繳
+                                                    @endif</div>
+                                            </h2>
+                                            <ul class="meta">
+                                                <li class="icon fa-clock">上架日期: {{ $house->created_at}}</li>
+                                                <li class="icon fa-comments">看過的人數</li>
+                                            </ul>
+                                            <br>
+
+                                            @foreach($furnishings as $furnishings)
+                                                <a class="button4">{{ $furnishings->furnish }}</a>
+                                            @endforeach<br><br>
+
+                                            @foreach($features as $features)
+                                                <a class="button4">{{ $features->feature }}</a>
+                                            @endforeach
+                                        </header>
+                                        @foreach($house->image as $image)
+                                            <a href="#" class="image featured"><img
+                                                    src="{{ asset('image/'.$image->image) }}" alt="123"/></a>
+                                        @endforeach
+                                        <p>
+                                            {{ $house->introduce }}
+                                        </p>
+
+                                    </article>
+                                </div>
+                            </div>
+
+                            <div class="col-3 col-12-medium">
+                                <div class="sidebar">
+
+                                    <ul class="divided">
+                                        <li>
+                                            <h4>房型:
+                                                <div class="cc">
+                                                    {{ $house->type }}</div>
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <h4>可住人數:
+                                                <div class="cc">
+                                                    {{ $house->num_renter }}</div>
+                                                人
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <h4>最短租期:
+                                                <div class="cc">
+                                                    {{ $house->min_period }}</div>
+                                                個月
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <h4>房間數量:
+                                                <div class="cc">
+                                                    {{ $house->pattern }}</div>
+                                                間
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <h4>房間坪數:
+                                                <div class="cc">
+                                                    {{ $house->size }}</div>
+                                                坪
+                                            </h4>
+                                        </li>
+                                        <li>
+                                            <h4>房間樓層:
+                                                <div class="cc">
+                                                    {{ $house->floor }}</div>
+                                                樓
+                                            </h4>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="major"><span>房東資訊</span></h2>
+                    <div class="main">
+                        <div class="main">
+                            <div class="avatar"><img src="{{ asset('image/userimage.png') }}" alt="Image"></div>
+                        </div>
+                        <div class="main">
+                            <div class="row">
+                                <h3>房東姓名</h3>
+                                <h3>房東電話</h3>
+                            </div>
+                            <div class="row">
+                                <h2>{{ $owner_data->name }}</h2>
+                                <h2>{{ $owner_data->phone }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </section>
 @endsection

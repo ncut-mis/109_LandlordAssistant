@@ -1,4 +1,4 @@
-@extends('layouts.test_master')
+@extends('layouts.master')
 @section('title', '個人資料')
 @section('content')
     <style>
@@ -37,7 +37,8 @@
             background-repeat: no-repeat;
             padding: 2px 20px;
         }
-        .btn1{
+
+        .btn1 {
             -webkit-appearance: none;
             display: inline-block;
             font-family: 'Open Sans Condensed', sans-serif;

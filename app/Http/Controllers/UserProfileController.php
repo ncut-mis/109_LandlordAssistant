@@ -20,7 +20,7 @@ class UserProfileController extends Controller
         $data  = [
             'users' => $users
         ];
-        return view('users.test_index',$data);
+        return view('users.index',$data);
     }
 
     /**
@@ -57,7 +57,7 @@ class UserProfileController extends Controller
         $data  = [
             'users' => $users
         ];
-        return view('users.test_edit',$data);
+        return view('users.edit',$data);
     }
 
     /**

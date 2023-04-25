@@ -17,7 +17,7 @@ class HomeController extends Controller
         $view_data = [
             'houses' => $houses,
         ];
-        return view('test_index', $view_data);
+        return view('index', $view_data);
     }
 
 
@@ -58,17 +58,17 @@ class HomeController extends Controller
             'image' => $image,
             'expenses' => $expenses,
         ];
-        return view('houses.test_show',$data);
+        return view('houses.show',$data);
     }
 
     public function about()
     {
-        return view('test_about');
+        return view('about');
     }
 
     public function help()
     {
-        return view('test_help');
+        return view('help');
     }
     /**
      * Show the form for editing the specified resource.
