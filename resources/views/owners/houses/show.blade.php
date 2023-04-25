@@ -17,6 +17,7 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
+
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script>
         fetch('/upload', {
@@ -69,6 +70,9 @@
             font-size: 20px;
             color: #333;
         }
+
+
+
     </style>
 
     {{-- 回到最上面的按鈕 --}}
@@ -128,7 +132,7 @@
                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
                                             id="home-code-tab" data-bs-toggle="tab" data-bs-target="#home-code"
                                             type="button" role="tab" aria-controls="home-code" aria-selected="false">
-                                        加入租客
+                                        租客資訊
                                     </button>
                                 </li>
                             </ul>
@@ -152,7 +156,8 @@
                                 <div class="row bg-dark text-white py-2 mx-1">
                                     <div class="col-8 fw-bold">
                                         <div class="row bg-dark text-white py-2" style="font-size: 3rem;">
-                                            房屋名稱：{{ $house->name }}<hr class="text-white-50">
+                                            房屋名稱：{{ $house->name }}
+                                            <hr class="text-white-80">
                                         </div>
                                         <div class="row bg-dark text-white py-2">
                                             <div class="col-2">
@@ -234,6 +239,84 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <style>
+
+
+
+
+                                        .container td {
+                                            font-weight: normal;
+                                            font-size: 1em;
+                                            -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+                                            -moz-box-shadow: 0 2px 2px -2px #0E1119;
+                                            box-shadow: 0 2px 2px -2px #0E1119;
+                                        }
+
+
+
+                                        .container td, .container th {
+                                            padding-bottom: 2%;
+                                            padding-top: 2%;
+                                            padding-left:2%;
+                                        }
+
+                                        /* Background-color of the odd rows */
+                                        .container tr:nth-child(odd) {
+                                            background-color: #323C50;
+                                        }
+
+                                        /* Background-color of the even rows */
+                                        .container tr:nth-child(even) {
+                                            background-color: #2C3446;
+                                        }
+                                        h1 {
+                                            font-size:3em;
+                                            font-weight: 300;
+                                            line-height:1em;
+                                            text-align: center;
+                                            color: #4DC3FA;
+                                        }
+                                        body {
+                                            font-family: 'Open Sans', sans-serif;
+                                            font-weight: 300;
+                                            line-height: 1.42em;
+                                            color:#A7A1AE;
+                                            text-align: center;
+
+                                        }
+                                        .container th {
+                                            background-color: #1F2739;
+                                        }
+
+                                        .container td:first-child { color: #FB667A; }
+
+                                        .container tr:hover {
+                                            background-color: #464A52;
+                                            -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+                                            -moz-box-shadow: 0 6px 6px -6px #0E1119;
+                                            box-shadow: 0 6px 6px -6px #0E1119;
+                                        }
+
+                                        .container td:hover {
+                                            background-color: #FFF842;
+                                            color: #403E10;
+                                            font-weight: bold;
+
+                                            box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+                                            transform: translate3d(6px, -6px, 0);
+
+                                            transition-delay: 0s;
+                                            transition-duration: 0.4s;
+                                            transition-property: all;
+                                            transition-timing-function: line;
+                                        }
+
+                                        @media (max-width: 800px) {
+                                            .container td:nth-child(4),
+                                            .container th:nth-child(4) { display: none; }
+                                        }
+
+                                    </style>
                                     <div class="col-4 fw-bold" style="padding: 20px;border: 1px solid #ccc;">
                                         <div class="row bg-dark py-2 mx-1 text-white fs-3">
                                             <div class="col fw-bold">
@@ -244,7 +327,7 @@
                                             </div>
                                             <hr class="text-white-50">
                                         </div>
-                                        @if(!$renters_data->isEmpty())
+                                        @if(!$renters_data->empty())
                                             @foreach($renters_data as $renters_data)
                                                 <div class="row bg-dark py-2 mx-1 text-white">
                                                     <div class="col fw-bold">
@@ -293,6 +376,46 @@
                     </div>
                     <div class="tab-pane fade" id="home-code" role="tabpanel" aria-labelledby="home-code-tab"
                          style="padding: 20px;border: 1px solid #ccc;">
+                        @if(!$renters_data->isEmpty())
+                            @foreach($renters_data as $renters_data)
+                        <table class="container">
+                            <thead>
+                            <tr>
+                                <th><h1>租客名稱</h1></th>
+                                <th><h1>電話</h1></th>
+                                <th><h1>行動</h1></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{ $renters_data->name }}</td>
+
+                                <td>{{ $renters_data->phone }}</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            @endforeach
+                        @else
+                            <table class="container">
+                                <thead>
+                                <tr>
+                                    <th><h1>租客名稱</h1></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>尚無租客</td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+
+
+                        @endif
+                        <br>
                         目前邀請碼為:
                         <div class="alert alert-primary" role="alert">
                             {{ $house->invitation_code }}
