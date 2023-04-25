@@ -1,9 +1,9 @@
 <footer id="footer">
     <div class="container">
         <div class="row gtr-200">
-            <div class="col-12">
+            <!--<div class="col-12">
 
-                <!-- About -->
+                --About--
                 <section>
                     <h2 class="major"><span>What's this about?</span></h2>
                     <p>
@@ -15,7 +15,7 @@
                     </p>
                 </section>
 
-            </div>
+            </div>-->
             <div class="col-12">
 
                 <!-- Contact -->

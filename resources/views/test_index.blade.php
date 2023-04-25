@@ -32,8 +32,8 @@
             transition: width 0.4s ease-in-out;
         }
 
-        .text-truncate{
-            Overflow:hidden;
+        .text-truncate {
+            Overflow: hidden;
             max-height: 6rem;
             line-height: 1.5rem; /*行高*/
             -webkit-box-orient: vertical;
@@ -42,8 +42,8 @@
             display: block;
         }
 
-        .text-truncate2{
-            Overflow:hidden;
+        .text-truncate2 {
+            Overflow: hidden;
             max-height: 2rem;
             line-height: 2rem; /*行高*/
             -webkit-box-orient: vertical;
@@ -75,61 +75,34 @@
                     <!-- Features -->
                     <section class="box features">
                         <h2 class="major"><span>你可能會喜歡....</span></h2>
-                        <div>
-                            <div class="row">
-                                @foreach ($houses as $house)
-                                    @foreach($house->image as $image)
+                        <div class="row">
+                            @foreach ($houses as $house)
+
                                 <div class="col-3 col-6-medium col-12-small">
 
                                     <!-- Feature -->
                                     <section class="box feature">
-                                        <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img src="image/{{ $image->image }}" alt=""/></a>
+                                        @foreach($house->image as $image)
+
+                                            <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
+                                                    src="image/{{ $image->image }}" alt=""/></a>
+                                        @endforeach
                                         <div class="col-2 text-truncate2">
-                                        <h3><a href="{{ route('houses.show', $house->id) }}">{{ $house->name }}</a></h3>
+                                            <h3><a href="{{ route('houses.show', $house->id) }}">{{ $house->county }}|{{ $house->name }}</a>
+                                            </h3>
                                         </div>
                                         <div class="col-2 text-truncate">
-                                        <p>
-                                            {{ $house->introduce }}
-                                        </p>
+                                            <p>
+                                                {{ $house->introduce }}
+                                            </p>
                                         </div>
                                     </section>
 
                                 </div>
-                                    @endforeach
-                                @endforeach
 
-                            </div>
-                        </div>
+                        @endforeach
                     </section>
-                <div class="col-12">
-
-                    <!-- Highlight -->
-                    <section class="box highlight">
-                        <ul class="special">
-                            <li><a href="#" class="icon solid fa-search"><span class="label">Magnifier</span></a></li>
-                            <li><a href="#" class="icon solid fa-tablet-alt"><span class="label">Tablet</span></a></li>
-                            <li><a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a></li>
-                            <li><a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a></li>
-                        </ul>
-                        <header>
-                            <h2>A random assortment of icons in circles</h2>
-                            <p>And some text that attempts to explain their significance</p>
-                        </header>
-                        <p>
-                            Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper mod
-                            quis
-                            eget mi. Etiam eu<br/>
-                            ante risus. Aliquam erat volutpat. Aliquam luctus et mattis lectus amet pulvinar. Nam nec
-                            turpis
-                            consequat.
-                        </p>
-                    </section>
-
                 </div>
-
-
-                </div>
-
             </div>
         </div>
     </section>
