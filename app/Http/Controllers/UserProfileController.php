@@ -14,9 +14,11 @@ class UserProfileController extends Controller
      */
     public function index($user)
     {
-        $users = user::find(1);
-        $data = [
-            'users' => $users,
+
+        $id = 1; //user id
+        $users = User::find($id);
+        $data  = [
+            'users' => $users
         ];
         return view('users.index',$data);
     }
@@ -50,7 +52,12 @@ class UserProfileController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $id = '1'; //user id
+        $users = User::find($id);
+        $data  = [
+            'users' => $users
+        ];
+        return view('users.edit',$data);
     }
 
     /**
@@ -58,7 +65,14 @@ class UserProfileController extends Controller
      */
     public function update(UpdateUserProfileRequest $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->account_name = $request->account_name;
+        $user->account = $request->account;
+        $user->save();
+
+        return redirect()->route('users.index',$user->id)->with('success', '修改成功！');
     }
 
     /**
