@@ -123,14 +123,14 @@
 
 
     </style>
-    @if(session('success'))
+    @if(session('yes'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            {{ session('yes') }}
         </div>
 
-    @elseif (session('error'))
+    @elseif (session('no'))
         <div class="alert alert-danger">
-            {{ session('error') }}
+            {{ session('no') }}
         </div>
     @endif
     <div class="from-group mb-3 px-3 py-2">
