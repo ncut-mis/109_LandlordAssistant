@@ -67,5 +67,6 @@ class House extends Model
 		'size',
 		'type',
 		'floor',
+        'invitation_code',
     ];
 }
