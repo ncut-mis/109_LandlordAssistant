@@ -17,7 +17,7 @@ class HomeController extends Controller
         $view_data = [
             'houses' => $houses,
         ];
-        return view('index', $view_data);
+        return view('test_index', $view_data);
     }
 
 
@@ -43,32 +43,32 @@ class HomeController extends Controller
     public function show(House $house)
     {
         $owner = $house->owner;
-		$owner_data = $owner->user;
-		$furnishings = $house->furnishings;
-		$features = $house->features;
-		$image = $house->image;
-		$expenses = $house->expenses;
-		//$image
-		$data = [
-			'house' => $house,
-			'owner' => $owner,
-			'owner_data' => $owner_data,
+        $owner_data = $owner->user;
+        $furnishings = $house->furnishings;
+        $features = $house->features;
+        $image = $house->image;
+        $expenses = $house->expenses;
+        //$image
+        $data = [
+            'house' => $house,
+            'owner' => $owner,
+            'owner_data' => $owner_data,
             'furnishings' => $furnishings,
             'features' => $features,
             'image' => $image,
             'expenses' => $expenses,
-		];
-		return view('houses.show',$data);
+        ];
+        return view('houses.test_show',$data);
     }
 
     public function about()
     {
-        return view('about');
+        return view('test_about');
     }
 
     public function help()
     {
-        return view('help');
+        return view('test_help');
     }
     /**
      * Show the form for editing the specified resource.

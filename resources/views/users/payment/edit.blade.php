@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.test_master')
 @section('title', '個人資料')
 @section('content')
 <header class="py-0">
