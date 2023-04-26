@@ -107,18 +107,18 @@ Route::patch('owners/locations/{location}/houses/{house}', [HouseController::cla
 Route::delete('owners/locations/{location}/houses/{house}', [HouseController::class, 'destroy'])->name('owners.locations.houses.destroy');
 
 //會員(房東)查看租客
-Route::get('owners/houses/{house}/rts', [OwnerController::class, 'owners_index'])->name('owners.houses.rts.index');
+Route::get('owners/houses/{house}/rts', [SignatoryController::class, 'index'])->name('owners.houses.rts.index');
 
-//會員(房東)新增租客
-Route::get('owners/houses/{house}/rts/create', [OwnerController::class, 'owners_create'])->name('owners.houses.rts.create');
-Route::post('owners/houses/{house}/rts', [OwnerController::class, 'owners_store'])->name('owners.houses.rts.store');
+//會員(房東)新增租客   租客加入房屋
+Route::get('owners/houses/{house}/rts/create', [SignatoryController::class, 'create'])->name('owners.houses.rts.create');
+Route::post('owners/houses/rts', [SignatoryController::class, 'store'])->name('owners.houses.rts.store');
 
-//會員(房東)修改租客
-Route::get('owners/houses/{house}/rts/{rt}/edit', [OwnerController::class, 'owners_edit'])->name('owners.houses.rts.edit');
-Route::patch('owners/houses/{house}/rts/{rt}', [OwnerController::class, 'owners_update'])->name('owners.houses.rts.update');
+////會員(房東)修改租客
+//Route::get('owners/houses/{house}/rts/{rt}/edit', [SignatoryController::class, 'edit'])->name('owners.houses.rts.edit');
+//Route::patch('owners/houses/{house}/rts/{rt}', [SignatoryController::class, 'update'])->name('owners.houses.rts.update');
 
 //會員(房東)刪除租客
-Route::delete('owners/houses/{house}/rts/{rt}', [OwnerController::class, 'owners_destroy'])->name('owners.houses.rts.destroy');
+Route::delete('owners/houses/rts/{rt}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
 
 // 3-9-7 會員(房東)查看公告
 Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');

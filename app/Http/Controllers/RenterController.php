@@ -14,7 +14,7 @@ class RenterController extends Controller
      */
     public function index()
     {
-        $houses = House::whereHas('contracts', function ($q) {
+        $houses = House::whereHas('signatories', function ($q) {
             $q->where('renter_id', '=', 1);
         })->with('repairs')->get();
         $view_data = [

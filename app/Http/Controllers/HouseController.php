@@ -11,6 +11,7 @@ use App\Models\Feature;
 use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HouseController extends Controller
 {
@@ -108,7 +109,7 @@ class HouseController extends Controller
         }else if(isset($_REQUEST['unpublish'])){
             $lease_status = "閒置";
         }
-
+        $invitation_code=Str::random(8);
         // 建立 House 資料
         $house = House::create([
             'name' => $validatedData['name'],
@@ -125,6 +126,8 @@ class HouseController extends Controller
             'floor' => $request->floor,
             'location_id' => $location,
             'owner_id' => $owner_id,
+            'invitation_code' => $invitation_code,
+
         ]);
 
         // 儲存動態增加的圖片路徑

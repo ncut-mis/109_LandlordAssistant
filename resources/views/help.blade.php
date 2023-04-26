@@ -1,18 +1,20 @@
 @extends('layouts.master')
 @section('title', '幫助')
 @section('content')
-    <header class="bg-dark py-5">
-        <div role="tw-city-selector"></div>
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">幫助</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+    <section id="main">
+        <div class="container">
+            <div class="row gtr-200">
+                <div class="col-12">
+                    <section class="box features">
+                        <h2 class="major"><span>幫助</span></h2>
+                        <h2><span>常見問題</span></h2>
+                        <h2><span>Q&A</span></h2>
+                        <h2><span>租屋資訊</span></h2>
+                        <h2><span>房東管理頁面</span></h2>
+                        <h2><span>租客管理頁面</span></h2>
+                    </section>
+                </div>
             </div>
-        </div>
-    </header>
-    <!-- Section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
         </div>
     </section>
 @endsection

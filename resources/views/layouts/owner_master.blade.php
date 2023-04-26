@@ -37,5 +37,11 @@
 <script src="js/simple-datatables.js" ></script>
 <script src="js/datatables-simple-demo.js"></script>
 <script src="js/scripts.js"></script>
+<script src="{{asset('js/tw-city-selector.js')}}"></script>
+<script>
+    new TwCitySelector({
+        districtFieldName: 'area'
+    });
+</script>
 </body>
 </html>
