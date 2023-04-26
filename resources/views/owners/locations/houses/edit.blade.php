@@ -184,12 +184,10 @@
 
 					<div class="row">
 						<div class="input-group mb-3">
-                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">縣市</span>
-                            <input type="text" class="form-control" name="county" style="width:15%" value="{{ $houses->county }}"
-                                   required aria-describedby="inputGroup-sizing-default">
-                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地區</span>
-                            <input type="text" class="form-control" name="area" style="width:15%" value="{{ $houses->area }}"
-                                   required aria-describedby="inputGroup-sizing-default">
+{{--                            縣市地區選項--}}
+                            <div role="tw-city-selector" class="my-style-selector"
+                                 data-county-value="{{ $houses->county }}"
+                                 data-district-value="{{ $houses->area }}"></div>
                             <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地址</span>
                             <input type="text" class="form-control" name="address" style="width:46%" value="{{ $houses->address }}"
                                    required aria-describedby="inputGroup-sizing-default">

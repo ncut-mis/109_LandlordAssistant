@@ -154,12 +154,7 @@ $(document).on('change', '.image-container input[type="file"]', function () {
 
 					<div class="row">
 						<div class="input-group mb-3">
-							<span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">縣市</span>
-							<input type="text" class="form-control" name="county" style="width:15%"
-								required aria-describedby="inputGroup-sizing-default">
-                            <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地區</span>
-                            <input type="text" class="form-control" name="area" style="width:15%"
-                                   required aria-describedby="inputGroup-sizing-default">
+                            <div role="tw-city-selector" class="my-style-selector"></div>
                             <span class="input-group-text" id="inputGroup-sizing-default" style="width:8%">地址</span>
                             <input type="text" class="form-control" name="address" style="width:46%"
                                    required aria-describedby="inputGroup-sizing-default">
