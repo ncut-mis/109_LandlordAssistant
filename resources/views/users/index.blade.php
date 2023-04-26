@@ -1,6 +1,16 @@
 @extends('layouts.master')
 @section('title', '個人資料')
 @section('content')
+    @if (session('success'))
+        <script>
+            alert('{{ session('success') }}');
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            alert('{{ session('error') }}');
+        </script>
+    @endif
     <style>
         .container-1 {
             width: 70%;

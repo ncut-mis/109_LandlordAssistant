@@ -12,6 +12,10 @@
             justify-content: center;
             align-items: center;
         }
+        .main1 {
+            display: flex;
+            align-items:flex-start ;
+        }
 
         .name-container {
             display: flex;
@@ -92,17 +96,23 @@
                 <div class="container-1">
                     <div class="main">
                         <div class="col">
-                            <div class="row">
+                            <div class="main1">
                                 <h2>銀行代碼　　</h2>
                                 <input type="text1" style="width: 100px;height: 42px" value="{{ $users->account_name }}"
                                        name="account_name" placeholder="請輸入銀行代碼">
                             </div>
                             <br>
-                            <div class="row">
+                            <div class="main1">
                                 <h2>銀行帳號　　</h2>
                                 <input type="text1" style="width: 300px;height: 42px" value="{{ $users->account }}"
                                        name="account" placeholder="請輸入銀行帳號">
                             </div>
+                            <!--<br>
+                            <div class="main1">
+                                <h2>密碼確認　　</h2>
+                                <input type="password" style="width: 300px;height: 42px" value=""
+                                       name="password" placeholder="輸入密碼">
+                            </div>-->
                         </div>
                     </div>
                     <br>

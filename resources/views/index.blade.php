@@ -52,6 +52,7 @@
             display: block;
         }
     </style>
+
     <!-- Banner -->
 
     <section id="banner">
@@ -77,32 +78,34 @@
                         <h2 class="major"><span>你可能會喜歡....</span></h2>
                         <div class="row">
                             @foreach ($houses as $house)
+                                @if($house->lease_status == '已刊登')
+                                    <div class="col-3 col-6-medium col-12-small">
 
-                                <div class="col-3 col-6-medium col-12-small">
+                                        <!-- Feature -->
+                                        <section class="box feature">
+                                            @foreach($house->image as $image)
 
-                                    <!-- Feature -->
-                                    <section class="box feature">
-                                        @foreach($house->image as $image)
+                                                <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
+                                                        src="image/{{ $image->image }}" alt=""/></a>
+                                            @endforeach
+                                            <div class="col-2 text-truncate2">
+                                                <h3>
+                                                    <a href="{{ route('houses.show', $house->id) }}">{{ $house->county }}
+                                                        |{{ $house->name }}</a>
+                                                </h3>
+                                            </div>
+                                            <div class="col-2 text-truncate">
+                                                <p>
+                                                    {{ $house->introduce }}
+                                                </p>
+                                            </div>
+                                        </section>
 
-                                            <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
-                                                    src="image/{{ $image->image }}" alt=""/></a>
-                                        @endforeach
-                                        <div class="col-2 text-truncate2">
-                                            <h3><a href="{{ route('houses.show', $house->id) }}">{{ $house->county }}
-                                                    |{{ $house->name }}</a>
-                                            </h3>
-                                        </div>
-                                        <div class="col-2 text-truncate">
-                                            <p>
-                                                {{ $house->introduce }}
-                                            </p>
-                                        </div>
-                                    </section>
-
-                                </div>
-
+                                    </div>
+                        @endif
                         @endforeach
                     </section>
+
                 </div>
             </div>
         </div>
