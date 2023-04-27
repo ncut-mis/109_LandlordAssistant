@@ -7,6 +7,7 @@
         <ol class="breadcrumb mb-4">
             @foreach($houses as $key => $house)
             <li class="breadcrumb-item active">{{$house->name}}的公告</li>
+            @endforeach
         </ol>
         <table class="table">
             <thead>
@@ -31,7 +32,6 @@
                     <td>{{ $post->content }}</td>
                     <td style="text-align: right;" >{{ $post->updated_at }}</td>
                 @endforeach
-            @endforeach
             @endforeach
             </tbody>
         </table>

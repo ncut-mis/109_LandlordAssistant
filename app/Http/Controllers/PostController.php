@@ -82,9 +82,10 @@ class PostController extends Controller
      */
     public function show(House $house,Post $post)
     {
-        $num=$post->id;
-        $house=House::find($house);
-        $posts = Post::find ($num);
+        $post_num=$post->id;
+        $house_num=$house->id;
+        $house=House::find($house_num);
+        $posts = Post::find ($post_num);
         $view_data = [
             'posts'=>$posts,
             'houses'=>$house,
