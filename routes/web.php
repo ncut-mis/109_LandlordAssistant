@@ -197,7 +197,10 @@ Route::get('renters/houses',[RenterController::class,'index'])->name('renters.ho
 //會員(租客)查看單一房屋
 Route::get('renters/houses/{house}',[RenterController::class,'show'])->name('renters.houses.show');
 // 3-10-1 會員(租客)查看公告
-Route::get('renters/houses/{location_id}/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
+Route::get('renters/houses/{house}/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
+//3-10-2 會員(租客)查看單一公告
+Route::get('renters/houses/{house}/posts/{post}', [PostController::class, 'show'])->name('renters.houses.posts.show');
+//Route::get('renters/houses/{location_id}/posts', [PostController::class, 'index'])->name('renters.houses.posts.index');
 
 // 3-10-3 會員(租客)查看合約
 Route::get('renters/houses/contracts/{contract}', [ContractController::class, 'show'])->name('renters.houses.contracts.show');

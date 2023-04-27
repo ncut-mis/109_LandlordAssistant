@@ -156,9 +156,7 @@
                             @foreach($house -> expenses as $expense)
                                 租金：{{$expense -> amount}}元&emsp;&emsp;
                             @endforeach
-                            @foreach($house -> contracts as $contract)
-                                結束日期：{{$contract -> end_date}}
-                            @endforeach
+                                地點：{{$house->address}}
                         </div>
                         <div class="column" style="width:10%;padding: 20px;">
                             <a class="btn btn-primary" href="{{ route('renters.houses.show', $house->id) }}">詳細資訊</a>&emsp;

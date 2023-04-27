@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use App\Models\Post;
+use App\Models\House;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdatePostRequest;
@@ -13,16 +14,17 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($location_id)
+    public function index(House $house)
     {
-        $location = Location::with(['posts' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        }])->findOrFail($location_id);
-
-        return view('renters.houses.posts.index', [
-            'location' => $location,
-            'posts' => $location->posts
-        ]);
+        $locations = Location::whereHas('houses', function ($q) {
+            $q->where('id', '=', 2);
+        })->with('posts')->get();
+        $houses = House::find($house);
+        $view_data = [
+            'locations' => $locations,
+            'houses'=> $houses,
+        ];
+        return view('renters.houses.posts.index',$view_data);
     }
 
     public function owners_index($location_id)
@@ -78,9 +80,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(House $house,Post $post)
     {
-        //
+        $num=$post->id;
+        $house=House::find($house);
+        $posts = Post::find ($num);
+        $view_data = [
+            'posts'=>$posts,
+            'houses'=>$house,
+        ];
+        return view('renters.houses.posts.show',$view_data);
     }
 
     /**
