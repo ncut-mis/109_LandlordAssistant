@@ -69,7 +69,7 @@ class RepairController extends Controller
 
     public function create_in_house($house)
     {
-        $house = House::find($house);
+        $house = House::find($house)->get();
         $view_data = [
             'house' => $house,
         ];
@@ -89,7 +89,7 @@ class RepairController extends Controller
             'content' => $request->contents,
             'date' => null,
         ]);
-        return redirect()->route('renters.houses.repairs.index')->with('success', '申請成功！');
+        return redirect()->route('renters.houses.index')->with('success', '申請成功！');
 
     }
 

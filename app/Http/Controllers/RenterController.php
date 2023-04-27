@@ -6,6 +6,7 @@ use App\Models\Renter;
 use App\Models\House;
 use App\Http\Requests\StoreRenterRequest;
 use App\Http\Requests\UpdateRenterRequest;
+use App\Models\Signatory;
 
 class RenterController extends Controller
 {
@@ -22,7 +23,16 @@ class RenterController extends Controller
         ];
         return view('renters.houses.index',$view_data);
     }
+    /*public function location_index()
+    {
+        $houses = House::whereHas('signatories', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with('repairs')->get();
 
+        $locations = $houses->pluck('location')->unique();
+
+        return view('renters.locations.index', compact('locations'));
+    }*/
     /**
      * Show the form for creating a new resource.
      */
@@ -42,29 +52,31 @@ class RenterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(House $house)
+        public function show(House $house)
     {
-        $contracts = $house->contracts; // 取得房屋的所有合約
-        $renters = $contracts->map(function ($contract) {
-            return $contract->renter; // 取得每個合約的租客
+        $location = $house->location;
+        $signatories = $house->signatories; // 取得房屋的目前租客
+        $owners = $signatories->map(function ($signatories) {
+            return $signatories->renter; // 取得每個合約的租客
         });
-        $renters_data = $renters->map(function ($renter) {
-            return $renter->user; // 取得每個租客的使用者資料
+        $owners_data = $owners->map(function ($owner) {
+            return $owner->user; // 取得每個租客的使用者資料
         });
 
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
         $expenses = $house->expenses;
-
         $data = [
-            'contract' =>$contracts,
-            'renters_data' => $renters_data,
+            'contract' =>$signatories,
+            'location_id' =>$location->id,
+            'owners_data' => $owners_data,
             'furnishings' => $furnishings,
             'features' => $features,
             'house' => $house,
             'image' => $image,
             'expenses' => $expenses,
+
         ];
         return view('renters.houses.show',$data);
     }

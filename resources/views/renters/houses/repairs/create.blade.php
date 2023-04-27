@@ -48,7 +48,7 @@
                             </button>
                         </div>
                         <div class="right-column" style="width:50%;text-align:left">
-                            <a class="btn btn-secondary" href="{{route('renters.houses.repairs.index')}}">
+                            <a class="btn btn-secondary" href="{{route('renters.houses.index')}}">
                                 取消
                             </a>
                         </div>
