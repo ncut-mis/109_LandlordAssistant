@@ -5,9 +5,7 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">公告一覽</h1>
         <ol class="breadcrumb mb-4">
-            @foreach($houses as $key => $house)
-            <li class="breadcrumb-item active">{{$house->name}}的公告</li>
-            @endforeach
+                <li class="breadcrumb-item active">{{$houses->first()->name}}的公告</li>
         </ol>
         <table class="table">
             <thead>
@@ -28,7 +26,7 @@
                 @foreach($location -> posts as $post)
                 <tr>
                     {{--                        <td >{{ $location->id }}</td>--}}
-                    <td><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
+                    <td><a href="{{route('renters.houses.posts.show',[$houses->first()->id,$post->id])}}">{{ $post->title }}</td>
                     <td>{{ $post->content }}</td>
                     <td style="text-align: right;" >{{ $post->updated_at }}</td>
                 @endforeach
