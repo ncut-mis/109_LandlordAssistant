@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('area'); //地區
             $table->string('address'); //地址
             $table->string('name'); //房屋名稱
-            $table->string('introduce'); //介紹
+            $table->string('introduce',1000); //介紹
             $table->string('lease_status'); //租賃狀態 *請用下拉式選單 限制使用者輸入的內容 (出租中、已刊登、閒置)
             $table->integer('num_renter'); //可住人數
             $table->integer('min_period'); //最短租期(以月為單位)

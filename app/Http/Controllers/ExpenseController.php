@@ -30,8 +30,9 @@ class ExpenseController extends Controller
      */
     public function owners_create()
     {
+        $h = $house->id;
         $houses = House::whereHas('expenses',function ($e){
-            $e ->where('house_id','=',2); //2為當時點進去的房間id
+            $e ->where('house_id','=',$h); //2為當時點進去的房間id
         })->get();
 
         $houses_data = [
@@ -45,14 +46,16 @@ class ExpenseController extends Controller
      */
     public function owners_store(Request $request)
     {
+
+
         $expense = Expense::create([
-            'house_id' => 2,
+            'house_id' => $request->house->id,
             'type' => $request->type,
             'amount' => $request->amount,
             'interval' => $request->interval,
         ]);
         // 返回頁面或其他操作
-        return redirect()->route('houses.expenses.index')->with('success', '費用新增成功！');;
+        return redirect()->route('owners.locations.houses.show',[$expense])->with('success', '費用新增成功！');;
     }
     public function store(StoreExpenseRequest $request)
     {
@@ -88,13 +91,14 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
+
         $data=$request->only([
             'type',
             'amount',
             'interval'
         ]);
         $expense->update($data);
-        return redirect()->route('houses.expenses.index')->with('success', '修改成功！');
+        return redirect()->route('owners.locations.houses.show', [$location->owner->id, $location->id])->with('success', '修改成功！');
     }
 
     /**

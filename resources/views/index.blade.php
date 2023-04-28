@@ -44,7 +44,7 @@
 
         .text-truncate2 {
             Overflow: hidden;
-            max-height: 2rem;
+            max-height: 1.5rem;
             line-height: 2rem; /*行高*/
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 1;

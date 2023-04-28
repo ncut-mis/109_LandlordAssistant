@@ -59,17 +59,17 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('u
 
 //會員查看個人資料
 Route::get('users/{user}',[UserProfileController::class,'index'])->name('users.index');
-// 3-8-1 會員(房東/租客)修改會員資料
+// 3-8-1 會員(房東/租客)修改會員資料及轉帳資訊
 Route::get('users/{user}/edit', [UserProfileController::class, 'edit'])->name('users.edit');
 Route::patch('users/{user}', [UserProfileController::class, 'update'])->name('users.update');
 
-// 3-8-2 會員(房東/租客)新增轉帳資訊
-Route::get('users/{user}/payment/create', [PaymentController::class, 'create'])->name('users.payment.create');
-Route::post('users/{user}/payment', [PaymentController::class, 'store'])->name('users.payment.store');
-
-// 3-8-3 會員(房東/租客)修改轉帳資訊
-Route::get('users/{user}/payment/edit', [PaymentController::class, 'edit'])->name('users.payment.edit');
-Route::patch('users/{user}/payment', [PaymentController::class, 'update'])->name('users.payment.update');
+//// 3-8-2 會員(房東/租客)新增轉帳資訊
+//Route::get('users/{user}/payment/create', [PaymentController::class, 'create'])->name('users.payment.create');
+//Route::post('users/{user}/payment', [PaymentController::class, 'store'])->name('users.payment.store');
+//
+//// 3-8-3 會員(房東/租客)修改轉帳資訊
+//Route::get('users/{user}/payment/edit', [PaymentController::class, 'edit'])->name('users.payment.edit');
+//Route::patch('users/{user}/payment', [PaymentController::class, 'update'])->name('users.payment.update');
 
 // 3-8-4 會員(房東/租客)顯示租客頁面
 Route::get('users/renters/{renter}', [RenterController::class, 'index'])->name('renters.home.index');

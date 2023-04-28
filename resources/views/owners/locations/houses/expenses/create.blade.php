@@ -8,7 +8,7 @@
             <div class="text-center fw-bolder fs-4">新增{{$house->name}}費用</div>
         </div>
     @endforeach
-    <form method="post" action="{{ route('houses.expenses.store') }}">
+    <form method="post" action="{{ route('houses.expenses.store',$house->id) }}">
         @csrf
         <div class="house" style="padding: 20px;border: 1px solid #ccc;display: block;">
 
