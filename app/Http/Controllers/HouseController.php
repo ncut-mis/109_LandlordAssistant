@@ -158,15 +158,15 @@ class HouseController extends Controller
 
 
 
-            // 建立 Expense 資料
-            $expense = new Expense([
-                'house_id' => $house_id,
-                'type' => "租金",
-                'amount' => $request->amount,
-                'interval' => $request->interval,
-            ]);
-            // 透過關聯存取資料庫
-        $house->expenses()->save($expense);
+//            // 建立 Expense 資料
+//            $expense = new Expense([
+//                'house_id' => $house_id,
+//                'type' => "租金",
+//                'amount' => $request->amount,
+//                'interval' => $request->interval,
+//            ]);
+//            // 透過關聯存取資料庫
+//        $house->expenses()->save($expense);
 
 
 
@@ -195,7 +195,7 @@ class HouseController extends Controller
             }
         }
 
-        return redirect()->route('owners.locations.houses.show',[$owner_id, $location])->with('success', '儲存成功！');
+        return redirect()->route('houses.expenses.store',[$owner_id, $location])->with('success', '儲存成功！');
     }
 
     /**

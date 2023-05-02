@@ -1,17 +1,17 @@
 @extends('layouts.owner_master')
-<link href="{{ 'css/house_index.css' }}" rel="stylesheet">
+{{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">--}}
+{{--<link href="{{ asset('css/custom.css') }}" rel="stylesheet">--}}
+{{--<link href="{{ asset('css/styles_owner.css') }}" rel="stylesheet">--}}
 @section('title', '房東管理頁面')
 @section('page-content')
 
-    @foreach($houses as $house)
         <div class="from-group mb-3 px-3 py-2">
-            <div class="text-center fw-bolder fs-4">新增{{$house->name}}費用</div>
+            <div class="text-center fw-bolder fs-4">新增{{$houses->name}}費用</div>
         </div>
-    @endforeach
-    <form method="post" action="{{ route('houses.expenses.store',$house->id) }}">
+
+    <form method="post" action="{{ route('houses.expenses.store',['house' => $houses->id]) }}">
         @csrf
         <div class="house" style="padding: 20px;border: 1px solid #ccc;display: block;">
-
             <div class="row mb-3">
                 <label for="inputState" class="col-sm-6 col-form-label">費用類型</label>
                 <div class="col-sm-7">
@@ -24,6 +24,7 @@
                 </div>
             </div>
 
+{{--            @dd($houses->id)--}}
             <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-6 col-form-label">金額</label>
                 <div class="col-sm-7">
