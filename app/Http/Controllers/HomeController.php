@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\House;
 use App\Models\Image;
 use App\Models\Location;
+use App\Models\SystemPost;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,9 +15,11 @@ class HomeController extends Controller
     public function index()
     {
         $houses = House::with('image')->get(); // 預先載入 image 關聯
+        $posts=SystemPost::all();
         $view_data = [
-            'houses' => $houses,
-        ];
+        'houses' => $houses,
+            'posts'=>$posts,
+    ];
         return view('index', $view_data);
     }
 
