@@ -1,428 +1,499 @@
-
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-</head>
-<body>
-
-@extends('layouts.renter_master')
-<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+@extends('layouts.renter_master_index')
 @section('title', '租客頁面')
 @section('page-content')
-
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-    <script>
-        fetch('/upload', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    // 上傳成功，顯示成功訊息
-                    alert(data.message);
-                } else {
-                    // 上傳失敗，顯示錯誤訊息
-                    alert('上傳失敗：' + data.message);
-                }
-            })
-            .catch(error => console.error(error));
-        function scrollToTop() {
-            // 滾動到頁面頂部
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        $(function(){
-            $('.masonry').masonry({
-                itemSelector: '.item'
-            })});
-
-    </script>
-    <style>
-        .scroll-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 10px;
-            padding: 8px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            transition: all .3s ease-in-out;
-        }
-
-        .scroll-to-top:hover {
-            background-color: #eee;
-            cursor: pointer;
-        }
-
-        .scroll-to-top i {
-            font-size: 20px;
-            color: #333;
-        }
+    <div class="layout-wrapper layout-content-navbar  ">
+        <div class="layout-container">
+            <!-- Menu -->
+            <!-- / Menu -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房屋 /</span>詳細資訊</h4>
+                        <!-- Tabs -->
+                        <h3 class="py-3 my-1 fw-semibold">{{ $house->name }}</h3>
+                        <div class="row">
+                            <div class="col-xl-15">
+                                <div class="nav-align-top mb-4">
+                                    <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link active" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-top-house"
+                                                    aria-controls="navs-top-home" aria-selected="true">房屋資訊
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-post" aria-controls="navs-top-profile"
+                                                    aria-selected="false">公告
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-expense" aria-controls="navs-top-messages"
+                                                    aria-selected="false">費用
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-repair" aria-controls="navs-top-home"
+                                                    aria-selected="false">報修
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <!--房屋資訊內容-->
+                                        <div class="tab-pane fade active show" id="navs-top-house" role="tabpanel">
 
 
-
-    </style>
-
-    {{-- 回到最上面的按鈕 --}}
-    <button onclick="scrollToTop()" class="scroll-to-top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <form method="POST" action="">
-        @csrf
-        @method('PATCH')
-        <div class="house" style="padding: 20px;border: 1px solid #ccc;justify-content: center;display: flex;">
-            <div class="location" style="padding: 20px;border: 1px solid #ccc;width:1200px">
-                <div class="house row_create_house" style="padding: 20px;border: 1px solid #ccc;">
-                    <a class="btn btn-outline-secondary text-center" href="{{ route('renters.houses.index') }}">返回</a>
-                    <div class="row">
-                        <div class="column" style="width:50%;text-align:right">
-                            <ul class="nav nav-home mb-3" id="home-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-
-                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
-                                            id="home-tab" data-bs-toggle="tab" data-bs-target="#home" aria-expanded="true"
-                                            aria-disabled="true" type="button" role="tab" aria-controls="home"
-                                            aria-selected="true">
-                                        房屋資訊
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                            id="home-contract-tab" data-bs-toggle="tab" data-bs-target="#home-contract"
-                                            type="button" role="tab" aria-controls="home-contract" aria-selected="false">
-                                        合約
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                            id="home-pack-tab" data-bs-toggle="tab" data-bs-target="#home-pack"
-                                            type="button" role="tab" aria-controls="home-pack" aria-selected="false">
-                                        信件
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                            id="home-expense-tab" data-bs-toggle="tab" data-bs-target="#home-expense"
-                                            type="button" role="tab" aria-controls="home-expense" aria-selected="false">
-                                        費用
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                            id="home-repair-tab" data-bs-toggle="tab" data-bs-target="#home-repair"
-                                            type="button" role="tab" aria-controls="home-repair" aria-selected="false">
-                                        報修
-                                    </button>
-                                </li>
-
-                                <li class="nav-item" role="presentation">
-                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                            id="home-code-tab" data-bs-toggle="tab" data-bs-target="#home-code"
-                                            type="button" role="tab" aria-controls="home-code" aria-selected="false">
-                                        房東資訊
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content">
-                    <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        <div class="container" style="overflow-y: auto;padding: 20px;">
-                            <div class="row" style="white-space: nowrap;">
-                                <div class="col-md-3 item" style="margin-right: 5px;">
-                                    @foreach($house->image as $image)
-                                        <img src="{{ asset('image/'.$image->image) }}" alt="123" class="img-fluid">
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <header class="bg-dark py-5">
-                            <div class="container my-5">
-                                <div class="row bg-dark text-white py-2 mx-1">
-                                    <div class="col-8 fw-bold">
-                                        <div class="row bg-dark text-white py-2" style="font-size: 3rem;">
-                                            房屋名稱：{{ $house->name }}
-                                            <hr class="text-white-80">
-                                        </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-2">
-                                                地址：
-                                            </div>
-                                            <div class="col">
-                                                {{ $house->county }}{{ $house->area }}{{ $house->address }}
-                                            </div>
-                                        </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-2">
-                                                介紹：
-                                            </div>
-                                            <div class="col-9">
-                                                @if(!empty($house->introduce)){{ $house->introduce }}@elseif(empty($house->introduce))尚未填寫 @endif
-                                            </div>
-                                        </div>
-                                        {{--以下內容待修改--}}
-
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="fs-4" style="white-space: nowrap;">
-                                                <div class="fs-4">
-                                                    <div class="col-2">
-                                                        每
-                                                        @if( $expenses->value('interval') == 12)
-                                                            年繳
-                                                        @elseif( $expenses->value('interval') == 6)
-                                                            半年繳
-                                                        @elseif( $expenses->value('interval') == 3)
-                                                            季繳
-                                                        @elseif( $expenses->value('interval') == 1)
-                                                            月繳
-                                                        @endif
-                                                        一次　
-                                                        <span class="text-danger">{{ number_format($expenses->value('amount')) }}</span>　元　　
+                                            <div class="container-xxl flex-grow-1 container-p-y">
+                                                <div class="row">
+                                                    <div class="col-12 col-lg-8 order-0 mb-4">
+                                                        <div class="card">
+                                                            <div class="row row-bordered g-0">
+                                                                <div class="col-md-8">
+                                                                    <h5 class="card-header m-0 me-2 pb-3">圖片</h5>
+                                                                    <div id="totalRevenueChart" class="px-2"
+                                                                         style="min-height: 315px;">
+                                                                        @foreach($house->image as $image)
+                                                                            <img
+                                                                                src="{{ asset('image/'.$image->image) }}"
+                                                                                alt="123" class="img-fluid">
+                                                                        @endforeach
+                                                                    </div>
+                                                                    <div class="resize-triggers">
+                                                                        <div class="expand-trigger"></div>
+                                                                        <div class="contract-trigger"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div
+                                                                        class="card-header d-flex align-items-center justify-content-between">
+                                                                        <h5 class="card-title m-0 me-2">目前租客</h5>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <ul class="p-0 m-0">
+                                                                            @if(!$owners_data->empty())
+                                                                                @foreach($owners_data as $owners_data)
+                                                                                    <li class="d-flex mb-4 pb-1">
+                                                                                        <div
+                                                                                            class="avatar flex-shrink-0 me-3">
+                                                                                            <img
+                                                                                                src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
+                                                                                                alt="User"
+                                                                                                class="rounded">
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                                                            <div class="me-2">
+                                                                                                <h5 class="mb-0 fw-semibold">{{ $owners_data->name }}</h5>
+                                                                                                <small
+                                                                                                    class="text-muted d-block mb-0">電話：{{ $owners_data->phone }}</small>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                @endforeach
+                                                                            @else
+                                                                                <li class="d-flex mb-4 pb-1">
+                                                                                    <div
+                                                                                        class="avatar flex-shrink-0 me-3">
+                                                                                        <img
+                                                                                            src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
+                                                                                            alt="User" class="rounded">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                                                        <div class="me-2">
+                                                                                            <h5 class="mb-0 fw-semibold">
+                                                                                                尚無資料</h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            @endif
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div class="col-lg-4 col-md-4 order-1">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div
+                                                                            class="d-flex justify-content-between flex-sm-row flex-column gap-3"
+                                                                            style="position: relative;">
+                                                                            <div
+                                                                                class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                                                                                <div class="card-title">
+                                                                                    <h5 class="text-nowrap fw-semibold mb-2">
+                                                                                        租金</h5>
+                                                                                    <span
+                                                                                        class="badge bg-label-warning rounded-pill">
+                                                        每@if( $expenses->value('interval') == 12)
+                                                                                            年繳
+                                                                                        @elseif( $expenses->value('interval') == 6)
+                                                                                            半年繳
+                                                                                        @elseif( $expenses->value('interval') == 3)
+                                                                                            季繳
+                                                                                        @elseif( $expenses->value('interval') == 1)
+                                                                                            月繳
+                                                                                        @endif一次</span>
+                                                                                </div>
+                                                                                <div class="mt-sm-auto">
+                                                                                    <h3 class="mb-0">
+                                                                                        ${{ number_format($expenses->value('amount')) }}</h3>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="profileReportChart"
+                                                                                 style="min-height: 80px;">
+                                                                                <div id="apexchartsph3fig7d"
+                                                                                     class="apexcharts-canvas apexchartsph3fig7d apexcharts-theme-light"
+                                                                                     style="width: 300px; height: 80px;">
+                                                                                    <div class="apexcharts-legend"
+                                                                                         style="max-height: 40px;"></div>
+                                                                                    <div
+                                                                                        class="apexcharts-tooltip apexcharts-theme-light">
+                                                                                        <div
+                                                                                            class="apexcharts-tooltip-title"
+                                                                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
+                                                                                        <div
+                                                                                            class="apexcharts-tooltip-series-group"
+                                                                                            style="order: 1;"><span
+                                                                                                class="apexcharts-tooltip-marker"
+                                                                                                style="background-color: rgb(255, 171, 0);"></span>
+                                                                                            <div
+                                                                                                class="apexcharts-tooltip-text"
+                                                                                                style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-y-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-y-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-y-value"></span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-goals-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-goals-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-goals-value"></span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-z-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-z-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-z-value"></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
+                                                                                        <div
+                                                                                            class="apexcharts-yaxistooltip-text"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="resize-triggers">
+                                                                                <div class="expand-trigger">
+                                                                                    <div
+                                                                                        style="width: 474px; height: 116px;"></div>
+                                                                                </div>
+                                                                                <div class="contract-trigger"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div
+                                                                            class="d-flex justify-content-between flex-sm-row flex-column gap-3"
+                                                                            style="position: relative;">
+                                                                            <div
+                                                                                class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                                                                                <div class="card-title overflow-hidden">
+                                                                                    <h5 class="text-nowrap fw-semibold mb-2">
+                                                                                        介紹</h5>
+                                                                                    <p>@if(!empty($house->introduce))
+                                                                                            {{ $house->introduce }}
+                                                                                        @elseif(empty($house->introduce))
+                                                                                            尚未填寫
+                                                                                        @endif</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="profileReportChart"
+                                                                                 style="min-height: 80px;">
+                                                                                <div id="apexchartsph3fig7d"
+                                                                                     class="apexcharts-canvas apexchartsph3fig7d apexcharts-theme-light"
+                                                                                     style="width: 300px; height: 80px;">
+                                                                                    <div class="apexcharts-legend"
+                                                                                         style="max-height: 40px;"></div>
+                                                                                    <div
+                                                                                        class="apexcharts-tooltip apexcharts-theme-light">
+                                                                                        <div
+                                                                                            class="apexcharts-tooltip-title"
+                                                                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
+                                                                                        <div
+                                                                                            class="apexcharts-tooltip-series-group"
+                                                                                            style="order: 1;"><span
+                                                                                                class="apexcharts-tooltip-marker"
+                                                                                                style="background-color: rgb(255, 171, 0);"></span>
+                                                                                            <div
+                                                                                                class="apexcharts-tooltip-text"
+                                                                                                style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-y-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-y-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-y-value"></span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-goals-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-goals-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-goals-value"></span>
+                                                                                                </div>
+                                                                                                <div
+                                                                                                    class="apexcharts-tooltip-z-group">
+                                                                                                    <span
+                                                                                                        class="apexcharts-tooltip-text-z-label"></span><span
+                                                                                                        class="apexcharts-tooltip-text-z-value"></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
+                                                                                        <div
+                                                                                            class="apexcharts-yaxistooltip-text"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="resize-triggers">
+                                                                                <div class="expand-trigger">
+                                                                                    <div
+                                                                                        style="width: 474px; height: 116px;"></div>
+                                                                                </div>
+                                                                                <div class="contract-trigger"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Total Revenue -->
+                                                    <div class="col-lg-8 mb-4  order-2 order-md-3 order-lg-2 mb-4">
+                                                        <div class="card">
+                                                            <div class="d-flex align-items-end row">
+                                                                <div class="col-sm-7">
+                                                                    <div class="card-body overflow-hidden">
+                                                                        <h5 class="card-title text-primary">地址</h5>
+                                                                        <p class="mb-4">
+                                                                            {{ $house->county }}{{ $house->area }}{{ $house->address }}
+                                                                        </p>
+                                                                        <h5 class="card-title text-primary">設備</h5>
+                                                                        @foreach($furnishings as $furnishings)
+                                                                            <a href="#"
+                                                                               class="btn btn-sm btn-outline-primary">{{ $furnishings->furnish }}</a>
+                                                                        @endforeach
+                                                                        <p>
+                                                                        <h5 class="card-title text-primary">特色</h5>
+                                                                        @foreach($features as $features)
+                                                                            <a href="#"
+                                                                               class="btn btn-sm btn-outline-primary">{{ $features->feature }}</a>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-5 text-center text-sm-left">
+                                                                    <div class="card-body pb-0 px-0 px-md-4">
+                                                                        <img
+                                                                            src="{{ asset('assets/img/illustrations/man-with-laptop-light.png') }}"
+                                                                            height="140" alt="View Badge User"
+                                                                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                                                                            data-app-light-img="illustrations/man-with-laptop-light.png">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+                                                        <div class="row">
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">可住人數</span>
+                                                                        <h3 class="card-title mb-2">@if(!empty($house->num_renter))
+                                                                                {{ $house->num_renter }}
+                                                                            @elseif(empty($house->num_renter))
+                                                                                未寫
+                                                                            @endif 人</h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">最短租期</span>
+                                                                        <h3 class="card-title text-nowrap mb-1">@if(!empty($house->min_period))
+                                                                                {{ $house->min_period }}
+                                                                            @elseif(empty($house->min_period))
+                                                                                未寫
+                                                                            @endif 個月</h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">坪數</span>
+                                                                        <h3 class="card-title text-nowrap mb-1">@if(!empty($house->size))
+                                                                                {{ $house->size }}
+                                                                            @elseif(empty($house->size))
+                                                                                未寫
+                                                                            @endif 坪</h3>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">房間</span>
+                                                                        <h3 class="card-title text-nowrap mb-1">@if(!empty($house->pattern))
+                                                                                {{ $house->pattern }}
+                                                                            @elseif(empty($house->pattern))
+                                                                                未寫
+                                                                            @endif 間房</h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">類型</span>
+                                                                        <h3 class="card-title text-nowrap mb-2">@if(!empty($house->type))
+                                                                                {{ $house->type }}
+                                                                            @elseif(empty($house->type))
+                                                                                未寫
+                                                                            @endif</h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 mb-4">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <span
+                                                                            class="fw-semibold d-block mb-1">樓層</span>
+                                                                        <h3 class="card-title mb-2">
+                                                                            第 @if(!empty($house->floor))
+                                                                                {{ $house->floor }}
+                                                                            @elseif(empty($house->floor))
+                                                                                未寫
+                                                                            @endif 樓</h3>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- </div>
+                                            <div class="row"> -->
+                                                        </div>
+                                                    </div>
+                                                    <!--/ Total Revenue -->
+                                                </div>
+                                                <div class="row">
+                                                    <!-- Order Statistics -->
+                                                    <!--/ Order Statistics -->
+                                                    <!-- Expense Overview -->
+                                                    <!--/ Expense Overview -->
+                                                    <!-- Transactions -->
+                                                    <!--/ Transactions -->
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-6">
-                                                可住　@if(!empty($house->num_renter)){{ $house->num_renter }}@elseif(empty($house->num_renter))尚未填寫 @endif人
-                                            </div>
-                                            <div class="col-6">
-                                                最短租　@if(!empty($house->min_period)){{ $house->min_period }}@elseif(empty($house->min_period))尚未填寫 @endif個月
-                                            </div>
+                                        <!--公告資訊內容-->
+                                        <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
+                                            <p>
+                                                Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer
+                                                candy oat cake ice cream. Gummies
+                                                halvah
+                                                tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
+                                                cheesecake fruitcake.
+                                            </p>
+                                            <p class="mb-0">
+                                                Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin
+                                                pie tiramisu halvah cotton candy
+                                                liquorice caramels.
+                                            </p>
                                         </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-6">
-                                                房間　@if(!empty($house->pattern)){{ $house->pattern }}@elseif(empty($house->pattern))尚未填寫 @endif　間
-                                            </div>
-                                            <div class="col-6">
-                                                房間　@if(!empty($house->size)){{ $house->size }}@elseif(empty($house->size))尚未填寫 @endif坪
-                                            </div>
+                                        <!--費用資訊內容-->
+                                        <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
+                                            <p>
+                                                Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans
+                                                macaroon gummies cupcake gummi
+                                                bears
+                                                cake chocolate.
+                                            </p>
+                                            <p class="mb-0">
+                                                Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple
+                                                pie brownie cake. Sweet roll icing
+                                                sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
+                                                Pudding jelly jelly-o tart brownie
+                                                jelly.
+                                            </p>
                                         </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-6">
-                                                類型：　@if(!empty($house->type)){{ $house->type }}　@elseif(empty($house->type))尚未填寫 @endif
-                                            </div>
-                                            <div class="col-6">
-                                                第　@if(!empty($house->floor)){{ $house->floor }}@elseif(empty($house->floor))尚未填寫 @endif層
-                                            </div>
-                                        </div>
-                                        <hr class="text-white-50">
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-9" style="white-space: nowrap;">
-                                                設備<p>
-                                                    @foreach($furnishings as $furnishings)
-                                                        <button type="button" class="btn btn-outline-light btn-sm">{{ $furnishings->furnish }}</button>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                        <div class="row bg-dark text-white py-2">
-                                            <div class="col-9" style="white-space: nowrap;">
-                                                特色<p>
-                                                    @foreach($features as $features)
-                                                        <button type="button" class="btn btn-outline-light btn-sm">{{ $features->feature }}</button>
-                                                @endforeach
-                                            </div>
+                                        <!--報修資訊內容-->
+                                        <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
+                                            <p>
+                                                Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans
+                                                macaroon gummies cupcake gummi
+                                                bears
+                                                cake chocolate.
+                                            </p>
+                                            <p class="mb-0">
+                                                Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple
+                                                pie brownie cake. Sweet roll icing
+                                                sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
+                                                Pudding jelly jelly-o tart brownie
+                                                jelly.
+                                            </p>
                                         </div>
                                     </div>
-                                    <style>
-
-
-
-
-                                        .container td {
-                                            font-weight: normal;
-                                            font-size: 1em;
-                                            -webkit-box-shadow: 0 2px 2px -2px #0E1119;
-                                            -moz-box-shadow: 0 2px 2px -2px #0E1119;
-                                            box-shadow: 0 2px 2px -2px #0E1119;
-                                        }
-
-
-
-                                        .container td, .container th {
-                                            padding-bottom: 2%;
-                                            padding-top: 2%;
-                                            padding-left:2%;
-                                        }
-
-                                        /* Background-color of the odd rows */
-                                        .container tr:nth-child(odd) {
-                                            background-color: #323C50;
-                                        }
-
-                                        /* Background-color of the even rows */
-                                        .container tr:nth-child(even) {
-                                            background-color: #2C3446;
-                                        }
-                                        h1 {
-                                            font-size:3em;
-                                            font-weight: 300;
-                                            line-height:1em;
-                                            text-align: center;
-                                            color: #4DC3FA;
-                                        }
-                                        body {
-                                            font-family: 'Open Sans', sans-serif;
-                                            font-weight: 300;
-                                            line-height: 1.42em;
-                                            color:#A7A1AE;
-                                            text-align: center;
-
-                                        }
-                                        .container th {
-                                            background-color: #1F2739;
-                                        }
-
-                                        .container td:first-child { color: #FB667A; }
-
-                                        .container tr:hover {
-                                            background-color: #464A52;
-                                            -webkit-box-shadow: 0 6px 6px -6px #0E1119;
-                                            -moz-box-shadow: 0 6px 6px -6px #0E1119;
-                                            box-shadow: 0 6px 6px -6px #0E1119;
-                                        }
-
-                                        .container td:hover {
-                                            background-color: #FFF842;
-                                            color: #403E10;
-                                            font-weight: bold;
-
-                                            box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
-                                            transform: translate3d(6px, -6px, 0);
-
-                                            transition-delay: 0s;
-                                            transition-duration: 0.4s;
-                                            transition-property: all;
-                                            transition-timing-function: line;
-                                        }
-
-                                        @media (max-width: 800px) {
-                                            .container td:nth-child(4),
-                                            .container th:nth-child(4) { display: none; }
-                                        }
-
-                                    </style>
-                                    <div class="col-4 fw-bold" style="padding: 20px;border: 1px solid #ccc;">
-                                        <div class="row bg-dark py-2 mx-1 text-white fs-3">
-                                            <div class="col fw-bold">
-                                                房東姓名
-                                            </div>
-                                            <div class="col fw-bold">
-                                                聯絡方式
-                                            </div>
-                                            <hr class="text-white-50">
-                                        </div>
-                                        @if(!$owners_data->empty())
-                                            @foreach($owners_data as $owners_data)
-                                                <div class="row bg-dark py-2 mx-1 text-white">
-                                                    <div class="col fw-bold">
-                                                        {{ $owners_data->name }}<hr>
-                                                    </div>
-                                                    <div class="col fw-bold">
-                                                        {{ $owners_data->phone }}<hr>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="row bg-dark py-2 mx-1 text-white">
-                                                尚無資料
-                                            </div>
-                                        @endif
-                                    </div>
+                                    <p></p>
                                 </div>
                             </div>
-                        </header>
+                        </div>
+                        <!-- Tabs -->
+                        <!-- Pills -->
+                        <!-- Pills -->
+                        <a type="button" class="btn btn-secondary" href="{{url('renters/houses')}}">返回房屋列表</a>
                     </div>
-                    <div class="tab-pane fade" id="home-contract" role="tabpanel" aria-labelledby="home-contract-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        <a class="btn btn-danger text-center" href="{{ route('houses.contracts.create', $house->id) }}">上傳合約</a>
-                        @php
-                            $a=0;
-                        @endphp
-                        @foreach($contract as $contract)
-
-                            <a href="{{asset('contracts/'.$contract->path)}}" target='_blank'>預覽合約{{$a+=1}}</a>
-
-                        @endforeach
-
-                    </div>
-
-                    <div class="tab-pane fade" id="home-pack" role="tabpanel" aria-labelledby="home-pack-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        2225
-                    </div>
-                    <div class="tab-pane fade" id="home-expense" role="tabpanel" aria-labelledby="home-expense-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        333
-                    </div>
-                    <div class="tab-pane fade" id="home-repair" role="tabpanel" aria-labelledby="home-repair-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        444
-                    </div>
-                    <div class="tab-pane fade" id="home-code" role="tabpanel" aria-labelledby="home-code-tab"
-                         style="padding: 20px;border: 1px solid #ccc;">
-                        @if(!$owners_data->isEmpty())
-                            @foreach($owners_data as $owners_data)
-                                <table class="container">
-                                    <thead>
-                                    <tr>
-                                        <th><h1>房東名稱</h1></th>
-                                        <th><h1>電話</h1></th>
-                                        <th><h1>行動</h1></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>{{ $owners_data->name }}</td>
-
-                                        <td>{{ $owners_data->phone }}</td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            @endforeach
-                        @else
-                            <table class="container">
-                                <thead>
-                                <tr>
-                                    <th><h1>房東名稱</h1></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-
-
-
-
-                        @endif
-                    </div>
-
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    <!-- / Footer -->
+                    <div class="content-backdrop fade"></div>
                 </div>
+                <!-- Content wrapper -->
             </div>
+            <!-- / Layout page -->
         </div>
-    </form>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
 @endsection
