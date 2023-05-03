@@ -1,4 +1,4 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="{{url('users/owners/1')}}">管理系統公告頁面</a>
     <!-- Sidebar Toggle-->
