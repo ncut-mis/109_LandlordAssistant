@@ -1,5 +1,5 @@
-@extends('layouts.owner_master')
-<link href="{{ 'css/house_index.css' }}" rel="stylesheet">
+@extends('layouts.admin_master')
+{{--<link href="{{ 'css/main.css' }}" rel="stylesheet">--}}
 @section('page-title', '系統公告')
 
 @section('page-content')
