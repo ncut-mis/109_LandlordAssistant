@@ -89,6 +89,10 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $location = Location::findOrFail($location->id);
+        $location->delete();
+
+        return redirect()->route('owners.home.index', ['owner' => 1])
+            ->with('success', '地點刪除成功！');
     }
 }

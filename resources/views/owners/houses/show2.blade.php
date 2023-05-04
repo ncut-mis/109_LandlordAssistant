@@ -338,7 +338,7 @@
                                         </div>
                                         <!--費用資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
-                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                            <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark active" style="margin-left: 12px"
                                                             id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all"
@@ -399,21 +399,34 @@
                                                 <table class="table" id="datatablesSimple">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">費用開始日</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">費用結束日</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">費用類型</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">金額</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">狀態</th>
+                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                        <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
 
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     @foreach($house->expenses as $expense)
                                                         <tr>
-                                                            <td style="text-align: center">每 {{$expense->interval}} 個月繳交</td>
+                                                            <td style="text-align: center">{{$expense->start_date}}</td>
+                                                            <td style="text-align: center">{{$expense->end_date}}</td>
                                                             <td style="text-align: center">{{$expense->type}}</td>
                                                             <td style="text-align: center">{{$expense->amount}} 元</td>
-                                                            <td style="text-align: center">還要關聯應繳款項</td>
+                                                            <td style="text-align: center">{{$expense->remark}} </td>
+                                                            <td style="text-align: center">
+                                                                @if($expense->owner_status == 0)
+                                                                    未送出費用
+                                                                @elseif($expense->owner_status == 1)
+                                                                    @if($expense->renter_status == 0)
+                                                                        費用已送出<br>尚未繳費
+                                                                    @elseif($expense->renter_status == 1)
+                                                                        已繳費
+                                                                    @endif
+                                                                @endif
+                                                            </td>
                                                             <td style="text-align: right;width: 5%">
                                                                 @csrf
                                                                 <a class="btn btn-secondary" href="{{route('houses.expenses.edit',['expense'=>$expense -> id])}}">修改</a>
@@ -423,7 +436,20 @@
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button class="btn btn-danger">刪除</button>
-                                                                </form></td>
+                                                                </form>
+                                                            </td>
+
+                                                            <td style="text-align: right;width: 8%">
+                                                                @if($expense->owner_status == 0)
+                                                                    <button type="button" class="btn btn-warning" name="for-renter">送出費用</button>
+                                                                @elseif($expense->owner_status == 1)
+                                                                    @if($expense->renter_status == 0)
+                                                                        <button type="button" class="btn btn-primary">再次提醒</button>
+                                                                    @elseif($expense->renter_status == 1)
+                                                                        <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                    @endif
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
