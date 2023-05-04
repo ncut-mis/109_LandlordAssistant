@@ -1,4 +1,4 @@
-@extends('layouts.renter_master')
+@extends('layouts.renter_master_index')
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '報修頁面')
 @section('page-content')
@@ -10,7 +10,7 @@
     <div class="from-group mb-3 px-3 py-2">
         <div class="house" style="padding: 20px;border: 1px solid #ccc;">
             <label for="content" class="form-label"><h3>需要報修嗎?</h3></label>
-            <a type="button" class="btn btn-dark btn-sm" href="{{route('renters.houses.repairs.create')}}">新增</a>
+            <a type="button" class="btn btn-dark btn-sm" href="{{route('renters.houses.repairs.create','1')}}">新增</a>
             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="btn btn-outline-dark active" style="margin-left: 12px"

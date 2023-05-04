@@ -56,26 +56,17 @@ class RepairController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(House $house)
     {
-        $house = House::whereHas('contracts', function ($q) {
-            $q->where('renter_id', '=', 1);
-        })->get();
+        $house_id=$house->id;
+        $house = House::where('id','=',$house_id)->get();
         $view_data = [
             'house' => $house,
-        ];
-        return view('renters.houses.repairs.create', $view_data);
-    }
-
-    public function create_in_house($house)
-    {
-        $house = House::find($house)->get();
-        $view_data = [
-            'house' => $house,
+            'house_id' => $house_id,
         ];
         return view('renters.houses.repairs.create',$view_data);
-
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -89,7 +80,7 @@ class RepairController extends Controller
             'content' => $request->contents,
             'date' => null,
         ]);
-        return redirect()->route('renters.houses.index')->with('success', '申請成功！');
+        return redirect()->route('renters.houses.show',$request->id)->with('success', '申請成功！');
 
     }
 
@@ -106,14 +97,16 @@ class RepairController extends Controller
      */
     public function edit(Repair $repair)
     {
-        $house = House::whereHas('contracts', function ($q) {
+        $house_id=$repair->id;
+        $house = House::whereHas('signatories', function ($q) {
             $q->where('renter_id', '=', 1);
         })->get();
         $edit_data = [
             'repairs' => $repair,
             'houses' => $house,
+            'house_id' => $house_id,
         ];
-        return view('renters.houses.repairs.edit', $edit_data);
+        return view('renters.houses.repairs.edit2', $edit_data);
     }
 
     /**
@@ -122,11 +115,12 @@ class RepairController extends Controller
     public function update(UpdateRepairRequest $request, Repair $repair)
     {
         $data = $request->only([
-            'house_id',
+            //要多一個標題
             'content'
         ]);
         $repair->update($data);
-        return redirect()->route('renters.houses.repairs.index')->with('success', '修改成功！');
+        //要改為跳回房屋詳細資訊
+        return redirect()->route('renters.houses.index')->with('success', '修改成功！');
     }
 
     public function update_status(UpdateRepairRequest $request, Repair $repair)

@@ -150,54 +150,7 @@
                                                                                         ${{ number_format($expenses->value('amount')) }}</h3>
                                                                                 </div>
                                                                             </div>
-                                                                            <div id="profileReportChart"
-                                                                                 style="min-height: 80px;">
-                                                                                <div id="apexchartsph3fig7d"
-                                                                                     class="apexcharts-canvas apexchartsph3fig7d apexcharts-theme-light"
-                                                                                     style="width: 300px; height: 80px;">
-                                                                                    <div class="apexcharts-legend"
-                                                                                         style="max-height: 40px;"></div>
-                                                                                    <div
-                                                                                        class="apexcharts-tooltip apexcharts-theme-light">
-                                                                                        <div
-                                                                                            class="apexcharts-tooltip-title"
-                                                                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
-                                                                                        <div
-                                                                                            class="apexcharts-tooltip-series-group"
-                                                                                            style="order: 1;"><span
-                                                                                                class="apexcharts-tooltip-marker"
-                                                                                                style="background-color: rgb(255, 171, 0);"></span>
-                                                                                            <div
-                                                                                                class="apexcharts-tooltip-text"
-                                                                                                style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-y-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-y-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-y-value"></span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-goals-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-goals-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-goals-value"></span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-z-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-z-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-z-value"></span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
-                                                                                        <div
-                                                                                            class="apexcharts-yaxistooltip-text"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+
                                                                             <div class="resize-triggers">
                                                                                 <div class="expand-trigger">
                                                                                     <div
@@ -229,59 +182,8 @@
                                                                             </div>
                                                                             <div id="profileReportChart"
                                                                                  style="min-height: 80px;">
-                                                                                <div id="apexchartsph3fig7d"
-                                                                                     class="apexcharts-canvas apexchartsph3fig7d apexcharts-theme-light"
-                                                                                     style="width: 300px; height: 80px;">
-                                                                                    <div class="apexcharts-legend"
-                                                                                         style="max-height: 40px;"></div>
-                                                                                    <div
-                                                                                        class="apexcharts-tooltip apexcharts-theme-light">
-                                                                                        <div
-                                                                                            class="apexcharts-tooltip-title"
-                                                                                            style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;"></div>
-                                                                                        <div
-                                                                                            class="apexcharts-tooltip-series-group"
-                                                                                            style="order: 1;"><span
-                                                                                                class="apexcharts-tooltip-marker"
-                                                                                                style="background-color: rgb(255, 171, 0);"></span>
-                                                                                            <div
-                                                                                                class="apexcharts-tooltip-text"
-                                                                                                style="font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-y-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-y-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-y-value"></span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-goals-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-goals-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-goals-value"></span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="apexcharts-tooltip-z-group">
-                                                                                                    <span
-                                                                                                        class="apexcharts-tooltip-text-z-label"></span><span
-                                                                                                        class="apexcharts-tooltip-text-z-value"></span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="apexcharts-yaxistooltip apexcharts-yaxistooltip-0 apexcharts-yaxistooltip-left apexcharts-theme-light">
-                                                                                        <div
-                                                                                            class="apexcharts-yaxistooltip-text"></div>
-                                                                                    </div>
-                                                                                </div>
                                                                             </div>
-                                                                            <div class="resize-triggers">
-                                                                                <div class="expand-trigger">
-                                                                                    <div
-                                                                                        style="width: 474px; height: 116px;"></div>
-                                                                                </div>
-                                                                                <div class="contract-trigger"></div>
-                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -459,20 +361,230 @@
                                             </p>
                                         </div>
                                         <!--報修資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
-                                            <p>
-                                                Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans
-                                                macaroon gummies cupcake gummi
-                                                bears
-                                                cake chocolate.
-                                            </p>
-                                            <p class="mb-0">
-                                                Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple
-                                                pie brownie cake. Sweet roll icing
-                                                sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
-                                                Pudding jelly jelly-o tart brownie
-                                                jelly.
-                                            </p>
+                                        <div class="tab-pane fade active show" id="navs-top-repair" role="tabpanel">
+                                            <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark active"
+                                                            style="margin-left: 12px" id="repair-all-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#repair-all"
+                                                            aria-expanded="true" aria-disabled="true" type="button"
+                                                            role="tab" aria-controls="repair-all" aria-selected="true">
+                                                        全部
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="repair-not-finshed-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#repair-not-finshed" type="button"
+                                                            role="tab" aria-controls="repair-not-finshed"
+                                                            aria-selected="false">
+                                                        未維修
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="conduct-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#in-repair" type="button" role="tab"
+                                                            aria-controls="in-repair" aria-selected="false">
+                                                        維修中
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="finshed-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#repair-finsh" type="button" role="tab"
+                                                            aria-controls="repair-finsh" aria-selected="false">
+                                                        已維修
+                                                    </button>
+                                                </li>
+                                                <li class="py-2 px-3">||</li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="{{route('renters.houses.repairs.create',$house->id)}}"><button type="button" class="btn btn-primary">建立報修</button></a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <!--全部-->
+                                                <div class="tab-pane fade active show" id="repair-all"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>內容</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                            @foreach($house -> repairs as $repair)
+                                                        <tr>
+                                                            <td>
+                                                                <strong>{{$repair -> content}}</strong></td>
+                                                            <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                            <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                            </td>
+                                                            <td style="text-align: right">
+                                                                <div class="dropdown">
+                                                                    <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                    &emsp;
+                                                                    <button type="button"
+                                                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" style="">
+                                                                        <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                              method="GET">
+                                                                            @csrf
+                                                                        <button class="dropdown-item"><i
+                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                            編輯</button>
+                                                                        </form>
+                                                                        <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                              method="POST">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                        <button class="dropdown-item"><i
+                                                                                class="bx bx-trash me-1"></i>刪除</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--未維修-->
+                                                <div class="tab-pane fade" id="repair-not-finshed"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th>日期</th>
+                                                            <th>狀態</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        <tr>
+                                                            <td>
+                                                                <strong>標題</strong></td>
+                                                            <td>日期</td>
+                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button type="button"
+                                                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" style="">
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                            編輯</a>
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--維修中-->
+                                                <div class="tab-pane fade" id="in-repair"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th>日期</th>
+                                                            <th>狀態</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        <tr>
+                                                            <td>
+                                                                <strong>標題</strong></td>
+                                                            <td>日期</td>
+                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button type="button"
+                                                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" style="">
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                            編輯</a>
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--已維修-->
+                                                <div class="tab-pane fade" id="repair-finsh"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th>日期</th>
+                                                            <th>狀態</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        <tr>
+                                                            <td>
+                                                                <strong>標題</strong></td>
+                                                            <td>日期</td>
+                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button type="button"
+                                                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                                    </button>
+                                                                    <div class="dropdown-menu" style="">
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                            編輯</a>
+                                                                        <a class="dropdown-item"
+                                                                           href="javascript:void(0);"><i
+                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                     <p></p>

@@ -67,6 +67,22 @@ class RenterController extends Controller
         $features = $house->features;
         $image = $house->image;
         $expenses = $house->expenses;
+        $unrepair = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '未維修');
+        }])->get();
+        $inrepair = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '維修中');
+        }])->get();
+        $finsh = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', 1);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '已維修');
+        }])->get();
+        dd($unrepair);
         $data = [
             'contract' =>$signatories,
             'location_id' =>$location->id,
@@ -76,7 +92,9 @@ class RenterController extends Controller
             'house' => $house,
             'image' => $image,
             'expenses' => $expenses,
-
+            'unrepair' => $unrepair,
+            'inrepair' => $inrepair,
+            'finsh' => $finsh,
         ];
         return view('renters.houses.show',$data);
     }

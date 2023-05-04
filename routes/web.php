@@ -213,11 +213,10 @@ Route::get('costs/create', [ExpenseController::class, 'create'])->name('costs.cr
 Route::post('costs', [ExpenseController::class, 'store'])->name('costs.store');
 
 // 3-10-6 會員(租客)查看報修訊息
-Route::get('renters/houses/repairs', [RepairController::class, 'index'])->name('renters.houses.repairs.index');
+Route::get('renters/houses/{house}/repairs', [RepairController::class, 'index'])->name('renters.houses.repairs.index');
 
 // 3-10-7 會員(租客)新增報修訊息
-Route::get('renters/houses/repairs/create', [RepairController::class, 'create'])->name('renters.houses.repairs.create');
-Route::get('renters/houses/{house}/repairs/create',[RepairController::class,'create_in_house'])->name('renters.houses.repairs.in.house.create');
+Route::get('renters/houses/{house}/repairs/create',[RepairController::class,'create'])->name('renters.houses.repairs.create');
 Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name('renters.houses.repairs.store');
 
 // 3-10-8 會員(租客)修改報修訊息
