@@ -118,7 +118,11 @@ class OwnerController extends Controller
 
         ];
 
+
         return view('owners.houses.show',$data);
+
+//        return view('owners.houses.show2',$data);
+
     }
 
     /**

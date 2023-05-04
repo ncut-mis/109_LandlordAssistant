@@ -1,4 +1,4 @@
-@extends('layouts.owner_master')
+@extends('layouts.owner_master_index')
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
@@ -61,9 +61,9 @@ function confirmDelete(event, houseId) {
 </script>
 
 {{-- 回到最上面的按鈕 --}}
-<button onclick="scrollToTop()" class="scroll-to-top">
-  <i class="fas fa-chevron-up"></i>
-</button>
+{{--<button onclick="scrollToTop()" class="scroll-to-top">--}}
+{{--  <i class="fas fa-chevron-up"></i>--}}
+{{--</button>--}}
 
 <form method="post" action="{{ route('owners.locations.store')}}" enctype="multipart/form-data">
     @csrf

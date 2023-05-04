@@ -158,15 +158,15 @@ class HouseController extends Controller
 
 
 
-//            // 建立 Expense 資料
-//            $expense = new Expense([
-//                'house_id' => $house_id,
-//                'type' => "租金",
-//                'amount' => $request->amount,
-//                'interval' => $request->interval,
-//            ]);
-//            // 透過關聯存取資料庫
-//        $house->expenses()->save($expense);
+            // 建立 Expense 資料
+            $expense = new Expense([
+                'house_id' => $house_id,
+                'type' => "租金",
+                'amount' => $request->amount,
+                'interval' => $request->interval,
+            ]);
+            // 透過關聯存取資料庫
+        $house->expenses()->save($expense);
 
 
 
@@ -221,7 +221,7 @@ class HouseController extends Controller
             'listed' => $listed,
             'vacancy' => $vacancy,
         ];
-		return view('owners.locations.houses.show',$data);
+		return view('owners.locations.houses.show2',$data);
     }
 
     public function advance_search(House $house)
