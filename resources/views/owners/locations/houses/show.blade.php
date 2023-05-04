@@ -77,7 +77,27 @@ function confirmDelete(event, houseId) {
 			</button>
 			<ul class="dropdown-menu location" style="text-align:center;">
 				<li><a class="dropdown-item" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a></li>
-				<li><a class="dropdown-item" href="#">刪除地點</a></li>
+
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <li> <a href="{{ route('owners.locations.destroy', $location->id) }}"
+                   onclick="event.preventDefault();
+            if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
+              document.getElementById('delete-form').submit();
+            }"
+                   style="color: black; text-decoration: none;">
+                    刪除
+                </a></li>
+
+                <form id="delete-form" action="{{ route('owners.locations.destroy', $location->id) }}" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+
+
 				<li><a class="dropdown-item" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a></li>
 				<hr>
 				<li><a class="dropdown-item" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a></li>

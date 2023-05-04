@@ -118,8 +118,7 @@ Route::post('owners/houses/rts', [SignatoryController::class, 'store'])->name('o
 //Route::patch('owners/houses/{house}/rts/{rt}', [SignatoryController::class, 'update'])->name('owners.houses.rts.update');
 
 //會員(房東)刪除租客
-Route::delete('owners/houses/rts/{rt}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
-
+Route::delete('owners/houses/rts/{signatory}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
 // 3-9-7 會員(房東)查看公告
 Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
 
