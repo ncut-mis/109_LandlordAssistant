@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('start_date'); //費用開始日期
             $table->string('end_date'); //費用結束日期
             $table->string('remark',100); //備註
+            $table->boolean('renter_status'); //狀態(1:已繳、0:未繳)
+            $table->boolean('owner_status'); //狀態(1:已送出費用、0:未送出費用)
             $table->timestamps();
         });
     }
