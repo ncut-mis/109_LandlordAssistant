@@ -17,6 +17,11 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
 @section('page-content')
+    @if (session('success'))
+        <script>
+            alert('{{ session('success') }}');
+        </script>
+    @endif
 
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script>
@@ -433,7 +438,7 @@
                                 </li>
                                 <li class="py-2 px-3">||</li>
                                 <li class="nav-item" role="presentation">
-                                    <a href="{{route('houses.expenses.create',$house->id)}}"><button type="button" class="btn btn-primary">新增費用</button></a>
+                                    <a href="{{route('houses.expenses.create',['house' => $house->id])}}"><button type="button" class="btn btn-primary">新增費用</button></a>
                                 </li>
                             </ul>
                             {{--    ^^費用種類按鈕^^    --}}
@@ -459,7 +464,7 @@
                                                     <td style="text-align: center">還要關聯應繳款項</td>
                                                     <td style="text-align: right;width: 5%">
                                                         @csrf
-                                                        <a class="btn btn-secondary" href="{{route('houses.expenses.edit',$expense -> id)}}">修改</a>
+                                                        <a class="btn btn-secondary" href="{{route('houses.expenses.edit',['expense'=>$expense -> id])}}">修改</a>
                                                     </td>
                                                     <td style="text-align: right;width: 3%">
                                                         <form action="{{route('houses.expenses.destroy',$expense -> id)}}" method="POST">

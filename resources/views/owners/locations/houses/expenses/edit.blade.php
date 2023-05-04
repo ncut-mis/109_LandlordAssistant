@@ -7,11 +7,12 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    @foreach($houses as $house)
+        @foreach($houses as $houses)
             <div class="from-group mb-3 px-3 py-2">
-                <div class="text-center fw-bolder fs-4">新增{{$house->name}}費用</div>
+                <div class="text-center fw-bolder fs-4">新增{{$houses->name}}費用</div>
             </div>
-    @endforeach
+        @endforeach
+
             <form method="post" action="{{ route('houses.expenses.update',[$expenses->id]) }}">
                 @csrf
                 @method('PATCH')
@@ -48,7 +49,7 @@
                         <button class="btn btn-primary" type="submit">
                             更改
                         </button>
-                        <a class="btn btn-secondary" type="submit" href="{{route('houses.expenses.index')}}">
+                        <a class="btn btn-secondary" type="submit" href="{{route('owners.houses.show',['house'=>$houses->id])}}">
                             取消
                         </a>
                     </div>

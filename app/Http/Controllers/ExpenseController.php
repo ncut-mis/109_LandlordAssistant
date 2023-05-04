@@ -28,34 +28,41 @@ class ExpenseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function owners_create()
+    public function owners_create($house)
     {
-        $h = $house->id;
-        $houses = House::whereHas('expenses',function ($e){
-            $e ->where('house_id','=',$h); //2為當時點進去的房間id
-        })->get();
+        $houses = House::find($house);
+        //$location = $houses->location_id;
+        //$house_id = $houses-> id;
 
+//        $data = House::whereHas('expenses',function ($e)use ($house_id){
+//            $e ->where('house_id','=',$house_id);
+//        })->get();
         $houses_data = [
-            'houses' => $houses,
+            'houses'=>$houses,
+            //'location'=> $location
         ];
+
         return view('owners.locations.houses.expenses.create',$houses_data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function owners_store(Request $request)
+    public function owners_store(Request $request, House $house)
     {
-
-
+//        $house = House::find($house);如果是傳單一值(Model $參數)
+        $location = $house->location_id;
+        $house_id = $house-> id;
         $expense = Expense::create([
-            'house_id' => $request->house->id,
+            'house_id' => $house_id,
             'type' => $request->type,
             'amount' => $request->amount,
             'interval' => $request->interval,
+            'house'=>$house,
+            'location'=> $location
         ]);
         // 返回頁面或其他操作
-        return redirect()->route('owners.locations.houses.show',[$expense])->with('success', '費用新增成功！');;
+        return redirect()->route('owners.houses.show',['house' => $house->id])->with('success', '費用新增成功！');;
     }
     public function store(StoreExpenseRequest $request)
     {
@@ -75,12 +82,15 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        $houses = House::whereHas('expenses', function ($q){
-            $q->where('house_id','=',2);
+        $house_id=$expense->house_id;
+        $data = House::whereHas('expenses',function ($e)use ($house_id){
+            $e ->where('house_id','=',$house_id);
         })->get();
-
+//            $houses = House::whereHas('expenses', function ($q){
+//            $q->where('house_id','=',2);
+//        })->get();
         $houses_data = [
-            'houses' => $houses,
+            'houses' => $data,
             'expenses'=> $expense,
         ];
         return view('owners.locations.houses.expenses.edit',$houses_data);
@@ -91,14 +101,17 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-
+        $house_id = $expense->house_id;
+        $location = House::find($house_id)->location_id;
+$owner_id = House::find($house_id)->owner_id;
+//dd($owner_id);
         $data=$request->only([
             'type',
             'amount',
             'interval'
         ]);
         $expense->update($data);
-        return redirect()->route('owners.locations.houses.show', [$location->owner->id, $location->id])->with('success', '修改成功！');
+        return redirect()->route('owners.locations.houses.show', [$owner_id, $location])->with('success', '修改成功！');
     }
 
     /**
