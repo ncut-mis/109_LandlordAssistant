@@ -12,7 +12,6 @@
 
 </head>
 <body>
-
 @extends('layouts.owner_master')
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 @section('title', '房東管理頁面')
@@ -501,10 +500,20 @@
                             <tbody>
                             <tr>
                                 <td>{{ $renters_data->name }}</td>
-
                                 <td>{{ $renters_data->phone }}</td>
-                                <td></td>
+                                <td>
+
+                                    <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">移除租客</button>
+                                    </form>
+
+                                </td>
                             </tr>
+
+
+
                             </tbody>
                         </table>
                             @endforeach
@@ -520,6 +529,7 @@
                                     <td>尚無租客</td>
 
                                 </tr>
+
                                 </tbody>
                             </table>
 

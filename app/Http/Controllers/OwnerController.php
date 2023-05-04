@@ -117,6 +117,7 @@ class OwnerController extends Controller
             'expenses' => $expenses,
 
         ];
+
         return view('owners.houses.show',$data);
     }
 

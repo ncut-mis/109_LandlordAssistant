@@ -80,7 +80,7 @@ class SignatoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSignatoryRequest $request, Signatory $signatory)
+    public function update(UpdateSignatoryRequest $request, Signatory $signatory,)
     {
         //
     }
@@ -90,6 +90,12 @@ class SignatoryController extends Controller
      */
     public function destroy(Signatory $signatory)
     {
-        //
+        $signatory->delete();
+
+        // 刪除成功，重定向到原始頁面，並顯示成功訊息
+        return redirect()->back()->with('success', '已移除租客');
+
+
+
     }
 }
