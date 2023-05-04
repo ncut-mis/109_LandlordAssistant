@@ -42,7 +42,7 @@ class ExpenseController extends Controller
             //'location'=> $location
         ];
 
-        return view('owners.locations.houses.expenses.create',$houses_data);
+        return view('owners.locations.houses.expenses.create2',$houses_data);
     }
 
     /**
@@ -57,12 +57,16 @@ class ExpenseController extends Controller
             'house_id' => $house_id,
             'type' => $request->type,
             'amount' => $request->amount,
-            'interval' => $request->interval,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'remark' => $request->remark,
             'house'=>$house,
             'location'=> $location
         ]);
+
+
         // 返回頁面或其他操作
-        return redirect()->route('owners.houses.show',['house' => $house->id])->with('success', '費用新增成功！');;
+        return redirect()->route('owners.houses.show2',['house' => $house->id])->with('success', '費用新增成功！');;
     }
     public function store(StoreExpenseRequest $request)
     {
