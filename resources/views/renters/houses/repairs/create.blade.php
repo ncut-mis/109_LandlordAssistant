@@ -29,6 +29,7 @@
                                         </h4>
                                         <!-- Tabs -->
                                         <form method="post" action="{{route('renters.houses.repairs.store')}}">
+                                            @csrf
                                             <input type="hidden" name="_token"
                                                    value="hqNsD26EYw0jeJ24qgNZpGF0mW6V76t5dQxzLICa">
                                             @foreach($house as  $houses)

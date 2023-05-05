@@ -82,7 +82,6 @@ class RenterController extends Controller
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
-        dd($unrepair);
         $data = [
             'contract' =>$signatories,
             'location_id' =>$location->id,

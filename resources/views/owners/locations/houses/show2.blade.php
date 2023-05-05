@@ -36,12 +36,9 @@
                                 @foreach ($houses as $house)
                                 <div class="col-12">
                                     <div class="card mb-4">
-                                        <h3 class="card-header" href="{{ route('owners.houses.show', $house->id) }}">{{ $house->name }}</h3>
+                                        <h3 class="card-header" href="{{ route('owners.houses.show', $house->id) }}">{{ $house->name }} | {{ $house->county }} {{ $house->area }} {{ $house->address }}</h3>
                                         <div class="card-body">
-                                            <h4 class="card-title text-nowrap mb-2">
-{{--                                                租金：200元  --}}
-{{--                                                地點：福田一街13號--}}
-                                            </h4>
+
                                             <p class="demo-inline-spacing">
                                                 <a class="btn btn-primary me-1" data-bs-toggle="#houses0" href="{{ route('owners.houses.show', $house->id) }}" role="button" aria-expanded="false" aria-controls="houses0">進入房屋</a>
                                             </p>
