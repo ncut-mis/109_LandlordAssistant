@@ -43,5 +43,11 @@
 <script src="{{asset('css/vendor/js/bootstrap.js')}}"></script>
 <script src="{{asset('css/vendor/js/helpers.js')}}"></script>
 <script src="{{asset('css/vendor/js/menu.js')}}"></script>
+<script src="{{asset('js/tw-city-selector.js')}}"></script>
+<script>
+    new TwCitySelector({
+        districtFieldName: 'area'
+    });
+</script>
 </body>
 </html>

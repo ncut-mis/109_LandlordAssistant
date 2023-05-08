@@ -249,7 +249,7 @@ class HouseController extends Controller
             'feature' => $feature,
             'owner_id' => $location->owner_id,
         ];
-        return view('owners.locations.houses.edit',$locations_data);
+        return view('owners.locations.houses.edit2',$locations_data);
     }
 
     public function publish_edit(House $house)
