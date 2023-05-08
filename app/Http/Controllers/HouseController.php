@@ -34,7 +34,7 @@ class HouseController extends Controller
             'locations' => $locations,
             'owner_id' => $owner_id,
         ];
-        return view('owners.locations.houses.create',$locations_data);
+        return view('owners.locations.houses.create2',$locations_data);
     }
 
     public function advance_search_create()
