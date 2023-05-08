@@ -19,6 +19,7 @@ class Expense extends Model
         'house_id',
         'type',
         'amount',
+        'interval',
         'start_date',
         'end_date',
         'remark',

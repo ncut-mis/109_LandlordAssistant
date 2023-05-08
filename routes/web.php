@@ -174,9 +174,17 @@ Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_
 Route::get('owners/houses/{house}/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
 Route::post('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
 
+//新增租金
+Route::get('owners/houses/{house}/expenses_rentals/create', [ExpenseController::class, 'rentals_create'])->name('houses.expenses_rentals.create');
+Route::post('owners/houses/{house}/expenses_rentals', [ExpenseController::class, 'rentals_store'])->name('houses.expenses_rentals.store');
+
 // 3-9-26 會員(房東)修改費用資訊
 Route::get('owners/houses/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');
 Route::patch('owners/houses/expenses/{expense}', [ExpenseController::class, 'update'])->name('houses.expenses.update');
+
+//修改租金
+Route::get('owners/houses/expenses_rentals/{expense}/edit', [ExpenseController::class, 'rentals_edit'])->name('houses.expenses_rentals.edit');
+Route::patch('owners/houses/expenses_rentals/{expense}', [ExpenseController::class, 'rentals_update'])->name('houses.expenses_rentals.update');
 
 // 3-9-27 會員(房東)刪除費用資訊
 Route::delete('owners/houses/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('houses.expenses.destroy');

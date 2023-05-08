@@ -337,74 +337,111 @@
                                             </p>
                                         </div>
                                         <!--費用資訊內容-->
+
+
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
-                                                            id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all"
-                                                            aria-disabled="true" type="button" role="tab" aria-controls="pills-all"
+                                                    <button class="btn btn-outline-dark active"
+                                                            style="margin-left: 12px"
+                                                            id="pills-all-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-all"
+                                                            aria-disabled="true" type="button" role="tab"
+                                                            aria-controls="pills-all"
                                                             aria-selected="true">
                                                         全部
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-for_rent-tab" data-bs-toggle="pill" data-bs-target="#pills-for_rent"
-                                                            type="button" role="tab" aria-controls="pills-for_rent" aria-selected="false">
+                                                            id="pills-for_rent-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-for_rent"
+                                                            type="button" role="tab" aria-controls="pills-for_rent"
+                                                            aria-selected="false">
                                                         水費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-listed-tab" data-bs-toggle="pill" data-bs-target="#pills-listed"
-                                                            type="button" role="tab" aria-controls="pills-listed" aria-selected="false">
+                                                            id="pills-listed-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-listed"
+                                                            type="button" role="tab" aria-controls="pills-listed"
+                                                            aria-selected="false">
                                                         電費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         房租
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         其他費用
                                                     </button>
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         已繳費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         未繳費
                                                     </button>
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a href="{{route('houses.expenses.create',['house' => $house->id])}}"><button type="button" class="btn btn-primary">新增費用</button></a>
+                                                    <a href="{{route('houses.expenses.create',['house' => $house->id])}}">
+                                                        <button type="button" class="btn btn-primary">新增費用</button>
+                                                    </a>
+                                                </li>
+                                                <li class="py-2 px-3">||</li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="{{route('houses.expenses_rentals.create',['house' => $house->id])}}">
+                                                        <button type="button" class="btn btn-success">新增租金</button>
+                                                    </a>
                                                 </li>
                                             </ul>
                                             <div class="card-body">
                                                 <table class="table" id="datatablesSimple">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
-                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
-                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
-                                                        <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
-                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用開始日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用結束日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">費用類型
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 5%;font-size: 18px">金額
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 10%;font-size: 18px">備註
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">狀態
+                                                        </th>
 
                                                     </tr>
                                                     </thead>
@@ -429,24 +466,42 @@
                                                             </td>
                                                             <td style="text-align: right;width: 5%">
                                                                 @csrf
-                                                                <a class="btn btn-secondary" href="{{route('houses.expenses.edit',['expense'=>$expense -> id])}}">修改</a>
+                                                                @if($expense->owner_status == 0)
+                                                                    <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                @else
+                                                                    <button class="btn btn-secondary" disabled>修改</button>
+                                                                @endif
+                                                                {{--                                                                <a class="btn btn-secondary" href="{{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}">修改</a>--}}
                                                             </td>
                                                             <td style="text-align: right;width: 3%">
-                                                                <form action="{{route('houses.expenses.destroy',$expense -> id)}}" method="POST">
+                                                                <form
+                                                                    action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btn btn-danger">刪除</button>
+                                                                    @if($expense->owner_status == 0)
+                                                                        <button class="btn btn-danger" onclick="return confirm('確定要刪除嗎？')">刪除</button>
+                                                                    @else
+                                                                        <button class="btn btn-danger" disabled>刪除</button>
+                                                                    @endif
                                                                 </form>
                                                             </td>
 
                                                             <td style="text-align: right;width: 8%">
                                                                 @if($expense->owner_status == 0)
-                                                                    <button type="button" class="btn btn-warning" name="for-renter">送出費用</button>
+                                                                    <button type="button" class="btn btn-warning"
+                                                                            name="for-renter">送出費用
+                                                                    </button>
                                                                 @elseif($expense->owner_status == 1)
                                                                     @if($expense->renter_status == 0)
-                                                                        <button type="button" class="btn btn-primary">再次提醒</button>
+                                                                        <button type="button" class="btn btn-primary">
+                                                                            再次提醒
+                                                                        </button>
                                                                     @elseif($expense->renter_status == 1)
-                                                                        <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                                disabled>再次提醒
+                                                                        </button>
                                                                     @endif
                                                                 @endif
                                                             </td>
