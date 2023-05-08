@@ -224,7 +224,7 @@
 													<div class="input-group mb-3">
 														<span class="input-group-text" id="inputGroup-sizing-default">租金</span>
 														<span class="input-group-text">$</span>
-														<input type="text" class="form-control" name="amount"
+														<input type="text" class="form-control" name="rentals"
 															aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 													</div>
 												</div>

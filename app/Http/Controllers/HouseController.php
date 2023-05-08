@@ -118,6 +118,8 @@ class HouseController extends Controller
             'address' => $validatedData['address'],
             'lease_status' => $lease_status,
             'introduce' => $request->introduce,
+            'rentals' => $request->rentals,
+            'interval' => $request->interval,
             'num_renter' => $request->num_renter,
             'min_period' => $request->min_period,
             'pattern' => $request->pattern,
@@ -195,7 +197,7 @@ class HouseController extends Controller
             }
         }
 
-        return redirect()->route('houses.expenses.store',[$owner_id, $location,$house])->with('success', '儲存成功！');
+        return redirect()->route('owners.houses.show',[$owner_id, $location,$house])->with('success', '儲存成功！');
     }
 
     /**
