@@ -11,6 +11,13 @@
             </ul>
         <li><a href="{{url('about')}}">關於我們</a></li>
         <li><a href="{{url('help')}}">幫助</a></li>
-        <li><a href="#">註冊/登入</a></li>
+        <li><a href="{{route('register')}}">註冊</a></li>
+        <li> <a href="{{route('login')}}">登入</a></li>
+
+        <form method="POST" action="{{ route('logout') }}" style="display: inline-block;">
+            @csrf
+            @method('DELETE')
+            <li> <a href="{{route('logout')}}" type="submit">登出</a></li>
+        </form>
     </ul>
 </nav>
