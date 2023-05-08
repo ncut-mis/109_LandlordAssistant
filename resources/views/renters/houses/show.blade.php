@@ -399,7 +399,7 @@
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a href="{{route('renters.houses.repairs.create',$house->id)}}"><button type="button" class="btn btn-primary">建立報修</button></a>
+                                                    <a href="{{route('renters.houses.repairs.create',['house'=>$house->id])}}"><button type="button" class="btn btn-primary">建立報修</button></a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">

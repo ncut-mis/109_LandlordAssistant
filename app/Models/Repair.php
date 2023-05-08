@@ -25,5 +25,6 @@ class Repair extends Model
         'status',
         'content',
         'date',
+        'title'
     ];
 }

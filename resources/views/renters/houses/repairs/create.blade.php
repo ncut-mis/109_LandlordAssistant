@@ -28,10 +28,10 @@
                                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房屋 /</span>報修
                                         </h4>
                                         <!-- Tabs -->
-                                        <form method="post" action="{{route('renters.houses.repairs.store')}}">
+                                        <form method="POST" action="{{route('renters.houses.repairs.store')}}">
                                             @csrf
-                                            <input type="hidden" name="_token"
-                                                   value="hqNsD26EYw0jeJ24qgNZpGF0mW6V76t5dQxzLICa">
+                                            <input type="hidden" name="id"
+                                                   value="{{$house_id}}">
                                             @foreach($house as  $houses)
                                             <h3 class="my-1 fw-semibold">新增 {{$houses->name}} 報修</h3>
                                                 <input name="id" value="{{$houses->id}}" style="visibility:hidden">
@@ -39,9 +39,15 @@
                                             <div class="col-xl-6">
                                                 <!-- HTML5 Inputs -->
                                                 <div class="card mb-4">
-                                                    <h5 class="card-header">報修</h5>
+                                                    <h3 class="card-header">報修</h3>
 
                                                     <div class="card-body">
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-2 col-form-label" style="font-size: 18px">標題</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" name="title" placeholder="請輸入報修標題">
+                                                            </div>
+                                                        </div>
                                                         <div class="mb-3 row">
 
 
@@ -53,9 +59,9 @@
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-info mx-3">確定報修</button>
+                                        </form>
                                             <a type="button" class="btn btn-secondary"
                                                href="{{route('renters.houses.show',$house_id)}}">返回</a>
-                                        </form>
                                     </div>
                                     <!-- / Content -->
                                     <!-- Footer -->

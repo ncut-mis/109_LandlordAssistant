@@ -76,6 +76,7 @@ class RepairController extends Controller
         $repair = Repair::create([
             'renter_id' => 1,
             'house_id' => $request->id,
+            'title' => $request->title,
             'status' => '未維修',
             'content' => $request->contents,
             'date' => null,
