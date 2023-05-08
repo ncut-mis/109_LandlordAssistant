@@ -54,8 +54,8 @@ Route::get('houses/advance_search', [HouseController::class, 'advance_search'])-
 Route::get('houses/{house}', [HomeController::class, 'show'])->name('houses.show');
 
 // 3-7-6 訪客登入(預設應該已經有)
-Route::get('login', [AuthenticatedSessionController::class, 'create']);
-Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
+//Route::get('login', [AuthenticatedSessionController::class, 'create']);
+//Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
 
 //會員查看個人資料
 Route::get('users/{user}',[UserProfileController::class,'index'])->name('users.index');
