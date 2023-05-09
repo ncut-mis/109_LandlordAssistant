@@ -541,7 +541,7 @@
                         <!-- Tabs -->
                         <!-- Pills -->
                         <!-- Pills -->
-                        <a type="button" class="btn btn-secondary" href="{{url('renters/houses')}}">返回房屋列表</a>
+                        <a type="button" class="btn btn-secondary" href="{{route('owners.locations.houses.show',['owner'=>$house->owner_id, 'location'=>$house->location_id])}}">返回房屋列表</a>
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->

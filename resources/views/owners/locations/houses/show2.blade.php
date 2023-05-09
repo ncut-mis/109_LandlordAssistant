@@ -51,11 +51,11 @@
 										</svg>
 									</a>
 									<a class="btn btn-secondary" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a>
-									@if (session('success'))
-										<div class="alert alert-success">
-											{{ session('success') }}
-										</div>
-									@endif
+{{--									@if (session('success'))--}}
+{{--										<div class="alert alert-success">--}}
+{{--											{{ session('success') }}--}}
+{{--										</div>--}}
+{{--									@endif--}}
 									<a class="btn btn-danger" href="{{ route('owners.locations.destroy', $location->id) }}"
 									   onclick="event.preventDefault();
 								if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
@@ -66,7 +66,7 @@
 									|
 									<a class="btn btn-primary" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a>
 									<a class="btn btn-warning" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a>
-                                    
+
 								</div>
 							</div>
                             <ul class="nav mb-3" id="house-tab" role="tablist">
