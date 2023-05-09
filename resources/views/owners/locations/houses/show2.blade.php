@@ -66,7 +66,7 @@
 									|
 									<a class="btn btn-primary" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a>
 									<a class="btn btn-warning" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a>
-								
+                                    
 								</div>
 							</div>
                             <ul class="nav mb-3" id="house-tab" role="tablist">

@@ -66,11 +66,16 @@
             imageContainer.remove();
         });
         // 刪除新圖片
-        $('.remove-image').click(function() {
+        $(document).on('click', '.remove-image', function() {
             var index = $(this).closest('.image-container').index();
             $(this).closest('.image-container').remove();
             images.splice(index, 1);
         });
+        // $('.remove-image').click(function() {
+        //     var index = $(this).closest('.image-container').index();
+        //     $(this).closest('.image-container').remove();
+        //     images.splice(index, 1);
+        // });
         $('.image-container').on('click', '.remove-image', function() {
             var inputGroup = $(this).parents('.input-group');
             var previewImage = inputGroup.prev('.preview-image');
