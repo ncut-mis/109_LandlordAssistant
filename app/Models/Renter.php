@@ -31,4 +31,8 @@ class Renter extends Model
     //public function user(){
     //    return $this->morphMany(User::class,'carry_on'); //繼承(子)
     //}
+    protected $fillable = [
+        'id',
+        'user_id',
+    ];
 }
