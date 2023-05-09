@@ -242,12 +242,10 @@ class HouseController extends Controller
     public function edit(Location $location, House $house)
     {
         $furnish = $house->furnishings;
-        $amount = $house->expenses;
         $feature = $house->features;
         $locations_data = [
             'locations' => $location,
             'houses' => $house,
-            'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
             'owner_id' => $location->owner_id,

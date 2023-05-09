@@ -140,17 +140,17 @@
                                                                                         class="badge bg-label-warning rounded-pill">
                                                         每@if( $expenses->value('interval') == 12)
                                                                                             年繳
-                                                                                        @elseif( $expenses->value('interval') == 6)
+                                                                                        @elseif( $house->interval == 6)
                                                                                             半年繳
-                                                                                        @elseif( $expenses->value('interval') == 3)
+                                                                                        @elseif( $house->interval == 3)
                                                                                             季繳
-                                                                                        @elseif( $expenses->value('interval') == 1)
+                                                                                        @elseif( $house->interval == 1)
                                                                                             月繳
                                                                                         @endif一次</span>
                                                                                 </div>
                                                                                 <div class="mt-sm-auto">
                                                                                     <h3 class="mb-0">
-                                                                                        ${{ number_format($expenses->value('amount')) }}</h3>
+                                                                                        ${{ number_format($house->rentals) }}</h3>
                                                                                 </div>
                                                                             </div>
                                                                             <div id="profileReportChart"
