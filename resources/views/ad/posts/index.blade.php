@@ -12,9 +12,9 @@
         <strong>完成！</strong> 成功儲存文章
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
         <a class="btn btn-success btn-sm" href="{{ route('ad.posts.create') }}">新增</a>
-    </div>
+
     <table class="table">
         <thead>
         <tr>

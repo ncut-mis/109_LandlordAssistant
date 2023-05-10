@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\Location;
 use App\Models\SystemPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $houses = House::with('image')->get(); // 預先載入 image 關聯
-        $posts=SystemPost::all();
+        $posts=SystemPost::where('created_at', '>=', Carbon::now()->subDays(3))->latest()->first();
         $view_data = [
         'houses' => $houses,
             'posts'=>$posts,

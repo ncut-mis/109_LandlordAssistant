@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title', '測試')
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 @section('content')
     <style>
         /* tw-city 替換適合的 css 樣式 */
@@ -51,7 +54,20 @@
             text-overflow: ellipsis;
             display: block;
         }
+        .notice {
+            margin-bottom: 0;
+        }
     </style>
+    <script>
+        $(document).ready(function() {
+            $('#liveAlert').alert();
+        });
+    </script>
+        <div class="alert alert-warning alert-dismissible position-fixed top-50 start-50 translate-middle" role="alert" id="liveAlert">
+            <div class="notice">{{ $posts->content }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
 
     <!-- Banner -->
 
@@ -66,19 +82,7 @@
             </div>
         </div>
     </section>
-    <div class="container-fluid">
-        <div class="alert alert-success alert-dismissible" role="alert" id="liveAlert">
-            @if(count($posts) > 0)
-                @foreach($posts as $post)
-                    <div class="notice">{{ $post->content }}
-                        {{--                                <span class="close-button">&times;</span>--}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                    </div>
-                @endforeach
-            @endif
 
-        </div>
-    </div>
     <!-- Main -->
     <section id="main">
         <div class="container">
@@ -126,4 +130,5 @@
             </div>
         </div>
     </section>
+
 @endsection
