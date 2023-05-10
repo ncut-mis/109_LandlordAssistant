@@ -66,16 +66,32 @@
             </div>
         </div>
     </section>
+    <div class="container-fluid">
+        <div class="alert alert-success alert-dismissible" role="alert" id="liveAlert">
+            @if(count($posts) > 0)
+                @foreach($posts as $post)
+                    <div class="notice">{{ $post->content }}
+                        {{--                                <span class="close-button">&times;</span>--}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                    </div>
+                @endforeach
+            @endif
 
+        </div>
+    </div>
     <!-- Main -->
     <section id="main">
         <div class="container">
             <div class="row gtr-200">
+
+
                 <div class="col-12">
 
                     <!-- Features -->
                     <section class="box features">
                         <h2 class="major"><span>你可能會喜歡....</span></h2>
+                        <!-- 顯示公告 -->
+
                         <div class="row">
                             @foreach ($houses as $house)
                                 @if($house->lease_status == '已刊登')

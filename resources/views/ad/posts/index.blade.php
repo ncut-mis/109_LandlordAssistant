@@ -1,5 +1,5 @@
-@extends('layouts.owner_master')
-<link href="{{ 'css/house_index.css' }}" rel="stylesheet">
+@extends('layouts.admin_master')
+{{--<link href="{{ 'css/main.css' }}" rel="stylesheet">--}}
 @section('page-title', '系統公告')
 
 @section('page-content')
@@ -21,7 +21,6 @@
 {{--            <th scope="col">#</th>--}}
             <!--<th scope="col">標題</th>-->
             <th scope="col" style="text-align: left">標題</th>
-            <th scope="col" style="text-align: right">內容</th>
         </tr>
         </thead>
         <tbody>
@@ -30,7 +29,6 @@
             <tr>
 {{--                <td style="text-align: right">{{$post->id}}</td>--}}
                 <td>{{$post->title}}</td>
-                <td>{{$post->content}}</td>
                 <td>
                     <a class="btn btn-sm btn-primary" href="{{route('ad.posts.edit', $post->id)}}">編輯</a>
                     /
