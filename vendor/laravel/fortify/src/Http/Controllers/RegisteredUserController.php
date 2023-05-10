@@ -9,9 +9,7 @@ use Illuminate\Routing\Controller;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
-use App\Models\User;
-use App\Models\Owner;
-use App\Models\Renter;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -57,22 +55,6 @@ class RegisteredUserController extends Controller
 
         $this->guard->login($user);
 
-        Owner::create([
-            'user_id' => $user->id,
-            // 其他欄位
-        ]);
-
-
-        Renter::create([
-            'user_id' => $user->id,
-            // 其他欄位
-        ]);
         return app(RegisterResponse::class);
-
-
-
-
-        //return app(RegisterResponse::class);
     }
-
 }

@@ -3048,7 +3048,6 @@ class ComposerStaticInitea9802e797ba84db1059c2bf3eb5954e
         'Laravel\\Fortify\\Http\\Responses\\VerifyEmailResponse' => __DIR__ . '/..' . '/laravel/fortify/src/Http/Responses/VerifyEmailResponse.php',
         'Laravel\\Fortify\\LoginRateLimiter' => __DIR__ . '/..' . '/laravel/fortify/src/LoginRateLimiter.php',
         'Laravel\\Fortify\\RecoveryCode' => __DIR__ . '/..' . '/laravel/fortify/src/RecoveryCode.php',
-        'Laravel\\Fortify\\RoutePath' => __DIR__ . '/..' . '/laravel/fortify/src/RoutePath.php',
         'Laravel\\Fortify\\Rules\\Password' => __DIR__ . '/..' . '/laravel/fortify/src/Rules/Password.php',
         'Laravel\\Fortify\\TwoFactorAuthenticatable' => __DIR__ . '/..' . '/laravel/fortify/src/TwoFactorAuthenticatable.php',
         'Laravel\\Fortify\\TwoFactorAuthenticationProvider' => __DIR__ . '/..' . '/laravel/fortify/src/TwoFactorAuthenticationProvider.php',

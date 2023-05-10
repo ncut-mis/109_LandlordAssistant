@@ -6,6 +6,7 @@ use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -73,7 +74,6 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configureCommands();
 
         RedirectResponse::macro('banner', function ($message) {
-            /** @var \Illuminate\Http\RedirectResponse $this */
             return $this->with('flash', [
                 'bannerStyle' => 'success',
                 'banner' => $message,
@@ -81,7 +81,6 @@ class JetstreamServiceProvider extends ServiceProvider
         });
 
         RedirectResponse::macro('dangerBanner', function ($message) {
-            /** @var \Illuminate\Http\RedirectResponse $this */
             return $this->with('flash', [
                 'bannerStyle' => 'danger',
                 'banner' => $message,

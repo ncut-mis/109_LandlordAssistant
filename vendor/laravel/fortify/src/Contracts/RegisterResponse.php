@@ -6,9 +6,5 @@ use Illuminate\Contracts\Support\Responsable;
 
 interface RegisterResponse extends Responsable
 {
-
-
+    //
 }
-
-
-

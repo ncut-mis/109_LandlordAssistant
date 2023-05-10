@@ -2493,7 +2493,6 @@ return array(
     'Laravel\\Fortify\\Http\\Responses\\VerifyEmailResponse' => $vendorDir . '/laravel/fortify/src/Http/Responses/VerifyEmailResponse.php',
     'Laravel\\Fortify\\LoginRateLimiter' => $vendorDir . '/laravel/fortify/src/LoginRateLimiter.php',
     'Laravel\\Fortify\\RecoveryCode' => $vendorDir . '/laravel/fortify/src/RecoveryCode.php',
-    'Laravel\\Fortify\\RoutePath' => $vendorDir . '/laravel/fortify/src/RoutePath.php',
     'Laravel\\Fortify\\Rules\\Password' => $vendorDir . '/laravel/fortify/src/Rules/Password.php',
     'Laravel\\Fortify\\TwoFactorAuthenticatable' => $vendorDir . '/laravel/fortify/src/TwoFactorAuthenticatable.php',
     'Laravel\\Fortify\\TwoFactorAuthenticationProvider' => $vendorDir . '/laravel/fortify/src/TwoFactorAuthenticationProvider.php',

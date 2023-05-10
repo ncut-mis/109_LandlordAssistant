@@ -56,15 +56,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-//        return $this->loginPipeline($request)->then(function ($request) {
-//            return app(LoginResponse::class);
-//        });
-
-
-            // 修改這裡的返回回應
-            return redirect()->intended('/');
-        }
-
+        return $this->loginPipeline($request)->then(function ($request) {
+            return app(LoginResponse::class);
+        });
+    }
 
     /**
      * Get the authentication pipeline instance.

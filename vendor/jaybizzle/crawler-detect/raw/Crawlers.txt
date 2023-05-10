@@ -749,7 +749,6 @@ Mnogosearch
 mogimogi
 Mojeek
 Mojolicious \(Perl\)
-Mollie
 monitis
 Monitority\/
 Monit\/
@@ -1034,7 +1033,6 @@ seo4ajax
 Seobility
 SEOCentro
 SeoCheck
-seocompany
 SEOkicks
 SEOlizer
 Seomoz
@@ -1232,7 +1230,6 @@ VCI
 via ggpht\.com GoogleImageProxy
 Virusdie
 visionutils
-Visual Rights Group
 vkShare
 VoidEYE
 Voil

@@ -101,9 +101,9 @@ class InstallCommand extends Command
         $stubs = $this->getTestStubsPath();
 
         if ($this->option('pest')) {
-            $this->removeComposerDevPackages(['phpunit/phpunit']);
+            $this->removeComposerDevPackages(['nunomaduro/collision', 'phpunit/phpunit']);
 
-            if (! $this->requireComposerDevPackages(['pestphp/pest:^2.0', 'pestphp/pest-plugin-laravel:^2.0'])) {
+            if (! $this->requireComposerDevPackages(['nunomaduro/collision:^6.4', 'pestphp/pest:^1.22', 'pestphp/pest-plugin-laravel:^1.2'])) {
                 return 1;
             }
 
@@ -536,6 +536,7 @@ EOF;
         (new Filesystem)->ensureDirectoryExists(app_path('Policies'));
 
         // Service Providers...
+        copy(__DIR__.'/../../stubs/app/Providers/AuthServiceProvider.php', app_path('Providers/AuthServiceProvider.php'));
         copy(__DIR__.'/../../stubs/app/Providers/JetstreamWithTeamsServiceProvider.php', app_path('Providers/JetstreamServiceProvider.php'));
 
         // Models...
