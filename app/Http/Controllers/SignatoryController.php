@@ -40,7 +40,7 @@ class SignatoryController extends Controller
         }
         // 檢查租客是否已經加入了這個房屋
         //auth()->renter()->id //之後有登入要取得租客ID 先用1
-        $existingSignatory = Signatory::where('renter_id', '1')
+        $existingSignatory = Signatory::where('renter_id', '2')
             ->where('house_id', $house->id)
             ->first();
         if ($existingSignatory) {

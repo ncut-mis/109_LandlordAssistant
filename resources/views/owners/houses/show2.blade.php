@@ -89,6 +89,12 @@
                                                     aria-selected="false">報修
                                             </button>
                                         </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-renter" aria-controls="navs-top-messages"
+                                                    aria-selected="false">租客資訊
+                                            </button>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
                                         <!--房屋資訊內容-->
@@ -119,8 +125,9 @@
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <ul class="p-0 m-0">
-                                                                            @if(!$renters_data->empty())
-                                                                                @foreach($renters_data as $renters_data)
+
+                                                                            @if(!$renters_data->isEmpty())
+                                                                                @foreach($renters_data as $abc)
                                                                                     <li class="d-flex mb-4 pb-1">
                                                                                         <div
                                                                                             class="avatar flex-shrink-0 me-3">
@@ -132,9 +139,9 @@
                                                                                         <div
                                                                                             class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                                                             <div class="me-2">
-                                                                                                <h5 class="mb-0 fw-semibold">{{ $renters_data->name }}</h5>
+                                                                                                <h5 class="mb-0 fw-semibold">{{ $abc->name }}</h5>
                                                                                                 <small
-                                                                                                    class="text-muted d-block mb-0">電話：{{ $renters_data->phone }}</small>
+                                                                                                    class="text-muted d-block mb-0">電話：{{ $abc->phone }}</small>
                                                                                             </div>
                                                                                         </div>
                                                                                     </li>
@@ -797,11 +804,88 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                    <div class="tab-pane fade" id="navs-top-renter" role="tabpanel">
+
+
+                                        @if(!$renters_data->isEmpty())
+                                            @foreach($renters_data as $index => $renter)
+
+                                                    @if ($index === 0) {{-- 檢查是否為第一次迭代 --}}
+                                                <table class="container">
+                                                    <thead>
+                                                    <tr>
+                                                        <th><h1>租客名稱</h1></th>
+                                                        <th><h1>電話</h1></th>
+                                                        <th><h1>123</h1></th>
+                                                    </tr>
+                                                    </thead>
+                                                    @endif
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>{{ $renter->name }}</td>
+                                                        <td>{{ $renter->phone }}</td>
+                                                        <td>
+
+{{--                                                            <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST">--}}
+{{--                                                                @csrf--}}
+{{--                                                                @method('DELETE')--}}
+{{--                                                                <button type="submit" class="btn btn-danger">移除租客</button>--}}
+{{--                                                            </form><p></p>--}}
+{{--                                                        </td>--}}
+                                                        <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST" onsubmit="return confirm('確定要移除租客嗎？')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">移除租客</button>
+                                                        </form>
+                                                    </tr>
+                                                    </tbody>
+
+                                            @endforeach
+                                                </table>
+                                        @else
+                                            <table class="container">
+                                                <thead>
+                                                <tr>
+                                                    <th><h1>租客名稱</h1></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>尚無租客</td>
+
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+
+
+
+
+                                        @endif
+                                        <br>
+                                        目前邀請碼為:
+                                        <div class="alert alert-primary" role="alert">
+                                            {{ $house->invitation_code }}
+                                        </div>
+                                        <br>
+                                        將此邀請碼給予租客輸入，租客即可進入房屋，租客進入房屋後此驗證碼會改變
+                                        {{--                    <a class="btn btn-danger text-center" href="{{ route('owners.houses.rts.create', $house->id) }}">變更邀請碼</a>--}}
                                     </div>
+
+
+                                    </div>
+
+
+
+                                    </div>
+                                </div>
                                     <p></p>
                                 </div>
-                            </div>
-                        </div>
+
+
+
+
                         <!-- Tabs -->
                         <!-- Pills -->
                         <!-- Pills -->

@@ -80,7 +80,7 @@ Route::get('users/renters/{renter}', [RenterController::class, 'index'])->name('
 Route::get('users/owners/{owner}', [OwnerController::class, 'index'])->name('owners.home.index');
 
 // 3-8-6 會員登出(預設應該已經有)
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
+//Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 //查看房東首頁
 //Route::get('owners',[HomeController::class,'owners_index'])->name('owners.houses.index');
@@ -121,6 +121,7 @@ Route::post('owners/houses/rts', [SignatoryController::class, 'store'])->name('o
 
 //會員(房東)刪除租客
 Route::delete('owners/houses/rts/{signatory}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
+
 // 3-9-7 會員(房東)查看公告
 Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
 
