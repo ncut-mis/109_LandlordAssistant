@@ -111,11 +111,11 @@
                                                                 <div class="col-md-4">
                                                                     <div
                                                                         class="card-header d-flex align-items-center justify-content-between">
-                                                                        <h5 class="card-title m-0 me-2">目前租客</h5>
+                                                                        <h5 class="card-title m-0 me-2">房東資訊</h5>
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <ul class="p-0 m-0">
-                                                                            @if(!$owners_data->empty())
+                                                                            @if(!$owners_data->isEmpty())
                                                                                 @foreach($owners_data as $owners_data)
                                                                                     <li class="d-flex mb-4 pb-1">
                                                                                         <div
@@ -520,9 +520,9 @@
 
 
                                         <!--報修資訊內容-->
-                                        <div class="tab-pane fade active show" id="navs-top-repair" role="tabpanel">
+                                        <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
-                                                <li class="nav-item">
+                                                <!--<li class="nav-item">
                                                     <button class="btn btn-outline-dark active"
                                                             style="margin-left: 12px" id="repair-all-tab"
                                                             data-bs-toggle="tab" data-bs-target="#repair-all"
@@ -530,9 +530,9 @@
                                                             role="tab" aria-controls="repair-all" aria-selected="true">
                                                         全部
                                                     </button>
-                                                </li>
+                                                </li>-->
                                                 <li class="nav-item">
-                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
                                                             id="repair-not-finshed-tab" data-bs-toggle="tab"
                                                             data-bs-target="#repair-not-finshed" type="button"
                                                             role="tab" aria-controls="repair-not-finshed"
@@ -563,89 +563,8 @@
                                             </ul>
                                             <div class="tab-content">
                                                 <!--全部-->
-                                                <div class="tab-pane fade active show" id="repair-all"
-                                                     role="tabpanel">
-
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody class="table-border-bottom-0">
-                                                            @foreach($house -> repairs as $repair)
-                                                        <tr>
-                                                            <td>
-                                                                <strong>{{$repair -> title}}</strong></td>
-                                                            <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                            <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
-                                                            </td>
-                                                            <td style="text-align: right">
-                                                                <div class="dropdown">
-                                                                    <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
-                                                                    <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                    &emsp;<div id="myModal" class="modal">
-                                                                        <div class="modal-dialog">
-                                                                            <div class="modal-content">
-
-                                                                                <!-- 訊息視窗標題 -->
-                                                                                <div class="modal-header">
-                                                                                    <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
-                                                                                </div>
-
-                                                                                <!-- 訊息視窗內容 -->
-                                                                                <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
-                                                                                    <p>租客：</p>
-                                                                                    <p>{{$repair->content}}</p>
-                                                                                    <small>{{$repair->updated_at}}</small>
-                                                                                </div>
-                                                                                <div class="card replies"style="margin-bottom: 20px;">
-                                                                                    <p>房東 ：</p>
-                                                                                    <p>已維修</p>
-                                                                                </div>
-                                                                                <p>
-                                                                                <!-- 訊息視窗按鈕 -->
-                                                                                <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
-                                                                              method="GET">
-                                                                            @csrf
-                                                                        <button class="dropdown-item"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</button>
-                                                                        </form>
-                                                                        <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
-                                                                              method="POST">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                        <button class="dropdown-item"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
                                                 <!--未維修-->
-                                                <div class="tab-pane fade" id="repair-not-finshed"
+                                                <div class="tab-pane fade active show" id="repair-not-finshed"
                                                      role="tabpanel">
                                                     <table class="table">
                                                         <thead>
@@ -657,7 +576,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        @foreach($unrepair as $repair)
+                                                        @foreach($unrepair  as $repair)
                                                             <tr>
                                                                 <td>
                                                                     <strong>{{$repair -> title}}</strong></td>
@@ -666,9 +585,9 @@
                                                                 </td>
                                                                 <td style="text-align: right">
                                                                     <div class="dropdown">
-                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                        &emsp;<div id="myModal" class="modal">
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
 
@@ -690,7 +609,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
                                                                                     </div>
 
                                                                                 </div>
@@ -710,13 +629,23 @@
                                                                                         class="bx bx-edit-alt me-1"></i>
                                                                                     編輯</button>
                                                                             </form>
-                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
-                                                                                  method="POST">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button class="dropdown-item"><i
-                                                                                        class="bx bx-trash me-1"></i>刪除</button>
-                                                                            </form>
+                                                                            @if($repair -> status!="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @elseif($repair -> status=="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -738,7 +667,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        @foreach($inrepair as $repair)
+                                                        @foreach($inrepair  as $repair)
                                                             <tr>
                                                                 <td>
                                                                     <strong>{{$repair -> title}}</strong></td>
@@ -747,9 +676,9 @@
                                                                 </td>
                                                                 <td style="text-align: right">
                                                                     <div class="dropdown">
-                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                        &emsp;<div id="myModal" class="modal">
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
 
@@ -771,7 +700,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
                                                                                     </div>
 
                                                                                 </div>
@@ -791,13 +720,23 @@
                                                                                         class="bx bx-edit-alt me-1"></i>
                                                                                     編輯</button>
                                                                             </form>
-                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
-                                                                                  method="POST">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button class="dropdown-item"><i
-                                                                                        class="bx bx-trash me-1"></i>刪除</button>
-                                                                            </form>
+                                                                            @if($repair -> status!="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @elseif($repair -> status=="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -819,7 +758,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        @foreach($finsh as $repair)
+                                                        @foreach($finsh  as $repair)
                                                             <tr>
                                                                 <td>
                                                                     <strong>{{$repair -> title}}</strong></td>
@@ -828,9 +767,9 @@
                                                                 </td>
                                                                 <td style="text-align: right">
                                                                     <div class="dropdown">
-                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                        &emsp;<div id="myModal" class="modal">
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
 
@@ -852,7 +791,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
                                                                                     </div>
 
                                                                                 </div>
@@ -872,13 +811,23 @@
                                                                                         class="bx bx-edit-alt me-1"></i>
                                                                                     編輯</button>
                                                                             </form>
-                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
-                                                                                  method="POST">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button class="dropdown-item"><i
-                                                                                        class="bx bx-trash me-1"></i>刪除</button>
-                                                                            </form>
+                                                                            @if($repair -> status!="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @elseif($repair -> status=="未維修")
+                                                                                <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                      method="POST">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button class="dropdown-item"><i
+                                                                                            class="bx bx-trash me-1"></i>刪除</button>
+                                                                                </form>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -912,26 +861,20 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 <script>
-    document.getElementById("myBtn").onclick = function() {
-        // 找到訊息視窗
-        var modal = document.getElementById("myModal");
-        // 顯示訊息視窗
-        modal.style.display = "block";
-    }
+    var buttons = document.querySelectorAll('[data-toggle="modal"]');
+
+    buttons.forEach(function(button) {
+        var target = button.getAttribute('data-target');
+        var modal = document.querySelector(target);
+        button.onclick = function() {
+            modal.style.display = "block";
+        }
+    });
     function closeModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
+        var modals = document.querySelectorAll('.modal');
+        modals.forEach(function(modal) {
+            modal.style.display = "none";
+        });
     }
-
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-        closeModal();
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById("myModal");
-        if (event.target == modal) {
-            closeModal();
-        }}
 </script>
 @endsection
