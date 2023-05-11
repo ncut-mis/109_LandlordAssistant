@@ -56,7 +56,8 @@
 {{--											{{ session('success') }}--}}
 {{--										</div>--}}
 {{--									@endif--}}
-									<a class="btn btn-danger" href="{{ route('owners.locations.destroy', $location->id) }}"
+
+                                    <a class="btn btn-danger" href="{{ route('owners.locations.destroy', $location->id) }}"
 									   onclick="event.preventDefault();
 								if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
 								  document.getElementById('delete-form').submit();

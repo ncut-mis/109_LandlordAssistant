@@ -546,13 +546,18 @@
                                                         <td>{{ $renter->name }}</td>
                                                         <td>{{ $renter->phone }}</td>
                                                         <td>
-                                                            <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger">移除租客</button>
-                                                            </form><p></p>
-                                                        </td>
 
+{{--                                                            <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST">--}}
+{{--                                                                @csrf--}}
+{{--                                                                @method('DELETE')--}}
+{{--                                                                <button type="submit" class="btn btn-danger">移除租客</button>--}}
+{{--                                                            </form><p></p>--}}
+{{--                                                        </td>--}}
+                                                        <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST" onsubmit="return confirm('確定要移除租客嗎？')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">移除租客</button>
+                                                        </form>
                                                     </tr>
                                                     </tbody>
 
