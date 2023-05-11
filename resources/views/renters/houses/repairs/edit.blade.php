@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="left-column" style="width:22%;">說明</div>
                         <div class="right-column" style="width:78%;">
-                            <textarea name="content" style="width:78%;"
+                            <textarea name="contents" style="width:78%;"
                                       placeholder="請詳細說明需要維修的物品狀況">{{$repairs->content}}</textarea>
                         </div>
                     </div>

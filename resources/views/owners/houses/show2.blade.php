@@ -41,12 +41,6 @@
                                         </li>
                                         <li class="nav-item">
                                             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#navs-top-post" aria-controls="navs-top-profile"
-                                                    aria-selected="false">公告
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-expense" aria-controls="navs-top-messages"
                                                     aria-selected="false">費用
                                             </button>
@@ -147,17 +141,17 @@
                                                                                         class="badge bg-label-warning rounded-pill">
                                                         每@if( $expenses->value('interval') == 12)
                                                                                             年繳
-                                                                                        @elseif( $expenses->value('interval') == 6)
+                                                                                        @elseif( $house->interval == 6)
                                                                                             半年繳
-                                                                                        @elseif( $expenses->value('interval') == 3)
+                                                                                        @elseif( $house->interval == 3)
                                                                                             季繳
-                                                                                        @elseif( $expenses->value('interval') == 1)
+                                                                                        @elseif( $house->interval == 1)
                                                                                             月繳
                                                                                         @endif一次</span>
                                                                                 </div>
                                                                                 <div class="mt-sm-auto">
                                                                                     <h3 class="mb-0">
-                                                                                        ${{ number_format($expenses->value('amount')) }}</h3>
+                                                                                        ${{ number_format($house->rentals) }}</h3>
                                                                                 </div>
                                                                             </div>
                                                                             <div id="profileReportChart"
@@ -334,24 +328,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--公告資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
-                                            <p>
-                                                Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer
-                                                candy oat cake ice cream. Gummies
-                                                halvah
-                                                tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
-                                                cheesecake fruitcake.
-                                            </p>
-                                            <p class="mb-0">
-                                                Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin
-                                                pie tiramisu halvah cotton candy
-                                                liquorice caramels.
-                                            </p>
-                                        </div>
                                         <!--費用資訊內容-->
-
-
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -548,7 +525,7 @@
                         <!-- Tabs -->
                         <!-- Pills -->
                         <!-- Pills -->
-                        <a type="button" class="btn btn-secondary" href="{{url('owner/houses')}}">返回房屋列表</a>
+                        <a type="button" class="btn btn-secondary" href="{{route('owners.locations.houses.show',['owner'=>$house->owner_id, 'location'=>$house->location_id])}}">返回房屋列表</a>
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->

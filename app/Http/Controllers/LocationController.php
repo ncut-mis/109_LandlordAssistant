@@ -74,7 +74,7 @@ class LocationController extends Controller
     public function update(Request $request, Location $location)
     {
         $owner_id='1';
-        $$location = new Location;
+            $$location = new Location;
 
         $location->name = $request->name;
         $location->save();

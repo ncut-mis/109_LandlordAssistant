@@ -1,6 +1,31 @@
-@extends('layouts.owner_master')
-<link href="{{ 'css/house_index.css' }}" rel="stylesheet">
+@extends('layouts.renter_master_index')
+{{--<link href="{{ 'css/house_index.css' }}" rel="stylesheet">--}}
 @section('title', '地點公告')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    .scroll-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 10px;
+        padding: 8px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        transition: all .3s ease-in-out;
+    }
+
+    .scroll-to-top:hover {
+        background-color: #eee;
+        cursor: pointer;
+    }
+
+    .scroll-to-top i {
+        font-size: 20px;
+        color: #333;
+    }
+</style>
+<script>
 @section('page-content')
     <div class="container-fluid px-4">
         <h1 class="mt-4">公告管理</h1>

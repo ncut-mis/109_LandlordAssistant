@@ -1,6 +1,44 @@
 @extends('layouts.renter_master_index')
 @section('title', '租客頁面-房屋詳細資訊')
 @section('page-content')
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: rgba(105,108,255,.85);
+            margin: auto;
+            padding: 35px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow:rgba(105,108,255,.4);
+        }
+        .card p{
+            font-size: 18px;
+            margin-top: 10px;
+            margin-left: 1rem;
+            text-align: left;
+        }
+        .replies p{
+            font-size: 18px;
+            margin-top: 10px;
+            margin-right: 1rem;
+            text-align: right;
+        }
+
+
+    </style>
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
             <!-- Menu -->
@@ -332,18 +370,27 @@
                                         </div>
                                         <!--公告資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
-                                            <p>
-                                                Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer
-                                                candy oat cake ice cream. Gummies
-                                                halvah
-                                                tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
-                                                cheesecake fruitcake.
-                                            </p>
-                                            <p class="mb-0">
-                                                Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin
-                                                pie tiramisu halvah cotton candy
-                                                liquorice caramels.
-                                            </p>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" style="text-align: left">標題</th>
+                                                    <th scope="col">內容</th>
+                                                    <th scope="col" style="text-align: right;">發布日期</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($locations as  $location)
+                                                    @foreach($location -> posts as $post)
+                                                        <tr>
+                                                            {{--                        <td >{{ $location->id }}</td>--}}
+                                                            <td><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
+                                                            <td>{{ $post->content }}</td>
+                                                            <td style="text-align: right;" >{{ $post->updated_at }}</td>
+                                                    @endforeach
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                         <!--費用資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
@@ -518,10 +565,11 @@
                                                 <!--全部-->
                                                 <div class="tab-pane fade active show" id="repair-all"
                                                      role="tabpanel">
+
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>內容</th>
+                                                            <th>標題</th>
                                                             <th style="text-align: center">日期</th>
                                                             <th style="text-align: right">狀態</th>
                                                             <th style="text-align: right">Actions</th>
@@ -531,14 +579,42 @@
                                                             @foreach($house -> repairs as $repair)
                                                         <tr>
                                                             <td>
-                                                                <strong>{{$repair -> content}}</strong></td>
+                                                                <strong>{{$repair -> title}}</strong></td>
                                                             <td style="text-align: center">{{$repair -> created_at}}</td>
                                                             <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                             </td>
                                                             <td style="text-align: right">
                                                                 <div class="dropdown">
+                                                                    <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
                                                                     <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                    &emsp;
+                                                                    &emsp;<div id="myModal" class="modal">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+
+                                                                                <!-- 訊息視窗標題 -->
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                </div>
+
+                                                                                <!-- 訊息視窗內容 -->
+                                                                                <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                    <p>租客：</p>
+                                                                                    <p>{{$repair->content}}</p>
+                                                                                    <small>{{$repair->updated_at}}</small>
+                                                                                </div>
+                                                                                <div class="card replies"style="margin-bottom: 20px;">
+                                                                                    <p>房東 ：</p>
+                                                                                    <p>已維修</p>
+                                                                                </div>
+                                                                                <p>
+                                                                                <!-- 訊息視窗按鈕 -->
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <button type="button"
                                                                             class="btn p-0 dropdown-toggle hide-arrow"
                                                                             data-bs-toggle="dropdown"
@@ -575,38 +651,77 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td>
-                                                                <strong>標題</strong></td>
-                                                            <td>日期</td>
-                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</a>
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                        @foreach($unrepair as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                                  method="GET">
+                                                                                @csrf
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    編輯</button>
+                                                                            </form>
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -617,38 +732,77 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td>
-                                                                <strong>標題</strong></td>
-                                                            <td>日期</td>
-                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</a>
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                        @foreach($inrepair as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                                  method="GET">
+                                                                                @csrf
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    編輯</button>
+                                                                            </form>
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -659,38 +813,77 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td>
-                                                                <strong>標題</strong></td>
-                                                            <td>日期</td>
-                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</a>
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                        @foreach($finsh as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                                  method="GET">
+                                                                                @csrf
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    編輯</button>
+                                                                            </form>
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -718,4 +911,27 @@
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+<script>
+    document.getElementById("myBtn").onclick = function() {
+        // 找到訊息視窗
+        var modal = document.getElementById("myModal");
+        // 顯示訊息視窗
+        modal.style.display = "block";
+    }
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+        closeModal();
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            closeModal();
+        }}
+</script>
 @endsection

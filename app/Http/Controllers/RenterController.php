@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Renter;
 use App\Models\House;
+use App\Models\Location;
 use App\Http\Requests\StoreRenterRequest;
 use App\Http\Requests\UpdateRenterRequest;
 use App\Models\Signatory;
@@ -82,6 +84,13 @@ class RenterController extends Controller
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
+        //公告
+        $locations = Location::with(['posts' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->where('id', '=', $location->id)->get();
+        $unrepairs = $unrepair->pluck('repairs')->flatten();
+        $inrepairs = $inrepair->pluck('repairs')->flatten();
+        $finshs = $finsh->pluck('repairs')->flatten();
         $data = [
             'contract' =>$signatories,
             'location_id' =>$location->id,
@@ -91,9 +100,10 @@ class RenterController extends Controller
             'house' => $house,
             'image' => $image,
             'expenses' => $expenses,
-            'unrepair' => $unrepair,
-            'inrepair' => $inrepair,
-            'finsh' => $finsh,
+            'unrepair' => $unrepairs,
+            'inrepair' => $inrepairs,
+            'finsh' => $finshs,
+            'locations'=>$locations,
         ];
         return view('renters.houses.show',$data);
     }

@@ -53,7 +53,9 @@ Route::get('houses/advance_search', [HouseController::class, 'advance_search'])-
 // 3-7-4 訪客/會員查看租屋資訊
 Route::get('houses/{house}', [HomeController::class, 'show'])->name('houses.show');
 
-// 3-7-6 訪客登入(預設應該已經有)
+
+//// 3-7-6 訪客登入(預設應該已經有)
+
 //Route::get('login', [AuthenticatedSessionController::class, 'create']);
 //Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
 
@@ -230,6 +232,9 @@ Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name(
 Route::get('renters/houses/repairs/{repair}/edit', [RepairController::class, 'edit'])->name('renters.houses.repairs.edit');
 Route::patch('renters/houses/repairs/{repair}', [RepairController::class, 'update'])->name('renters.houses.repairs.update');
 
+// 會員(租客)查看單一報修訊息
+Route::get('renters/houses/repairs/{repair}/show', [RepairController::class, 'show'])->name('renters.houses.repairs.show');
+
 // 3-10-9 會員(租客)刪除報修訊息
 Route::delete('renters/houses/repairs/{repair}', [RepairController::class, 'destroy'])->name('renters.houses.repairs.destroy');
 // 系統查看公告
@@ -251,7 +256,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
+        Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });
+
