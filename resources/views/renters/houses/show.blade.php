@@ -585,9 +585,9 @@
                                                             </td>
                                                             <td style="text-align: right">
                                                                 <div class="dropdown">
-                                                                    <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                    <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                     <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                    &emsp;<div id="myModal" class="modal">
+                                                                    &emsp;<div id="myModal{{$repair -> id}}" class="modal">
                                                                         <div class="modal-dialog">
                                                                             <div class="modal-content">
 
@@ -609,7 +609,7 @@
                                                                                 <p>
                                                                                 <!-- 訊息視窗按鈕 -->
                                                                                 <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
                                                                                 </div>
 
                                                                             </div>
@@ -749,7 +749,7 @@
                                                                     <div class="dropdown">
                                                                         <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
-                                                                        &emsp;<div id="myModal" class="modal">
+                                                                        &emsp;<div id="myModal{{$repair->id}}" class="modal">
                                                                             <div class="modal-dialog">
                                                                                 <div class="modal-content">
 
@@ -912,26 +912,20 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 <script>
-    document.getElementById("myBtn").onclick = function() {
-        // 找到訊息視窗
-        var modal = document.getElementById("myModal");
-        // 顯示訊息視窗
-        modal.style.display = "block";
-    }
+    var buttons = document.querySelectorAll('[data-toggle="modal"]');
+
+    buttons.forEach(function(button) {
+        var target = button.getAttribute('data-target');
+        var modal = document.querySelector(target);
+        button.onclick = function() {
+            modal.style.display = "block";
+        }
+    });
     function closeModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
+        var modals = document.querySelectorAll('.modal');
+        modals.forEach(function(modal) {
+            modal.style.display = "none";
+        });
     }
-
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function() {
-        closeModal();
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById("myModal");
-        if (event.target == modal) {
-            closeModal();
-        }}
 </script>
 @endsection
