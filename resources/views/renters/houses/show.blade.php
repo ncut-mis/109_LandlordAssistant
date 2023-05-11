@@ -111,11 +111,11 @@
                                                                 <div class="col-md-4">
                                                                     <div
                                                                         class="card-header d-flex align-items-center justify-content-between">
-                                                                        <h5 class="card-title m-0 me-2">目前租客</h5>
+                                                                        <h5 class="card-title m-0 me-2">房東資訊</h5>
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <ul class="p-0 m-0">
-                                                                            @if(!$owners_data->empty())
+                                                                            @if(!$owners_data->isEmpty())
                                                                                 @foreach($owners_data as $owners_data)
                                                                                     <li class="d-flex mb-4 pb-1">
                                                                                         <div
@@ -520,7 +520,7 @@
 
 
                                         <!--報修資訊內容-->
-                                        <div class="tab-pane fade active show" id="navs-top-repair" role="tabpanel">
+                                        <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
                                                 <!--<li class="nav-item">
                                                     <button class="btn btn-outline-dark active"
