@@ -1,5 +1,5 @@
 @extends('layouts.renter_master_index')
-@section('title', '租客頁面')
+@section('title', '租客頁面-房屋詳細資訊')
 @section('page-content')
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
@@ -191,6 +191,7 @@
                                                         </div>
                                                     </div>
                                                     <!-- Total Revenue -->
+                                                    <!--房屋資訊-->
                                                     <div class="col-lg-8 mb-4  order-2 order-md-3 order-lg-2 mb-4">
                                                         <div class="card">
                                                             <div class="d-flex align-items-end row">
@@ -346,20 +347,131 @@
                                         </div>
                                         <!--費用資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
-                                            <p>
-                                                Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans
-                                                macaroon gummies cupcake gummi
-                                                bears
-                                                cake chocolate.
-                                            </p>
-                                            <p class="mb-0">
-                                                Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple
-                                                pie brownie cake. Sweet roll icing
-                                                sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
-                                                Pudding jelly jelly-o tart brownie
-                                                jelly.
-                                            </p>
+                                            <!--費用類型-->
+                                            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark active"
+                                                            style="margin-left: 12px"
+                                                            id="pills-all-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-all"
+                                                            aria-disabled="true" type="button" role="tab"
+                                                            aria-controls="pills-all"
+                                                            aria-selected="true">
+                                                        全部
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="pills-for_rent-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-for_rent"
+                                                            type="button" role="tab" aria-controls="pills-for_rent"
+                                                            aria-selected="false">
+                                                        水費
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="pills-listed-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-listed"
+                                                            type="button" role="tab" aria-controls="pills-listed"
+                                                            aria-selected="false">
+                                                        電費
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
+                                                        房租
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
+                                                        其他費用
+                                                    </button>
+                                                </li>
+                                                <li class="py-2 px-3">||</li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark"
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
+                                                        已繳費
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
+                                                        未繳費
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="card-body">
+                                                <table class="table" id="datatablesSimple">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用開始日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用結束日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">費用類型
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 5%;font-size: 18px">金額
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 10%;font-size: 18px">備註
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">狀態
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($house->expenses as $expense)
+                                                        @if($expense->owner_status == 1)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->renter_status == 0)
+                                                                        未繳費
+                                                                    @else
+                                                                        已繳費
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @if($expense->renter_status == 0)
+                                                                        <a class="btn btn-primary" href=#>繳費</a>
+                                                                    @else
+                                                                        <button class="btn btn-primary" disabled>繳費</button>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+
+
                                         <!--報修資訊內容-->
                                         <div class="tab-pane fade active show" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
@@ -583,8 +695,6 @@
                                                     </table>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                     <p></p>

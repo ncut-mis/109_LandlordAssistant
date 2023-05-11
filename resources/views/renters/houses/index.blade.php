@@ -1,5 +1,5 @@
 @extends('layouts.renter_master_index')
-@section('title', '租客頁面')
+@section('title', '租客頁面-首頁')
 @section('page-content')
     @if(Session::has('success'))
         <div class="alert alert-success">
@@ -32,7 +32,7 @@
                         <!-- Collapse -->
                         <h3>房屋資訊</h3>
                         <div class="row">
-                                <div class="col-4">
+                            <div class="col-4">
                                 <div class="card">
                                     <h5 class="card-header">填寫邀請碼加入房屋</h5>
                                     <div class="card-body">
@@ -53,15 +53,13 @@
                             </div>
                             <p>
                             @foreach ($houses as $key =>$house)
-                                <div class="col-12">
+                                <div class="col-8">
                                     <div class="card mb-4">
                                         <h3 class="card-header">{{ $house->name }}</h3>
                                         <div class="card-body">
                                             <h4 class="card-title text-nowrap mb-2">
-                                                @foreach($house -> expenses as $expense)
-                                                    租金：{{$expense -> amount}}元&emsp;&emsp;
-                                                @endforeach
-                                                地點：{{$house->address}}
+                                                租金：{{$house -> rentals}}元&emsp;&emsp;
+                                                地點：{{$house->county}}{{$house->area}}{{$house->address}}
                                             </h4>
                                             <p class="demo-inline-spacing">
                                                 <a class="btn btn-primary me-1" data-bs-toggle="#houses{{ $key }}"

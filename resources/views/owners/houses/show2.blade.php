@@ -1,6 +1,13 @@
 @extends('layouts.renter_master_index')
-@section('title', '房東頁面')
+@section('title', '房東管理頁面-房屋詳細資訊')
 @section('page-content')
+    @if(session('success'))
+        <div class="mx-3 my-3">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div></div>
+    @endif
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
             <!-- Menu -->
@@ -541,7 +548,7 @@
                         <!-- Tabs -->
                         <!-- Pills -->
                         <!-- Pills -->
-                        <a type="button" class="btn btn-secondary" href="{{url('renters/houses')}}">返回房屋列表</a>
+                        <a type="button" class="btn btn-secondary" href="{{url('owner/houses')}}">返回房屋列表</a>
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->
