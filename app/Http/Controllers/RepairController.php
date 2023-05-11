@@ -133,7 +133,12 @@ class RepairController extends Controller
 
     public function update_status(UpdateRepairRequest $request, Repair $repair)
     {
-        //
+        $house_id = $repair->house_id;
+        $repair->update([
+            'status' => $request->input('status')
+        ]);
+        //要改為跳回房屋詳細資訊
+        return redirect()->route('owners.houses.show',[$house_id])->with('success', '修改成功！');
     }
 
     /**

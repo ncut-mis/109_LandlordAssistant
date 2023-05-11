@@ -1,6 +1,44 @@
 @extends('layouts.renter_master_index')
 @section('title', '房東管理頁面-房屋詳細資訊')
 @section('page-content')
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: rgba(105,108,255,.85);
+            margin: auto;
+            padding: 35px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow:rgba(105,108,255,.4);
+        }
+        .card p{
+            font-size: 18px;
+            margin-top: 10px;
+            margin-left: 1rem;
+            text-align: left;
+        }
+        .replies p{
+            font-size: 18px;
+            margin-top: 10px;
+            margin-right: 1rem;
+            text-align: right;
+        }
+
+
+    </style>
     @if(session('success'))
         <div class="mx-3 my-3">
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -503,19 +541,261 @@
                                         </div>
                                         <!--報修資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
-                                            <p>
-                                                Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans
-                                                macaroon gummies cupcake gummi
-                                                bears
-                                                cake chocolate.
-                                            </p>
-                                            <p class="mb-0">
-                                                Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple
-                                                pie brownie cake. Sweet roll icing
-                                                sesame snaps caramels danish toffee. Brownie biscuit dessert dessert.
-                                                Pudding jelly jelly-o tart brownie
-                                                jelly.
-                                            </p>
+                                            <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
+                                                <!--<li class="nav-item">
+                                                    <button class="btn btn-outline-dark active"
+                                                            style="margin-left: 12px" id="repair-all-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#repair-all"
+                                                            aria-expanded="true" aria-disabled="true" type="button"
+                                                            role="tab" aria-controls="repair-all" aria-selected="true">
+                                                        全部
+                                                    </button>
+                                                </li>-->
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
+                                                            id="repair-not-finshed-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#repair-not-finshed" type="button"
+                                                            role="tab" aria-controls="repair-not-finshed"
+                                                            aria-selected="false">
+                                                        未維修
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="conduct-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#in-repair" type="button" role="tab"
+                                                            aria-controls="in-repair" aria-selected="false">
+                                                        維修中
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="finshed-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#repair-finsh" type="button" role="tab"
+                                                            aria-controls="repair-finsh" aria-selected="false">
+                                                        已維修
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <!--全部-->
+                                                <!--未維修-->
+                                                <div class="tab-pane fade active show" id="repair-not-finshed"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        @foreach($unrepair  as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item" name="status" value="維修中"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    維修中</button>
+                                                                            </form>
+                                                                            <form action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item" name="status" value="已維修"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    已維修</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--維修中-->
+                                                <div class="tab-pane fade" id="in-repair"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        @foreach($inrepair  as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item" name="status" value="已維修"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    已維修</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--已維修-->
+                                                <div class="tab-pane fade" id="repair-finsh"
+                                                     role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>標題</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-border-bottom-0">
+                                                        @foreach($finsh  as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal{{$repair -> id}}" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal" onclick="closeModal('myModal{{$repair->id}}')">關閉</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <p></p>
@@ -539,4 +819,21 @@
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    <script>
+        var buttons = document.querySelectorAll('[data-toggle="modal"]');
+
+        buttons.forEach(function(button) {
+            var target = button.getAttribute('data-target');
+            var modal = document.querySelector(target);
+            button.onclick = function() {
+                modal.style.display = "block";
+            }
+        });
+        function closeModal() {
+            var modals = document.querySelectorAll('.modal');
+            modals.forEach(function(modal) {
+                modal.style.display = "none";
+            });
+        }
+    </script>
 @endsection
