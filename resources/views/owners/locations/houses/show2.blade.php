@@ -41,7 +41,34 @@
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <h2 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房東 /</span>首頁</h2>
                             <!-- Collapse -->
-                            <h3>房屋資訊</h3>
+                            <div class="row">
+								<div class="col-7" style="display: inline-block;"><h3>房屋資訊</h3></div>
+								<div class="col-5" style="display: inline-block;">
+									<a class="btn btn-outline-secondary" href="{{ route('owners.home.index',[$owner_id,$location->id]) }}">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+										  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+										</svg>
+									</a>
+									<a class="btn btn-secondary" href="{{ route('owners.locations.edit',$location->id) }}">修改地點</a>
+{{--									@if (session('success'))--}}
+{{--										<div class="alert alert-success">--}}
+{{--											{{ session('success') }}--}}
+{{--										</div>--}}
+{{--									@endif--}}
+									<a class="btn btn-danger" href="{{ route('owners.locations.destroy', $location->id) }}"
+									   onclick="event.preventDefault();
+								if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
+								  document.getElementById('delete-form').submit();
+								}">
+										刪除地點
+									</a>
+									|
+									<a class="btn btn-primary" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a>
+									<a class="btn btn-warning" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a>
+
+								</div>
+							</div>
                             <ul class="nav mb-3" id="house-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="btn btn-outline-dark active" style="margin-left: 12px"

@@ -369,18 +369,27 @@
                                         </div>
                                         <!--公告資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
-                                            <p>
-                                                Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer
-                                                candy oat cake ice cream. Gummies
-                                                halvah
-                                                tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
-                                                cheesecake fruitcake.
-                                            </p>
-                                            <p class="mb-0">
-                                                Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin
-                                                pie tiramisu halvah cotton candy
-                                                liquorice caramels.
-                                            </p>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col" style="text-align: left">標題</th>
+                                                    <th scope="col">內容</th>
+                                                    <th scope="col" style="text-align: right;">發布日期</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($locations as  $location)
+                                                    @foreach($location -> posts as $post)
+                                                        <tr>
+                                                            {{--                        <td >{{ $location->id }}</td>--}}
+                                                            <td><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
+                                                            <td>{{ $post->content }}</td>
+                                                            <td style="text-align: right;" >{{ $post->updated_at }}</td>
+                                                    @endforeach
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                         <!--費用資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">

@@ -34,7 +34,7 @@ class HouseController extends Controller
             'locations' => $locations,
             'owner_id' => $owner_id,
         ];
-        return view('owners.locations.houses.create',$locations_data);
+        return view('owners.locations.houses.create2',$locations_data);
     }
 
     public function advance_search_create()
@@ -77,7 +77,7 @@ class HouseController extends Controller
                 'area' => 'required',
                 'address' => 'required',
                 'introduce' => 'required',
-                'amount' => 'required',
+                'rentals' => 'required',
                 'interval' => 'required',
                 'num_renter' => 'required',
                 'min_period' => 'required',
@@ -94,7 +94,7 @@ class HouseController extends Controller
                 'area.required' => '請輸入地區。',
                 'address.required' => '請輸入地址。',
                 'introduce.required' => '請輸入介紹。',
-                'amount.required' => '請輸入金額。',
+                'rentals.required' => '請輸入金額。',
                 'interval.required' => '請輸入繳納區間。',
                 'num_renter.required' => '請輸入可住人數。',
                 'min_period.required' => '請輸入最短租期。',
@@ -118,6 +118,8 @@ class HouseController extends Controller
             'address' => $validatedData['address'],
             'lease_status' => $lease_status,
             'introduce' => $request->introduce,
+            'rentals' => $request->rentals,
+            'interval' => $request->interval,
             'num_renter' => $request->num_renter,
             'min_period' => $request->min_period,
             'pattern' => $request->pattern,
@@ -195,7 +197,8 @@ class HouseController extends Controller
             }
         }
 
-        return redirect()->route('houses.expenses.store',[$owner_id, $location])->with('success', '儲存成功！');
+//        return redirect()->route('owners.houses.show',[$owner_id, $location,$house])->with('success', '儲存成功！');
+        return redirect()->route('owners.houses.show',$house_id)->with('success', '儲存成功！');
     }
 
     /**
@@ -239,12 +242,10 @@ class HouseController extends Controller
     public function edit(Location $location, House $house)
     {
         $furnish = $house->furnishings;
-        $amount = $house->expenses;
         $feature = $house->features;
         $locations_data = [
             'locations' => $location,
             'houses' => $house,
-            'amount' => $amount,
             'furnish' => $furnish,
             'feature' => $feature,
             'owner_id' => $location->owner_id,

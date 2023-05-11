@@ -41,7 +41,7 @@
                                                 <label for="defaultSelect" class="col-md-2 col-form-label" style="font-size: 20px">費用類型</label>
                                                 <div class="col-md-7">
                                                     <select name="type" class="form-select ">
-                                                        <option value="租金">租金</option>
+{{--                                                        <option value="租金">租金</option>--}}
                                                         <option value="水費">水費</option>
                                                         <option value="電費">電費</option>
                                                         <option value="瓦斯費">瓦斯費</option>

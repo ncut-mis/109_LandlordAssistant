@@ -53,9 +53,11 @@ Route::get('houses/advance_search', [HouseController::class, 'advance_search'])-
 // 3-7-4 訪客/會員查看租屋資訊
 Route::get('houses/{house}', [HomeController::class, 'show'])->name('houses.show');
 
-// 3-7-6 訪客登入(預設應該已經有)
-Route::get('login', [AuthenticatedSessionController::class, 'create']);
-Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
+
+//// 3-7-6 訪客登入(預設應該已經有)
+
+//Route::get('login', [AuthenticatedSessionController::class, 'create']);
+//Route::post('login', [AuthenticatedSessionController::class, 'store']) ->name('users.data'); //預設名稱可能不同
 
 //會員查看個人資料
 Route::get('users/{user}',[UserProfileController::class,'index'])->name('users.index');
@@ -174,9 +176,17 @@ Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_
 Route::get('owners/houses/{house}/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
 Route::post('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
 
+//新增租金
+Route::get('owners/houses/{house}/expenses_rentals/create', [ExpenseController::class, 'rentals_create'])->name('houses.expenses_rentals.create');
+Route::post('owners/houses/{house}/expenses_rentals', [ExpenseController::class, 'rentals_store'])->name('houses.expenses_rentals.store');
+
 // 3-9-26 會員(房東)修改費用資訊
 Route::get('owners/houses/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');
 Route::patch('owners/houses/expenses/{expense}', [ExpenseController::class, 'update'])->name('houses.expenses.update');
+
+//修改租金
+Route::get('owners/houses/expenses_rentals/{expense}/edit', [ExpenseController::class, 'rentals_edit'])->name('houses.expenses_rentals.edit');
+Route::patch('owners/houses/expenses_rentals/{expense}', [ExpenseController::class, 'rentals_update'])->name('houses.expenses_rentals.update');
 
 // 3-9-27 會員(房東)刪除費用資訊
 Route::delete('owners/houses/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('houses.expenses.destroy');
@@ -250,3 +260,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+

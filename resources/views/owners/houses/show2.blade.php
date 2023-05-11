@@ -14,7 +14,13 @@
                     <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房屋 /</span>詳細資訊</h4>
-                        <!-- Tabs -->
+                        <a class="btn btn-outline-secondary" href="{{ route('owners.locations.houses.show',[$house->owner_id, $location_id]) }}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+							  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+							</svg>
+						</a>
+						<!-- Tabs -->
                         <h3 class="py-3 my-1 fw-semibold">{{ $house->name }}</h3>
                         <div class="row">
                             <div class="col-xl-15">
@@ -24,12 +30,6 @@
                                             <button type="button" class="nav-link active" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                                    data-bs-target="#navs-top-post" aria-controls="navs-top-profile"
-                                                    aria-selected="false">公告
                                             </button>
                                         </li>
                                         <li class="nav-item">
@@ -134,17 +134,17 @@
                                                                                         class="badge bg-label-warning rounded-pill">
                                                         每@if( $expenses->value('interval') == 12)
                                                                                             年繳
-                                                                                        @elseif( $expenses->value('interval') == 6)
+                                                                                        @elseif( $house->interval == 6)
                                                                                             半年繳
-                                                                                        @elseif( $expenses->value('interval') == 3)
+                                                                                        @elseif( $house->interval == 3)
                                                                                             季繳
-                                                                                        @elseif( $expenses->value('interval') == 1)
+                                                                                        @elseif( $house->interval == 1)
                                                                                             月繳
                                                                                         @endif一次</span>
                                                                                 </div>
                                                                                 <div class="mt-sm-auto">
                                                                                     <h3 class="mb-0">
-                                                                                        ${{ number_format($expenses->value('amount')) }}</h3>
+                                                                                        ${{ number_format($house->rentals) }}</h3>
                                                                                 </div>
                                                                             </div>
                                                                             <div id="profileReportChart"
@@ -321,90 +321,112 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--公告資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
-                                            <p>
-                                                Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer
-                                                candy oat cake ice cream. Gummies
-                                                halvah
-                                                tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream
-                                                cheesecake fruitcake.
-                                            </p>
-                                            <p class="mb-0">
-                                                Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin
-                                                pie tiramisu halvah cotton candy
-                                                liquorice caramels.
-                                            </p>
-                                        </div>
                                         <!--費用資訊內容-->
+
+
                                         <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
-                                                            id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all"
-                                                            aria-disabled="true" type="button" role="tab" aria-controls="pills-all"
+                                                    <button class="btn btn-outline-dark active"
+                                                            style="margin-left: 12px"
+                                                            id="pills-all-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-all"
+                                                            aria-disabled="true" type="button" role="tab"
+                                                            aria-controls="pills-all"
                                                             aria-selected="true">
                                                         全部
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-for_rent-tab" data-bs-toggle="pill" data-bs-target="#pills-for_rent"
-                                                            type="button" role="tab" aria-controls="pills-for_rent" aria-selected="false">
+                                                            id="pills-for_rent-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-for_rent"
+                                                            type="button" role="tab" aria-controls="pills-for_rent"
+                                                            aria-selected="false">
                                                         水費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-listed-tab" data-bs-toggle="pill" data-bs-target="#pills-listed"
-                                                            type="button" role="tab" aria-controls="pills-listed" aria-selected="false">
+                                                            id="pills-listed-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-listed"
+                                                            type="button" role="tab" aria-controls="pills-listed"
+                                                            aria-selected="false">
                                                         電費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         房租
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         其他費用
                                                     </button>
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         已繳費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill" data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy" aria-selected="false">
+                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
+                                                            data-bs-target="#pills-vacancy"
+                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            aria-selected="false">
                                                         未繳費
                                                     </button>
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
-                                                    <a href="{{route('houses.expenses.create',['house' => $house->id])}}"><button type="button" class="btn btn-primary">新增費用</button></a>
+                                                    <a href="{{route('houses.expenses.create',['house' => $house->id])}}">
+                                                        <button type="button" class="btn btn-primary">新增費用</button>
+                                                    </a>
+                                                </li>
+                                                <li class="py-2 px-3">||</li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="{{route('houses.expenses_rentals.create',['house' => $house->id])}}">
+                                                        <button type="button" class="btn btn-success">新增租金</button>
+                                                    </a>
                                                 </li>
                                             </ul>
                                             <div class="card-body">
                                                 <table class="table" id="datatablesSimple">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
-                                                        <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
-                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
-                                                        <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
-                                                        <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
-                                                        <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用開始日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 9%;font-size: 18px">費用結束日
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">費用類型
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 5%;font-size: 18px">金額
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 10%;font-size: 18px">備註
+                                                        </th>
+                                                        <th scope="col"
+                                                            style="text-align: center;width: 7%;font-size: 18px">狀態
+                                                        </th>
 
                                                     </tr>
                                                     </thead>
@@ -429,24 +451,42 @@
                                                             </td>
                                                             <td style="text-align: right;width: 5%">
                                                                 @csrf
-                                                                <a class="btn btn-secondary" href="{{route('houses.expenses.edit',['expense'=>$expense -> id])}}">修改</a>
+                                                                @if($expense->owner_status == 0)
+                                                                    <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                @else
+                                                                    <button class="btn btn-secondary" disabled>修改</button>
+                                                                @endif
+                                                                {{--                                                                <a class="btn btn-secondary" href="{{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}">修改</a>--}}
                                                             </td>
                                                             <td style="text-align: right;width: 3%">
-                                                                <form action="{{route('houses.expenses.destroy',$expense -> id)}}" method="POST">
+                                                                <form
+                                                                    action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button class="btn btn-danger">刪除</button>
+                                                                    @if($expense->owner_status == 0)
+                                                                        <button class="btn btn-danger" onclick="return confirm('確定要刪除嗎？')">刪除</button>
+                                                                    @else
+                                                                        <button class="btn btn-danger" disabled>刪除</button>
+                                                                    @endif
                                                                 </form>
                                                             </td>
 
                                                             <td style="text-align: right;width: 8%">
                                                                 @if($expense->owner_status == 0)
-                                                                    <button type="button" class="btn btn-warning" name="for-renter">送出費用</button>
+                                                                    <button type="button" class="btn btn-warning"
+                                                                            name="for-renter">送出費用
+                                                                    </button>
                                                                 @elseif($expense->owner_status == 1)
                                                                     @if($expense->renter_status == 0)
-                                                                        <button type="button" class="btn btn-primary">再次提醒</button>
+                                                                        <button type="button" class="btn btn-primary">
+                                                                            再次提醒
+                                                                        </button>
                                                                     @elseif($expense->renter_status == 1)
-                                                                        <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                        <button type="button" class="btn btn-primary"
+                                                                                disabled>再次提醒
+                                                                        </button>
                                                                     @endif
                                                                 @endif
                                                             </td>
@@ -480,7 +520,7 @@
                         <!-- Tabs -->
                         <!-- Pills -->
                         <!-- Pills -->
-                        <a type="button" class="btn btn-secondary" href="{{url('renters/houses')}}">返回房屋列表</a>
+                        <a type="button" class="btn btn-secondary" href="{{route('owners.locations.houses.show',['owner'=>$house->owner_id, 'location'=>$house->location_id])}}">返回房屋列表</a>
                     </div>
                     <!-- / Content -->
                     <!-- Footer -->

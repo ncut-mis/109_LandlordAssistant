@@ -15,7 +15,7 @@
                 <!--<th scope="col">標題</th>-->
                 <th scope="col" style="text-align: left">標題</th>
                 <th scope="col">內容</th>
-                <th scope="col" style="text-align: right;">日期</th>
+                <th scope="col" style="text-align: right;">發布日期</th>
             </tr>
             </thead>
             <tbody>
