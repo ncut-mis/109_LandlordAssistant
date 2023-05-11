@@ -488,6 +488,7 @@
                                                                                 <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
                                                                                     <p>租客：</p>
                                                                                     <p>{{$repair->content}}</p>
+                                                                                    <small>{{$repair->updated_at}}</small>
                                                                                 </div>
                                                                                 <div class="card replies"style="margin-bottom: 20px;">
                                                                                     <p>房東 ：</p>
@@ -538,13 +539,13 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        @foreach($house -> repairs as $repair)
+                                                        @foreach($unrepair as $repair)
                                                             <tr>
                                                                 <td>
                                                                     <strong>{{$repair -> title}}</strong></td>
@@ -568,6 +569,7 @@
                                                                                     <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
                                                                                         <p>租客：</p>
                                                                                         <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
                                                                                     </div>
                                                                                     <div class="card replies"style="margin-bottom: 20px;">
                                                                                         <p>房東 ：</p>
@@ -618,38 +620,77 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td>
-                                                                <strong>標題</strong></td>
-                                                            <td>日期</td>
-                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</a>
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                        @foreach($inrepair as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                                  method="GET">
+                                                                                @csrf
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    編輯</button>
+                                                                            </form>
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -660,38 +701,77 @@
                                                         <thead>
                                                         <tr>
                                                             <th>標題</th>
-                                                            <th>日期</th>
-                                                            <th>狀態</th>
-                                                            <th>Actions</th>
+                                                            <th style="text-align: center">日期</th>
+                                                            <th style="text-align: right">狀態</th>
+                                                            <th style="text-align: right">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
-                                                        <tr>
-                                                            <td>
-                                                                <strong>標題</strong></td>
-                                                            <td>日期</td>
-                                                            <td><span class="badge bg-label-primary me-1">狀態</span>
-                                                            </td>
-                                                            <td>
-                                                                <div class="dropdown">
-                                                                    <button type="button"
-                                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu" style="">
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-edit-alt me-1"></i>
-                                                                            編輯</a>
-                                                                        <a class="dropdown-item"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="bx bx-trash me-1"></i>刪除</a>
+                                                        @foreach($finsh as $repair)
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                <td style="text-align: center">{{$repair -> created_at}}</td>
+                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                </td>
+                                                                <td style="text-align: right">
+                                                                    <div class="dropdown">
+                                                                        <button type="button" id="myBtn" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}">查看內容</button>
+                                                                        <!--<button type="button" class="btn btn-info">查看內容</button>-->
+                                                                        &emsp;<div id="myModal" class="modal">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+
+                                                                                    <!-- 訊息視窗標題 -->
+                                                                                    <div class="modal-header">
+                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                    </div>
+
+                                                                                    <!-- 訊息視窗內容 -->
+                                                                                    <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
+                                                                                        <p>租客：</p>
+                                                                                        <p>{{$repair->content}}</p>
+                                                                                        <small>{{$repair->updated_at}}</small>
+                                                                                    </div>
+                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                        <p>房東 ：</p>
+                                                                                        <p>已維修</p>
+                                                                                    </div>
+                                                                                    <p>
+                                                                                        <!-- 訊息視窗按鈕 -->
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-danger close" data-dismiss="modal">關閉</button>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form action="{{route('renters.houses.repairs.edit',[$repair -> id,$house->id])}}"
+                                                                                  method="GET">
+                                                                                @csrf
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    編輯</button>
+                                                                            </form>
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
