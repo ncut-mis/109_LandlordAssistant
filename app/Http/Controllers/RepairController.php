@@ -88,9 +88,17 @@ class RepairController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Repair $repair)
+    public function show(Repair $repair,House $house)
     {
-        //
+        $repair_num=$repair->id;
+        $house_num=$house->id;
+        $house=House::find($house_num);
+        $repairs = Repair::find ($repair_num);
+        $view_data = [
+            'repairs'=>$repairs,
+            'houses'=>$house,
+        ];
+        return view('renters.houses.repairs.show',$view_data);
     }
 
     /**
