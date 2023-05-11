@@ -629,6 +629,15 @@
                                                                                 class="bx bx-edit-alt me-1"></i>
                                                                             編輯</button>
                                                                         </form>
+                                                                        @if($repair -> status!="未維修")
+                                                                            <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button class="dropdown-item"><i
+                                                                                        class="bx bx-trash me-1"></i>刪除</button>
+                                                                            </form>
+                                                                        @elseif($repair -> status=="未維修")
                                                                         <form action="{{route('renters.houses.repairs.destroy',$repair -> id)}}"
                                                                               method="POST">
                                                                             @csrf
@@ -636,6 +645,7 @@
                                                                         <button class="dropdown-item"><i
                                                                                 class="bx bx-trash me-1"></i>刪除</button>
                                                                         </form>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </td>
