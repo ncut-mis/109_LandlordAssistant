@@ -115,9 +115,7 @@
                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                         $house->min_period && $house->pattern && $house->size &&
                                                         $house->type && $house->floor &&
-                                                        $house->expenses->filter(function ($expense) {
-                                                            return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                        })->count() !== 0 &&
+                                                        $house->rentals && $house->interval &&
                                                         $house->image->whereNotNull('image')->count() !== 0 &&
                                                         $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                         $house->features->whereNotNull('feature')->count() !== 0)
@@ -146,9 +144,7 @@
                                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                     $house->min_period && $house->pattern && $house->size &&
                                                                     $house->type && $house->floor &&
-                                                                    $house->expenses->filter(function ($expense) {
-                                                                        return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                                    })->count() !== 0 &&
+                                                                    $house->rentals && $house->interval &&
                                                                     $house->image->whereNotNull('image')->count() !== 0 &&
                                                                     $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                                     $house->features->whereNotNull('feature')->count() !== 0
@@ -198,9 +194,7 @@
                                                         @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                             $house->min_period && $house->pattern && $house->size &&
                                                             $house->type && $house->floor &&
-                                                            $house->expenses->filter(function ($expense) {
-                                                                return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                            })->count() !== 0 &&
+                                                            $house->rentals && $house->interval &&
                                                             $house->image->whereNotNull('image')->count() !== 0 &&
                                                             $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                             $house->features->whereNotNull('feature')->count() !== 0)
@@ -229,9 +223,7 @@
                                                                         @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                         $house->min_period && $house->pattern && $house->size &&
                                                                         $house->type && $house->floor &&
-                                                                        $house->expenses->filter(function ($expense) {
-                                                                            return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                                        })->count() !== 0 &&
+                                                                        $house->rentals && $house->interval &&
                                                                         $house->image->whereNotNull('image')->count() !== 0 &&
                                                                         $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                                         $house->features->whereNotNull('feature')->count() !== 0
@@ -281,9 +273,7 @@
                                                         @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                             $house->min_period && $house->pattern && $house->size &&
                                                             $house->type && $house->floor &&
-                                                            $house->expenses->filter(function ($expense) {
-                                                                return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                            })->count() !== 0 &&
+                                                            $house->rentals && $house->interval &&
                                                             $house->image->whereNotNull('image')->count() !== 0 &&
                                                             $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                             $house->features->whereNotNull('feature')->count() !== 0)
@@ -312,9 +302,7 @@
                                                                         @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                         $house->min_period && $house->pattern && $house->size &&
                                                                         $house->type && $house->floor &&
-                                                                        $house->expenses->filter(function ($expense) {
-                                                                            return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                                        })->count() !== 0 &&
+                                                                        $house->rentals && $house->interval &&
                                                                         $house->image->whereNotNull('image')->count() !== 0 &&
                                                                         $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                                         $house->features->whereNotNull('feature')->count() !== 0
@@ -366,9 +354,7 @@
                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                         $house->min_period && $house->pattern && $house->size &&
                                                         $house->type && $house->floor &&
-                                                        $house->expenses->filter(function ($expense) {
-                                                            return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                        })->count() !== 0 &&
+                                                        $house->rentals && $house->interval &&
                                                         $house->image->whereNotNull('image')->count() !== 0 &&
                                                         $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                         $house->features->whereNotNull('feature')->count() !== 0)
@@ -397,9 +383,7 @@
                                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                     $house->min_period && $house->pattern && $house->size &&
                                                                     $house->type && $house->floor &&
-                                                                    $house->expenses->filter(function ($expense) {
-                                                                        return !is_null($expense->type) && !is_null($expense->amount) && !is_null($expense->interval);
-                                                                    })->count() !== 0 &&
+                                                                    $house->rentals && $house->interval &&
                                                                     $house->image->whereNotNull('image')->count() !== 0 &&
                                                                     $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
                                                                     $house->features->whereNotNull('feature')->count() !== 0
