@@ -373,9 +373,9 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th scope="col" style="text-align: left">標題</th>
-                                                    <th scope="col">內容</th>
-                                                    <th scope="col" style="text-align: right;">發布日期</th>
+                                                    <th scope="col" style="text-align: center;font-size: 18px">標題</th>
+                                                    <th scope="col" style="text-align: center;font-size: 18px">內容</th>
+                                                    <th scope="col" style="text-align: center;font-size: 18px">發布日期</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -383,9 +383,9 @@
                                                     @foreach($location -> posts as $post)
                                                         <tr>
                                                             {{--                        <td >{{ $location->id }}</td>--}}
-                                                            <td><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
-                                                            <td>{{ $post->content }}</td>
-                                                            <td style="text-align: right;" >{{ $post->updated_at }}</td>
+                                                            <td style="text-align: center"><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
+                                                            <td style="text-align: center">{{ $post->content }}</td>
+                                                            <td style="text-align: center" >{{ $post->updated_at }}</td>
                                                     @endforeach
                                                 @endforeach
                                                 </tbody>
@@ -569,10 +569,10 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: right;font-size: 18px">狀態</th>
+                                                            <th style="text-align: right;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">

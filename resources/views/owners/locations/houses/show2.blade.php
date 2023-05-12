@@ -44,7 +44,7 @@
                             <div class="row">
 								<div class="col-7" style="display: inline-block;"><h3>房屋資訊</h3></div>
 								<div class="col-5" style="display: inline-block;">
-									<a class="btn btn-outline-secondary" href="{{ route('owners.home.index',[$owner_id,$location->id]) }}">
+									<a class="btn btn-outline-secondary mx-1 " href="{{ route('owners.home.index',[$owner_id,$location->id]) }}">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
 										  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
 										  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
@@ -57,7 +57,7 @@
 {{--										</div>--}}
 {{--									@endif--}}
 
-                                    <a class="btn btn-danger" href="{{ route('owners.locations.destroy', $location->id) }}"
+                                    <a class="btn btn-danger mx-1" href="{{ route('owners.locations.destroy', $location->id) }}"
 									   onclick="event.preventDefault();
 								if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
 								  document.getElementById('delete-form').submit();
@@ -65,8 +65,8 @@
 										刪除地點
 									</a>
 									|
-									<a class="btn btn-primary" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a>
-									<a class="btn btn-warning" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a>
+									<a class="btn btn-primary mx-1" href="{{ route('owners.locations.houses.create',$location->id) }}">加入房屋</a>
+									<a class="btn btn-dark" href="{{ route('owners.locations.posts.index',$location->id) }}">公告</a>
 
 								</div>
 							</div>
@@ -131,17 +131,17 @@
                                                         @csrf
                                                         @method('PATCH')
         {{--                                                    進入房屋--}}
-                                                        <a class="btn btn-primary me-1" data-bs-toggle="#houses0"
+                                                        <a class="btn rounded-pill btn-primary" data-bs-toggle="#houses0"
                                                            href="{{ route('owners.houses.show', $house->id) }}" role="button"
-                                                           aria-expanded="false" aria-controls="houses0">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                                            </svg>
+                                                           aria-expanded="false" aria-controls="houses0">房屋資訊
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">--}}
+{{--                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>--}}
+{{--                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>--}}
+{{--                                                            </svg>--}}
                                                         </a>
         {{--                                                    房屋刊登狀態--}}
                                                         @if ($house->lease_status == '閒置')
-                                                            <button type="submit" class="btn btn-warning" name="publish"
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="publish"
                                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                     $house->min_period && $house->pattern && $house->size &&
                                                                     $house->type && $house->floor &&
@@ -156,24 +156,24 @@
                                                             >刊登
                                                             </button>
                                                         @elseif ($house->lease_status == '已刊登')
-                                                            <button type="submit" class="btn btn-danger" name="unpublish">取消刊登
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="unpublish">取消刊登
                                                             </button>
                                                         @else
-                                                            <button type="submit" class="btn btn-success" name="rent" disabled>出租中
+                                                            <button type="submit" class="btn rounded-pill btn-success" name="rent" disabled>出租中
                                                             </button>
                                                         @endif
                                                     </form>
-                                                    |
+                                                      |
                                                     <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-outline-primary">編輯</button>
+                                                        <button type="submit" class="btn rounded-pill btn-secondary mx-1">編輯</button>
                                                     </form>
                                                     <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
                                                         method="POST" id="delete-form-{{ $house->id }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-                                                        <button type="submit" class="btn btn-outline-danger" @if($house->lease_status=='出租中')disabled @endif
+                                                        <button type="submit" class="btn rounded-pill btn-danger" @if($house->lease_status=='出租中')disabled @endif
                                                                 data-lease-status="{{ $house->lease_status }}"
                                                                 onclick="confirmDelete(event, {{ $house->id }})">刪除
                                                         </button>

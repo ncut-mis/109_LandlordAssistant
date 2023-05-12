@@ -592,21 +592,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($unrepair  as $repair)
                                                             <tr>
-                                                                <td>
+                                                                <td style="text-align: center">
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
@@ -675,10 +675,10 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
@@ -687,9 +687,9 @@
                                                                 <td>
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
@@ -750,21 +750,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($finsh  as $repair)
                                                             <tr>
                                                                 <td>
-                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                    <strong style="text-align: center">{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
@@ -812,20 +812,20 @@
                                             @foreach($renters_data as $index => $renter)
 
                                                     @if ($index === 0) {{-- 檢查是否為第一次迭代 --}}
-                                                <table class="container">
+                                                <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th><h1>租客名稱</h1></th>
-                                                        <th><h1>電話</h1></th>
-                                                        <th><h1>123</h1></th>
+                                                        <th style="text-align: center;font-size: 18px">租客名稱</th>
+                                                        <th style="text-align: center;font-size: 18px">電話</th>
+                                                        <th style="text-align: center;font-size: 18px">123</th>
                                                     </tr>
                                                     </thead>
                                                     @endif
-                                                    <tbody>
+                                                    <tbody class="table-border-bottom-0">
                                                     <tr>
-                                                        <td>{{ $renter->name }}</td>
-                                                        <td>{{ $renter->phone }}</td>
-                                                        <td>
+                                                        <td style="text-align: center;">{{ $renter->name }}</td>
+                                                        <td style="text-align: center;">{{ $renter->phone }}</td>
+                                                        <td style="text-align: center;">
 
 {{--                                                            <form action="{{ route('owners.houses.rts.destroy', ['signatory' => $contract[$index]->id]) }}" method="POST">--}}
 {{--                                                                @csrf--}}
@@ -840,36 +840,33 @@
                                                         </form>
                                                     </tr>
                                                     </tbody>
-
                                             @endforeach
                                                 </table>
                                         @else
                                             <table class="container">
                                                 <thead>
                                                 <tr>
-                                                    <th><h1>租客名稱</h1></th>
+                                                    <th><h1>尚無租客</h1></th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>尚無租客</td>
+{{--                                                <tbody>--}}
+{{--                                                <tr>--}}
+{{--                                                    <td>尚無租客</td>--}}
 
-                                                </tr>
+{{--                                                </tr>--}}
 
-                                                </tbody>
+{{--                                                </tbody>--}}
                                             </table>
-
-
 
 
                                         @endif
                                         <br>
                                         目前邀請碼為:
-                                        <div class="alert alert-primary" role="alert">
+                                        <div class="col-2 alert alert-primary" role="alert" style="font-size: 18px">
                                             {{ $house->invitation_code }}
                                         </div>
                                         <br>
-                                        將此邀請碼給予租客輸入，租客即可進入房屋，租客進入房屋後此驗證碼會改變
+                                        將此邀請碼給予租客輸入，租客即可進入房屋。租客進入房屋後此驗證碼將會改變
                                         {{--                    <a class="btn btn-danger text-center" href="{{ route('owners.houses.rts.create', $house->id) }}">變更邀請碼</a>--}}
                                     </div>
 
