@@ -46,6 +46,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div></div>
     @endif
+	@php
+		$expense = session('expense');
+	@endphp
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
             <!-- Menu -->
@@ -72,13 +75,13 @@
                                 <div class="nav-align-top mb-4">
                                     <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link active" role="tab"
+                                            <button type="button" class="nav-link @if(isset($expense)) @else active @endif" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($expense == '1') active @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-expense" aria-controls="navs-top-messages"
                                                     aria-selected="false">費用
                                             </button>
@@ -98,7 +101,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <!--房屋資訊內容-->
-                                        <div class="tab-pane fade active show" id="navs-top-house" role="tabpanel">
+                                        <div class="tab-pane fade @if(isset($expense)) @else active show @endif" id="navs-top-house" role="tabpanel">
 
 
                                             <div class="container-xxl flex-grow-1 container-p-y">
@@ -374,7 +377,7 @@
                                             </div>
                                         </div>
                                         <!--費用資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
+                                        <div class="tab-pane fade @if($expense == '1') active show @endif" id="navs-top-expense" role="tabpanel">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark active"
@@ -524,7 +527,11 @@
                                                             </td>
 
                                                             <td style="text-align: right;width: 8%">
-                                                                @if($expense->owner_status == 0)
+                                                                
+																	
+																@if($expense->owner_status == 0)
+																	<a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning"
+                                                                            name="for-renter">送出費用</a>
                                                                     <button type="button" class="btn btn-warning"
                                                                             name="for-renter">送出費用
                                                                     </button>

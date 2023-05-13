@@ -23,6 +23,8 @@ use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\SystemPostController;
 use App\Http\Controllers\UserProfileController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Expense;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,18 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/sendemail/{expense}', function (Expense $expense) {
+	$subject = $expense->house->name.'房屋的費用提醒 - ' . $expense->type; // 將字串和費用類型拼接成主旨
+	$text = '您有一筆日期為'.$expense->start_date.'~'.$expense->end_date.'的'.$expense->type.'尚未繳費';
+    Mail::send([], [], function ($message) use ($subject, $text) {
+        $message->to('play465430525@gmail.com')
+                ->subject($subject)
+                ->text($text);
+    });
+	return redirect()->back()->with(['success' => '已送出費用提醒信件', 'expense' => '1']);
+})->name('sendemail.expense');
+
 // 3-7-1 訪客/會員瀏覽平台首頁
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
