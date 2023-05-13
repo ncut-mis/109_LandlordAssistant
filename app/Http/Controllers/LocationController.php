@@ -65,7 +65,7 @@ class LocationController extends Controller
             'name' => $location->name,
 
         ];
-        return view('owners.locations.edit',$locations_data);
+        return view('owners.locations.edit2',$locations_data);
     }
 
     /**

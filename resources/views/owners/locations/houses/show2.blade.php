@@ -39,7 +39,7 @@
                     <div class="content-wrapper">
                         <!-- Content -->
                         <div class="container-xxl flex-grow-1 container-p-y">
-                            <h2 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房東 /</span>首頁</h2>
+                            <h2 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房東 /</span>房屋</h2>
                             <!-- Collapse -->
                             <div class="row">
 								<div class="col-7" style="display: inline-block;"><h3>房屋資訊</h3></div>
