@@ -39,20 +39,28 @@
 
 
     </style>
+    @if(session('success'))
+        <div class="mx-3 my-3">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="mx-3 my-3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
-            <!-- Menu -->
-            <!-- / Menu -->
-            <!-- Layout container -->
             <div class="layout-page">
-                <!-- Navbar -->
-                <!-- / Navbar -->
-                <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    <!-- Content -->
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房屋 /</span>詳細資訊</h4>
-                        <!-- Tabs -->
                         <h3 class="py-3 my-1 fw-semibold">{{ $house->name }}</h3>
                         <div class="row">
                             <div class="col-xl-15">
@@ -84,10 +92,9 @@
                                         </li>
                                     </ul>
                                     <div class="tab-content">
+
                                         <!--房屋資訊內容-->
                                         <div class="tab-pane fade active show" id="navs-top-house" role="tabpanel">
-
-
                                             <div class="container-xxl flex-grow-1 container-p-y">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-8 order-0 mb-4">
@@ -504,11 +511,16 @@
                                                                     @endif
                                                                 </td>
                                                                 <td style="text-align: right;width: 5%">
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
                                                                     @if($expense->renter_status == 0)
-                                                                        <a class="btn btn-primary" href=#>繳費</a>
+                                                                            <button type="submit" class="btn btn-primary" name="renterpush">繳費</button>
                                                                     @else
                                                                         <button class="btn btn-primary" disabled>繳費</button>
                                                                     @endif
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -522,15 +534,7 @@
                                         <!--報修資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
-                                                <!--<li class="nav-item">
-                                                    <button class="btn btn-outline-dark active"
-                                                            style="margin-left: 12px" id="repair-all-tab"
-                                                            data-bs-toggle="tab" data-bs-target="#repair-all"
-                                                            aria-expanded="true" aria-disabled="true" type="button"
-                                                            role="tab" aria-controls="repair-all" aria-selected="true">
-                                                        全部
-                                                    </button>
-                                                </li>-->
+
                                                 <li class="nav-item">
                                                     <button class="btn btn-outline-dark active" style="margin-left: 12px"
                                                             id="repair-not-finshed-tab" data-bs-toggle="tab"
@@ -562,10 +566,8 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <!--全部-->
                                                 <!--未維修-->
-                                                <div class="tab-pane fade active show" id="repair-not-finshed"
-                                                     role="tabpanel">
+                                                <div class="tab-pane fade active show" id="repair-not-finshed" role="tabpanel">
                                                     <table class="table">
                                                         <thead>
                                                         <tr>

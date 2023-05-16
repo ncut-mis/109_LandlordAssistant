@@ -23,5 +23,7 @@ class Expense extends Model
         'start_date',
         'end_date',
         'remark',
+        'owner_status',
+        'renter_status',
 	];
 }

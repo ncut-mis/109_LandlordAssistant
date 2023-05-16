@@ -118,7 +118,7 @@
                                             @endforeach
                                         </header>
                                         <div id="image-container" style="text-align: right">
-                                            <a class="image featured"><img src="{{ asset('image/'.$image->image) }}" id="image"></a>
+                                            <a class="image featured"><img src="{{ asset('image/'.$image->image) }}" id="image"  alt="{{$image->image}}"></a>
                                             <a class="button4" href="#image-container" onclick="nextImage()">下一張</a>
                                         </div><br>
 
