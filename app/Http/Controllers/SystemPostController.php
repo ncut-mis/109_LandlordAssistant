@@ -52,8 +52,8 @@ class SystemPostController extends Controller
             'content' => $request->input('content'),
         ]);
 //        真實用戶
-//        $post->user_id = auth()->user()->id;
-        $post->admin_id = 1;
+        $post->admin_id = Auth::user()->admin->id;
+//        $post->admin_id = 1;
         $post->save();
         return redirect()->route('ad.posts.index');
     }
