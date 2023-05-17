@@ -9,6 +9,7 @@ use App\Models\SystemPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Signatory;
 
 
 class HomeController extends Controller
@@ -25,21 +26,29 @@ class HomeController extends Controller
         // 驗證使用者是否為系統管理員
         if (Auth::check()) {
             $user = Auth::user();
-
         if ($user->admin) {
             return redirect()->route('ad.posts.index');
         }
     }
         $houses = House::with('image')->get(); // 預先載入 image 關聯
-        //租屋公告
-        $housepost=Post::latest()->first();
-        //系統公告
-        $posts=SystemPost::where('created_at', '>=', Carbon::now()->subDays(3))->latest()->first();
+        //租客公告
+        $hasNewPosts=false;
+        $lastLoginTime = $user->last_login_at;
+        // 獲取租客資料
+        $renter = $user->renter;
+        if ($renter && $renter->signatory) {
+            $rentedHouse = $renter->signatory->house;
+            if ($rentedHouse) {
+                $latestPost = $rentedHouse->posts()->latest()->first();
+                if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
+                    $hasNewPosts = true;
+                }
+            }
+        }
 
         $view_data = [
             'houses' => $houses,
-            'housepost'=>$housepost,
-            'posts'=>$posts,
+            'hasNewPosts' => $hasNewPosts,
     ];
         return view('index', $view_data);
     }

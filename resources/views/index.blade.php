@@ -70,7 +70,12 @@
 {{--        </div>--}}
 
     <!-- Banner -->
-
+    @if ($hasNewPosts)
+        <div class="alert alert-info">
+            <p>您有新的公告！</p>
+            <a class="btn btn-primary" href="{{ route('renters.houses.posts.index', $house) }}">前往查看</a>
+        </div>
+    @endif
     <section id="banner">
         <div class="row">
             <div class="col">
