@@ -23,6 +23,8 @@ use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\SystemPostController;
 use App\Http\Controllers\UserProfileController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Expense;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,23 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/sendemail/{expense}', function (Expense $expense) {
+	$subject = $expense->house->name.'房屋的'.$expense->type.'費用提醒'; // 將字串和費用類型拼接成主旨
+//	$text = '<h1>親愛的用戶，您好：</h1>'."\n\n".'您有一筆日期為'."\n\n".$expense->start_date.'~'.$expense->end_date.'的'.$expense->type.'費用'.$expense->amount.'元尚未繳費'."\n\n".'請盡速前往繳費';
+    $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
+    '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
+    '<p style="font-size: 16px;">您有一筆日期為</p>'."\n\n" .
+    '<p style="font-size: 20px;font-weight: bold">'.$expense->start_date.' ~ '.$expense->end_date.' 的 '.$expense->type.' 費用</p>'."\n\n".
+    '<p style="font-size: 30px;font-weight: bold;color: red">'.$expense->amount.'元</p>' .'尚未繳費，請盡速前往繳費。';
+    Mail::send([], [], function ($message) use ($subject, $text) {
+        $message->to('3a932117@gm.student.ncut.edu.tw')
+                ->subject($subject)
+                ->html($text);
+    });
+	return redirect()->back()->with(['success' => '已送出費用提醒信件', 'expense' => '1']);
+})->name('sendemail.expense');
+
 // 3-7-1 訪客/會員瀏覽平台首頁
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -80,7 +99,7 @@ Route::get('users/renters/{renter}', [RenterController::class, 'index'])->name('
 Route::get('users/owners/{owner}', [OwnerController::class, 'index'])->name('owners.home.index');
 
 // 3-8-6 會員登出(預設應該已經有)
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
+//Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 //查看房東首頁
 //Route::get('owners',[HomeController::class,'owners_index'])->name('owners.houses.index');
@@ -121,6 +140,7 @@ Route::post('owners/houses/rts', [SignatoryController::class, 'store'])->name('o
 
 //會員(房東)刪除租客
 Route::delete('owners/houses/rts/{signatory}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
+
 // 3-9-7 會員(房東)查看公告
 Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
 
@@ -232,6 +252,9 @@ Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name(
 Route::get('renters/houses/repairs/{repair}/edit', [RepairController::class, 'edit'])->name('renters.houses.repairs.edit');
 Route::patch('renters/houses/repairs/{repair}', [RepairController::class, 'update'])->name('renters.houses.repairs.update');
 
+// 會員(租客)查看單一報修訊息
+Route::get('renters/houses/repairs/{repair}/show', [RepairController::class, 'show'])->name('renters.houses.repairs.show');
+
 // 3-10-9 會員(租客)刪除報修訊息
 Route::delete('renters/houses/repairs/{repair}', [RepairController::class, 'destroy'])->name('renters.houses.repairs.destroy');
 // 系統查看公告
@@ -253,7 +276,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
+        Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });

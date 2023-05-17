@@ -160,7 +160,7 @@ class HouseController extends Controller
 
 
 
-            // 建立 Expense 資料
+        /*    // 建立 Expense 資料
             $expense = new Expense([
                 'house_id' => $house_id,
                 'type' => "租金",
@@ -168,7 +168,7 @@ class HouseController extends Controller
                 'interval' => $request->interval,
             ]);
             // 透過關聯存取資料庫
-        $house->expenses()->save($expense);
+        $house->expenses()->save($expense);*/
 
 
 
@@ -269,6 +269,8 @@ class HouseController extends Controller
             'area',
             'address',
             'introduce',
+			'rentals',
+            'interval',
             'num_renter',
             'min_period',
             'pattern',
@@ -281,6 +283,8 @@ class HouseController extends Controller
             if(isset($_REQUEST['publish'])){
                 $v_house = House::where('id', $house->id)
                     ->whereNotNull('introduce')
+					->whereNotNull('rentals')
+					->whereNotNull('interval')
                     ->whereNotNull('lease_status')
                     ->whereNotNull('num_renter')
                     ->whereNotNull('min_period')
@@ -288,11 +292,6 @@ class HouseController extends Controller
                     ->whereNotNull('size')
                     ->whereNotNull('type')
                     ->whereNotNull('floor')
-                    ->first();
-                $v_expense = $house->expenses
-                    ->whereNotNull('type')
-                    ->whereNotNull('amount')
-                    ->whereNotNull('interval')
                     ->first();
 				$v_image = $house->image
                     ->whereNotNull('image')
@@ -304,7 +303,7 @@ class HouseController extends Controller
                     ->whereNotNull('feature')
                     ->first();
 
-                if ($v_house && $v_expense && $v_furnish && $v_feature && $v_image) {
+                if ($v_house && $v_furnish && $v_feature && $v_image) {
                     // 沒有 NULL 值
                     $lease_status = "已刊登";
                     $data = array_merge(
@@ -393,13 +392,13 @@ class HouseController extends Controller
 
         // 更新租屋費用信息
 
-        if ($house->expenses !== null) {
+        /*if ($house->expenses !== null) {
             foreach ($house->expenses as $expense) {
                 $expense->amount = $request->amount;
                 $expense->interval = $request->interval;
                 $expense->save();
             }
-        }
+        }*/
 
         // 檢查設備是否需要刪除
 //        dd($request->furnishings);

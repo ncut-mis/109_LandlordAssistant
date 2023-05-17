@@ -91,15 +91,15 @@
                                         <header>
                                             <h3>{{ $house->county }} {{ $house->area }} {{ $house->address }}</h3>
                                             <h2>
-                                                <a style="font-size: xxx-large; color: #b02a37">${{ number_format($expenses->value('amount')) }}</a>/月
+                                                <a style="font-size: xxx-large; color: #b02a37">${{ number_format($house->rentals) }}</a>/月
                                                 <div class="bb">
-                                                    @if( $expenses->value('interval') == 12)
+                                                    @if( $house->interval == 12)
                                                         ｜年繳
-                                                    @elseif( $expenses->value('interval') == 6)
+                                                    @elseif( $house->interval == 6)
                                                         ｜半年繳
-                                                    @elseif( $expenses->value('interval') == 3)
+                                                    @elseif( $house->interval == 3)
                                                         ｜季繳
-                                                    @elseif( $expenses->value('interval') == 1)
+                                                    @elseif( $house->interval == 1)
                                                         ｜月繳
                                                     @endif</div>
                                             </h2>
@@ -118,7 +118,7 @@
                                             @endforeach
                                         </header>
                                         <div id="image-container" style="text-align: right">
-                                            <a class="image featured"><img src="{{ asset('image/'.$image->image) }}" id="image"></a>
+                                            <a class="image featured"><img src="{{ asset('image/'.$image->image) }}" id="image"  alt="{{$image->image}}"></a>
                                             <a class="button4" href="#image-container" onclick="nextImage()">下一張</a>
                                         </div><br>
 

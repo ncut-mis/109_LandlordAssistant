@@ -104,9 +104,10 @@
                                         <!-- Feature -->
                                         <section class="box feature">
                                             @foreach($house->image as $image)
-
+                                                @if($loop->first)
                                                 <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
                                                         src="image/{{ $image->image }}" alt=""/></a>
+                                                @endif
                                             @endforeach
                                             <div class="col-2 text-truncate2">
                                                 <h3>

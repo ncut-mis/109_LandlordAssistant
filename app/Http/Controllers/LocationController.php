@@ -65,7 +65,7 @@ class LocationController extends Controller
             'name' => $location->name,
 
         ];
-        return view('owners.locations.edit',$locations_data);
+        return view('owners.locations.edit2',$locations_data);
     }
 
     /**
@@ -74,7 +74,7 @@ class LocationController extends Controller
     public function update(Request $request, Location $location)
     {
         $owner_id='1';
-        $$location = new Location;
+            $$location = new Location;
 
         $location->name = $request->name;
         $location->save();

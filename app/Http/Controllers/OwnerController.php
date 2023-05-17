@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateOwnerRequest;
 use App\Models\Contract;
 use App\Models\Renter;
 use App\Models\House;
+use App\Models\Repair;
 use App\Models\Feature;
 use App\Models\Furnish;
 use App\Models\Image;
@@ -93,6 +94,7 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
+        $house_id=$house->id;
 		$location = $house->location;
 		$signatories = $house->signatories; // 取得房屋的目前租客
 		$renters = $signatories->map(function ($signatories) {
@@ -101,7 +103,24 @@ class OwnerController extends Controller
 		$renters_data = $renters->map(function ($renter) {
 			return $renter->user; // 取得每個租客的使用者資料
 		});
-
+        $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '未維修');
+        }])->get();
+        $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '維修中');
+        }])->get();
+        $finsh = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
+        })->with(['repairs' => function ($q) {
+            $q->where('status', '=', '已維修');
+        }])->get();
+        $unrepairs = $unrepair->pluck('repairs')->flatten();
+        $inrepairs = $inrepair->pluck('repairs')->flatten();
+        $finshs = $finsh->pluck('repairs')->flatten();
 		$furnishings = $house->furnishings;
 		$features = $house->features;
 		$image = $house->image;
@@ -114,6 +133,9 @@ class OwnerController extends Controller
             'features' => $features,
             'house' => $house,
             'image' => $image,
+            'unrepair' => $unrepairs,
+            'inrepair' => $inrepairs,
+            'finsh' => $finshs,
             'expenses' => $expenses,
 
         ];

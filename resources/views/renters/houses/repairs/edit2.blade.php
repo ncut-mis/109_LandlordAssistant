@@ -30,8 +30,7 @@
                                           action="{{route('renters.houses.repairs.update',$repairs->id)}}">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="hidden" name="_token"
-                                               value="hqNsD26EYw0jeJ24qgNZpGF0mW6V76t5dQxzLICa">
+                                        <input type="hidden">
                                         <h3 class="my-1 fw-semibold">修改 標題 報修</h3>
                                         <input name="id" value="" style="visibility:hidden">
                                         <div class="col-xl-6">

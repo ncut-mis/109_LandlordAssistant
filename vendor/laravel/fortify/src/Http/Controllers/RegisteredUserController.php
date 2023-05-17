@@ -1,7 +1,9 @@
 <?php
 
 namespace Laravel\Fortify\Http\Controllers;
-
+use App\Models\House;
+use App\Models\Owner;
+use App\Models\Renter;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
@@ -54,6 +56,17 @@ class RegisteredUserController extends Controller
         event(new Registered($user = $creator->create($request->all())));
 
         $this->guard->login($user);
+        
+        Owner::create([
+            'user_id' => $user->id,
+            // 其他欄位
+        ]);
+
+
+        Renter::create([
+            'user_id' => $user->id,
+            // 其他欄位
+        ]);
 
         return app(RegisterResponse::class);
     }

@@ -104,7 +104,7 @@ class ExpenseController extends Controller
 
 
         // 返回頁面或其他操作
-        return redirect()->route('owners.houses.show',['house' => $house->id])->with('success', '租金新增成功！');
+        return redirect()->route('owners.houses.show',['house' => $house->id,'expense' => '1'])->with('success', '租金新增成功！');
     }
 
     /**
@@ -158,7 +158,6 @@ class ExpenseController extends Controller
         $house_id = $expense->house_id;
         $location = House::find($house_id)->location_id;
         $owner_id = House::find($house_id)->owner_id;
-//dd($owner_id);
         $data=$request->only([
             'type',
             'amount',
@@ -166,8 +165,41 @@ class ExpenseController extends Controller
             'end_date',
             'remark',
         ]);
+
+        //如果送出費用或繳費被按下
+        if(isset($_REQUEST['ownerpush']) || isset($_REQUEST['renterpush'])){
+            if (isset($_REQUEST['ownerpush'])) {
+                $v_expense = Expense::where('id', $expense->id)
+                    ->whereNotNull('type')
+                    ->whereNotNull('amount')
+                    ->whereNotNull('start_date')
+                    ->whereNotNull('end_date')
+                    ->first();
+                if ($v_expense) {
+                    $owner_status = '1';
+                    $data = array_merge(
+                        ['owner_status' => $owner_status], $data
+                    );
+                    $expense->update($data);
+//                return redirect()->back()->with('success', '已送出費用');
+                    return redirect()->route('sendemail.expense', $expense->id);
+                } else {
+                    return redirect()->back()->with('error', '費用送出失敗，尚有未填寫的資料');
+                }
+            }
+            //租客按下繳費
+            elseif (isset($_REQUEST['renterpush'])){
+                $renter_status = '1';
+                $data = array_merge(
+                    ['renter_status' => $renter_status], $data
+                );
+                $expense->update($data);
+                return redirect()->route('renters.houses.show', [$house_id])->with('success', '繳費成功！');
+            }
+        }
+
         $expense->update($data);
-        return redirect()->route('owners.locations.houses.show', [$owner_id, $location])->with('success', '修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with('success', '費用修改成功！');
     }
 
     public function rentals_update(Request $request, Expense $expense)
@@ -184,8 +216,9 @@ class ExpenseController extends Controller
             'remark',
         ]);
         $expense->update($data);
-        return redirect()->route('owners.houses.show', [$house_id])->with('success', '修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with('success', '租金費用修改成功！');
     }
+
 
     /**
      * Remove the specified resource from storage.

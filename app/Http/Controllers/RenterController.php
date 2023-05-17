@@ -88,6 +88,9 @@ class RenterController extends Controller
         $locations = Location::with(['posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
         }])->where('id', '=', $location->id)->get();
+        $unrepairs = $unrepair->pluck('repairs')->flatten();
+        $inrepairs = $inrepair->pluck('repairs')->flatten();
+        $finshs = $finsh->pluck('repairs')->flatten();
         $data = [
             'contract' =>$signatories,
             'location_id' =>$location->id,
@@ -97,9 +100,9 @@ class RenterController extends Controller
             'house' => $house,
             'image' => $image,
             'expenses' => $expenses,
-            'unrepair' => $unrepair,
-            'inrepair' => $inrepair,
-            'finsh' => $finsh,
+            'unrepair' => $unrepairs,
+            'inrepair' => $inrepairs,
+            'finsh' => $finshs,
             'locations'=>$locations,
         ];
         return view('renters.houses.show',$data);
