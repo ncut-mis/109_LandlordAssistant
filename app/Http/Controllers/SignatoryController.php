@@ -5,6 +5,7 @@ use App\Models\Signatory;
 use App\Models\House;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class SignatoryController extends Controller
@@ -38,9 +39,10 @@ class SignatoryController extends Controller
             //房間不存在回傳畫面
             return back()->with('no', '未找到房屋');
         }
+		$renter_id = Auth::user()->renter->id;
         // 檢查租客是否已經加入了這個房屋
         //auth()->renter()->id //之後有登入要取得租客ID 先用1
-        $existingSignatory = Signatory::where('renter_id', '2')
+        $existingSignatory = Signatory::where('renter_id', $renter_id)
             ->where('house_id', $house->id)
             ->first();
         if ($existingSignatory) {
@@ -50,7 +52,7 @@ class SignatoryController extends Controller
         //將租客與房間關聯
         $house->id;
         $signatory = new Signatory;
-        $signatory->renter_id = '1';//之後有登入要取得租客ID
+        $signatory->renter_id = $renter_id;//之後有登入要取得租客ID
         $signatory->house_id = $house->id;
         $signatory->save();
 

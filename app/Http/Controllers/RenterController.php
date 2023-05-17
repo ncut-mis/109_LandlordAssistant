@@ -26,8 +26,9 @@ class RenterController extends Controller
             return redirect()->route('ad.posts.index');
         }
         $houses = House::whereHas('signatories', function ($q) use ($user){
-            $q->where('renter_id', '=', $user->id);
-        })->with('repairs')->get();
+            $q->where('renter_id', $user->renter->id);
+        })->get();
+		
         $view_data = [
             'houses' => $houses,
         ];
