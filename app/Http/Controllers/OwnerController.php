@@ -30,28 +30,40 @@ class OwnerController extends Controller
         if ($user->admin) {
             return redirect()->route('ad.posts.index');
         }
+        // 抓取目前登入使用者的 ID
+        $ownerId = Auth::id();
+        // 抓取該使用者擁有的地點
+        $locations = Location::whereHas('houses', function ($query) use ($ownerId) {
+            $query->where('owner_id', $ownerId);
+        })->with('houses')->get();
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/
         //抓取全部地點
-		$locations = Location::with('houses')->get();
+//		$locations = Location::with('houses')->get();
         //抓取出租中地點
-		$for_rent = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '出租中');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '出租中');
+		$for_rent = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '出租中')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '出租中')
+                ->where('owner_id', $ownerId);
         }])->get();
 		//抓取已刊登地點
-		$listed = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '已刊登');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '已刊登');
+		$listed = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '已刊登')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '已刊登')
+                ->where('owner_id', $ownerId);
         }])->get();
 		//抓取閒置地點
-		$vacancy = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '閒置');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '閒置');
+		$vacancy = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '閒置')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '閒置')
+                ->where('owner_id', $ownerId);
         }])->get();
 
 
@@ -60,7 +72,7 @@ class OwnerController extends Controller
             'for_rent' => $for_rent,
             'listed' => $listed,
             'vacancy' => $vacancy,
-            'owner_id' => $owner,
+            'owner_id' => $ownerId,
         ];
         return view('owners.home.index',$locations_data);
     }
