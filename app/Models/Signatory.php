@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Signatory extends Model
 {
     use HasFactory;
+	protected $table = 'signatories';
+
     public function house(){
         return $this->belongsTo(House::class);
     }
