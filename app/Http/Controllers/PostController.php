@@ -8,6 +8,7 @@ use App\Models\House;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -64,7 +65,7 @@ class PostController extends Controller
             'date' => $request->input('date'),
         ]);
 //        真實用戶
-        $post->user_id = auth()->user()->id;
+        $post->owner_id = Auth::user()->owner->id;
 //        $post->owner_id = 1;
         $location->posts()->save($post);
 
