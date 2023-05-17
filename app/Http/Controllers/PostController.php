@@ -29,7 +29,6 @@ class PostController extends Controller
 
     public function owners_index($location_id)
     {
-
         $location = Location::with(['posts' => function ($query) {
             $query->orderBy('created_at', 'desc'); // 按照创建时间降序排列帖子
         }])->findOrFail($location_id);
@@ -41,10 +40,10 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Location $location)
     {
 //       dd($location) ;
-        $location = Location::with('posts')->get();
+        $location = Location::with('posts')->where('id', $location->id)->get();
         $location_data=['location'=>$location];
         return view('owners.locations.posts.create', $location_data );
     }

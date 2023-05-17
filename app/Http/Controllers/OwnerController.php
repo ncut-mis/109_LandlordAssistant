@@ -31,11 +31,9 @@ class OwnerController extends Controller
             return redirect()->route('ad.posts.index');
         }
         // 抓取目前登入使用者的 ID
-        $ownerId = Auth::id();
+        $ownerId = Auth::user()->owner->id;
         // 抓取該使用者擁有的地點
-        $locations = Location::whereHas('houses', function ($query) use ($ownerId) {
-            $query->where('owner_id', $ownerId);
-        })->with('houses')->get();
+		$locations = Location::with('houses')->where('owner_id', $ownerId)->get();
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/

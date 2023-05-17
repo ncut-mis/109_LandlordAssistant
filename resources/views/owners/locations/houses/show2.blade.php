@@ -210,54 +210,54 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             {{--                                                    進入房屋--}}
-                                                            <a class="btn btn-primary me-1" data-bs-toggle="#houses0"
-                                                               href="{{ route('owners.houses.show', $house->id) }}" role="button"
-                                                               aria-expanded="false" aria-controls="houses0">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                                                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                                                </svg>
-                                                            </a>
-                                                            {{--                                                    房屋刊登狀態--}}
-                                                            @if ($house->lease_status == '閒置')
-                                                                <button type="submit" class="btn btn-warning" name="publish"
-                                                                        @if ($house->introduce && $house->lease_status && $house->num_renter &&
-                                                                        $house->min_period && $house->pattern && $house->size &&
-                                                                        $house->type && $house->floor &&
-                                                                        $house->rentals && $house->interval &&
-                                                                        $house->image->whereNotNull('image')->count() !== 0 &&
-                                                                        $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
-                                                                        $house->features->whereNotNull('feature')->count() !== 0
-                                                                        )
-                                                                        @else
-                                                                            disabled
-                                                                    @endif
-                                                                >刊登
-                                                                </button>
-                                                            @elseif ($house->lease_status == '已刊登')
-                                                                <button type="submit" class="btn btn-danger" name="unpublish">取消刊登
-                                                                </button>
-                                                            @else
-                                                                <button type="submit" class="btn btn-success" name="rent" disabled>出租中
-                                                                </button>
-                                                            @endif
-                                                        </form>
-                                                        |
-                                                        <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-outline-primary">編輯</button>
-                                                        </form>
-                                                        <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
-                                                              method="POST" id="delete-form-{{ $house->id }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-                                                            <button type="submit" class="btn btn-outline-danger" @if($house->lease_status=='出租中')disabled @endif
-                                                                    data-lease-status="{{ $house->lease_status }}"
-                                                                    onclick="confirmDelete(event, {{ $house->id }})">刪除
+                                                            <a class="btn rounded-pill btn-primary" data-bs-toggle="#houses0"
+                                                           href="{{ route('owners.houses.show', $house->id) }}" role="button"
+                                                           aria-expanded="false" aria-controls="houses0">房屋資訊
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">--}}
+{{--                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>--}}
+{{--                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>--}}
+{{--                                                            </svg>--}}
+                                                        </a>
+        {{--                                                    房屋刊登狀態--}}
+                                                        @if ($house->lease_status == '閒置')
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="publish"
+                                                                    @if ($house->introduce && $house->lease_status && $house->num_renter &&
+                                                                    $house->min_period && $house->pattern && $house->size &&
+                                                                    $house->type && $house->floor &&
+                                                                    $house->rentals && $house->interval &&
+                                                                    $house->image->whereNotNull('image')->count() !== 0 &&
+                                                                    $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+                                                                    $house->features->whereNotNull('feature')->count() !== 0
+                                                                    )
+                                                                    @else
+                                                                        disabled
+                                                                @endif
+                                                            >刊登
                                                             </button>
-                                                            {{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
-                                                        </form>
+                                                        @elseif ($house->lease_status == '已刊登')
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="unpublish">取消刊登
+                                                            </button>
+                                                        @else
+                                                            <button type="submit" class="btn rounded-pill btn-success" name="rent" disabled>出租中
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                      |
+                                                    <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
+                                                        @csrf
+                                                        <button type="submit" class="btn rounded-pill btn-secondary mx-1">編輯</button>
+                                                    </form>
+                                                    <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
+                                                        method="POST" id="delete-form-{{ $house->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+                                                        <button type="submit" class="btn rounded-pill btn-danger" @if($house->lease_status=='出租中')disabled @endif
+                                                                data-lease-status="{{ $house->lease_status }}"
+                                                                onclick="confirmDelete(event, {{ $house->id }})">刪除
+                                                        </button>
+                                                        {{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+                                                    </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -289,56 +289,54 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             {{--                                                    進入房屋--}}
-                                                            <a class="btn btn-primary me-1" data-bs-toggle="#houses0"
-                                                               href="{{ route('owners.houses.show', $house->id) }}" role="button"
-                                                               aria-expanded="false" aria-controls="houses0">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                                                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                                                </svg>
-                                                            </a>
-                                                            {{--                                                    房屋刊登狀態--}}
-                                                            @if ($house->lease_status == '閒置')
-                                                                <button type="submit" class="btn btn-warning" name="publish"
-                                                                        @if ($house->introduce && $house->lease_status && $house->num_renter &&
-                                                                        $house->min_period && $house->pattern && $house->size &&
-                                                                        $house->type && $house->floor &&
-                                                                        $house->rentals && $house->interval &&
-                                                                        $house->image->whereNotNull('image')->count() !== 0 &&
-                                                                        $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
-                                                                        $house->features->whereNotNull('feature')->count() !== 0
-                                                                        )
-                                                                        @else
-                                                                            disabled
-                                                                    @endif
-                                                                >刊登
-                                                                </button>
-                                                            @elseif ($house->lease_status == '已刊登')
-                                                                <button type="submit" class="btn btn-danger" name="unpublish">取消刊登
-                                                                </button>
-                                                            @else
-                                                                <button type="submit" class="btn btn-success" name="rent" disabled>出租中
-                                                                </button>
-                                                            @endif
-
-
-                                                        </form>
-                                                        |
-                                                        <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-outline-primary">編輯</button>
-                                                        </form>
-                                                        <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
-                                                              method="POST" id="delete-form-{{ $house->id }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-                                                            <button type="submit" class="btn btn-outline-danger" @if($house->lease_status=='出租中')disabled @endif
-                                                                    data-lease-status="{{ $house->lease_status }}"
-                                                                    onclick="confirmDelete(event, {{ $house->id }})">刪除
+                                                            <a class="btn rounded-pill btn-primary" data-bs-toggle="#houses0"
+                                                           href="{{ route('owners.houses.show', $house->id) }}" role="button"
+                                                           aria-expanded="false" aria-controls="houses0">房屋資訊
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">--}}
+{{--                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>--}}
+{{--                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>--}}
+{{--                                                            </svg>--}}
+                                                        </a>
+        {{--                                                    房屋刊登狀態--}}
+                                                        @if ($house->lease_status == '閒置')
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="publish"
+                                                                    @if ($house->introduce && $house->lease_status && $house->num_renter &&
+                                                                    $house->min_period && $house->pattern && $house->size &&
+                                                                    $house->type && $house->floor &&
+                                                                    $house->rentals && $house->interval &&
+                                                                    $house->image->whereNotNull('image')->count() !== 0 &&
+                                                                    $house->furnishings->whereNotNull('furnish')->count() !== 0 &&
+                                                                    $house->features->whereNotNull('feature')->count() !== 0
+                                                                    )
+                                                                    @else
+                                                                        disabled
+                                                                @endif
+                                                            >刊登
                                                             </button>
-                                                            {{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
-                                                        </form>
+                                                        @elseif ($house->lease_status == '已刊登')
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="unpublish">取消刊登
+                                                            </button>
+                                                        @else
+                                                            <button type="submit" class="btn rounded-pill btn-success" name="rent" disabled>出租中
+                                                            </button>
+                                                        @endif
+                                                    </form>
+                                                      |
+                                                    <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
+                                                        @csrf
+                                                        <button type="submit" class="btn rounded-pill btn-secondary mx-1">編輯</button>
+                                                    </form>
+                                                    <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
+                                                        method="POST" id="delete-form-{{ $house->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
+                                                        <button type="submit" class="btn rounded-pill btn-danger" @if($house->lease_status=='出租中')disabled @endif
+                                                                data-lease-status="{{ $house->lease_status }}"
+                                                                onclick="confirmDelete(event, {{ $house->id }})">刪除
+                                                        </button>
+                                                        {{--<button type="submit" class="btn btn-outline-danger" {{ $house->lease_status == '出租中' ? 'disabled' : '' }}>刪除</button>--}}
+                                                    </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -370,17 +368,17 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         {{--                                                    進入房屋--}}
-                                                        <a class="btn btn-primary me-1" data-bs-toggle="#houses0"
+                                                        <a class="btn rounded-pill btn-primary" data-bs-toggle="#houses0"
                                                            href="{{ route('owners.houses.show', $house->id) }}" role="button"
-                                                           aria-expanded="false" aria-controls="houses0">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                                            </svg>
+                                                           aria-expanded="false" aria-controls="houses0">房屋資訊
+{{--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">--}}
+{{--                                                                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>--}}
+{{--                                                                <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>--}}
+{{--                                                            </svg>--}}
                                                         </a>
-                                                        {{--                                                    房屋刊登狀態--}}
+        {{--                                                    房屋刊登狀態--}}
                                                         @if ($house->lease_status == '閒置')
-                                                            <button type="submit" class="btn btn-warning" name="publish"
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="publish"
                                                                     @if ($house->introduce && $house->lease_status && $house->num_renter &&
                                                                     $house->min_period && $house->pattern && $house->size &&
                                                                     $house->type && $house->floor &&
@@ -395,26 +393,24 @@
                                                             >刊登
                                                             </button>
                                                         @elseif ($house->lease_status == '已刊登')
-                                                            <button type="submit" class="btn btn-danger" name="unpublish">取消刊登
+                                                            <button type="submit" class="btn rounded-pill btn-warning mx-1" name="unpublish">取消刊登
                                                             </button>
                                                         @else
-                                                            <button type="submit" class="btn btn-success" name="rent" disabled>出租中
+                                                            <button type="submit" class="btn rounded-pill btn-success" name="rent" disabled>出租中
                                                             </button>
                                                         @endif
-
-
                                                     </form>
-                                                    |
+                                                      |
                                                     <form style="display: inline-block;" action="{{ route('owners.locations.houses.edit', [$location->id, $house->id]) }}" method="GET">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-outline-primary">編輯</button>
+                                                        <button type="submit" class="btn rounded-pill btn-secondary mx-1">編輯</button>
                                                     </form>
                                                     <form style="display: inline-block;" action="{{ route('owners.locations.houses.destroy', [$location->id, $house->id]) }}"
-                                                          method="POST" id="delete-form-{{ $house->id }}">
+                                                        method="POST" id="delete-form-{{ $house->id }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input type="hidden" name="lease_status" value="{{ $house->lease_status }}">
-                                                        <button type="submit" class="btn btn-outline-danger" @if($house->lease_status=='出租中')disabled @endif
+                                                        <button type="submit" class="btn rounded-pill btn-danger" @if($house->lease_status=='出租中')disabled @endif
                                                                 data-lease-status="{{ $house->lease_status }}"
                                                                 onclick="confirmDelete(event, {{ $house->id }})">刪除
                                                         </button>
