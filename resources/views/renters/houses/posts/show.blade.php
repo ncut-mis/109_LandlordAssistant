@@ -1,6 +1,6 @@
-@extends('layouts.renter_master')
-<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
-<link href="{{asset('css/post_show.css')}}">
+@extends('layouts.renter_master_index')
+{{--<link href="{{ asset('css/house_index.css') }}" rel="stylesheet">--}}
+{{--<link href="{{asset('css/post_show.css')}}">--}}
 @section('title', '公告頁面')
 @section('page-content')
     <style>
@@ -42,11 +42,11 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4"></h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">{{$houses->first()->name}}的公告</li>
+                <li class="breadcrumb-item active">{{$houses->name}}的公告</li>
             </ol>
-                <h1 style="text-align: center">{{$posts->first()->title}}</h1>
+                <h1 style="text-align: center">{{$posts->title}}</h1>
                 <div class='container' style=" border: 4px solid #ccc">
-                    <p>{{$posts->first()->title}}</p>
-                    <p style="text-align: right">公告日期：{{$posts->first()->created_at}}
+                    <p>{{$posts->content}}</p>
+                    <p style="text-align: right">公告日期：{{$posts->updated_at}}
                 </div>
 @endsection

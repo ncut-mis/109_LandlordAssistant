@@ -16,10 +16,10 @@ class PostController extends Controller
      */
     public function index(House $house)
     {
-        $locations = Location::whereHas('houses', function ($q) {
-            $q->where('id', '=', 2);
+        $locations = Location::whereHas('houses', function ($q) use ($house){
+            $q->where('id', '=',  $house);
         })->with('posts')->get();
-        $houses = House::find($house);
+        $houses = House::findOrFail($house);
         $view_data = [
             'locations' => $locations,
             'houses'=> $houses,
@@ -65,8 +65,8 @@ class PostController extends Controller
             'date' => $request->input('date'),
         ]);
 //        真實用戶
-//        $post->user_id = auth()->user()->id;
-        $post->owner_id = 1;
+        $post->user_id = auth()->user()->id;
+//        $post->owner_id = 1;
         $location->posts()->save($post);
 
 //        $request->merge(['location_id' => $location->id]);

@@ -391,7 +391,7 @@
                                                         <tr>
                                                             {{--                        <td >{{ $location->id }}</td>--}}
                                                             <td style="text-align: center"><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
-                                                            <td style="text-align: center">{{ $post->content }}</td>
+                                                            <td style="text-align: center">{{ Illuminate\Support\Str::limit($post->content, 10) }}</td>
                                                             <td style="text-align: center" >{{ $post->updated_at }}</td>
                                                     @endforeach
                                                 @endforeach

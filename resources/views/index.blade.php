@@ -63,11 +63,11 @@
             $('#liveAlert').alert();
         });
     </script>
-        <div class="alert alert-warning alert-dismissible position-fixed top-50 start-50 translate-middle" role="alert" id="liveAlert">
-            <div class="notice">{{ $posts->content }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
+{{--        <div class="alert alert-warning alert-dismissible position-fixed top-50 start-50 translate-middle" role="alert" id="liveAlert">--}}
+{{--            <div class="notice">{{ $posts->content }}--}}
+{{--                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     <!-- Banner -->
 
