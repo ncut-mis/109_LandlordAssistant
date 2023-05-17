@@ -14,6 +14,7 @@ use App\Models\Feature;
 use App\Models\Furnish;
 use App\Models\Image;
 use App\Models\Expense;
+use Illuminate\Support\Facades\Auth;
 
 class OwnerController extends Controller
 {
@@ -22,7 +23,13 @@ class OwnerController extends Controller
      */
     public function index($owner)
     {
-
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        $user = Auth::user();
+        if ($user->admin) {
+            return redirect()->route('ad.posts.index');
+        }
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/

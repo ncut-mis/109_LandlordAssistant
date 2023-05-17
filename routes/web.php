@@ -259,6 +259,7 @@ Route::get('renters/houses/repairs/{repair}/show', [RepairController::class, 'sh
 Route::delete('renters/houses/repairs/{repair}', [RepairController::class, 'destroy'])->name('renters.houses.repairs.destroy');
 // 系統查看公告
 Route::get('ad/posts', [SystemPostController::class, 'index'])->name('ad.posts.index');
+//    ->middleware(AdminMiddleware::class);
 
 // 系統新增公告
 Route::get('ad/posts/create', [SystemPostController::class, 'create'])->name('ad.posts.create');

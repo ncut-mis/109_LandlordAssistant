@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Http\Requests\StoreRenterRequest;
 use App\Http\Requests\UpdateRenterRequest;
 use App\Models\Signatory;
+use Illuminate\Support\Facades\Auth;
 
 class RenterController extends Controller
 {
@@ -17,8 +18,15 @@ class RenterController extends Controller
      */
     public function index()
     {
-        $houses = House::whereHas('signatories', function ($q) {
-            $q->where('renter_id', '=', 1);
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        $user = Auth::user();
+        if ($user->admin) {
+            return redirect()->route('ad.posts.index');
+        }
+        $houses = House::whereHas('signatories', function ($q) use ($user){
+            $q->where('renter_id', '=', $user->id);
         })->with('repairs')->get();
         $view_data = [
             'houses' => $houses,

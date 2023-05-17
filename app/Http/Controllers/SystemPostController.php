@@ -6,14 +6,25 @@ use App\Models\Post;
 use App\Models\SystemPost;
 use App\Http\Requests\StoreSystemPostRequest;
 use App\Http\Requests\UpdateSystemPostRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SystemPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index()    {
+//        dd('00');
+        // 驗證使用者是否已登入
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+
+        $user = Auth::user();
+        if (!$user->admin) {
+            return redirect('/');
+        }
+
         $posts = SystemPost::orderBy('created_at', 'DESC')->get();
         $data = ['posts' => $posts];
         return view('ad.posts.index', $data);

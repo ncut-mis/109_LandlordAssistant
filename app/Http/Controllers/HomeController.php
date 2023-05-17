@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 use App\Models\House;
 use App\Models\Image;
 use App\Models\Location;
+use App\Models\Post;
 use App\Models\SystemPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -15,10 +18,27 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        if (!Auth::check()) {
+//            return redirect('/');
+//        }
+
+        // 驗證使用者是否為系統管理員
+        if (Auth::check()) {
+            $user = Auth::user();
+
+        if ($user->admin) {
+            return redirect()->route('ad.posts.index');
+        }
+    }
         $houses = House::with('image')->get(); // 預先載入 image 關聯
+        //租屋公告
+        $housepost=Post::latest()->first();
+        //系統公告
         $posts=SystemPost::where('created_at', '>=', Carbon::now()->subDays(3))->latest()->first();
+
         $view_data = [
-        'houses' => $houses,
+            'houses' => $houses,
+            'housepost'=>$housepost,
             'posts'=>$posts,
     ];
         return view('index', $view_data);

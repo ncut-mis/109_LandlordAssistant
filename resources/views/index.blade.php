@@ -94,8 +94,13 @@
                     <!-- Features -->
                     <section class="box features">
                         <h2 class="major"><span>你可能會喜歡....</span></h2>
-                        <!-- 顯示公告 -->
-
+                        <!-- 顯示租屋公告 -->
+{{--                        @if ($housepost)--}}
+{{--                            <div class="alert alert-info">--}}
+{{--                                租屋新公告：{{ $housepost->title }}--}}
+{{--                                <a href="{{ route('renters.houses.posts.show', [$houses->id, $housepost->id]) }}" class="btn btn-primary">查看詳情</a>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
                         <div class="row">
                             @foreach ($houses as $house)
                                 @if($house->lease_status == '已刊登')
