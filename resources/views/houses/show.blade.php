@@ -51,7 +51,6 @@
         .text {
             background-color: rgba(160, 182, 169, 0.41);
             border-radius: 10px;
-            text-indent: 2em;
             padding: 1em;
             font-size: 18px;
             white-space: pre-wrap;

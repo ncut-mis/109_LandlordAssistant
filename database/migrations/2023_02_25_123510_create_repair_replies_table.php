@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('repair_id')->references('id')->on('repairs')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');//標題
             $table->string('status');//狀態
-            $table->string('content');//內容
-            $table->date('date');//日期
+            $table->string('content')->nullable();//內容
+            $table->date('date')->nullable();//日期
         });
     }
 

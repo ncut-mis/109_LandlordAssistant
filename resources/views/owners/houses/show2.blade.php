@@ -2,6 +2,11 @@
 @section('title', '房東管理頁面-房屋詳細資訊')
 @section('page-content')
     <style>
+        .text {
+            font-size: 18px;
+            white-space: pre-wrap;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -205,8 +210,8 @@
                                                                                     <h5 class="text-nowrap fw-semibold mb-2">
                                                                                         租金</h5>
                                                                                     <span
-                                                                                        class="badge bg-label-warning rounded-pill">
-                                                        每@if( $expenses->value('interval') == 12)
+                                                                                        class="badge bg-label-warning rounded-pill">每
+                                                                                        @if( $house->interval == 12)
                                                                                             年繳
                                                                                         @elseif( $house->interval == 6)
                                                                                             半年繳
@@ -241,7 +246,7 @@
                                                                                 <div class="card-title overflow-hidden">
                                                                                     <h5 class="text-nowrap fw-semibold mb-2">
                                                                                         介紹</h5>
-                                                                                    <p>@if(!empty($house->introduce))
+                                                                                    <p class="text">@if(!empty($house->introduce))
                                                                                             {{ $house->introduce }}
                                                                                         @elseif(empty($house->introduce))
                                                                                             尚未填寫
@@ -384,14 +389,6 @@
                                                         </div>
                                                     </div>
                                                     <!--/ Total Revenue -->
-                                                </div>
-                                                <div class="row">
-                                                    <!-- Order Statistics -->
-                                                    <!--/ Order Statistics -->
-                                                    <!-- Expense Overview -->
-                                                    <!--/ Expense Overview -->
-                                                    <!-- Transactions -->
-                                                    <!--/ Transactions -->
                                                 </div>
                                             </div>
                                         </div>

@@ -52,7 +52,7 @@
 
 
                                                             <div class="col-md-12">
-                                                                <textarea class="form-control" name="content" aria-label="With textarea" placeholder="請詳細描述你需要報修的內容" style="height: 248px;"></textarea>
+                                                                <textarea class="form-control" name="contents" aria-label="With textarea" placeholder="請詳細描述你需要報修的內容" style="height: 248px;"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>

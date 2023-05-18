@@ -23,34 +23,42 @@ class HomeController extends Controller
 //            return redirect('/');
 //        }
 
+        $hasNewPosts=false;
+
         // 驗證使用者是否為系統管理員
         if (Auth::check()) {
             $user = Auth::user();
-        if ($user->admin) {
-            return redirect()->route('ad.posts.index');
-        }
-    }
-        $houses = House::with('image')->get(); // 預先載入 image 關聯
-        //租客公告
-        $hasNewPosts=false;
-        $lastLoginTime = $user->last_login_at;
-        // 獲取租客資料
-        $renter = $user->renter;
-        if ($renter && $renter->signatory) {
-            $rentedHouse = $renter->signatory->house;
-            if ($rentedHouse) {
-                $latestPost = $rentedHouse->posts()->latest()->first();
-                if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
-                    $hasNewPosts = true;
+            if ($user->admin) {
+                return redirect()->route('ad.posts.index');
+            }
+            $lastLoginTime = $user->last_login_at;
+            // 獲取租客資料
+            $renter = $user->renter;
+            if ($renter && $renter->signatory) {
+                $rentedHouse = $renter->signatory->house;
+                if ($rentedHouse) {
+                    $latestPost = $rentedHouse->posts()->latest()->first();
+                    if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
+                        $hasNewPosts = true;
+                    }
                 }
             }
+
+            $view_data = [
+                'hasNewPosts' => $hasNewPosts,
+            ];
+
+        }
+        $houses = House::with('image')->get(); // 預先載入 image 關聯
+        //租客公告
+        if (isset($view_data)) { //view_data已經存在
+            $view_data += ['houses' => $houses];
+        } else {//view_data尚未存在
+            $view_data = ['houses' => $houses];
         }
 
-        $view_data = [
-            'houses' => $houses,
-            'hasNewPosts' => $hasNewPosts,
-    ];
         return view('index', $view_data);
+
     }
 
 

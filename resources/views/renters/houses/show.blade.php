@@ -15,7 +15,7 @@
             background-color: rgba(0,0,0,0.4);
         }
         .modal-content {
-            background-color: rgba(105,108,255,.85);
+            background-color: rgba(255, 255, 255, 0.9);
             margin: auto;
             padding: 35px;
             border: 1px solid #888;
@@ -24,6 +24,8 @@
             text-align: center;
             box-shadow:rgba(105,108,255,.4);
         }
+
+
         .card p{
             font-size: 18px;
             margin-top: 10px;
@@ -420,16 +422,7 @@
                                                             data-bs-target="#pills-for_rent"
                                                             type="button" role="tab" aria-controls="pills-for_rent"
                                                             aria-selected="false">
-                                                        水費
-                                                    </button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-listed-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-listed"
-                                                            type="button" role="tab" aria-controls="pills-listed"
-                                                            aria-selected="false">
-                                                        電費
+                                                        水電費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
@@ -511,15 +504,53 @@
                                                                     @endif
                                                                 </td>
                                                                 <td style="text-align: right;width: 5%">
-                                                                    <form
-                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('PATCH')
+
                                                                     @if($expense->renter_status == 0)
-                                                                            <button type="submit" class="btn btn-primary" name="renterpush">繳費</button>
+                                                                            <button class="btn btn-primary" name="renterpush" data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
                                                                     @else
                                                                         <button class="btn btn-primary" disabled>繳費</button>
                                                                     @endif
+                                                                    <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST">
+                                                                            @csrf
+                                                                            @method('PATCH')
+                                                                        <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}</h3>
+                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col mb-3">
+                                                                                                <label class="form-label">英文姓名</label>
+                                                                                                <input type="text" class="form-control" placeholder="需與卡片上相符" name="en-name">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col mb-1">
+                                                                                                <label class="form-label">卡號</label>
+                                                                                                <input type="text" class="form-control" name="card-number" placeholder="共16碼">
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row g-2">
+                                                                                            <div class="col mb-0">
+                                                                                                <label for="emailWithTitle" class="form-label">安全碼</label>
+                                                                                                <input type="text" class="form-control" placeholder="卡面背後3碼" name="CVV">
+                                                                                            </div>
+                                                                                            <div class="col mb-0">
+                                                                                                <label for="dobWithTitle" class="form-label">卡片到期日</label>
+                                                                                                <input type="text" class="form-control" placeholder="MM / YY" name="expiration">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="submit" class="btn btn-primary" name="renterpush">送出</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </form>
                                                                 </td>
                                                             </tr>
@@ -587,7 +618,7 @@
                                                                 </td>
                                                                 <td style="text-align: right">
                                                                     <div class="dropdown">
-                                                                        <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
+                                                                        <button type="button" class="btn btn-secondary"  data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
                                                                         &emsp;<div id="myModal{{$repair -> id}}" class="modal">
                                                                             <div class="modal-dialog">
@@ -595,7 +626,7 @@
 
                                                                                     <!-- 訊息視窗標題 -->
                                                                                     <div class="modal-header">
-                                                                                        <h4 class="modal-title" style="color: #f0f0f0">報修內容</h4>
+                                                                                        <h4 class="modal-title">報修內容</h4>
                                                                                     </div>
 
                                                                                     <!-- 訊息視窗內容 -->
@@ -604,7 +635,7 @@
                                                                                         <p>{{$repair->content}}</p>
                                                                                         <small>{{$repair->updated_at}}</small>
                                                                                     </div>
-                                                                                    <div class="card replies"style="margin-bottom: 20px;">
+                                                                                    <div class="card "style="margin-bottom: 20px;">
                                                                                         <p>房東 ：</p>
                                                                                         <p>已維修</p>
                                                                                     </div>
