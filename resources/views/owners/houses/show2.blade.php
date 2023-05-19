@@ -65,6 +65,7 @@
     @endif
     @php
         $expense = session('expense');
+        $signatory = session('signatory');
     @endphp
     <div class="layout-wrapper layout-content-navbar  ">
         <div class="layout-container">
@@ -97,7 +98,7 @@
                                     <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
                                         <li class="nav-item">
                                             <button type="button"
-                                                    class="nav-link @if(isset($expense)) @else active @endif" role="tab"
+                                                    class="nav-link @if(isset($expense) || isset($signatory)) @else active @endif" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
                                             </button>
@@ -116,7 +117,7 @@
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($signatory == '1') active @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-renter" aria-controls="navs-top-messages"
                                                     aria-selected="false">租客資訊
                                             </button>
@@ -124,7 +125,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <!--房屋資訊內容-->
-                                        <div class="tab-pane fade @if(isset($expense)) @else active show @endif"
+                                        <div class="tab-pane fade @if(isset($expense) || isset($signatory)) @else active show @endif"
                                              id="navs-top-house" role="tabpanel">
 
 
@@ -889,7 +890,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane fade" id="navs-top-renter" role="tabpanel">
+                                        <div class="tab-pane fade @if($signatory == '1') active show @endif" id="navs-top-renter" role="tabpanel">
 
 
                                             @if(!$renters_data->isEmpty())
