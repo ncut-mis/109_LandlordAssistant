@@ -23,7 +23,18 @@ class UserProfileController extends Controller
         $data = [
             'users' => $users
         ];
-        return view('users.index', $data);
+
+        if (Auth::check()) {
+            $name = Auth::user()->name;
+            return view('users.index', $data,compact('name'));
+        }
+        else
+        {
+
+
+            return view('users.index', $data);
+        }
+
     }
 
     /**
@@ -70,7 +81,7 @@ class UserProfileController extends Controller
     {
         /*// 先驗證輸入的密碼是否正確
         $password = $request->get('password');
-        
+
         if (!Hash::check($password, Auth::user()->password)) {
             return redirect()->route('users.index', $user->id)->with('error', '密碼錯誤！');
         } else {

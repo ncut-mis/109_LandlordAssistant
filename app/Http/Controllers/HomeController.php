@@ -57,7 +57,16 @@ class HomeController extends Controller
             $view_data = ['houses' => $houses];
         }
 
-        return view('index', $view_data);
+        if (Auth::check()) {
+            $name = Auth::user()->name;
+            return view('index', $view_data, compact('name'));
+        }
+        else
+        {
+
+
+            return view('index', $view_data);
+        }
 
     }
 

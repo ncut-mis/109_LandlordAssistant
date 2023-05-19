@@ -904,7 +904,7 @@
                                                                     租客名稱
                                                                 </th>
                                                                 <th style="text-align: center;font-size: 18px">電話</th>
-                                                                <th style="text-align: center;font-size: 18px">123</th>
+                                                                <th style="text-align: center;font-size: 18px"></th>
                                                             </tr>
                                                             </thead>
                                                             @endif
