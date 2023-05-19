@@ -18,7 +18,8 @@ class UserProfileController extends Controller
     public function index($user)
     {
 
-        $id = 1; //user id
+        $id = Auth::id(); //user id
+        //$id = 1; //user id
         $users = User::find($id);
         $data = [
             'users' => $users
@@ -66,7 +67,8 @@ class UserProfileController extends Controller
      */
     public function edit(User $user)
     {
-        $id = '1'; //user id
+        $id = Auth::id(); //user id
+        //$id = '1'; //user id
         $users = User::find($id);
         $data = [
             'users' => $users
