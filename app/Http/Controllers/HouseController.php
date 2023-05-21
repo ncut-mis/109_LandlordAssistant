@@ -109,8 +109,10 @@ class HouseController extends Controller
         }else if(isset($_REQUEST['unpublish'])){
             $lease_status = "閒置";
         }
-        $invitation_code=Str::random(8);
+//        $invitation_code=Str::random(8);
         // 建立 House 資料
+        $invitation_code = mt_rand(1000, 9999);
+
         $house = House::create([
             'name' => $validatedData['name'],
             'county' => $validatedData['county'],

@@ -39,7 +39,9 @@ class SignatoryController extends Controller
             //房間不存在回傳畫面
             return back()->with('no', '未找到房屋');
         }
-		$renter_id = Auth::user()->renter->id;
+        $renter_id = Auth::user()->renter->id;
+
+
         // 檢查租客是否已經加入了這個房屋
         //auth()->renter()->id //之後有登入要取得租客ID 先用1
         $existingSignatory = Signatory::where('renter_id', $renter_id)
@@ -49,13 +51,22 @@ class SignatoryController extends Controller
             // 租客已經加入過這個房屋，回傳畫面
             return back()->with('no', '您已經加入過這個房屋');
         }
+        //	$owner_id 目前登入的使用者的房東ID
+        $owner_id = Auth::user()->owner->id;
+        $current_house_id = $house->owner_id;
+
+        if ($owner_id == $current_house_id) {
+            // 租客已經加入過這個房屋，回傳畫面
+            return back()->with('no', '您不可以加入自己的房屋');
+
+        }
         //將租客與房間關聯
         $house->id;
         $signatory = new Signatory;
         $signatory->renter_id = $renter_id;//之後有登入要取得租客ID
         $signatory->house_id = $house->id;
         $signatory->save();
-		
+
 		if($house->lease_status != '出租中'){
 			$house->lease_status = '出租中'; // 將房屋狀態欄位值修改為 '出租中'
 			$house->save();
@@ -64,7 +75,7 @@ class SignatoryController extends Controller
         $random_str = Str::random(8);
         $house->invitation_code = $random_str;
         $house->save();
-		
+
         //回傳成功畫面
         return back()->with('yes', '您已成功加入房屋');
     }

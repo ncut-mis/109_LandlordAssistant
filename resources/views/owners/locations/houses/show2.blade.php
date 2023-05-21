@@ -39,7 +39,7 @@
                     <div class="content-wrapper">
                         <!-- Content -->
                         <div class="container-xxl flex-grow-1 container-p-y">
-                            <h2 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房東 /</span>房屋</h2>
+                            <h2 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房東 /</span>{{ $location->name }}</h2>
                             <!-- Collapse -->
                             <div class="row">
 								<div class="col-7" style="display: inline-block;"><h3>房屋資訊</h3></div>
@@ -56,12 +56,15 @@
 {{--											{{ session('success') }}--}}
 {{--										</div>--}}
 {{--									@endif--}}
-
+									<form id="delete-form" action="{{ route('owners.locations.destroy', $location->id) }}" method="POST" style="display: none;">
+										@csrf
+										@method('DELETE')
+									</form>
                                     <a class="btn btn-danger mx-1" href="{{ route('owners.locations.destroy', $location->id) }}"
 									   onclick="event.preventDefault();
-								if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
-								  document.getElementById('delete-form').submit();
-								}">
+										if(confirm('確定要刪除這個地點嗎？底下房屋都會消失喔!!')) {
+										  document.getElementById('delete-form').submit();
+										}">
 										刪除地點
 									</a>
 									|
