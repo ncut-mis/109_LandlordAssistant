@@ -46,7 +46,7 @@
 		</ol>
 		<h1 style="text-align: center">
 			<a class="btn btn-outline-secondary"
-			   href="{{ route('renters.houses.index')}}">
+			   href="{{ route('renters.houses.show',['house' => $houses->id, 'post' => 1])}}">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 					 class="bi bi-box-arrow-left" viewBox="0 0 16 16">
 					<path fill-rule="evenodd"

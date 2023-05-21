@@ -70,8 +70,9 @@ class RenterController extends Controller
     /**
      * Display the specified resource.
      */
-        public function show(House $house)
+	public function show(House $house)
     {
+		$post = request()->query('post');
         $location = $house->location;
         $signatories = $house->signatories; // 取得房屋的目前租客
         $owners = $signatories->map(function ($signatories) {
@@ -120,6 +121,7 @@ class RenterController extends Controller
             'inrepair' => $inrepairs,
             'finsh' => $finshs,
             'locations'=>$locations,
+            'post'=>$post,
         ];
         return view('renters.houses.show',$data);
     }

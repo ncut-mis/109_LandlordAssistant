@@ -81,7 +81,7 @@ class RepairController extends Controller
             'content' => $request->contents,
 //            'date' => null,
         ]);
-        return redirect()->route('renters.houses.show',$request->id)->with('success', '申請成功！');
+        return redirect()->route('renters.houses.show',$request->id)->with(['success'=>'申請成功！','repair'=>'1']);
 
     }
 

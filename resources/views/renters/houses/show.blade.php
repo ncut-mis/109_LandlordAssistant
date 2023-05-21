@@ -68,14 +68,17 @@
                             <div class="col-xl-15">
                                 <div class="nav-align-top mb-4">
                                     <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
-                                        <li class="nav-item">
-                                            <button type="button" class="nav-link active" role="tab"
+										@php
+											$repair = session('repair');
+										@endphp
+										<li class="nav-item">
+                                            <button type="button" class="nav-link @if(isset($post)|| isset($repair)) 12 @else active @endif" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($post == '1') active @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-post" aria-controls="navs-top-profile"
                                                     aria-selected="false">公告
                                             </button>
@@ -87,7 +90,7 @@
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($repair == '1') active @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-repair" aria-controls="navs-top-home"
                                                     aria-selected="false">報修
                                             </button>
@@ -96,7 +99,7 @@
                                     <div class="tab-content">
 
                                         <!--房屋資訊內容-->
-                                        <div class="tab-pane fade active show" id="navs-top-house" role="tabpanel">
+                                        <div class="tab-pane fade @if(isset($post)|| isset($repair)) @else active show @endif" id="navs-top-house" role="tabpanel">
                                             <div class="container-xxl flex-grow-1 container-p-y">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-8 order-0 mb-4">
@@ -378,7 +381,7 @@
                                             </div>
                                         </div>
                                         <!--公告資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-post" role="tabpanel">
+                                        <div class="tab-pane fade @if($post == '1') active show @endif" id="navs-top-post" role="tabpanel">
                                             <table class="table">
                                                 <thead>
                                                 <tr>
@@ -563,7 +566,7 @@
 
 
                                         <!--報修資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
+                                        <div class="tab-pane fade @if($repair == '1') active show @endif" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
 
                                                 <li class="nav-item">
