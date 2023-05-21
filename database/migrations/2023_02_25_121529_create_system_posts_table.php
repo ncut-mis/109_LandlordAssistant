@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');//標題
             $table->string('content');//內容
-            $table->date('date');//日期
+            $table->date('date')->nullable();//日期
             $table->timestamps();
         });
     }

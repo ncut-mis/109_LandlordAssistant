@@ -55,10 +55,16 @@ class SignatoryController extends Controller
         $signatory->renter_id = $renter_id;//之後有登入要取得租客ID
         $signatory->house_id = $house->id;
         $signatory->save();
+		
+		if($house->lease_status != '出租中'){
+			$house->lease_status = '出租中'; // 將房屋狀態欄位值修改為 '出租中'
+			$house->save();
+		}
 
         $random_str = Str::random(8);
         $house->invitation_code = $random_str;
         $house->save();
+		
         //回傳成功畫面
         return back()->with('yes', '您已成功加入房屋');
     }
@@ -93,9 +99,15 @@ class SignatoryController extends Controller
     public function destroy(Signatory $signatory)
     {
         $signatory->delete();
+		$house = $signatory->house;
+		$hasActiveSignatory = $house->signatories()->exists(); //該房屋還有目前租客
+		if (!$hasActiveSignatory) {
+			$house->lease_status = '閒置';
+			$house->save();
+		}
 
         // 刪除成功，重定向到原始頁面，並顯示成功訊息
-        return redirect()->back()->with('success', '已移除租客');
+        return redirect()->back()->with(['success', '已移除租客','signatory'=>'1']);
 
 
 

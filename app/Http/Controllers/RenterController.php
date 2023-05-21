@@ -28,9 +28,16 @@ class RenterController extends Controller
         $houses = House::whereHas('signatories', function ($q) use ($user){
             $q->where('renter_id', $user->renter->id);
         })->get();
+		//查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
+		$posts = Post::whereHas('location.houses', function ($query) use ($user) {
+			$query->whereHas('signatories', function ($q) use ($user) {
+				$q->where('renter_id', $user->renter->id);
+			});
+		})->get();
 		
         $view_data = [
             'houses' => $houses,
+            'posts' => $posts,
         ];
         return view('renters.houses.index',$view_data);
     }
