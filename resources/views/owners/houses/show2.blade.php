@@ -959,7 +959,7 @@
                                                         {{ $house->invitation_code }}
                                                     </div>
                                                     <br>
-                                                    將此邀請碼給予租客輸入，租客即可進入房屋。租客進入房屋後此驗證碼將會改變
+                                                    將此邀請碼給予租客輸入，租客即可進入房屋。租客進入房屋後此驗證碼將會改變，刪除房屋前請先移除租客
                                                     {{--                    <a class="btn btn-danger text-center" href="{{ route('owners.houses.rts.create', $house->id) }}">變更邀請碼</a>--}}
                                         </div>
 
