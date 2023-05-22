@@ -18,33 +18,38 @@
     @endif
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
-	@if($posts->isNotEmpty())
-		<script>
-			$(document).ready(function() {
-				$('#post').modal('show');
-			});
-		</script>
-	@endif
+    @foreach ($houses as $house)
+        @if ($house->latestPost && !session('shown_announcement_' . $house->id))
+            <script>
+                $(document).ready(function() {
+                    $('#post').modal('show');
+                });
+            </script>
+                <?php session(['shown_announcement_' . $house->id => true]); ?>
+        @endif
+    @endforeach
 
 	<button type="button" class="col-sm-3 btn btn-primary" data-bs-toggle="modal" data-bs-target="#post">確定送出</button>
-
+    {{--公告提醒--}}
+    @foreach ($houses as $key =>$house)
 	<div class="modal" tabindex="-1" id="post">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Modal title</h5>
+					<h5 class="modal-title">公告</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p>Modal body text goes here.</p>
+					<p>有新公告，要去查看</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+					<a href="{{route('renters.houses.show' ,$house->id)}}" class="btn btn-primary">查看公告</a>
 				</div>
 			</div>
 		</div>
 	</div>
+    @endforeach
     <div class="layout-wrapper">
         <div class="layout-container">
             <!-- Menu -->

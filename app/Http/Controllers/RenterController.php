@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateRenterRequest;
 use App\Models\Signatory;
 use Illuminate\Support\Facades\Auth;
 
+
 class RenterController extends Controller
 {
     /**
@@ -34,10 +35,21 @@ class RenterController extends Controller
 				$q->where('renter_id', $user->renter->id);
 			});
 		})->get();
-		
+        $hasRentedHouse = $houses->isNotEmpty();
+        if ($hasRentedHouse) {
+            $houses = Auth::user()->houses()->with(['posts' => function ($query) {
+                $query->latest()->first();
+            }])->get();
+        } else {
+            $houses = collect(); // 如果租客沒有租房子，則設置為空的集合
+        }
+
+        $hasNewAnnouncement = $posts->isNotEmpty();
         $view_data = [
             'houses' => $houses,
             'posts' => $posts,
+            'hasRentedHouse' => $hasRentedHouse,
+            'hasNewAnnouncement' => $hasNewAnnouncement,
         ];
         return view('renters.houses.index',$view_data);
     }
