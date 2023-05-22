@@ -89,11 +89,17 @@ class HomeController extends Controller
                 // 檢查並取回 Session 中的搜尋結果
                 if (Session::has('search_result')) {
                     $houses = Session::get('search_result');
-                    $view_data['houses'] = $houses;
+                    $view_data = [
+                        'houses' => $houses,
+                        'lastSystemPost'=>$lastSystemPost,
+                    ];
                 }
                 else {
                     $houses = House::with('image')->get();
-                    $view_data['houses'] = $houses;
+                    $view_data = [
+                        'houses' => $houses,
+                        'lastSystemPost'=>$lastSystemPost,
+                    ];
                 }
 
                 return view('index', $view_data, compact('name'));
@@ -103,11 +109,17 @@ class HomeController extends Controller
 
             if (Session::has('search_result')) {
                 $houses = Session::get('search_result');
-                $view_data['houses'] = $houses;
+                $view_data = [
+                    'houses' => $houses,
+                    'lastSystemPost'=>$lastSystemPost,
+                ];
             }
             else {
                 $houses = House::with('image')->get();
-                $view_data['houses'] = $houses;
+                $view_data = [
+                    'houses' => $houses,
+                    'lastSystemPost'=>$lastSystemPost,
+                ];
             }
             return view('index', $view_data);
         }
