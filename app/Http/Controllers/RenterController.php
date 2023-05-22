@@ -29,7 +29,6 @@ class RenterController extends Controller
         $houses = House::whereHas('signatories', function ($q) use ($user){
             $q->where('renter_id', $user->renter->id);
         })->get();
-
         $hasRentedHouse = $houses->isNotEmpty();
         if ($hasRentedHouse) {
             //查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
@@ -41,12 +40,12 @@ class RenterController extends Controller
             ->get()
                 ->groupBy('location_id') // 根據地點進行分組
                 ->map(function ($group) {
-                    return $group->first(); // 取得每個地點分組中的第一筆公告，即最後一筆公告
+                    return $group->sortByDesc('created_at')->first();// 取得每個地點分組中的第一筆公告，即最後一筆公告
                 });
+//            dd($posts);
         } else {
             $houses = collect(); // 如果租客沒有租房子，則設置為空的集合
         }
-
         $view_data = [
             'houses' => $houses,
             'posts' => $posts,
