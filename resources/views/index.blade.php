@@ -1,8 +1,8 @@
 @extends('layouts.master')
-@section('title', '測試')
+@section('title', '首頁')
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 @section('content')
     <style>
         /* tw-city 替換適合的 css 樣式 */
@@ -54,27 +54,42 @@
             text-overflow: ellipsis;
             display: block;
         }
-        .notice {
-            margin-bottom: 0;
+        .custom-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
         }
-    </style>
-    <script>
-        $(document).ready(function() {
-            $('#liveAlert').alert();
-        });
-    </script>
-{{--        <div class="alert alert-warning alert-dismissible position-fixed top-50 start-50 translate-middle" role="alert" id="liveAlert">--}}
-{{--            <div class="notice">{{ $posts->content }}--}}
-{{--                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
+    </style>
     <!-- Banner -->
-    @if (isset($hasNewPost) && $hasNewPosts)
-        <div class="alert alert-info">
-            <p>您有新的公告！</p>
-            <a class="btn btn-primary" href="{{ route('renters.houses.posts.index', $house) }}">前往查看</a>
+    @if(isset($lastSystemPost))
+        <div class="custom-modal" id="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">系統公告提醒</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ $lastSystemPost->content }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">關閉</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <script>
+            function closeModal() {
+                var modal = document.getElementById('post');
+                modal.style.display = 'none';
+            }
+        </script>
     @endif
     <section id="banner">
         <div class="row">
@@ -87,7 +102,6 @@
             </div>
         </div>
     </section>
-
     <!-- Main -->
     <section id="main">
         <div class="container">

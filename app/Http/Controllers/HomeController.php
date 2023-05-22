@@ -19,55 +19,29 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        if (!Auth::check()) {
-//            return redirect('/');
-//        }
-
-        $hasNewPosts=false;
-
+        $houses = House::with('image')->get(); // 預先載入 image 關聯
+        $lastSystemPost = SystemPost::latest()->first();
         // 驗證使用者是否為系統管理員
         if (Auth::check()) {
             $user = Auth::user();
             if ($user->admin) {
                 return redirect()->route('ad.posts.index');
             }
-            $lastLoginTime = $user->last_login_at;
-            // 獲取租客資料
-            $renter = $user->renter;
-            if ($renter && $renter->signatory) {
-                $rentedHouse = $renter->signatory->house;
-                if ($rentedHouse) {
-                    $latestPost = $rentedHouse->posts()->latest()->first();
-                    if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
-                        $hasNewPosts = true;
-                    }
-                }
-            }
 
             $view_data = [
-                'hasNewPosts' => $hasNewPosts,
+                'houses' => $houses,
             ];
-
-        }
-        $houses = House::with('image')->get(); // 預先載入 image 關聯
-        //租客公告
-        if (isset($view_data)) { //view_data已經存在
-            $view_data += ['houses' => $houses];
-        } else {//view_data尚未存在
-            $view_data = ['houses' => $houses];
-        }
-
-        if (Auth::check()) {
             $name = Auth::user()->name;
             return view('index', $view_data, compact('name'));
         }
         else
         {
-
-
+            $view_data = [
+                'houses' => $houses,
+                'lastSystemPost'=>$lastSystemPost,
+            ];
             return view('index', $view_data);
         }
-
     }
 
 
