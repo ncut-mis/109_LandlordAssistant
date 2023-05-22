@@ -1,6 +1,7 @@
 <nav id="nav">
     <ul>
-        <li class="current"><a href="{{url('/')}}">租屋網</a></li>
+        <li class="current"><a href="{{ route('home.clearSearchSession') }}">租屋網</a></li>
+
         <li>
             <a href="#">會員中心</a>
             <ul>

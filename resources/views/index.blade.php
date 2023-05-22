@@ -18,10 +18,12 @@
             margin-left: 20px;
             outline: none;
             padding: .3em 1.25em;
+
+
         }
 
         input[type=text1] {
-            width: 500px;
+            width: 400px;
             box-sizing: border-box;
             border: 2px solid #ccc;
             border-radius: 1em;;
@@ -57,6 +59,7 @@
         .notice {
             margin-bottom: 0;
         }
+
     </style>
     <script>
         $(document).ready(function() {
@@ -76,17 +79,23 @@
             <a class="btn btn-primary" href="{{ route('renters.houses.posts.index', $house) }}">前往查看</a>
         </div>
     @endif
-    <section id="banner">
-        <div class="row">
-            <div class="col">
-                <div role="tw-city-selector" class="my-style-selector"></div>
+
+    <form method="post" action="{{ route('houses.search') }}" enctype="multipart/form-data" style=" padding: 0;
+            margin: 0;
+            border: none;">
+        @csrf
+    <section id="banner" >
+        <div class="row" >
+            <div class="col"  >
+                <div role="tw-city-selector" class="my-style-selector"  ></div>
             </div>
-            <div class="col">
-                <input type="text1" placeholder="請輸入社區名、街道或商圈名..." aria-label="Last name">
-                <button class="btn" type="button" id="button-addon2">搜尋</button>
+            <div class="col" >
+                <input type="text1" placeholder="請輸入社區名、街道或商圈名..." aria-label="Last name" name="selecthouse">
+                <button class="btn" type="submit" id="button-addon2">搜尋</button>
             </div>
         </div>
     </section>
+</form>
 
     <!-- Main -->
     <section id="main">
@@ -98,7 +107,13 @@
 
                     <!-- Features -->
                     <section class="box features">
-                        <h2 class="major"><span>你可能會喜歡....</span></h2>
+                        @if(Session::has('search_result'))
+                            <h2 class="major"><span>搜尋結果如下...顯示所有房屋點租屋網</span></h2>
+
+                        @else
+                            <h2 class="major"><span>你可能會喜歡...</span></h2>
+                            <!-- 顯示默認的首頁內容 -->
+                        @endif
                         <!-- 顯示租屋公告 -->
 {{--                        @if ($housepost)--}}
 {{--                            <div class="alert alert-info">--}}
@@ -117,6 +132,7 @@
                                                 @if($loop->first)
                                                 <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
                                                         src="image/{{ $image->image }}" alt=""/></a>
+
                                                 @endif
                                             @endforeach
                                             <div class="col-2 text-truncate2">
