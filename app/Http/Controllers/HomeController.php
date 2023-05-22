@@ -20,6 +20,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
 //        if (!Auth::check()) {
 //            return redirect('/');
 //        }
@@ -68,44 +69,66 @@ class HomeController extends Controller
 //
 //            return view('index', $view_data);
 //        }
-$name='';
-        if (Auth::check()) {
-            $name = Auth::user()->name;
-
-            $hasNewPosts = false;
-            $user = Auth::user();
-            if ($user->admin) {
-                return redirect()->route('ad.posts.index');
-            }
-            $lastLoginTime = $user->last_login_at;
-            $renter = $user->renter;
-            if ($renter && $renter->signatory) {
-                $rentedHouse = $renter->signatory->house;
-                if ($rentedHouse) {
-                    $latestPost = $rentedHouse->posts()->latest()->first();
-                    if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
-                        $hasNewPosts = true;
-                    }
-                }
-            }
-
-            $view_data = [
-                'hasNewPosts' => $hasNewPosts,
-            ];
-        } else {
-            $view_data = [];
-        }
+//
 
         // 檢查並取回 Session 中的搜尋結果
         if (Session::has('search_result')) {
             $houses = Session::get('search_result');
             $view_data['houses'] = $houses;
-        } else {
+        }
+        else {
             $houses = House::with('image')->get();
             $view_data['houses'] = $houses;
         }
 
+        $name = Auth::user()->name;
         return view('index', $view_data, compact('name'));
+
+//
+        $name='';
+        $houses = House::with('image')->get(); // 預先載入 image 關聯
+        $lastSystemPost = SystemPost::latest()->first();
+        // 驗證使用者是否為系統管理員
+
+        if (Auth::check()) {
+
+            $name = Auth::user()->name;
+
+
+            $user = Auth::user();
+            if ($user->admin) {
+                return redirect()->route('ad.posts.index');
+            }
+            else {
+
+                // 檢查並取回 Session 中的搜尋結果
+                if (Session::has('search_result')) {
+                    $houses = Session::get('search_result');
+                    $view_data['houses'] = $houses;
+                }
+                else {
+                    $houses = House::with('image')->get();
+                    $view_data['houses'] = $houses;
+                }
+                $name = Auth::user()->name;
+                return view('index', $view_data, compact('name'));
+            }
+
+        } else {
+            // 檢查並取回 Session 中的搜尋結果
+            if (Session::has('search_result')) {
+                $houses = Session::get('search_result');
+                $view_data['houses'] = $houses;
+            }
+            else {
+                $houses = House::with('image')->get();
+                $view_data['houses'] = $houses;
+            }
+            $name = Auth::user()->name;
+            return view('index', $view_data, compact('name'));
+        }
+
+
     }
 
     public function clearSearchSession()

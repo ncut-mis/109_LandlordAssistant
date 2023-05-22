@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateRenterRequest;
 use App\Models\Signatory;
 use Illuminate\Support\Facades\Auth;
 
+
 class RenterController extends Controller
 {
     /**
@@ -28,16 +29,28 @@ class RenterController extends Controller
         $houses = House::whereHas('signatories', function ($q) use ($user){
             $q->where('renter_id', $user->renter->id);
         })->get();
-		//查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
-		$posts = Post::whereHas('location.houses', function ($query) use ($user) {
-			$query->whereHas('signatories', function ($q) use ($user) {
-				$q->where('renter_id', $user->renter->id);
-			});
-		})->get();
-		
+        $hasRentedHouse = $houses->isNotEmpty();
+        if ($hasRentedHouse) {
+            //查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
+            $posts = Post::whereHas('location.houses', function ($query) use ($user) {
+                $query->whereHas('signatories', function ($q) use ($user) {
+                    $q->where('renter_id', $user->renter->id);
+                });
+            })->latest() // 根據 created_at 欄位進行最新排序
+            ->get()
+                ->groupBy('location_id') // 根據地點進行分組
+                ->map(function ($group) {
+                    return $group->sortByDesc('created_at')->first();// 取得每個地點分組中的第一筆公告，即最後一筆公告
+                });
+//            dd($posts);
+        } else {
+            $houses = collect(); // 如果租客沒有租房子，則設置為空的集合
+        }
         $view_data = [
             'houses' => $houses,
             'posts' => $posts,
+            'hasRentedHouse' => $hasRentedHouse,
+
         ];
         return view('renters.houses.index',$view_data);
     }
