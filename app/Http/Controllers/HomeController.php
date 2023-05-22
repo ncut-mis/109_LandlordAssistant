@@ -91,14 +91,13 @@ class HomeController extends Controller
                     $houses = Session::get('search_result');
                     $view_data = [
                         'houses' => $houses,
-                        'lastSystemPost'=>$lastSystemPost,
                     ];
                 }
                 else {
                     $houses = House::with('image')->get();
                     $view_data = [
                         'houses' => $houses,
-                        'lastSystemPost'=>$lastSystemPost,
+//                        'lastSystemPost'=>$lastSystemPost,
                     ];
                 }
 
@@ -111,7 +110,7 @@ class HomeController extends Controller
                 $houses = Session::get('search_result');
                 $view_data = [
                     'houses' => $houses,
-                    'lastSystemPost'=>$lastSystemPost,
+//                    'lastSystemPost'=>$lastSystemPost,
                 ];
             }
             else {
