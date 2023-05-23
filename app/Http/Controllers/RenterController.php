@@ -29,6 +29,17 @@ class RenterController extends Controller
         $houses = House::whereHas('signatories', function ($q) use ($user){
             $q->where('renter_id', $user->renter->id);
         })->get();
+		//查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
+		$posts = Post::whereHas('location.houses', function ($query) use ($user) {
+			$query->whereHas('signatories', function ($q) use ($user) {
+				$q->where('renter_id', $user->renter->id);
+			});
+		})->get();
+
+        $view_data = [
+            'houses' => $houses,
+            'posts' => $posts,
+        ];
         $hasRentedHouse = $houses->isNotEmpty();
         if ($hasRentedHouse) {
             //查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
@@ -101,25 +112,27 @@ class RenterController extends Controller
         $owners_data = $owners->map(function ($owner) {
             return $owner->user; // 取得每個租客的使用者資料
         });
-
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
         $expenses = $house->expenses;
-        $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
+            $q->with('repair_replies');
         }])->get();
-        $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
+            $q->with('repair_replies');
         }])->get();
-        $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $finsh = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
+            $q->with('repair_replies');
         }])->get();
         //公告
         $locations = Location::with(['posts' => function ($query) {

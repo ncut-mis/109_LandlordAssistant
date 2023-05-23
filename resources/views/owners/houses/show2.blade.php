@@ -2,11 +2,6 @@
 @section('title', '房東管理頁面-房屋詳細資訊')
 @section('page-content')
     <style>
-        .text {
-            font-size: 18px;
-            white-space: pre-wrap;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -17,28 +12,27 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0,0,0,0.4);
         }
-
         .modal-content {
-            background-color: rgba(105, 108, 255, .85);
+            background-color: rgba(255, 255, 255, 0.9);
             margin: auto;
             padding: 35px;
             border: 1px solid #888;
             width: 80%;
             max-width: 600px;
             text-align: center;
-            box-shadow: rgba(105, 108, 255, .4);
+            box-shadow:rgba(105,108,255,.4);
         }
 
-        .card p {
+
+        .card p{
             font-size: 18px;
             margin-top: 10px;
             margin-left: 1rem;
             text-align: left;
         }
-
-        .replies p {
+        .replies p{
             font-size: 18px;
             margin-top: 10px;
             margin-right: 1rem;
@@ -663,14 +657,44 @@
                                                                                         <p>{{$repair->content}}</p>
                                                                                         <small>{{$repair->updated_at}}</small>
                                                                                     </div>
-                                                                                    <div class="card replies"
-                                                                                         style="margin-bottom: 20px;">
+                                                                                    @foreach($repair->repair_replies as $repair_reply)
+                                                                                    <div class="card "style="margin-bottom: 20px;">
                                                                                         <p>房東 ：</p>
-                                                                                        <p>已維修</p>
+                                                                                        <p>{{$repair_reply->content}}</p>
+                                                                                        <small>{{$repair_reply->updated_at}}
+                                                                                            <button type="button"
+                                                                                                    class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                                    data-bs-toggle="dropdown"
+                                                                                                    aria-expanded="false" style="float: right;">
+                                                                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                                                                            </button>
+                                                                                            <div class="dropdown-menu" style="">
+                                                                                                <form action="{{ route('houses.repairs.reply.edit', ['repairReply' => $repair_reply->id]) }}" method="GET">
+                                                                                                    @csrf
+                                                                                                    <button class="dropdown-item" name="status" value="編輯">
+                                                                                                        <i class="bx bx-edit-alt me-1"></i>
+                                                                                                        編輯
+                                                                                                    </button>
+                                                                                                </form>
+                                                                                                <form
+                                                                                                    action="{{route('houses.repairs.reply.destroy',$repair_reply->id)}}"
+                                                                                                    method="POST">
+                                                                                                    @csrf
+                                                                                                    @method('DELETE')
+                                                                                                    <button class="dropdown-item"
+                                                                                                            name="status" value="刪除"><i
+                                                                                                            class="bx bx-edit-alt me-1"></i>
+                                                                                                        刪除
+                                                                                                    </button>
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </small>
                                                                                     </div>
+                                                                                    @endforeach
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -775,6 +799,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
+                                                                                        <a href="{{route('houses.repairs.reply.create'),[$repair->id,'house'=>$house->id]}}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -870,6 +895,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
+                                                                                        <a href="{{route('houses.repairs.reply.create'),[$repair->id,'house'=>$house->id]}}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
