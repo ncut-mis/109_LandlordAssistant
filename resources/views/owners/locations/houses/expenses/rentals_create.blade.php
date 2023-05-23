@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-info mx-3">新增租金費用</button>
-                                <a type="button" class="btn btn-secondary" href="{{route('owners.houses.show',[$houses->id])}}">返回</a>
+                                <a type="button" class="btn btn-secondary" href="{{route('owners.houses.show',[$houses->id, 'expense'=>1])}}">返回</a>
                             </form>
                         </div>
                         <!-- / Content -->
