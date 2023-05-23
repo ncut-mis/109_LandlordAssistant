@@ -49,6 +49,29 @@
             behavior: 'smooth'
         });
     }
+	
+	//驗證表單
+	function validateAndSubmit() {
+		const inputs = document.querySelectorAll('input, select, textarea');
+		let isValid = true;
+		//驗證每種類型的輸入都有資料
+		inputs.forEach((input) => {
+			if (!input.value) {
+				isValid = false; //有資料未填寫
+			}
+		});
+		//有資料未填寫
+		if (!isValid) {
+			const shouldSubmit = confirm('表單中有未填寫的欄位，確定要送出嗎？');
+			if (shouldSubmit) {
+				document.querySelector('form').submit(); // 送出表單
+			}else{
+				event.preventDefault(); //取消默認行為
+			}
+		} else {//資料都有填寫，則直接送出表單
+		  document.querySelector('form').submit(); // 送出表單
+		}
+	}
 
     $(function() {
         // 設定計數器和圖片陣列
