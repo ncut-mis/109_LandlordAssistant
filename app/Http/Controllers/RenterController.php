@@ -42,16 +42,23 @@ class RenterController extends Controller
                 ->map(function ($group) {
                     return $group->sortByDesc('created_at')->first();// 取得每個地點分組中的第一筆公告，即最後一筆公告
                 });
+            $view_data = ['posts' => $posts];
 //            dd($posts);
         } else {
             $houses = collect(); // 如果租客沒有租房子，則設置為空的集合
         }
-        $view_data = [
-            'houses' => $houses,
-            'posts' => $posts,
-            'hasRentedHouse' => $hasRentedHouse,
 
-        ];
+        if (isset($posts)) {
+            $view_data = $view_data + [
+                'houses' => $houses,
+                'hasRentedHouse' => $hasRentedHouse,
+            ];
+        } else{
+            $view_data = [
+                'houses' => $houses,
+                'hasRentedHouse' => $hasRentedHouse,
+            ];
+        }
         return view('renters.houses.index',$view_data);
     }
     /*public function location_index()
