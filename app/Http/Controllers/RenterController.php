@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
 use App\Models\Post;
 use App\Models\Renter;
 use App\Models\House;
@@ -115,7 +116,15 @@ class RenterController extends Controller
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
+
+        //費用
         $expenses = $house->expenses;
+        $expenses_we = $house->expenses->whereIn('type',['水費','電費']);
+        $expenses_rentals = $house->expenses->where('type','租金');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金']);
+        $expenses_payoff = $house->expenses->where('renter_status','1');
+        $expenses_unpay  =$house->expenses->where('renter_status','0');
+
         $unrepair = House::whereHas('repairs', function ($q) use ($house) {
             $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
@@ -155,7 +164,12 @@ class RenterController extends Controller
             'finsh' => $finshs,
             'locations'=>$locations,
             'post'=>$post,
-            'po'=>1
+            'po'=>1,
+            'expenses_we' => $expenses_we,
+            'expenses_rentals'=>$expenses_rentals,
+            'expenses_other' => $expenses_other,
+            'expenses_payoff' => $expenses_payoff,
+            'expenses_unpay' => $expenses_unpay
         ];
 //        dd($data);
         return view('renters.houses.show',$data);
