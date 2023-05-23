@@ -107,17 +107,17 @@ class RenterController extends Controller
         $image = $house->image;
         $expenses = $house->expenses;
         $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
         }])->get();
         $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
         }])->get();
         $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
