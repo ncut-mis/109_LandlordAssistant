@@ -142,7 +142,9 @@ class RenterController extends Controller
             'finsh' => $finshs,
             'locations'=>$locations,
             'post'=>$post,
+            'po'=>1
         ];
+//        dd($data);
         return view('renters.houses.show',$data);
     }
 
