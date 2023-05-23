@@ -14,6 +14,7 @@ use App\Models\Feature;
 use App\Models\Furnish;
 use App\Models\Image;
 use App\Models\Expense;
+use App\Models\RepairReply;
 use Illuminate\Support\Facades\Auth;
 
 class OwnerController extends Controller
@@ -124,16 +125,19 @@ class OwnerController extends Controller
             $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
+            $q->with('repair_replies');
         }])->get();
         $inrepair = House::whereHas('repairs', function ($q) use ($house) {
             $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
+            $q->with('repair_replies');
         }])->get();
         $finsh = House::whereHas('repairs', function ($q) use ($house) {
             $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
+            $q->with('repair_replies');
         }])->get();
         $unrepairs = $unrepair->pluck('repairs')->flatten();
         $inrepairs = $inrepair->pluck('repairs')->flatten();
@@ -154,7 +158,6 @@ class OwnerController extends Controller
             'inrepair' => $inrepairs,
             'finsh' => $finshs,
             'expenses' => $expenses,
-
         ];
 
 
