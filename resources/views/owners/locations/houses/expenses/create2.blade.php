@@ -77,7 +77,7 @@
                                 <button type="submit" class="btn btn-primary mx-3">新增費用</button>
                                 <button type="submit" id="save-and-add" class="btn btn-info" name="store-and-next">儲存並新增下一筆</button>
 
-                                <a type="button" class="btn btn-secondary mx-3" href="{{route('owners.houses.show',[$houses->id])}}">返回</a>
+                                <a type="button" class="btn btn-secondary mx-3" href="{{route('owners.houses.show',['house' => $houses->id, 'expense'=>1])}}">返回</a>
                             </form>
                         </div>
                         <!-- / Content -->

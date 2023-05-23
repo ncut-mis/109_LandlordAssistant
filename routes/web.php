@@ -63,7 +63,7 @@ Route::get('about',[HomeController::class,'about'])->name('home.about');
 Route::get('help',[HomeController::class,'help'])->name('home.help');
 
 // 3-7-2 訪客/會員查詢出租房屋(地區)
-Route::get('houses/search', [HouseController::class, 'search'])->name('houses.search');
+Route::post('houses/search', [HouseController::class, 'search'])->name('houses.search');
 
 // 3-7-3 訪客/會員篩選租屋條件
 Route::get('houses/advance_search/create', [HouseController::class, 'advance_search_create'])->name('houses.advance_search.create');
@@ -283,6 +283,8 @@ Route::patch('ad/posts/{post}', [SystemPostController::class, 'update'])->name('
 // 系統刪除公告
 Route::delete('ad/posts/{post}', [SystemPostController::class, 'destroy'])->name('ad.posts.destroy');
 
+//清除搜尋結果
+Route::get('/clear-search-session', [HomeController::class, 'clearSearchSession'])->name('home.clearSearchSession');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

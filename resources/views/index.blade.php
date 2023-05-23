@@ -1,8 +1,8 @@
 @extends('layouts.master')
-@section('title', '測試')
+@section('title', '首頁')
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
 @section('content')
     <style>
         /* tw-city 替換適合的 css 樣式 */
@@ -18,10 +18,12 @@
             margin-left: 20px;
             outline: none;
             padding: .3em 1.25em;
+
+
         }
 
         input[type=text1] {
-            width: 500px;
+            width: 400px;
             box-sizing: border-box;
             border: 2px solid #ccc;
             border-radius: 1em;;
@@ -54,39 +56,63 @@
             text-overflow: ellipsis;
             display: block;
         }
-        .notice {
-            margin-bottom: 0;
+        .custom-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
         }
-    </style>
-    <script>
-        $(document).ready(function() {
-            $('#liveAlert').alert();
-        });
-    </script>
-{{--        <div class="alert alert-warning alert-dismissible position-fixed top-50 start-50 translate-middle" role="alert" id="liveAlert">--}}
-{{--            <div class="notice">{{ $posts->content }}--}}
-{{--                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
+
+    </style>
     <!-- Banner -->
-    @if (isset($hasNewPost) && $hasNewPosts)
-        <div class="alert alert-info">
-            <p>您有新的公告！</p>
-            <a class="btn btn-primary" href="{{ route('renters.houses.posts.index', $house) }}">前往查看</a>
-        </div>
-    @endif
-    <section id="banner">
-        <div class="row">
-            <div class="col">
-                <div role="tw-city-selector" class="my-style-selector"></div>
+    @if(isset($lastSystemPost))
+        <div class="custom-modal" id="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">系統公告提醒</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ $lastSystemPost->content }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">關閉</button>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <input type="text1" placeholder="請輸入社區名、街道或商圈名..." aria-label="Last name">
-                <button class="btn" type="button" id="button-addon2">搜尋</button>
+        </div>
+        <script>
+            function closeModal() {
+                var modal = document.getElementById('post');
+                modal.style.display = 'none';
+            }
+        </script>
+    @endif
+
+    <form method="post" action="{{ route('houses.search') }}" enctype="multipart/form-data" style=" padding: 0;
+            margin: 0;
+            border: none;">
+        @csrf
+    <section id="banner" >
+        <div class="row" >
+            <div class="col"  >
+                <div role="tw-city-selector" class="my-style-selector"  ></div>
+            </div>
+            <div class="col" >
+                <input type="text1" placeholder="請輸入社區名、街道或商圈名..." aria-label="Last name" name="selecthouse">
+                <button class="btn" type="submit" id="button-addon2">搜尋</button>
             </div>
         </div>
     </section>
+
+</form>
+
 
     <!-- Main -->
     <section id="main">
@@ -98,7 +124,13 @@
 
                     <!-- Features -->
                     <section class="box features">
-                        <h2 class="major"><span>你可能會喜歡....</span></h2>
+                        @if(Session::has('search_result'))
+                            <h2 class="major"><span>搜尋結果如下...顯示所有房屋點租屋網</span></h2>
+
+                        @else
+                            <h2 class="major"><span>你可能會喜歡...</span></h2>
+                            <!-- 顯示默認的首頁內容 -->
+                        @endif
                         <!-- 顯示租屋公告 -->
 {{--                        @if ($housepost)--}}
 {{--                            <div class="alert alert-info">--}}
@@ -117,6 +149,7 @@
                                                 @if($loop->first)
                                                 <a href="{{ route('houses.show', $house->id) }}" class="image featured"><img
                                                         src="image/{{ $image->image }}" alt=""/></a>
+
                                                 @endif
                                             @endforeach
                                             <div class="col-2 text-truncate2">

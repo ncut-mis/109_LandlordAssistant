@@ -72,7 +72,8 @@ class SignatoryController extends Controller
 			$house->save();
 		}
 
-        $random_str = Str::random(8);
+        //$random_str = Str::random(8);
+        $random_str = mt_rand(1000, 9999);
         $house->invitation_code = $random_str;
         $house->save();
 

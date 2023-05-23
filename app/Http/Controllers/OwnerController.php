@@ -158,9 +158,9 @@ class OwnerController extends Controller
             'inrepair' => $inrepairs,
             'finsh' => $finshs,
             'expenses' => $expenses,
+            'ex' => request()->query('expense')
         ];
-
-
+//dd($data);
         return view('owners.houses.show2',$data);
 
 //        return view('owners.houses.show2',$data);

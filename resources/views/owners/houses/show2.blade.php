@@ -92,13 +92,13 @@
                                     <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
                                         <li class="nav-item">
                                             <button type="button"
-                                                    class="nav-link @if(isset($expense) || isset($signatory)) @else active @endif" role="tab"
+                                                    class="nav-link @if(isset($expense) || isset($ex) || isset($signatory)) @else active @endif" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link @if($expense == '1') active @endif"
+                                            <button type="button" class="nav-link @if($expense == '1'|| $ex == '1') active @endif"
                                                     role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-expense" aria-controls="navs-top-messages"
                                                     aria-selected="false">費用
@@ -119,7 +119,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <!--房屋資訊內容-->
-                                        <div class="tab-pane fade @if(isset($expense) || isset($signatory)) @else active show @endif"
+                                        <div class="tab-pane fade @if(isset($expense) || isset($ex) || isset($signatory)) @else active show @endif"
                                              id="navs-top-house" role="tabpanel">
 
 
@@ -388,7 +388,7 @@
                                             </div>
                                         </div>
                                         <!--費用資訊內容-->
-                                        <div class="tab-pane fade @if($expense == '1') active show @endif"
+                                        <div class="tab-pane fade @if($expense == '1'|| $ex == '1') active show @endif"
                                              id="navs-top-expense" role="tabpanel">
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
                                                 <li class="nav-item" role="presentation">

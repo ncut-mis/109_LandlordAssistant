@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Session;
 use App\Models\House;
 use App\Models\Image;
 use App\Models\Location;
@@ -19,58 +20,117 @@ class HomeController extends Controller
      */
     public function index()
     {
+
 //        if (!Auth::check()) {
 //            return redirect('/');
 //        }
 
-        $hasNewPosts=false;
+//        $hasNewPosts=false;
+//
+//        // 驗證使用者是否為系統管理員
+//        if (Auth::check()) {
+//            $user = Auth::user();
+//            if ($user->admin) {
+//                return redirect()->route('ad.posts.index');
+//            }
+//            $lastLoginTime = $user->last_login_at;
+//            // 獲取租客資料
+//            $renter = $user->renter;
+//            if ($renter && $renter->signatory) {
+//                $rentedHouse = $renter->signatory->house;
+//                if ($rentedHouse) {
+//                    $latestPost = $rentedHouse->posts()->latest()->first();
+//                    if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
+//                        $hasNewPosts = true;
+//                    }
+//                }
+//            }
+//
+//            $view_data = [
+//                'hasNewPosts' => $hasNewPosts,
+//            ];
+//
+//        }
+//        $houses = House::with('image')->get(); // 預先載入 image 關聯
+//        //租客公告
+//        if (isset($view_data)) { //view_data已經存在
+//            $view_data += ['houses' => $houses];
+//        } else {//view_data尚未存在
+//            $view_data = ['houses' => $houses];
+//        }
+//
+//        if (Auth::check()) {
+//            $name = Auth::user()->name;
+//            return view('index', $view_data, compact('name'));
+//        }
+//        else
+//        {
+//
+//
+//            return view('index', $view_data);
+//        }
+//
 
-        // 驗證使用者是否為系統管理員
+
+        $name='';
+       // $houses = House::with('image')->get(); // 預先載入 image 關聯
+        $lastSystemPost = SystemPost::latest()->first();
+
         if (Auth::check()) {
+
+            $name = Auth::user()->name;
             $user = Auth::user();
+            // 驗證使用者是否為系統管理員
             if ($user->admin) {
                 return redirect()->route('ad.posts.index');
             }
-            $lastLoginTime = $user->last_login_at;
-            // 獲取租客資料
-            $renter = $user->renter;
-            if ($renter && $renter->signatory) {
-                $rentedHouse = $renter->signatory->house;
-                if ($rentedHouse) {
-                    $latestPost = $rentedHouse->posts()->latest()->first();
-                    if ($latestPost && $latestPost->updated_at > $lastLoginTime) {
-                        $hasNewPosts = true;
-                    }
+            else {
+
+                // 檢查並取回 Session 中的搜尋結果
+                if (Session::has('search_result')) {
+                    $houses = Session::get('search_result');
+                    $view_data = [
+                        'houses' => $houses,
+                    ];
                 }
+                else {
+                    $houses = House::with('image')->get();
+                    $view_data = [
+                        'houses' => $houses,
+//                        'lastSystemPost'=>$lastSystemPost,
+                    ];
+                }
+
+                return view('index', $view_data, compact('name'));
             }
 
-            $view_data = [
-                'hasNewPosts' => $hasNewPosts,
-            ];
+        } else {
 
-        }
-        $houses = House::with('image')->get(); // 預先載入 image 關聯
-        //租客公告
-        if (isset($view_data)) { //view_data已經存在
-            $view_data += ['houses' => $houses];
-        } else {//view_data尚未存在
-            $view_data = ['houses' => $houses];
-        }
-
-        if (Auth::check()) {
-            $name = Auth::user()->name;
-            return view('index', $view_data, compact('name'));
-        }
-        else
-        {
-
-
+            if (Session::has('search_result')) {
+                $houses = Session::get('search_result');
+                $view_data = [
+                    'houses' => $houses,
+//                    'lastSystemPost'=>$lastSystemPost,
+                ];
+            }
+            else {
+                $houses = House::with('image')->get();
+                $view_data = [
+                    'houses' => $houses,
+                    'lastSystemPost'=>$lastSystemPost,
+                ];
+            }
             return view('index', $view_data);
         }
 
+
     }
 
-
+    public function clearSearchSession()
+    {
+        Session::forget('search_result');
+        return redirect()->route('home.index');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -92,6 +152,9 @@ class HomeController extends Controller
      */
     public function show(House $house)
     {
+        $name='';
+        if (Auth::check()) {
+            $name = Auth::user()->name;}
         $owner = $house->owner;
         $owner_data = $owner->user;
         $furnishings = $house->furnishings;
@@ -108,7 +171,7 @@ class HomeController extends Controller
             'image' => $image,
             'expenses' => $expenses,
         ];
-        return view('houses.show',$data);
+        return view('houses.show',$data,compact('name'));
     }
 
     public function about()

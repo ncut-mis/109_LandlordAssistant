@@ -20,21 +20,22 @@ class RepairController extends Controller
      */
     public function index()
     {
-        /*$houses = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+
+        $houses = House::whereHas('repairs', function ($q) {
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with('repairs')->get();
         $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
         }])->get();
         $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
         }])->get();
         $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
@@ -45,7 +46,7 @@ class RepairController extends Controller
             'finsh' => $finsh,
         ];
 
-        return view('renters.houses.repairs.index', $view_data);*/
+        return view('renters.houses.repairs.index', $view_data);
         //
     }
 
@@ -111,7 +112,7 @@ class RepairController extends Controller
     {
         $house_id=$repair->id;
         $house = House::whereHas('signatories', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->get();
         $edit_data = [
             'repairs' => $repair,
