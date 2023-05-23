@@ -638,10 +638,13 @@
                                                                                         <p>{{$repair->content}}</p>
                                                                                         <small>{{$repair->updated_at}}</small>
                                                                                     </div>
-                                                                                    <div class="card "style="margin-bottom: 20px;">
-                                                                                        <p>房東 ：</p>
-                                                                                        <p>已維修</p>
-                                                                                    </div>
+                                                                                    @foreach($repair->repair_replies as $repair_reply)
+                                                                                        <div class="card "style="margin-bottom: 20px;">
+                                                                                            <p>房東 ：</p>
+                                                                                            <p>{{$repair_reply->content}}</p>
+                                                                                            <small>{{$repair_reply->updated_at}}</small>
+                                                                                        </div>
+                                                                                    @endforeach
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
@@ -670,7 +673,7 @@
                                                                                       method="POST">
                                                                                     @csrf
                                                                                     @method('DELETE')
-                                                                                    <button class="dropdown-item"><i
+                                                                                    <button class="dropdown-item" disabled><i
                                                                                             class="bx bx-trash me-1"></i>刪除</button>
                                                                                 </form>
                                                                             @elseif($repair -> status=="未維修")
