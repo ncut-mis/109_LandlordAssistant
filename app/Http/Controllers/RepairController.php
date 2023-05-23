@@ -11,6 +11,7 @@ use App\Http\Requests\StoreRepairRequest;
 use App\Http\Requests\UpdateRepairRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RepairController extends Controller
 {
@@ -19,7 +20,7 @@ class RepairController extends Controller
      */
     public function index()
     {
-        $houses = House::whereHas('repairs', function ($q) {
+        /*$houses = House::whereHas('repairs', function ($q) {
             $q->where('renter_id', '=', 1);
         })->with('repairs')->get();
         $unrepair = House::whereHas('repairs', function ($q) {
@@ -44,7 +45,7 @@ class RepairController extends Controller
             'finsh' => $finsh,
         ];
 
-        return view('renters.houses.repairs.index', $view_data);
+        return view('renters.houses.repairs.index', $view_data);*/
         //
     }
 
@@ -73,8 +74,10 @@ class RepairController extends Controller
      */
     public function store(StoreRepairRequest $request)
     {
+        $user = Auth::user();
+        $renter_id=$user->renter->id;
         $repair = Repair::create([
-            'renter_id' => 1,
+            'renter_id' => $renter_id,
             'house_id' => $request->id,
             'title' => $request->title,
             'status' => '未維修',

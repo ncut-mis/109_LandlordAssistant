@@ -34,7 +34,7 @@ class RenterController extends Controller
 				$q->where('renter_id', $user->renter->id);
 			});
 		})->get();
-		
+
         $view_data = [
             'houses' => $houses,
             'posts' => $posts,
@@ -81,23 +81,22 @@ class RenterController extends Controller
         $owners_data = $owners->map(function ($owner) {
             return $owner->user; // 取得每個租客的使用者資料
         });
-
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
         $expenses = $house->expenses;
-        $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+        $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
         }])->get();
-        $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+        $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('renter_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
         }])->get();
-        $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+        $finsh = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('renter_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
