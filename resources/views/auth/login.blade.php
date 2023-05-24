@@ -29,12 +29,16 @@
             <div class="block mt-4">
 
             </div>
+            <div class="flex items-center justify-end mt-4">
+                <a href="{{ route('register') }}" class="ml-4" style="background-color: #000; border-radius: 9999px; color: #fff; padding: 4px 11px; text-decoration: none; font-family: '微軟正黑體', sans-serif; font-size: 15px;">
+                    未有帳號前往註冊
+                </a>
 
-
-            <x-button class="ml-4" style="float: right;">
-                登入
-            </x-button>
+                <x-button class="ml-4" style="background-color: #000; border-radius: 9999px; color: #fff; font-family: '微軟正黑體', sans-serif;">
+                    登入
+                </x-button>
             </div>
+        </div>
         </form>
     </x-authentication-card>
 </x-guest-layout>

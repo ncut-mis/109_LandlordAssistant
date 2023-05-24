@@ -20,6 +20,7 @@ class RepairController extends Controller
      */
     public function index()
     {
+
         $houses = House::whereHas('repairs', function ($q) {
             $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with('repairs')->get();
@@ -74,8 +75,10 @@ class RepairController extends Controller
      */
     public function store(StoreRepairRequest $request)
     {
+        $user = Auth::user();
+        $renter_id=$user->renter->id;
         $repair = Repair::create([
-            'renter_id' => Auth::user()->renter->id,
+            'renter_id' => $renter_id,
             'house_id' => $request->id,
             'title' => $request->title,
             'status' => '未維修',

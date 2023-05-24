@@ -192,15 +192,20 @@ class ExpenseController extends Controller
                 }
             }
             //租客按下繳費
-            elseif (isset($_REQUEST['renterpush'])){
-                $renter_status = '1';
-                $data = array_merge(
-                    ['renter_status' => $renter_status], $data
-                );
-                $expense->update($data);
-                return redirect()->route('renters.houses.show', [$house_id])->with('success', '繳費成功！');
+            elseif (isset($_REQUEST['renterpush'])) {
+                if (empty($request->input('en-name')) || empty($request->input('card-number')) || empty($request->input('CVV')) || empty($request->input('expiration'))) {
+                    return redirect()->back()->with(['error'=>'尚有未填寫的欄位','expense' => '1']);
+                } else {
+                    $renter_status = '1';
+                    $data = array_merge(
+                        ['renter_status' => $renter_status], $data
+                    );
+                    $expense->update($data);
+                    return redirect()->route('renters.houses.show', [$house_id])->with(['success' => '繳費成功！', 'expense' => '1']);
+                }
             }
-        }
+            }
+
 
         $expense->update($data);
         return redirect()->route('owners.houses.show', [$house_id])->with('success', '費用修改成功！');

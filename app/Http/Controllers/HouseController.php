@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
+
 class HouseController extends Controller
 {
     /**
@@ -25,109 +26,156 @@ class HouseController extends Controller
     public function search(Request $request)
     {
 
+//        $furnishings1 = $request->input('furnishings1');
+//        $furnishings2 = $request->input('furnishings2');
+//        $furnishings3 = $request->input('furnishings3');
+//        $furnishings4 = $request->input('furnishings4');
+//
+//        // 取得features1 ~ features5的值
+//        $features1 = $request->input('features1');
+//        $features2 = $request->input('features2');
+//        $features3 = $request->input('features3');
+//        $features4 = $request->input('features4');
+//        $features5 = $request->input('features5');
+//        if (Auth::check()) {
+//            $county = $request->input('county');
+//            $area = $request->input('district');
+//            $selecthouse = $request->input('selecthouse');
+//            if (isset($area)) {
+//                // 執行搜尋邏輯，假設你的房屋模型是 House
+//                $houses = House::where('county', $county)
+//                    ->where('area', $area)
+//                    ->where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//                $name = Auth::user()->name;
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index')->with(compact('name'));
+//            } elseif (isset($county) && !isset($area)) {
+//                // 執行搜尋邏輯，假設你的房屋模型是 House
+//                $houses = House::where('county', $county)
+//                    ->where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//                $name = Auth::user()->name;
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index')->with(compact('name'));
+//            } else {
+//                $houses = House::where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index');
+//
+//            }
+//        } else {
+//
+//                $county = $request->input('county');
+//                $area = $request->input('district');
+//                $selecthouse = $request->input('selecthouse');
+//                if (isset($area)) {
+//                    // 執行搜尋邏輯，假設你的房屋模型是 House
+//                    $houses = House::where('county', $county)
+//                        ->where('area', $area)
+//                        ->where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+//                } elseif (isset($county) && !isset($area)) {
+//                    // 執行搜尋邏輯，假設你的房屋模型是 House
+//                    $houses = House::where('county', $county)
+//                        ->where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+//                } else {
+//                    $houses = House::where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+
+//                }
+        $county = $request->input('county');
+        $area = $request->input('district');
+        $selecthouse = $request->input('selecthouse');
+
+        $furnishings1 = $request->input('furnishings1');
+        $furnishings2 = $request->input('furnishings2');
+        $furnishings3 = $request->input('furnishings3');
+        $furnishings4 = $request->input('furnishings4');
+
+        $features1 = $request->input('features1');
+        $features2 = $request->input('features2');
+        $features3 = $request->input('features3');
+        $features4 = $request->input('features4');
+        $features5 = $request->input('features5');
+
+        $query = House::query();
+
+        if (isset($area)) {
+            $query->where('county', $county)
+                ->where('area', $area);
+        } elseif (isset($county) && !isset($area)) {
+            $query->where('county', $county);
+        }
+
+        $query->where('name', 'like', '%' . $selecthouse . '%');
+
+// 應用 furnishings 條件
+        $furnishings = array_filter([$furnishings1, $furnishings2, $furnishings3, $furnishings4]);
+        if (!empty($furnishings)) {
+            $query->whereHas('furnishings', function ($query) use ($furnishings) {
+                $query->whereIn('furnish', $furnishings);
+            });
+        }
+
+// 應用 features 條件
+        $features = array_filter([$features1, $features2, $features3, $features4, $features5]);
+        if (!empty($features)) {
+            $query->whereHas('features', function ($query) use ($features) {
+                $query->whereIn('feature', $features);
+            });
+        }
+
+// 執行搜尋並載入關聯模型
+        $houses = $query->with('image')->get();
+
+// 將搜尋結果存儲到 Session
+        Session::put('search_result', $houses);
+
         if (Auth::check()) {
-            $county = $request->input('county');
-            $area = $request->input('district');
-            $selecthouse = $request->input('selecthouse');
-            if (isset($area)) {
-                // 執行搜尋邏輯，假設你的房屋模型是 House
-                $houses = House::where('county', $county)
-                    ->where('area', $area)
-                    ->where('name', 'like', '%' . $selecthouse . '%')
-                    ->with('image') // 預先載入圖片關聯
-                    ->get();
-
-                $name = Auth::user()->name;
-
-                // 將搜尋結果存儲到 Session
-                Session::put('search_result', $houses);
-
-                return redirect()->route('home.index')->with(compact('name'));
-            } elseif (isset($county) && !isset($area)) {
-                // 執行搜尋邏輯，假設你的房屋模型是 House
-                $houses = House::where('county', $county)
-                    ->where('name', 'like', '%' . $selecthouse . '%')
-                    ->with('image') // 預先載入圖片關聯
-                    ->get();
-
-                $name = Auth::user()->name;
-
-                // 將搜尋結果存儲到 Session
-                Session::put('search_result', $houses);
-
-                return redirect()->route('home.index')->with(compact('name'));
-            } else {
-                $houses = House::where('name', 'like', '%' . $selecthouse . '%')
-                    ->with('image') // 預先載入圖片關聯
-                    ->get();
-
-
-                // 將搜尋結果存儲到 Session
-                Session::put('search_result', $houses);
-
-                return redirect()->route('home.index');
-
-            }
+            $name = Auth::user()->name;
+            return redirect()->route('home.index')->with(compact('name'));
         } else {
-
-                $county = $request->input('county');
-                $area = $request->input('district');
-                $selecthouse = $request->input('selecthouse');
-                if (isset($area)) {
-                    // 執行搜尋邏輯，假設你的房屋模型是 House
-                    $houses = House::where('county', $county)
-                        ->where('area', $area)
-                        ->where('name', 'like', '%' . $selecthouse . '%')
-                        ->with('image') // 預先載入圖片關聯
-                        ->get();
-
-
-                    // 將搜尋結果存儲到 Session
-                    Session::put('search_result', $houses);
-
-                    return redirect()->route('home.index');
-                } elseif (isset($county) && !isset($area)) {
-                    // 執行搜尋邏輯，假設你的房屋模型是 House
-                    $houses = House::where('county', $county)
-                        ->where('name', 'like', '%' . $selecthouse . '%')
-                        ->with('image') // 預先載入圖片關聯
-                        ->get();
-
-
-                    // 將搜尋結果存儲到 Session
-                    Session::put('search_result', $houses);
-
-                    return redirect()->route('home.index');
-                } else {
-                    $houses = House::where('name', 'like', '%' . $selecthouse . '%')
-                        ->with('image') // 預先載入圖片關聯
-                        ->get();
-
-
-
-                    // 將搜尋結果存儲到 Session
-                    Session::put('search_result', $houses);
-
-                    return redirect()->route('home.index');
-
-                }
-
-
-
-//        $county = $request->input('county');
-//        $area = $request->input('area');
-//        $keyword = $request->input('keyword');
-//
-//        // 執行搜尋邏輯，假設你的房屋模型是 House
-//        $houses = House::where('county', $county)
-//            ->where('area', $area)
-//            ->where('name', 'like', '%'.$keyword.'%')
-//            ->get();
-//
-//        // 將搜尋結果傳遞到視圖或進行其他操作
-//
-
-
+            return redirect()->route('home.index');
         }
     }
     /**

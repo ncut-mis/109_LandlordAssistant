@@ -221,6 +221,17 @@ Route::get('owners/houses/repairs/{repair}', [RepairController::class, 'show'])-
 // 3-9-30 會員(房東)更新報修狀態
 Route::patch('owners/houses/repairs/{repair}', [RepairController::class, 'update_status'])->name('houses.repairs.update');
 
+//會員(房東)新增報修回覆
+Route::get('owners/houses/repairs/{repair}/reply',[RepairReplyController::class,'create'])->name('owners.houses.repairs.reply.create');
+Route::post('owners/houses/repairs/{repair}',[RepairReplyController::class,'store'])->name('owners.houses.repairs.reply.store');
+
+//會員(房東)編輯報修回覆
+Route::get('owners/houses/repairs/reply/{repairReply}/edit', [RepairReplyController::class,'edit'])->name('houses.repairs.reply.edit');
+Route::patch('owners/houses/repairs/reply/{repairReply}', [RepairReplyController::class,'update'])->name('houses.repairs.reply.update');
+
+//會員(房東)刪除報修回覆
+Route::delete('owners/houses/repairs/{repairReply}', [RepairReplyController::class,'destroy'])->name('houses.repairs.reply.destroy');
+
 //會員(租客)查看首頁
 Route::get('renters/houses',[RenterController::class,'index'])->name('renters.houses.index');
 //會員(租客)查看單一房屋

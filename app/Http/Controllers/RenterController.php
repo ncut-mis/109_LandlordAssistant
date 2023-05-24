@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
 use App\Models\Post;
 use App\Models\Renter;
 use App\Models\House;
@@ -29,6 +30,17 @@ class RenterController extends Controller
         $houses = House::whereHas('signatories', function ($q) use ($user){
             $q->where('renter_id', $user->renter->id);
         })->get();
+		//查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
+		$posts = Post::whereHas('location.houses', function ($query) use ($user) {
+			$query->whereHas('signatories', function ($q) use ($user) {
+				$q->where('renter_id', $user->renter->id);
+			});
+		})->get();
+
+        $view_data = [
+            'houses' => $houses,
+            'posts' => $posts,
+        ];
         $hasRentedHouse = $houses->isNotEmpty();
         if ($hasRentedHouse) {
             //查看Post關聯location再到houses再到signstories特定renter_id的資料是否存在
@@ -101,25 +113,35 @@ class RenterController extends Controller
         $owners_data = $owners->map(function ($owner) {
             return $owner->user; // 取得每個租客的使用者資料
         });
-
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
+
+        //費用
         $expenses = $house->expenses;
-        $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $expenses_we = $house->expenses->whereIn('type',['水費','電費']);
+        $expenses_rentals = $house->expenses->where('type','租金');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金']);
+        $expenses_payoff = $house->expenses->where('renter_status','1');
+        $expenses_unpay  =$house->expenses->where('renter_status','0');
+
+        $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
+            $q->with('repair_replies');
         }])->get();
-        $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
+            $q->with('repair_replies');
         }])->get();
-        $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', Auth::user()->renter->id);
+        $finsh = House::whereHas('repairs', function ($q) use ($house) {
+            $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
+            $q->with('repair_replies');
         }])->get();
         //公告
         $locations = Location::with(['posts' => function ($query) {
@@ -142,7 +164,12 @@ class RenterController extends Controller
             'finsh' => $finshs,
             'locations'=>$locations,
             'post'=>$post,
-            'po'=>1
+            'po'=>1,
+            'expenses_we' => $expenses_we,
+            'expenses_rentals'=>$expenses_rentals,
+            'expenses_other' => $expenses_other,
+            'expenses_payoff' => $expenses_payoff,
+            'expenses_unpay' => $expenses_unpay
         ];
 //        dd($data);
         return view('renters.houses.show',$data);
