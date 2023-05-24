@@ -128,26 +128,24 @@
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <ul class="p-0 m-0">
-                                                                            @if(!$owners_data->isEmpty())
-                                                                                @foreach($owners_data as $owners_data)
-                                                                                    <li class="d-flex mb-4 pb-1">
-                                                                                        <div
-                                                                                            class="avatar flex-shrink-0 me-3">
-                                                                                            <img
-                                                                                                src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
-                                                                                                alt="User"
-                                                                                                class="rounded">
+                                                                            @if(isset($owners_data))
+                                                                                <li class="d-flex mb-4 pb-1">
+                                                                                    <div
+                                                                                        class="avatar flex-shrink-0 me-3">
+                                                                                        <img
+                                                                                            src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
+                                                                                            alt="User"
+                                                                                            class="rounded">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                                                        <div class="me-2">
+                                                                                            <h5 class="mb-0 fw-semibold">{{ $owners_data->name }}</h5>
+                                                                                            <small
+                                                                                                class="text-muted d-block mb-0">電話：{{ $owners_data->phone }}</small>
                                                                                         </div>
-                                                                                        <div
-                                                                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                                                            <div class="me-2">
-                                                                                                <h5 class="mb-0 fw-semibold">{{ $owners_data->name }}</h5>
-                                                                                                <small
-                                                                                                    class="text-muted d-block mb-0">電話：{{ $owners_data->phone }}</small>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                @endforeach
+                                                                                    </div>
+                                                                                </li>
                                                                             @else
                                                                                 <li class="d-flex mb-4 pb-1">
                                                                                     <div

@@ -106,13 +106,8 @@ class RenterController extends Controller
     {
 		$post = request()->query('post');
         $location = $house->location;
-        $signatories = $house->signatories; // 取得房屋的目前租客
-        $owners = $signatories->map(function ($signatories) {
-            return $signatories->renter; // 取得每個合約的租客
-        });
-        $owners_data = $owners->map(function ($owner) {
-            return $owner->user; // 取得每個租客的使用者資料
-        });
+        $owners = $house->location->owner; // 取得每個合約的房東
+        $owners_data = $owners->user; // 取得每個租客的使用者資料
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
@@ -154,7 +149,6 @@ class RenterController extends Controller
         $inrepairs = $inrepair->pluck('repairs')->flatten();
         $finshs = $finsh->pluck('repairs')->flatten();
         $data = [
-            'contract' =>$signatories,
             'location_id' =>$location->id,
             'owners_data' => $owners_data,
             'furnishings' => $furnishings,
