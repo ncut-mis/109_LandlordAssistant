@@ -119,6 +119,9 @@ class RenterController extends Controller
 
         //費用
         $expenses = $house->expenses;
+//        $expenses = House::with(['expenses' => function ($query){
+//            $query->orderBy('updated_at', 'desc');
+//        }])->where('id','=',$house->id)->get();
         $expenses_we = $house->expenses->whereIn('type',['水費','電費']);
         $expenses_rentals = $house->expenses->where('type','租金');
         $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金']);

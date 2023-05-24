@@ -792,70 +792,7 @@
                                                                         @endif
                                                                     </td>
                                                                     <td style="text-align: right;width: 5%">
-
-                                                                        @if($expense->renter_status == 0)
-                                                                            <button class="btn btn-primary"  data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
-                                                                        @else
                                                                             <button class="btn btn-primary" disabled>繳費</button>
-                                                                        @endif
-                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
-                                                                            @csrf
-                                                                            @method('PATCH')
-                                                                            <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
-                                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}元</h3>
-                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
-                                                                                        </div>
-                                                                                        <div class="modal-body">
-                                                                                            <div class="row">
-                                                                                                <div class="col mb-3">
-                                                                                                    <label class="form-label">英文姓名</label>
-                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name" name="en-name">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <div class="col mb-1">
-                                                                                                    <label class="form-label">卡號</label>
-                                                                                                    <input type="text" class="form-control" id="card-number" name="card-number" placeholder="共16碼">
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="row g-2">
-                                                                                                <div class="col mb-0">
-                                                                                                    <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV" name="CVV">
-                                                                                                </div>
-                                                                                                <div class="col mb-0">
-                                                                                                    <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration" name="expiration">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit()" name="renterpush">送出</button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                        <script>
-                                                                            function validateAndSubmit() {
-                                                                                const enName = document.getElementById('en-name').value;
-                                                                                const cardNumber = document.getElementById('card-number').value;
-                                                                                const cvv = document.getElementById('CVV').value;
-                                                                                const expiration = document.getElementById('expiration').value;
-
-                                                                                if (!enName || !cardNumber || !cvv || !expiration) {
-                                                                                    alert('尚有未填寫的欄位');
-                                                                                    return false; // 阻止表單提交
-                                                                                } else {
-                                                                                    // 資料都有填寫，則直接送出表單
-                                                                                    document.getElementById('expense{{$expense->id}}-form').submit();
-                                                                                }
-                                                                            }
-                                                                        </script>
                                                                     </td>
                                                                 </tr>
                                                             @endif
@@ -895,14 +832,14 @@
                                                                     <td style="text-align: right;width: 5%">
 
                                                                         @if($expense->renter_status == 0)
-                                                                            <button class="btn btn-primary"  data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
+                                                                            <button class="btn btn-primary"  data-target="#unpayModal{{$expense->id}}" data-toggle="modal">繳費</button>
                                                                         @else
                                                                             <button class="btn btn-primary" disabled>繳費</button>
                                                                         @endif
                                                                         <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
                                                                             @csrf
                                                                             @method('PATCH')
-                                                                            <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                            <div class="modal" id="unpayModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
                                                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                                                     <div class="modal-content">
                                                                                         <div class="modal-header">
