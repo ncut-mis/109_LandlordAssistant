@@ -56,14 +56,15 @@ Route::get('/sendemail/{expense}', function (Expense $expense) {
 
 //報修信件
 Route::GET('/sendemail/repair/{repair}', function (Repair $repair) {
+    $mail=$repair->house->owner->user->email;
     $subject = $repair->house->name.'房屋的報修通知'; // 將字串和費用類型拼接成主旨
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
         '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
         '<p style="font-size: 16px;">您有一筆</p>\n\n' .
         '<p style="font-size: 16px;font-weight: bold">'.$repair->title.' 的報修</p>'."\n\n".
         '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
-    Mail::send([], [], function ($message) use ($subject, $text) {
-        $message->to('3a932045@gm.student.ncut.edu.tw')
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
             ->subject($subject)
             ->html($text);
     });
@@ -71,14 +72,15 @@ Route::GET('/sendemail/repair/{repair}', function (Repair $repair) {
 })->name('sendemail.repair');
 //報修回覆信件
 Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repairReply) {
+    $mail=$repairReply->repair->house->renter->user->email;
     $subject = $repairReply->repair->house->name.'房屋的報修回覆通知'; // 將字串和費用類型拼接成主旨
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
         '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
         '<p style="font-size: 16px;">您有一則關於</p>'."\n\n" .
         '<p style="font-size: 16px;font-weight: bold">'.$repairReply->repair->title.' 的報修回覆</p>'."\n\n".
         '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
-    Mail::send([], [], function ($message) use ($subject, $text) {
-        $message->to('3a932045@gm.student.ncut.edu.tw')
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
             ->subject($subject)
             ->html($text);
     });
@@ -87,13 +89,14 @@ Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repai
 
 //報修狀態更新信件
 Route::GET('/sendemail/repair/update/{repair}', function (Repair $repair) {
+    $mail=$repair->house->renter->user->email;
     $subject = $repair->house->name.'房屋的報修狀態更動通知'; // 將字串和費用類型拼接成主旨
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
         '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
         '<p style="font-size: 16px;font-weight: bold">您'.$repair->title.' 的報修狀態有更動</p>'."\n\n".
         '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
-    Mail::send([], [], function ($message) use ($subject, $text) {
-        $message->to('3a932045@gm.student.ncut.edu.tw')
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
             ->subject($subject)
             ->html($text);
     });
