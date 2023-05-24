@@ -196,8 +196,17 @@ class ExpenseController extends Controller
             }
             //租客按下繳費
             elseif (isset($_REQUEST['renterpush'])) {
-                if (empty($request->input('en-name')) || empty($request->input('card-number')) || empty($request->input('CVV')) || empty($request->input('expiration'))) {
+                $cardNumber = $request->input('card-number');
+                $cvv = $request->input('CVV');
+                $expiration = $request->input('expiration');
+                if (empty($request->input('en-name')) || empty($cardNumber) || empty($cvv) || empty($expiration)) {
                     return redirect()->back()->with(['error'=>'尚有未填寫的欄位','expense' => '1']);
+                } elseif (!preg_match('/^\d{16}$/', $cardNumber)){
+                    return redirect()->back()->with(['error' => '請輸入16位數字的卡號', 'expense' => '1']);
+                }elseif (!preg_match('/^\d{3}$/', $cvv)){
+                    return redirect()->back()->with(['error' => '請輸入3位數字的安全碼', 'expense' => '1']);
+                } elseif (!preg_match('/^\d{2}\/\d{2}$/', $expiration)) {
+                    return redirect()->back()->with(['error' => '請輸入正確的卡片到期日格式 (MM / YY)', 'expense' => '1']);
                 } else {
                     $renter_status = '1';
                     $data = array_merge(

@@ -507,49 +507,62 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col mb-3">
                                                                                                         <label class="form-label">英文姓名</label>
-                                                                                                        <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name" name="en-name">
+                                                                                                        <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="row">
                                                                                                     <div class="col mb-1">
                                                                                                         <label class="form-label">卡號</label>
-                                                                                                        <input type="text" class="form-control" id="card-number" name="card-number" placeholder="共16碼">
+                                                                                                        <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
                                                                                                     </div>
                                                                                                 </div>
 
                                                                                                 <div class="row g-2">
                                                                                                     <div class="col mb-0">
                                                                                                         <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                        <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV" name="CVV">
+                                                                                                        <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
                                                                                                     </div>
                                                                                                     <div class="col mb-0">
                                                                                                         <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                        <input type="text" class="form-control" placeholder="MM / YY" id="expiration" name="expiration">
+                                                                                                        <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="modal-footer">
-                                                                                                <button type="submit" class="btn btn-primary" onclick="validateAndSubmit()" name="renterpush">送出</button>
+                                                                                                <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
                                                                                 <script>
-                                                                                        function validateAndSubmit() {
-                                                                                        const enName = document.getElementById('en-name').value;
-                                                                                        const cardNumber = document.getElementById('card-number').value;
-                                                                                        const cvv = document.getElementById('CVV').value;
-                                                                                        const expiration = document.getElementById('expiration').value;
+                                                                                        function validateAndSubmit{{$expense->id}}() {
+                                                                                            const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                            const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                            const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                            const expiration = document.getElementById('expiration{{$expense->id}}').value;
 
-                                                                                        if (!enName || !cardNumber || !cvv || !expiration) {
-                                                                                        alert('尚有未填寫的欄位');
-                                                                                        return false; // 阻止表單提交
-                                                                                    } else {
-                                                                                        // 資料都有填寫，則直接送出表單
-                                                                                        document.getElementById('expense{{$expense->id}}-form').submit();
+                                                                                            const cardNumberPattern = /^\d{16}$/;
+                                                                                            const cvvPattern = /^\d{3}$/;
+                                                                                            const expirationPattern = /^\d{2}\/\d{2}$/;
+
+                                                                                            if (!enName || !cardNumber || !cvv || !expiration) {
+                                                                                                alert('尚有未填寫的欄位');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                                alert('請輸入 16 個數字的卡號');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!cvvPattern.test(cvv)) {
+                                                                                                alert('請輸入 3 位數安全碼');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!expirationPattern.test(expiration)) {
+                                                                                                alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else {
+                                                                                                // 資料都有填寫，則直接送出表單
+                                                                                                document.getElementById('expense{{$expense->id}}-pay -form').submit();
+                                                                                            }
                                                                                         }
-                                                                                    }
                                                                                 </script>
                                                                         </td>
                                                                     </tr>
@@ -608,47 +621,60 @@
                                                                                             <div class="row">
                                                                                                 <div class="col mb-3">
                                                                                                     <label class="form-label">英文姓名</label>
-                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name" name="en-name">
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="row">
                                                                                                 <div class="col mb-1">
                                                                                                     <label class="form-label">卡號</label>
-                                                                                                    <input type="text" class="form-control" id="card-number" name="card-number" placeholder="共16碼">
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="row g-2">
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV" name="CVV">
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
                                                                                                 </div>
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration" name="expiration">
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="modal-footer">
-                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit()" name="renterpush">送出</button>
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </form>
                                                                         <script>
-                                                                            function validateAndSubmit() {
-                                                                                const enName = document.getElementById('en-name').value;
-                                                                                const cardNumber = document.getElementById('card-number').value;
-                                                                                const cvv = document.getElementById('CVV').value;
-                                                                                const expiration = document.getElementById('expiration').value;
+                                                                            function validateAndSubmit{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}').value;
+
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
 
                                                                                 if (!enName || !cardNumber || !cvv || !expiration) {
                                                                                     alert('尚有未填寫的欄位');
                                                                                     return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
                                                                                 } else {
                                                                                     // 資料都有填寫，則直接送出表單
-                                                                                    document.getElementById('expense{{$expense->id}}-form').submit();
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
                                                                                 }
                                                                             }
                                                                         </script>
@@ -710,47 +736,60 @@
                                                                                             <div class="row">
                                                                                                 <div class="col mb-3">
                                                                                                     <label class="form-label">英文姓名</label>
-                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name" name="en-name">
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="row">
                                                                                                 <div class="col mb-1">
                                                                                                     <label class="form-label">卡號</label>
-                                                                                                    <input type="text" class="form-control" id="card-number" name="card-number" placeholder="共16碼">
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="row g-2">
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV" name="CVV">
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
                                                                                                 </div>
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration" name="expiration">
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="modal-footer">
-                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit()" name="renterpush">送出</button>
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </form>
                                                                         <script>
-                                                                            function validateAndSubmit() {
-                                                                                const enName = document.getElementById('en-name').value;
-                                                                                const cardNumber = document.getElementById('card-number').value;
-                                                                                const cvv = document.getElementById('CVV').value;
-                                                                                const expiration = document.getElementById('expiration').value;
+                                                                            function validateAndSubmit{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}').value;
+
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
 
                                                                                 if (!enName || !cardNumber || !cvv || !expiration) {
                                                                                     alert('尚有未填寫的欄位');
                                                                                     return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
                                                                                 } else {
                                                                                     // 資料都有填寫，則直接送出表單
-                                                                                    document.getElementById('expense{{$expense->id}}-form').submit();
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
                                                                                 }
                                                                             }
                                                                         </script>
@@ -835,7 +874,7 @@
                                                                         @else
                                                                             <button class="btn btn-primary" disabled>繳費</button>
                                                                         @endif
-                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
+                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-pay-form">
                                                                             @csrf
                                                                             @method('PATCH')
                                                                             <div class="modal" id="unpayModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
@@ -849,47 +888,58 @@
                                                                                             <div class="row">
                                                                                                 <div class="col mb-3">
                                                                                                     <label class="form-label">英文姓名</label>
-                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name" name="en-name">
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}-pay" name="en-name">
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="row">
                                                                                                 <div class="col mb-1">
                                                                                                     <label class="form-label">卡號</label>
-                                                                                                    <input type="text" class="form-control" id="card-number" name="card-number" placeholder="共16碼">
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}-pay" name="card-number" placeholder="共16碼">
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="row g-2">
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV" name="CVV">
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}-pay" name="CVV">
                                                                                                 </div>
                                                                                                 <div class="col mb-0">
                                                                                                     <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration" name="expiration">
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}-pay" name="expiration">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="modal-footer">
-                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit()" name="renterpush">送出</button>
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmitPay{{$expense->id}}()" name="renterpush">送出</button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </form>
                                                                         <script>
-                                                                            function validateAndSubmit() {
-                                                                                const enName = document.getElementById('en-name').value;
-                                                                                const cardNumber = document.getElementById('card-number').value;
-                                                                                const cvv = document.getElementById('CVV').value;
-                                                                                const expiration = document.getElementById('expiration').value;
-
+                                                                            function validateAndSubmitPay{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}-pay').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}-pay').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}-pay').value;
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
                                                                                 if (!enName || !cardNumber || !cvv || !expiration) {
                                                                                     alert('尚有未填寫的欄位');
                                                                                     return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
                                                                                 } else {
                                                                                     // 資料都有填寫，則直接送出表單
-                                                                                    document.getElementById('expense{{$expense->id}}-form').submit();
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
                                                                                 }
                                                                             }
                                                                         </script>
