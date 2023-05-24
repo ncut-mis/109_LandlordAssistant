@@ -61,7 +61,10 @@ class ExpenseController extends Controller
         $amount = $request->amount;
         $type = $request->type;
         if (empty($amount)) {
-            return redirect()->back()->withInput()->with('error', '請填入金額');
+//            dd('1');
+            return redirect()->route('houses.expenses.create', ['house' => $house_id])->withInput()->with(['error'=> '請填入金額']);
+
+            //            return redirect()->back()->withInput()->with(['error'=> '請填入金額'])->withInput(['house' => $house_id]);
         }
         elseif (empty($type)){
             return redirect()->back()->withInput()->with('error', '請選擇費用類型');
