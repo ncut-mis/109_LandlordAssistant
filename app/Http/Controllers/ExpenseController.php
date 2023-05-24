@@ -191,7 +191,7 @@ class ExpenseController extends Controller
 //                return redirect()->back()->with('success', '已送出費用');
                     return redirect()->route('sendemail.expense', $expense->id);
                 } else {
-                    return redirect()->back()->with('error', '費用送出失敗，尚有未填寫的資料');
+                    return redirect()->back()->with(['error'=>'費用送出失敗，尚有未填寫的資料','expense' => '1']);
                 }
             }
             //租客按下繳費
@@ -220,7 +220,7 @@ class ExpenseController extends Controller
 
 
         $expense->update($data);
-        return redirect()->route('owners.houses.show', [$house_id])->with('success', '費用修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with(['success'=>'費用修改成功！','expense' => '1']);
     }
 
     public function rentals_update(Request $request, Expense $expense)
@@ -237,7 +237,7 @@ class ExpenseController extends Controller
             'remark',
         ]);
         $expense->update($data);
-        return redirect()->route('owners.houses.show', [$house_id])->with('success', '租金費用修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with(['success'=>'租金費用修改成功！','expense' => '1']);
     }
 
 
