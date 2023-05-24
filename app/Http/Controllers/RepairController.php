@@ -77,6 +77,12 @@ class RepairController extends Controller
     {
         $user = Auth::user();
         $renter_id=$user->renter->id;
+        if (empty($request->title)) {
+            return redirect()->back()->with('error', '請輸入標題');
+        }
+        elseif (empty($request->contents)){
+            return redirect()->back()->with('error', '請輸入內容');
+        }
         $repair = Repair::create([
             'renter_id' => $renter_id,
             'house_id' => $request->id,
@@ -128,6 +134,9 @@ class RepairController extends Controller
     public function update(UpdateRepairRequest $request, Repair $repair)
     {
         $house_id = $repair->house_id;
+        if (empty($request->input('contents'))) {
+            return redirect()->back()->with('error', '內文不能為空');
+        }
         $repair->update([
             'content' => $request->input('contents')
         ]);

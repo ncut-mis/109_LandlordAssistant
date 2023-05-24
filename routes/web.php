@@ -82,7 +82,7 @@ Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repai
             ->subject($subject)
             ->html($text);
     });
-    return redirect()->route('renters.houses.show',[$repairReply->repair->house->id])->with(['success' => '已送出回覆通知信件', 'repair' => '1']);
+    return redirect()->route('owners.houses.show',[$repairReply->repair->house->id])->with(['success' => '已送出回覆通知信件', 'repair' => '1']);
 })->name('sendemail.repair.reply');
 
 //報修狀態更新信件

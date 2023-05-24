@@ -3,9 +3,12 @@
 @section('title', '報修頁面')
 @section('page-content')
 
-    @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
+    @if(session('error'))
+        <div class="mx-3 my-3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         </div>
     @endif
     <form method="post" action="{{route('renters.houses.repairs.store')}}">

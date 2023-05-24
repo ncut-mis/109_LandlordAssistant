@@ -39,10 +39,12 @@ class RepairReplyController extends Controller
      */
     public function store(StoreRepairReplyRequest $request,Repair $repair)
     {
+        if (empty($request->contents)) {
+            return redirect()->back()->with('error', '請輸入內文');
+        }
         $reply = RepairReply::create([
             'repair_id' => $request->id,
             'content' => $request->contents,
-//            'date' => null,
         ]);
         return redirect()->route('sendemail.repair.reply', $reply->id);
     }
@@ -87,6 +89,9 @@ class RepairReplyController extends Controller
     public function update(UpdateRepairReplyRequest $request, RepairReply $repairReply)
     {
         $houseId = request('house_id');
+        if (empty($request->input('contents'))) {
+            return redirect()->back()->with('error', '請輸入內文');
+        }
         $repairReply->update([
             'content' => $request->input('contents')
         ]);
