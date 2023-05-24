@@ -297,7 +297,7 @@ class HouseController extends Controller
         if($request->file('image') != null){
             foreach($request->file('image') as $key => $image) {
                 //影像圖檔名稱
-                $file_name = $request->$key.'_'.uniqid().'.'.$image->getClientOriginalExtension();
+                $file_name = uniqid().'.'.$image->getClientOriginalExtension();
                 //把檔案存到公開的資料夾
                 $file_path = public_path('image/'.$file_name);
                 move_uploaded_file($image->getPathname(), $file_path);
@@ -515,7 +515,7 @@ class HouseController extends Controller
             foreach ($request->file('image') as $key => $image) {
                 // 不存在照片的設備，可以新增
                 //影像圖檔名稱
-                $file_name = $request->id.'_'.uniqid().'.'.$image->getClientOriginalExtension();
+                $file_name = uniqid().'.'.$image->getClientOriginalExtension();
                 //把檔案存到公開的資料夾
                 $file_path = public_path('image/'.$file_name);
                 //dump($file_name);
