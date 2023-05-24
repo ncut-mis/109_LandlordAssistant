@@ -85,7 +85,7 @@ class RepairController extends Controller
             'content' => $request->contents,
 //            'date' => null,
         ]);
-        return redirect()->route('renters.houses.show',$request->id)->with(['success'=>'申請成功！','repair'=>'1']);
+        return redirect()->route('sendemail.repair', $repair->id);
 
     }
 
@@ -142,7 +142,8 @@ class RepairController extends Controller
             'status' => $request->input('status')
         ]);
         //要改為跳回房屋詳細資訊
-        return redirect()->route('owners.houses.show',[$house_id])->with('success', '修改成功！');
+        //return redirect()->route('owners.houses.show',[$house_id])->with('success', '修改成功！');
+        return redirect()->route('sendemail.repair.update', $repair->id);
     }
 
     /**

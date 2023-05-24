@@ -44,7 +44,7 @@ class RepairReplyController extends Controller
             'content' => $request->contents,
 //            'date' => null,
         ]);
-        return redirect()->route('owners.houses.show',$request->house_id)->with(['success'=>'申請成功！','repair'=>'1']);
+        return redirect()->route('sendemail.repair.reply', $reply->id);
     }
 
     /**

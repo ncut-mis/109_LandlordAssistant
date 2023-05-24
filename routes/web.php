@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\RepairReply;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,7 +26,7 @@ use App\Http\Controllers\UserProfileController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Expense;
-
+use App\Models\Repair;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +37,7 @@ use App\Models\Expense;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//費用信件
 Route::get('/sendemail/{expense}', function (Expense $expense) {
 	$subject = $expense->house->name.'房屋的'.$expense->type.'費用提醒'; // 將字串和費用類型拼接成主旨
 //	$text = '<h1>親愛的用戶，您好：</h1>'."\n\n".'您有一筆日期為'."\n\n".$expense->start_date.'~'.$expense->end_date.'的'.$expense->type.'費用'.$expense->amount.'元尚未繳費'."\n\n".'請盡速前往繳費';
@@ -52,6 +53,52 @@ Route::get('/sendemail/{expense}', function (Expense $expense) {
     });
 	return redirect()->back()->with(['success' => '已送出費用提醒信件', 'expense' => '1']);
 })->name('sendemail.expense');
+
+//報修信件
+Route::GET('/sendemail/repair/{repair}', function (Repair $repair) {
+    $subject = $repair->house->name.'房屋的報修通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
+        '<p style="font-size: 16px;">您有一筆</p>\n\n' .
+        '<p style="font-size: 16px;font-weight: bold">'.$repair->title.' 的報修</p>'."\n\n".
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text) {
+        $message->to('3a932045@gm.student.ncut.edu.tw')
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('renters.houses.show',[$repair->house->id])->with(['success' => '已送出報修通知信件', 'repair' => '1']);
+})->name('sendemail.repair');
+//報修回覆信件
+Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repairReply) {
+    $subject = $repairReply->repair->house->name.'房屋的報修回覆通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
+        '<p style="font-size: 16px;">您有一則關於</p>'."\n\n" .
+        '<p style="font-size: 16px;font-weight: bold">'.$repairReply->repair->title.' 的報修回覆</p>'."\n\n".
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text) {
+        $message->to('3a932045@gm.student.ncut.edu.tw')
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('renters.houses.show',[$repairReply->repair->house->id])->with(['success' => '已送出回覆通知信件', 'repair' => '1']);
+})->name('sendemail.repair.reply');
+
+//報修狀態更新信件
+Route::GET('/sendemail/repair/update/{repair}', function (Repair $repair) {
+    $subject = $repair->house->name.'房屋的報修狀態更動通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
+        '<p style="font-size: 16px;font-weight: bold">您'.$repair->title.' 的報修狀態有更動</p>'."\n\n".
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text) {
+        $message->to('3a932045@gm.student.ncut.edu.tw')
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('renters.houses.show',[$repair->house->id])->with(['success' => '已送出維修狀態更新通知信件', 'repair' => '1']);
+})->name('sendemail.repair.update');
 
 // 3-7-1 訪客/會員瀏覽平台首頁
 Route::get('/', [HomeController::class, 'index'])->name('home.index');

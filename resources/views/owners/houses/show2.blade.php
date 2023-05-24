@@ -799,7 +799,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{route('houses.repairs.reply.create'),[$repair->id,'house'=>$house->id]}}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -895,7 +895,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{route('houses.repairs.reply.create'),[$repair->id,'house'=>$house->id]}}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"

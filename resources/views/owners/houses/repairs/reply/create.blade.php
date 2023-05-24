@@ -28,7 +28,7 @@
                                         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">房屋 /</span>報修回覆
                                         </h4>
                                         <!-- Tabs -->
-                                        <form method="POST" action="#">
+                                        <form method="#" action="#">
                                             @csrf
                                             <input type="hidden" name="house_id"
                                                    value="{{$house_id}}">
