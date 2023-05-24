@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
 use App\Models\Post;
 use App\Models\Renter;
 use App\Models\House;
@@ -105,17 +106,23 @@ class RenterController extends Controller
     {
 		$post = request()->query('post');
         $location = $house->location;
-        $signatories = $house->signatories; // 取得房屋的目前租客
-        $owners = $signatories->map(function ($signatories) {
-            return $signatories->renter; // 取得每個合約的租客
-        });
-        $owners_data = $owners->map(function ($owner) {
-            return $owner->user; // 取得每個租客的使用者資料
-        });
+        $owners = $house->location->owner; // 取得每個合約的房東
+        $owners_data = $owners->user; // 取得每個租客的使用者資料
         $furnishings = $house->furnishings;
         $features = $house->features;
         $image = $house->image;
+
+        //費用
         $expenses = $house->expenses;
+//        $expenses = House::with(['expenses' => function ($query){
+//            $query->orderBy('updated_at', 'desc');
+//        }])->where('id','=',$house->id)->get();
+        $expenses_we = $house->expenses->whereIn('type',['水費','電費'])->sortByDesc('updated_at');
+        $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+        $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+        $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
+
         $unrepair = House::whereHas('repairs', function ($q) use ($house) {
             $q->where('house_id', '=', $house->id);
         })->with(['repairs' => function ($q) {
@@ -142,7 +149,6 @@ class RenterController extends Controller
         $inrepairs = $inrepair->pluck('repairs')->flatten();
         $finshs = $finsh->pluck('repairs')->flatten();
         $data = [
-            'contract' =>$signatories,
             'location_id' =>$location->id,
             'owners_data' => $owners_data,
             'furnishings' => $furnishings,
@@ -155,7 +161,12 @@ class RenterController extends Controller
             'finsh' => $finshs,
             'locations'=>$locations,
             'post'=>$post,
-            'po'=>1
+            'po'=>1,
+            'expenses_we' => $expenses_we,
+            'expenses_rentals'=>$expenses_rentals,
+            'expenses_other' => $expenses_other,
+            'expenses_payoff' => $expenses_payoff,
+            'expenses_unpay' => $expenses_unpay
         ];
 //        dd($data);
         return view('renters.houses.show',$data);

@@ -69,28 +69,29 @@
                                 <div class="nav-align-top mb-4">
                                     <ul class="nav nav-tabs  me-auto mb-2 mb-lg-0" role="tablist">
 										@php
-											$repair = session('repair');
+											$re = session('repair');
+											$ex = session('expense');
 										@endphp
 										<li class="nav-item">
-                                            <button type="button" class="nav-link @if(isset($po)|| isset($repair)) 12 @else active @endif" role="tab"
+                                            <button type="button" class="nav-link" role="tab"
                                                     data-bs-toggle="tab" data-bs-target="#navs-top-house"
                                                     aria-controls="navs-top-home" aria-selected="true">房屋資訊
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link @if($po == '1') active @endif" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if(isset($re)||isset($ex)) 0 @else active @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-post" aria-controls="navs-top-profile"
                                                     aria-selected="false">公告
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($ex == '1') active @else 0 @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-expense" aria-controls="navs-top-messages"
                                                     aria-selected="false">費用
                                             </button>
                                         </li>
                                         <li class="nav-item">
-                                            <button type="button" class="nav-link @if($repair == '1') active @endif" role="tab" data-bs-toggle="tab"
+                                            <button type="button" class="nav-link @if($re == '1') active @else 0 @endif" role="tab" data-bs-toggle="tab"
                                                     data-bs-target="#navs-top-repair" aria-controls="navs-top-home"
                                                     aria-selected="false">報修
                                             </button>
@@ -99,7 +100,7 @@
                                     <div class="tab-content">
 
                                         <!--房屋資訊內容-->
-                                        <div class="tab-pane fade @if(isset($po)|| isset($repair)) @else active show @endif" id="navs-top-house" role="tabpanel">
+                                        <div class="tab-pane fade " id="navs-top-house" role="tabpanel">
                                             <div class="container-xxl flex-grow-1 container-p-y">
                                                 <div class="row">
                                                     <div class="col-12 col-lg-8 order-0 mb-4">
@@ -127,26 +128,24 @@
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <ul class="p-0 m-0">
-                                                                            @if(!$owners_data->isEmpty())
-                                                                                @foreach($owners_data as $owners_data)
-                                                                                    <li class="d-flex mb-4 pb-1">
-                                                                                        <div
-                                                                                            class="avatar flex-shrink-0 me-3">
-                                                                                            <img
-                                                                                                src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
-                                                                                                alt="User"
-                                                                                                class="rounded">
+                                                                            @if(isset($owners_data))
+                                                                                <li class="d-flex mb-4 pb-1">
+                                                                                    <div
+                                                                                        class="avatar flex-shrink-0 me-3">
+                                                                                        <img
+                                                                                            src="{{ asset('assets/img/icons/unicons/paypal.png') }}"
+                                                                                            alt="User"
+                                                                                            class="rounded">
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                                                        <div class="me-2">
+                                                                                            <h5 class="mb-0 fw-semibold">{{ $owners_data->name }}</h5>
+                                                                                            <small
+                                                                                                class="text-muted d-block mb-0">電話：{{ $owners_data->phone }}</small>
                                                                                         </div>
-                                                                                        <div
-                                                                                            class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                                                            <div class="me-2">
-                                                                                                <h5 class="mb-0 fw-semibold">{{ $owners_data->name }}</h5>
-                                                                                                <small
-                                                                                                    class="text-muted d-block mb-0">電話：{{ $owners_data->phone }}</small>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                @endforeach
+                                                                                    </div>
+                                                                                </li>
                                                                             @else
                                                                                 <li class="d-flex mb-4 pb-1">
                                                                                     <div
@@ -381,7 +380,7 @@
                                             </div>
                                         </div>
                                         <!--公告資訊內容-->
-                                        <div class="tab-pane fade @if($po == '1') active show @endif" id="navs-top-post" role="tabpanel">
+                                        <div class="tab-pane fade @if(isset($re)|| isset($ex)) 0 @else active show @endif" id="navs-top-post" role="tabpanel">
                                             <table class="table">
                                                 <thead>
                                                 <tr>
@@ -405,168 +404,559 @@
 
                                         </div>
                                         <!--費用資訊內容-->
-                                        <div class="tab-pane fade" id="navs-top-expense" role="tabpanel">
+                                        <div class="tab-pane fade @if($ex == '1') active show @else 0  @endif" id="navs-top-expense" role="tabpanel">
                                             <!--費用類型-->
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark active"
-                                                            style="margin-left: 12px"
-                                                            id="pills-all-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-all"
-                                                            aria-disabled="true" type="button" role="tab"
-                                                            aria-controls="pills-all"
-                                                            aria-selected="true">
-                                                        全部
-                                                    </button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
+                                                <li class="nav-item">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-for_rent-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-for_rent"
-                                                            type="button" role="tab" aria-controls="pills-for_rent"
+                                                            id="expense-we-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-we"
+                                                            type="button" role="tab" aria-controls="expense-we"
                                                             aria-selected="false">
                                                         水電費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            id="expense-rentals-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-rentals"
+                                                            type="button" role="tab" aria-controls="expense-rentals"
                                                             aria-selected="false">
                                                         房租
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            id="expense-other-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-other"
+                                                            type="button" role="tab" aria-controls="expense-other"
                                                             aria-selected="false">
                                                         其他費用
                                                     </button>
                                                 </li>
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
+                                                            id="expense-payoff-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-payoff"
+                                                            type="button" role="tab" aria-controls="expense-payoff"
                                                             aria-selected="false">
                                                         已繳費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
-                                                            aria-selected="false">
+                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
+                                                            id="expense-unpay-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-unpay"
+                                                            type="button" role="tab" aria-controls="expense-unpay"
+                                                            aria-selected="true">
                                                         未繳費
                                                     </button>
                                                 </li>
                                             </ul>
-                                            <div class="card-body">
-                                                <table class="table" id="datatablesSimple">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 9%;font-size: 18px">費用開始日
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 9%;font-size: 18px">費用結束日
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 7%;font-size: 18px">費用類型
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 5%;font-size: 18px">金額
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 10%;font-size: 18px">備註
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 7%;font-size: 18px">狀態
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($house->expenses as $expense)
-                                                        @if($expense->owner_status == 1)
-                                                            <tr>
-                                                                <td style="text-align: center">{{$expense->start_date}}</td>
-                                                                <td style="text-align: center">{{$expense->end_date}}</td>
-                                                                <td style="text-align: center">{{$expense->type}}</td>
-                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
-                                                                <td style="text-align: center">{{$expense->remark}} </td>
-                                                                <td style="text-align: center">
-                                                                    @if($expense->renter_status == 0)
-                                                                        未繳費
-                                                                    @else
-                                                                        已繳費
-                                                                    @endif
-                                                                </td>
-                                                                <td style="text-align: right;width: 5%">
 
-                                                                    @if($expense->renter_status == 0)
-                                                                            <button class="btn btn-primary" name="renterpush" data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
-                                                                    @else
-                                                                        <button class="btn btn-primary" disabled>繳費</button>
-                                                                    @endif
-                                                                    <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST">
+
+                                            <div class="tab-content">
+                                                <!--水電費-->
+                                                <div class="tab-pane fade" id="expense-we" aria-labelledby="expense-we-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($expenses_we as $expense)
+                                                                @if($expense->owner_status == 1)
+                                                                    <tr>
+                                                                        <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                        <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                        <td style="text-align: center">{{$expense->type}}</td>
+                                                                        <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                        <td style="text-align: center">{{$expense->remark}} </td>
+                                                                        <td style="text-align: center">
+                                                                            @if($expense->renter_status == 0)
+                                                                                未繳費
+                                                                            @else
+                                                                                已繳費
+                                                                            @endif
+                                                                        </td>
+                                                                        <td style="text-align: right;width: 5%">
+
+                                                                            @if($expense->renter_status == 0)
+                                                                                    <button class="btn btn-primary"  data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
+                                                                            @else
+                                                                                <button class="btn btn-primary" disabled>繳費</button>
+                                                                            @endif
+                                                                            <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
+                                                                                    @csrf
+                                                                                    @method('PATCH')
+                                                                                <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}元</h3>
+                                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <div class="row">
+                                                                                                    <div class="col mb-3">
+                                                                                                        <label class="form-label">英文姓名</label>
+                                                                                                        <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <div class="col mb-1">
+                                                                                                        <label class="form-label">卡號</label>
+                                                                                                        <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="row g-2">
+                                                                                                    <div class="col mb-0">
+                                                                                                        <label for="emailWithTitle" class="form-label">安全碼</label>
+                                                                                                        <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
+                                                                                                    </div>
+                                                                                                    <div class="col mb-0">
+                                                                                                        <label for="dobWithTitle" class="form-label">卡片到期日</label>
+                                                                                                        <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                                <script>
+                                                                                        function validateAndSubmit{{$expense->id}}() {
+                                                                                            const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                            const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                            const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                            const expiration = document.getElementById('expiration{{$expense->id}}').value;
+
+                                                                                            const cardNumberPattern = /^\d{16}$/;
+                                                                                            const cvvPattern = /^\d{3}$/;
+                                                                                            const expirationPattern = /^\d{2}\/\d{2}$/;
+
+                                                                                            if (!enName || !cardNumber || !cvv || !expiration) {
+                                                                                                alert('尚有未填寫的欄位');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                                alert('請輸入 16 個數字的卡號');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!cvvPattern.test(cvv)) {
+                                                                                                alert('請輸入 3 位數安全碼');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else if (!expirationPattern.test(expiration)) {
+                                                                                                alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                                return false; // 阻止表單提交
+                                                                                            } else {
+                                                                                                // 資料都有填寫，則直接送出表單
+                                                                                                document.getElementById('expense{{$expense->id}}-pay -form').submit();
+                                                                                            }
+                                                                                        }
+                                                                                </script>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div >
+                                                <!--房租-->
+                                                <div class="tab-pane fade" id="expense-rentals" role="tabpanel" aria-labelledby="expense-rentals-tab">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_rentals as $expense)
+                                                            @if($expense->owner_status == 1)
+                                                                <tr>
+                                                                    <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->type}}</td>
+                                                                    <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                    <td style="text-align: center">{{$expense->remark}} </td>
+                                                                    <td style="text-align: center">
+                                                                        @if($expense->renter_status == 0)
+                                                                            未繳費
+                                                                        @else
+                                                                            已繳費
+                                                                        @endif
+                                                                    </td>
+                                                                    <td style="text-align: right;width: 5%">
+
+                                                                        @if($expense->renter_status == 0)
+                                                                            <button class="btn btn-primary"  data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
+                                                                        @else
+                                                                            <button class="btn btn-primary" disabled>繳費</button>
+                                                                        @endif
+                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
                                                                             @csrf
                                                                             @method('PATCH')
-                                                                        <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
-                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}</h3>
-                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col mb-3">
-                                                                                                <label class="form-label">英文姓名</label>
-                                                                                                <input type="text" class="form-control" placeholder="需與卡片上相符" name="en-name">
-                                                                                            </div>
+                                                                            <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}元</h3>
+                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
                                                                                         </div>
-                                                                                        <div class="row">
-                                                                                            <div class="col mb-1">
-                                                                                                <label class="form-label">卡號</label>
-                                                                                                <input type="text" class="form-control" name="card-number" placeholder="共16碼">
+                                                                                        <div class="modal-body">
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-3">
+                                                                                                    <label class="form-label">英文姓名</label>
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
+                                                                                                </div>
                                                                                             </div>
-                                                                                        </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-1">
+                                                                                                    <label class="form-label">卡號</label>
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
+                                                                                                </div>
+                                                                                            </div>
 
-                                                                                        <div class="row g-2">
-                                                                                            <div class="col mb-0">
-                                                                                                <label for="emailWithTitle" class="form-label">安全碼</label>
-                                                                                                <input type="text" class="form-control" placeholder="卡面背後3碼" name="CVV">
-                                                                                            </div>
-                                                                                            <div class="col mb-0">
-                                                                                                <label for="dobWithTitle" class="form-label">卡片到期日</label>
-                                                                                                <input type="text" class="form-control" placeholder="MM / YY" name="expiration">
+                                                                                            <div class="row g-2">
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="emailWithTitle" class="form-label">安全碼</label>
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
+                                                                                                </div>
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="dobWithTitle" class="form-label">卡片到期日</label>
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="submit" class="btn btn-primary" name="renterpush">送出</button>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </form>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                                                        </form>
+                                                                        <script>
+                                                                            function validateAndSubmit{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}').value;
+
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
+
+                                                                                if (!enName || !cardNumber || !cvv || !expiration) {
+                                                                                    alert('尚有未填寫的欄位');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else {
+                                                                                    // 資料都有填寫，則直接送出表單
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
+                                                                                }
+                                                                            }
+                                                                        </script>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--其他費用-->
+                                                <div class="tab-pane fade" id="expense-other" role="tabpanel" aria-labelledby="expense-other-tab">
+
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_other as $expense)
+                                                            @if($expense->owner_status == 1)
+                                                                <tr>
+                                                                    <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->type}}</td>
+                                                                    <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                    <td style="text-align: center">{{$expense->remark}} </td>
+                                                                    <td style="text-align: center">
+                                                                        @if($expense->renter_status == 0)
+                                                                            未繳費
+                                                                        @else
+                                                                            已繳費
+                                                                        @endif
+                                                                    </td>
+                                                                    <td style="text-align: right;width: 5%">
+
+                                                                        @if($expense->renter_status == 0)
+                                                                            <button class="btn btn-primary"  data-target="#payModal{{$expense->id}}" data-toggle="modal">繳費</button>
+                                                                        @else
+                                                                            <button class="btn btn-primary" disabled>繳費</button>
+                                                                        @endif
+                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-form">
+                                                                            @csrf
+                                                                            @method('PATCH')
+                                                                            <div class="modal" id="payModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}元</h3>
+                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-3">
+                                                                                                    <label class="form-label">英文姓名</label>
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}" name="en-name">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-1">
+                                                                                                    <label class="form-label">卡號</label>
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}" name="card-number" placeholder="共16碼">
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row g-2">
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="emailWithTitle" class="form-label">安全碼</label>
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}" name="CVV">
+                                                                                                </div>
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="dobWithTitle" class="form-label">卡片到期日</label>
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}" name="expiration">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmit{{$expense->id}}()" name="renterpush">送出</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                        <script>
+                                                                            function validateAndSubmit{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}').value;
+
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
+
+                                                                                if (!enName || !cardNumber || !cvv || !expiration) {
+                                                                                    alert('尚有未填寫的欄位');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else {
+                                                                                    // 資料都有填寫，則直接送出表單
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
+                                                                                }
+                                                                            }
+                                                                        </script>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--已繳-->
+                                                <div class="tab-pane fade" id="expense-payoff" role="tabpanel" aria-labelledby="expense-payoff-tab">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_payoff as $expense)
+                                                            @if($expense->owner_status == 1)
+                                                                <tr>
+                                                                    <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->type}}</td>
+                                                                    <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                    <td style="text-align: center">{{$expense->remark}} </td>
+                                                                    <td style="text-align: center">
+                                                                        @if($expense->renter_status == 0)
+                                                                            未繳費
+                                                                        @else
+                                                                            已繳費
+                                                                        @endif
+                                                                    </td>
+                                                                    <td style="text-align: right;width: 5%">
+                                                                            <button class="btn btn-primary" disabled>繳費</button>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--未繳-->
+                                                <div class="tab-pane fade active show" id="expense-unpay" role="tabpanel" aria-labelledby="expense-unpay-tab">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_unpay as $expense)
+                                                            @if($expense->owner_status == 1)
+                                                                <tr>
+                                                                    <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                    <td style="text-align: center">{{$expense->type}}</td>
+                                                                    <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                    <td style="text-align: center">{{$expense->remark}} </td>
+                                                                    <td style="text-align: center">
+                                                                        @if($expense->renter_status == 0)
+                                                                            未繳費
+                                                                        @else
+                                                                            已繳費
+                                                                        @endif
+                                                                    </td>
+                                                                    <td style="text-align: right;width: 5%">
+
+                                                                        @if($expense->renter_status == 0)
+                                                                            <button class="btn btn-primary"  data-target="#unpayModal{{$expense->id}}" data-toggle="modal">繳費</button>
+                                                                        @else
+                                                                            <button class="btn btn-primary" disabled>繳費</button>
+                                                                        @endif
+                                                                        <form action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}" method="POST" id="expense{{$expense->id}}-pay-form">
+                                                                            @csrf
+                                                                            @method('PATCH')
+                                                                            <div class="modal" id="unpayModal{{$expense -> id}}" tabindex="-1" style="padding-left: 0px;" aria-modal="true" role="dialog">
+                                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <h3 class="modal-title">繳納 {{$expense->type}} {{$expense->amount }}元</h3>
+                                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('payModal{{$expense -> id}}')"></button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-3">
+                                                                                                    <label class="form-label">英文姓名</label>
+                                                                                                    <input type="text" class="form-control" placeholder="需與卡片上相符" id="en-name{{$expense->id}}-pay" name="en-name">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col mb-1">
+                                                                                                    <label class="form-label">卡號</label>
+                                                                                                    <input type="text" class="form-control" id="card-number{{$expense->id}}-pay" name="card-number" placeholder="共16碼">
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="row g-2">
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="emailWithTitle" class="form-label">安全碼</label>
+                                                                                                    <input type="text" class="form-control" placeholder="卡面背後3碼" id="CVV{{$expense->id}}-pay" name="CVV">
+                                                                                                </div>
+                                                                                                <div class="col mb-0">
+                                                                                                    <label for="dobWithTitle" class="form-label">卡片到期日</label>
+                                                                                                    <input type="text" class="form-control" placeholder="MM / YY" id="expiration{{$expense->id}}-pay" name="expiration">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" class="btn btn-primary" onclick="validateAndSubmitPay{{$expense->id}}()" name="renterpush">送出</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                        <script>
+                                                                            function validateAndSubmitPay{{$expense->id}}() {
+                                                                                const enName = document.getElementById('en-name{{$expense->id}}-pay').value;
+                                                                                const cardNumber = document.getElementById('card-number{{$expense->id}}-pay').value;
+                                                                                const cvv = document.getElementById('CVV{{$expense->id}}-pay').value;
+                                                                                const expiration = document.getElementById('expiration{{$expense->id}}-pay').value;
+                                                                                const cardNumberPattern = /^\d{16}$/;
+                                                                                const cvvPattern = /^\d{3}$/;
+                                                                                const expirationPattern = /^\d{2}\/\d{2}$/;
+                                                                                if (!enName || !cardNumber || !cvv || !expiration) {
+                                                                                    alert('尚有未填寫的欄位');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cardNumberPattern.test(cardNumber)) {
+                                                                                    alert('請輸入 16 個數字的卡號');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!cvvPattern.test(cvv)) {
+                                                                                    alert('請輸入 3 位數安全碼');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else if (!expirationPattern.test(expiration)) {
+                                                                                    alert('請輸入正確的卡片到期日格式 (MM / YY)');
+                                                                                    return false; // 阻止表單提交
+                                                                                } else {
+                                                                                    // 資料都有填寫，則直接送出表單
+                                                                                    document.getElementById('expense{{$expense->id}}-pay -form').submit();
+                                                                                }
+                                                                            }
+                                                                        </script>
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
                                             </div>
                                         </div>
 
 
                                         <!--報修資訊內容-->
-                                        <div class="tab-pane fade @if($repair == '1') active show @endif" id="navs-top-repair" role="tabpanel">
+                                        <div class="tab-pane fade @if($re == '1') active show @else 0 @endif" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
 
                                                 <li class="nav-item">

@@ -152,6 +152,6 @@ class RepairController extends Controller
     public function destroy(Repair $repair)
     {
         $repair->delete();
-        return redirect()->back()->with('success', '刪除成功');
+        return redirect()->back()->with(['success' => '刪除成功', 'repair'=>'1']);
     }
 }

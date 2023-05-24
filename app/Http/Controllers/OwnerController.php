@@ -145,7 +145,16 @@ class OwnerController extends Controller
 		$furnishings = $house->furnishings;
 		$features = $house->features;
 		$image = $house->image;
-		$expenses = $house->expenses;
+
+        //費用
+        $expenses = $house->expenses()->orderBy('updated_at', 'desc')->get();
+        $expenses_w = $house->expenses->where('type','水費')->sortByDesc('updated_at');
+        $expenses_e = $house->expenses->where('type','電費')->sortByDesc('updated_at');
+        $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+        $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+        $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
+
 		$data = [
             'contract' =>$signatories,
             'location_id' =>$location->id,
@@ -158,7 +167,13 @@ class OwnerController extends Controller
             'inrepair' => $inrepairs,
             'finsh' => $finshs,
             'expenses' => $expenses,
-            'ex' => request()->query('expense')
+            'ex' => request()->query('expense'),
+            'expenses_w' => $expenses_w,
+            'expenses_e' => $expenses_e,
+            'expenses_rentals' => $expenses_rentals,
+            'expenses_other' => $expenses_other,
+            'expenses_payoff' => $expenses_payoff,
+            'expenses_unpay' => $expenses_unpay
         ];
 //dd($data);
         return view('owners.houses.show2',$data);

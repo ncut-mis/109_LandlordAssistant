@@ -67,11 +67,13 @@ class UserProfileController extends Controller
      */
     public function edit(User $user)
     {
+        $name = Auth::user()->name;
         $id = Auth::id(); //user id
         //$id = '1'; //user id
         $users = User::find($id);
         $data = [
-            'users' => $users
+            'users' => $users,
+            'name' => $name
         ];
         return view('users.edit', $data);
     }

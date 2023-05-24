@@ -387,53 +387,44 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!--費用資訊內容-->
                                         <div class="tab-pane fade @if($expense == '1'|| $ex == '1') active show @endif"
                                              id="navs-top-expense" role="tabpanel">
+                                            <!--費用類型-->
                                             <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark active"
-                                                            style="margin-left: 12px"
-                                                            id="pills-all-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-all"
-                                                            aria-disabled="true" type="button" role="tab"
-                                                            aria-controls="pills-all"
-                                                            aria-selected="true">
-                                                        全部
-                                                    </button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
+                                                <li class="nav-item">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-for_rent-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-for_rent"
-                                                            type="button" role="tab" aria-controls="pills-for_rent"
+                                                            id="expense-w-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-w"
+                                                            type="button" role="tab" aria-controls="expense-w"
                                                             aria-selected="false">
                                                         水費
                                                     </button>
                                                 </li>
-                                                <li class="nav-item" role="presentation">
+                                                <li class="nav-item">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-listed-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-listed"
-                                                            type="button" role="tab" aria-controls="pills-listed"
+                                                            id="expense-e-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-e"
+                                                            type="button" role="tab" aria-controls="expense-e"
                                                             aria-selected="false">
                                                         電費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            id="expense-rentals-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-rentals"
+                                                            type="button" role="tab" aria-controls="expense-rentals"
                                                             aria-selected="false">
                                                         房租
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            id="expense-other-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-other"
+                                                            type="button" role="tab" aria-controls="expense-other"
                                                             aria-selected="false">
                                                         其他費用
                                                     </button>
@@ -441,19 +432,19 @@
                                                 <li class="py-2 px-3">||</li>
                                                 <li class="nav-item" role="presentation">
                                                     <button class="btn btn-outline-dark"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
+                                                            id="expense-payoff-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-payoff"
+                                                            type="button" role="tab" aria-controls="expense-payoff"
                                                             aria-selected="false">
                                                         已繳費
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="btn btn-outline-dark" style="margin-left: 12px"
-                                                            id="pills-vacancy-tab" data-bs-toggle="pill"
-                                                            data-bs-target="#pills-vacancy"
-                                                            type="button" role="tab" aria-controls="pills-vacancy"
-                                                            aria-selected="false">
+                                                    <button class="btn btn-outline-dark active" style="margin-left: 12px"
+                                                            id="expense-unpay-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#expense-unpay"
+                                                            type="button" role="tab" aria-controls="expense-unpay"
+                                                            aria-selected="true">
                                                         未繳費
                                                     </button>
                                                 </li>
@@ -470,104 +461,508 @@
                                                     </a>
                                                 </li>
                                             </ul>
-                                            <div class="card-body">
-                                                <table class="table" id="datatablesSimple">
-                                                    <thead>
-                                                    <tr>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 9%;font-size: 18px">費用開始日
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 9%;font-size: 18px">費用結束日
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 7%;font-size: 18px">費用類型
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 5%;font-size: 18px">金額
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 10%;font-size: 18px">備註
-                                                        </th>
-                                                        <th scope="col"
-                                                            style="text-align: center;width: 7%;font-size: 18px">狀態
-                                                        </th>
-
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($house->expenses as $expense)
+                                            <div class="tab-content">
+                                                <!--水費-->
+                                                <div class="tab-pane fade" id="expense-w" aria-labelledby="expense-w-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
                                                         <tr>
-                                                            <td style="text-align: center">{{$expense->start_date}}</td>
-                                                            <td style="text-align: center">{{$expense->end_date}}</td>
-                                                            <td style="text-align: center">{{$expense->type}}</td>
-                                                            <td style="text-align: center">{{$expense->amount}} 元</td>
-                                                            <td style="text-align: center">{{$expense->remark}} </td>
-                                                            <td style="text-align: center">
-                                                                @if($expense->owner_status == 0)
-                                                                    未送出費用
-                                                                @elseif($expense->owner_status == 1)
-                                                                    @if($expense->renter_status == 0)
-                                                                        費用已送出<br>尚未繳費
-                                                                    @elseif($expense->renter_status == 1)
-                                                                        已繳費
-                                                                    @endif
-                                                                @endif
-                                                            </td>
-                                                            <td style="text-align: right;width: 5%">
-                                                                @csrf
-                                                                @if($expense->owner_status == 0)
-                                                                    <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
-                                                                @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
-                                                                @else
-                                                                    <button class="btn btn-secondary" disabled>修改
-                                                                    </button>
-                                                                @endif
-                                                                {{--                                                                <a class="btn btn-secondary" href="{{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}">修改</a>--}}
-                                                            </td>
-                                                            <td style="text-align: right;width: 3%">
-                                                                <form
-                                                                    action="{{route('houses.expenses.destroy',$expense -> id)}}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_w as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
                                                                     @if($expense->owner_status == 0)
-                                                                        <button class="btn btn-danger"
-                                                                                onclick="return confirm('確定要刪除嗎？')">
-                                                                            刪除
-                                                                        </button>
-                                                                    @else
-                                                                        <button class="btn btn-danger" disabled>刪除
-                                                                        </button>
-                                                                    @endif
-                                                                </form>
-                                                            </td>
-
-                                                            <td style="text-align: right;width: 8%">
-
-                                                                <form
-                                                                    action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('PATCH')
-                                                                    @if($expense->owner_status == 0)
-                                                                        {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
-                                                                        <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        未送出費用
                                                                     @elseif($expense->owner_status == 1)
                                                                         @if($expense->renter_status == 0)
-                                                                            <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            費用已送出<br>尚未繳費
                                                                         @elseif($expense->renter_status == 1)
-                                                                            <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            已繳費
                                                                         @endif
                                                                     @endif
-                                                                </form>
-                                                            </td>
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--電費-->
+                                                <div class="tab-pane fade" id="expense-e" aria-labelledby="expense-e-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
                                                         </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_e as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->owner_status == 0)
+                                                                        未送出費用
+                                                                    @elseif($expense->owner_status == 1)
+                                                                        @if($expense->renter_status == 0)
+                                                                            費用已送出<br>尚未繳費
+                                                                        @elseif($expense->renter_status == 1)
+                                                                            已繳費
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--房租-->
+                                                <div class="tab-pane fade" id="expense-rentals" aria-labelledby="expense--tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_rentals as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->owner_status == 0)
+                                                                        未送出費用
+                                                                    @elseif($expense->owner_status == 1)
+                                                                        @if($expense->renter_status == 0)
+                                                                            費用已送出<br>尚未繳費
+                                                                        @elseif($expense->renter_status == 1)
+                                                                            已繳費
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--其他費用-->
+                                                <div class="tab-pane fade" id="expense-other" aria-labelledby="expense-other-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_other as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->owner_status == 0)
+                                                                        未送出費用
+                                                                    @elseif($expense->owner_status == 1)
+                                                                        @if($expense->renter_status == 0)
+                                                                            費用已送出<br>尚未繳費
+                                                                        @elseif($expense->renter_status == 1)
+                                                                            已繳費
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--已繳費-->
+                                                <div class="tab-pane fade" id="expense-payoff" aria-labelledby="expense-payoff-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_payoff as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->owner_status == 0)
+                                                                        未送出費用
+                                                                    @elseif($expense->owner_status == 1)
+                                                                        @if($expense->renter_status == 0)
+                                                                            費用已送出<br>尚未繳費
+                                                                        @elseif($expense->renter_status == 1)
+                                                                            已繳費
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--未繳費-->
+                                                <div class="tab-pane fade active show" id="expense-unpay" aria-labelledby="expense-unpay-tab" role="tabpanel">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用開始日</th>
+                                                            <th scope="col" style="text-align: center;width: 9%;font-size: 18px">費用結束日</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">費用類型</th>
+                                                            <th scope="col" style="text-align: center;width: 5%;font-size: 18px">金額</th>
+                                                            <th scope="col" style="text-align: center;width: 10%;font-size: 18px">備註</th>
+                                                            <th scope="col" style="text-align: center;width: 7%;font-size: 18px">狀態</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($expenses_unpay as $expense)
+                                                            <tr>
+                                                                <td style="text-align: center">{{$expense->start_date}}</td>
+                                                                <td style="text-align: center">{{$expense->end_date}}</td>
+                                                                <td style="text-align: center">{{$expense->type}}</td>
+                                                                <td style="text-align: center">{{$expense->amount}} 元</td>
+                                                                <td style="text-align: center">{{$expense->remark}} </td>
+                                                                <td style="text-align: center">
+                                                                    @if($expense->owner_status == 0)
+                                                                        未送出費用
+                                                                    @elseif($expense->owner_status == 1)
+                                                                        @if($expense->renter_status == 0)
+                                                                            費用已送出<br>尚未繳費
+                                                                        @elseif($expense->renter_status == 1)
+                                                                            已繳費
+                                                                        @endif
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 5%">
+                                                                    @csrf
+                                                                    @if($expense->owner_status == 0)
+                                                                        <a class="btn btn-secondary" href="@if($expense->type == '租金'){{route('houses.expenses_rentals.edit',['expense'=>$expense -> id])}}
+                                                                    @else{{route('houses.expenses.edit',['expense'=>$expense -> id])}}@endif">修改</a>
+                                                                    @else
+                                                                        <button class="btn btn-secondary" disabled>修改
+                                                                        </button>
+                                                                    @endif
+                                                                </td>
+                                                                <td style="text-align: right;width: 3%">
+                                                                    <form
+                                                                        action="{{route('houses.expenses.destroy',$expense -> id)}}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        @if($expense->owner_status == 0)
+                                                                            <button class="btn btn-danger"
+                                                                                    onclick="return confirm('確定要刪除嗎？')">
+                                                                                刪除
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn btn-danger" disabled>刪除
+                                                                            </button>
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                                <td style="text-align: right;width: 8%">
+
+                                                                    <form
+                                                                        action="{{ route('houses.expenses.update', ['expense'=> $expense -> id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('PATCH')
+                                                                        @if($expense->owner_status == 0)
+                                                                            {{--<button href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning" name="ownerpush1">送出費用</button>--}}
+                                                                            <button type="submit" class="btn btn-warning" name="ownerpush">送出費用</button>
+                                                                        @elseif($expense->owner_status == 1)
+                                                                            @if($expense->renter_status == 0)
+                                                                                <a href="{{route('sendemail.expense',$expense -> id)}}" class="btn btn-warning">再次提醒</a>
+                                                                            @elseif($expense->renter_status == 1)
+                                                                                <button type="button" class="btn btn-primary" disabled>再次提醒</button>
+                                                                            @endif
+                                                                        @endif
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
+
                                         <!--報修資訊內容-->
                                         <div class="tab-pane fade" id="navs-top-repair" role="tabpanel">
                                             <ul class="nav nav-house mb-3" id="house-tab" role="tablist">
@@ -694,7 +1089,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -799,7 +1194,11 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
+<<<<<<< HEAD
                                                                                         <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+=======
+                                                                                        <a href="{{route('owners.houses.repairs.reply.create',[$repair->id,'house'=>$house->id])}}"><button type="button" class="btn btn-primary">回覆</button></a>
+>>>>>>> fa0f5bddaf39f615fcc1aad7ce74a990324dd096
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -895,7 +1294,11 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
+<<<<<<< HEAD
                                                                                         <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+=======
+                                                                                        <a href="{{route('owners.houses.repairs.reply.create',[$repair->id,'house'=>$house->id])}}"><button type="button" class="btn btn-primary">回覆</button></a>
+>>>>>>> fa0f5bddaf39f615fcc1aad7ce74a990324dd096
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -916,6 +1319,7 @@
                                             </div>
                                         </div>
 
+                                        <!--租客資訊-->
                                         <div class="tab-pane fade @if($signatory == '1') active show @endif" id="navs-top-renter" role="tabpanel">
 
 

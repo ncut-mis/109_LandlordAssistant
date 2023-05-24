@@ -15,7 +15,6 @@
             border-width: 2px;
             border-radius: 1em;
             color: rgba(6, 61, 9, 0.34);
-            margin-left: 20px;
             outline: none;
             padding: .3em 1.25em;
         }

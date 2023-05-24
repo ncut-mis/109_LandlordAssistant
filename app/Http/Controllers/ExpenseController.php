@@ -61,7 +61,10 @@ class ExpenseController extends Controller
         $amount = $request->amount;
         $type = $request->type;
         if (empty($amount)) {
-            return redirect()->back()->withInput()->with('error', '請填入金額');
+//            dd('1');
+            return redirect()->route('houses.expenses.create', ['house' => $house_id])->withInput()->with(['error'=> '請填入金額']);
+
+            //            return redirect()->back()->withInput()->with(['error'=> '請填入金額'])->withInput(['house' => $house_id]);
         }
         elseif (empty($type)){
             return redirect()->back()->withInput()->with('error', '請選擇費用類型');
@@ -188,22 +191,36 @@ class ExpenseController extends Controller
 //                return redirect()->back()->with('success', '已送出費用');
                     return redirect()->route('sendemail.expense', $expense->id);
                 } else {
-                    return redirect()->back()->with('error', '費用送出失敗，尚有未填寫的資料');
+                    return redirect()->back()->with(['error'=>'費用送出失敗，尚有未填寫的資料','expense' => '1']);
                 }
             }
             //租客按下繳費
-            elseif (isset($_REQUEST['renterpush'])){
-                $renter_status = '1';
-                $data = array_merge(
-                    ['renter_status' => $renter_status], $data
-                );
-                $expense->update($data);
-                return redirect()->route('renters.houses.show', [$house_id])->with('success', '繳費成功！');
+            elseif (isset($_REQUEST['renterpush'])) {
+                $cardNumber = $request->input('card-number');
+                $cvv = $request->input('CVV');
+                $expiration = $request->input('expiration');
+                if (empty($request->input('en-name')) || empty($cardNumber) || empty($cvv) || empty($expiration)) {
+                    return redirect()->back()->with(['error'=>'尚有未填寫的欄位','expense' => '1']);
+                } elseif (!preg_match('/^\d{16}$/', $cardNumber)){
+                    return redirect()->back()->with(['error' => '請輸入16位數字的卡號', 'expense' => '1']);
+                }elseif (!preg_match('/^\d{3}$/', $cvv)){
+                    return redirect()->back()->with(['error' => '請輸入3位數字的安全碼', 'expense' => '1']);
+                } elseif (!preg_match('/^\d{2}\/\d{2}$/', $expiration)) {
+                    return redirect()->back()->with(['error' => '請輸入正確的卡片到期日格式 (MM / YY)', 'expense' => '1']);
+                } else {
+                    $renter_status = '1';
+                    $data = array_merge(
+                        ['renter_status' => $renter_status], $data
+                    );
+                    $expense->update($data);
+                    return redirect()->route('renters.houses.show', [$house_id])->with(['success' => '繳費成功！', 'expense' => '1']);
+                }
             }
-        }
+            }
+
 
         $expense->update($data);
-        return redirect()->route('owners.houses.show', [$house_id])->with('success', '費用修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with(['success'=>'費用修改成功！','expense' => '1']);
     }
 
     public function rentals_update(Request $request, Expense $expense)
@@ -220,7 +237,7 @@ class ExpenseController extends Controller
             'remark',
         ]);
         $expense->update($data);
-        return redirect()->route('owners.houses.show', [$house_id])->with('success', '租金費用修改成功！');
+        return redirect()->route('owners.houses.show', [$house_id])->with(['success'=>'租金費用修改成功！','expense' => '1']);
     }
 
 
