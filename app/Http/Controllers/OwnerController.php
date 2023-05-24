@@ -147,13 +147,13 @@ class OwnerController extends Controller
 		$image = $house->image;
 
         //費用
-        $expenses = $house->expenses;
-        $expenses_w = $house->expenses->where('type','水費');
-        $expenses_e = $house->expenses->where('type','電費');
-        $expenses_rentals = $house->expenses->where('type','租金');
-        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金']);
-        $expenses_payoff = $house->expenses->where('renter_status','1');
-        $expenses_unpay  =$house->expenses->where('renter_status','0');
+        $expenses = $house->expenses()->orderBy('updated_at', 'desc')->get();
+        $expenses_w = $house->expenses->where('type','水費')->sortByDesc('updated_at');
+        $expenses_e = $house->expenses->where('type','電費')->sortByDesc('updated_at');
+        $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+        $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+        $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
 
 		$data = [
             'contract' =>$signatories,

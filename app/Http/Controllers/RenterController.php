@@ -122,11 +122,11 @@ class RenterController extends Controller
 //        $expenses = House::with(['expenses' => function ($query){
 //            $query->orderBy('updated_at', 'desc');
 //        }])->where('id','=',$house->id)->get();
-        $expenses_we = $house->expenses->whereIn('type',['水費','電費']);
-        $expenses_rentals = $house->expenses->where('type','租金');
-        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金']);
-        $expenses_payoff = $house->expenses->where('renter_status','1');
-        $expenses_unpay  =$house->expenses->where('renter_status','0');
+        $expenses_we = $house->expenses->whereIn('type',['水費','電費'])->sortByDesc('updated_at');
+        $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+        $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+        $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
 
         $unrepair = House::whereHas('repairs', function ($q) use ($house) {
             $q->where('house_id', '=', $house->id);
