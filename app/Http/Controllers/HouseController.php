@@ -297,7 +297,7 @@ class HouseController extends Controller
         if($request->file('image') != null){
             foreach($request->file('image') as $key => $image) {
                 //影像圖檔名稱
-                $file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
+                $file_name = $request->$key.'_'.uniqid().'.'.$image->getClientOriginalExtension();
                 //把檔案存到公開的資料夾
                 $file_path = public_path('image/'.$file_name);
                 move_uploaded_file($image->getPathname(), $file_path);
@@ -309,6 +309,7 @@ class HouseController extends Controller
                     'house_id' => $house->id,
                     'image' => $file_name,
                 ]);
+
                 //dd($imageModel);
                 $house->image()->save($imageModel);
             }
