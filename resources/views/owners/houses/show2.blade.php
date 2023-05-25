@@ -247,9 +247,9 @@
                                                                         <div
                                                                             class="d-flex justify-content-between flex-sm-row flex-column gap-3"
                                                                             style="position: relative;">
-                                                                            <div
-                                                                                class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                                                                                <div class="card-title overflow-hidden">
+                                                                            <div style="max-height: 300px; overflow-y: auto;">
+                                                                                <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                                                                                    <div class="card-title overflow-hidden">
                                                                                     <h5 class="text-nowrap fw-semibold mb-2">
                                                                                         介紹</h5>
                                                                                     <p class="text">@if(!empty($house->introduce))
@@ -259,7 +259,7 @@
                                                                                         @endif</p>
                                                                                 </div>
                                                                             </div>
-
+                                                                            </div>
 
                                                                         </div>
                                                                     </div>
@@ -1164,7 +1164,7 @@
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($inrepair  as $repair)
                                                             <tr>
-                                                                <td>
+                                                                <td style="text-align: center">
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
                                                                 <td style="text-align: center ;padding-right:5px"><span
@@ -1196,46 +1196,45 @@
                                                                                         <p>租客：</p>
                                                                                         <p>{{$repair->content}}</p>
                                                                                         <small>{{$repair->updated_at}}</small>
-                                                                                        <button type="button"
-                                                                                                class="btn p-0 dropdown-toggle hide-arrow"
-                                                                                                data-bs-toggle="dropdown"
-                                                                                                aria-expanded="false" style="float: right;">
-                                                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                        </button>
-                                                                                        <div class="dropdown-menu" style="">
-                                                                                            <form action="{{ route('houses.repairs.reply.edit', ['repairReply' => $repair_reply->id]) }}" method="GET">
-                                                                                                @csrf
-                                                                                                <button class="dropdown-item" name="status" value="編輯">
-                                                                                                    <i class="bx bx-edit-alt me-1"></i>
-                                                                                                    編輯
+                                                                                    </div>
+                                                                                    @foreach($repair->repair_replies as $repair_reply)
+                                                                                        <div class="card "style="margin-bottom: 20px;">
+                                                                                            <p>房東 ：</p>
+                                                                                            <p>{{$repair_reply->content}}</p>
+                                                                                            <small>{{$repair_reply->updated_at}}
+                                                                                                <button type="button"
+                                                                                                        class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                                        data-bs-toggle="dropdown"
+                                                                                                        aria-expanded="false" style="float: right;">
+                                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
                                                                                                 </button>
-                                                                                            </form>
-                                                                                            <form
-                                                                                                action="{{route('houses.repairs.reply.destroy',$repair_reply->id)}}"
-                                                                                                method="POST">
-                                                                                                @csrf
-                                                                                                @method('DELETE')
-                                                                                                <button class="dropdown-item"
-                                                                                                        name="status" value="刪除"><i
-                                                                                                        class="bx bx-edit-alt me-1"></i>
-                                                                                                    刪除
-                                                                                                </button>
-                                                                                            </form>
+                                                                                                <div class="dropdown-menu" style="">
+                                                                                                    <form action="{{ route('houses.repairs.reply.edit', ['repairReply' => $repair_reply->id]) }}" method="GET">
+                                                                                                        @csrf
+                                                                                                        <button class="dropdown-item" name="status" value="編輯">
+                                                                                                            <i class="bx bx-edit-alt me-1"></i>
+                                                                                                            編輯
+                                                                                                        </button>
+                                                                                                    </form>
+                                                                                                    <form
+                                                                                                        action="{{route('houses.repairs.reply.destroy',$repair_reply->id)}}"
+                                                                                                        method="POST">
+                                                                                                        @csrf
+                                                                                                        @method('DELETE')
+                                                                                                        <button class="dropdown-item"
+                                                                                                                name="status" value="刪除"><i
+                                                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                                                            刪除
+                                                                                                        </button>
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </small>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="card replies"
-                                                                                         style="margin-bottom: 20px;">
-                                                                                        <p>房東 ：</p>
-                                                                                        <p>已維修</p>
-                                                                                    </div>
+                                                                                    @endforeach
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-<<<<<<< HEAD
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
-=======
-                                                                                        <a href="{{route('owners.houses.repairs.reply.create',[$repair->id,'house'=>$house->id])}}"><button type="button" class="btn btn-primary">回覆</button></a>
->>>>>>> fa0f5bddaf39f615fcc1aad7ce74a990324dd096
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -1254,6 +1253,17 @@
                                                                             <i class="bx bx-dots-vertical-rounded"></i>
                                                                         </button>
                                                                         <div class="dropdown-menu" style="">
+                                                                            <form
+                                                                                action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item"
+                                                                                        name="status" value="維修中"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    維修中
+                                                                                </button>
+                                                                            </form>
                                                                             <form
                                                                                 action="{{route('houses.repairs.update',$repair -> id)}}"
                                                                                 method="POST">
@@ -1288,10 +1298,8 @@
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($finsh  as $repair)
                                                             <tr>
-                                                                <td>
-                                                                    <strong
-                                                                        style="text-align: center">{{$repair -> title}}</strong>
-                                                                </td>
+                                                                <td style="text-align: center">
+                                                                    <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
                                                                 <td style="text-align: center ;padding-right:5px"><span
                                                                         class="badge bg-label-primary me-1">{{$repair -> status}}</span>
@@ -1322,46 +1330,45 @@
                                                                                         <p>租客：</p>
                                                                                         <p>{{$repair->content}}</p>
                                                                                         <small>{{$repair->updated_at}}</small>
-                                                                                        <button type="button"
-                                                                                                class="btn p-0 dropdown-toggle hide-arrow"
-                                                                                                data-bs-toggle="dropdown"
-                                                                                                aria-expanded="false" style="float: right;">
-                                                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                                                        </button>
-                                                                                        <div class="dropdown-menu" style="">
-                                                                                            <form action="{{ route('houses.repairs.reply.edit', ['repairReply' => $repair_reply->id]) }}" method="GET">
-                                                                                                @csrf
-                                                                                                <button class="dropdown-item" name="status" value="編輯">
-                                                                                                    <i class="bx bx-edit-alt me-1"></i>
-                                                                                                    編輯
+                                                                                    </div>
+                                                                                    @foreach($repair->repair_replies as $repair_reply)
+                                                                                        <div class="card "style="margin-bottom: 20px;">
+                                                                                            <p>房東 ：</p>
+                                                                                            <p>{{$repair_reply->content}}</p>
+                                                                                            <small>{{$repair_reply->updated_at}}
+                                                                                                <button type="button"
+                                                                                                        class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                                        data-bs-toggle="dropdown"
+                                                                                                        aria-expanded="false" style="float: right;">
+                                                                                                    <i class="bx bx-dots-vertical-rounded"></i>
                                                                                                 </button>
-                                                                                            </form>
-                                                                                            <form
-                                                                                                action="{{route('houses.repairs.reply.destroy',$repair_reply->id)}}"
-                                                                                                method="POST">
-                                                                                                @csrf
-                                                                                                @method('DELETE')
-                                                                                                <button class="dropdown-item"
-                                                                                                        name="status" value="刪除"><i
-                                                                                                        class="bx bx-edit-alt me-1"></i>
-                                                                                                    刪除
-                                                                                                </button>
-                                                                                            </form>
+                                                                                                <div class="dropdown-menu" style="">
+                                                                                                    <form action="{{ route('houses.repairs.reply.edit', ['repairReply' => $repair_reply->id]) }}" method="GET">
+                                                                                                        @csrf
+                                                                                                        <button class="dropdown-item" name="status" value="編輯">
+                                                                                                            <i class="bx bx-edit-alt me-1"></i>
+                                                                                                            編輯
+                                                                                                        </button>
+                                                                                                    </form>
+                                                                                                    <form
+                                                                                                        action="{{route('houses.repairs.reply.destroy',$repair_reply->id)}}"
+                                                                                                        method="POST">
+                                                                                                        @csrf
+                                                                                                        @method('DELETE')
+                                                                                                        <button class="dropdown-item"
+                                                                                                                name="status" value="刪除"><i
+                                                                                                                class="bx bx-edit-alt me-1"></i>
+                                                                                                            刪除
+                                                                                                        </button>
+                                                                                                    </form>
+                                                                                                </div>
+                                                                                            </small>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="card replies"
-                                                                                         style="margin-bottom: 20px;">
-                                                                                        <p>房東 ：</p>
-                                                                                        <p>已維修</p>
-                                                                                    </div>
+                                                                                    @endforeach
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-<<<<<<< HEAD
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
-=======
-                                                                                        <a href="{{route('owners.houses.repairs.reply.create',[$repair->id,'house'=>$house->id])}}"><button type="button" class="btn btn-primary">回覆</button></a>
->>>>>>> fa0f5bddaf39f615fcc1aad7ce74a990324dd096
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -1369,8 +1376,39 @@
                                                                                             關閉
                                                                                         </button>
                                                                                     </div>
+
                                                                                 </div>
                                                                             </div>
+                                                                        </div>
+                                                                        <button type="button"
+                                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false">
+                                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                                        </button>
+                                                                        <div class="dropdown-menu" style="">
+                                                                            <form
+                                                                                action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item"
+                                                                                        name="status" value="維修中"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    維修中
+                                                                                </button>
+                                                                            </form>
+                                                                            <form
+                                                                                action="{{route('houses.repairs.update',$repair -> id)}}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button class="dropdown-item"
+                                                                                        name="status" value="已維修"><i
+                                                                                        class="bx bx-edit-alt me-1"></i>
+                                                                                    已維修
+                                                                                </button>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </td>

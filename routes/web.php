@@ -72,7 +72,7 @@ Route::GET('/sendemail/repair/{repair}', function (Repair $repair) {
 })->name('sendemail.repair');
 //報修回覆信件
 Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repairReply) {
-    $mail=$repairReply->repair->house->renter->user->email;
+    $mail=$repairReply->repair->renter->user->email;
     $subject = $repairReply->repair->house->name.'房屋的報修回覆通知'; // 將字串和費用類型拼接成主旨
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
         '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>\n\n'.
@@ -89,7 +89,7 @@ Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repai
 
 //報修狀態更新信件
 Route::GET('/sendemail/repair/update/{repair}', function (Repair $repair) {
-    $mail=$repair->house->renter->user->email;
+    $mail=$repair->renter->user->email;
     $subject = $repair->house->name.'房屋的報修狀態更動通知'; // 將字串和費用類型拼接成主旨
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
         '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>\n\n'.
@@ -100,7 +100,7 @@ Route::GET('/sendemail/repair/update/{repair}', function (Repair $repair) {
             ->subject($subject)
             ->html($text);
     });
-    return redirect()->route('renters.houses.show',[$repair->house->id])->with(['success' => '已送出維修狀態更新通知信件', 'repair' => '1']);
+    return redirect()->route('owners.houses.show',[$repair->house->id])->with(['success' => '已送出維修狀態更新通知信件', 'repair' => '1']);
 })->name('sendemail.repair.update');
 
 // 3-7-1 訪客/會員瀏覽平台首頁
@@ -335,6 +335,7 @@ Route::delete('ad/posts/{post}', [SystemPostController::class, 'destroy'])->name
 
 //清除搜尋結果
 Route::get('/clear-search-session', [HomeController::class, 'clearSearchSession'])->name('home.clearSearchSession');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
