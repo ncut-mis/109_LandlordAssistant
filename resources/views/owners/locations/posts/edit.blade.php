@@ -26,7 +26,8 @@
     }
 </style>
 @section('page-content')
-    <div class="container-fluid px-4">
+    <div class="layout-container">
+        <div class="container-fluid px-4">
         <h1 class="mt-4">公告管理</h1>
 		<a class="btn btn-outline-secondary"
 		   href="{{ route('owners.locations.posts.index',[$location->id]) }}">
@@ -65,6 +66,7 @@
                 </div>
             </form>
         @endif
+    </div>
     </div>
 @endsection
 

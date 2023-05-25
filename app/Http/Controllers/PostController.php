@@ -74,7 +74,7 @@ class PostController extends Controller
         //dump &die
         //dd($request->all());
 
-        return redirect()->route('owners.locations.posts.index',$location);
+        return redirect()->route('owners.locations.posts.index',$location)->with('success','成功儲存公告!');
     }
 
     /**
@@ -115,7 +115,7 @@ class PostController extends Controller
 
         $post->update($request->all());
 
-        return redirect()->route('owners.locations.posts.index', $location);
+        return redirect()->route('owners.locations.posts.index', $location)->with('success','修改成功!');
     }
 
     /**

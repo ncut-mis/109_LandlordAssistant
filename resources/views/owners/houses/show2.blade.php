@@ -1100,7 +1100,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -1234,7 +1234,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
@@ -1297,9 +1297,10 @@
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($finsh  as $repair)
-                                                            <tr>
                                                                 <td style="text-align: center">
-                                                                    <strong>{{$repair -> title}}</strong></td>
+                                                                    <strong
+                                                                        style="text-align: center">{{$repair -> title}}</strong>
+                                                                </td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
                                                                 <td style="text-align: center ;padding-right:5px"><span
                                                                         class="badge bg-label-primary me-1">{{$repair -> status}}</span>
@@ -1368,7 +1369,7 @@
                                                                                     <p>
                                                                                         <!-- 訊息視窗按鈕 -->
                                                                                     <div class="modal-footer">
-                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id,'house'=>$house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
+                                                                                        <a href="{{ route('owners.houses.repairs.reply.create', ['repair' => $repair->id, 'house_id' => $house->id]) }}"><button type="button" class="btn btn-primary">回覆</button></a>
                                                                                         <button type="button"
                                                                                                 class="btn btn-danger close"
                                                                                                 data-dismiss="modal"
