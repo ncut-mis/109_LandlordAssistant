@@ -184,7 +184,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-12 col-md-12 col-6 mb-4">
                                                                 <div class="card">
-                                                                    <div class="card-body">
+                                                                    <div class="card-body ps ps--active-y">
                                                                         <div
                                                                             class="d-flex justify-content-between flex-sm-row flex-column gap-3"
                                                                             style="position: relative;">
@@ -222,15 +222,16 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                             <div class="col-lg-12 col-md-12 col-6 mb-4">
                                                                 <div class="card">
                                                                     <div class="card-body">
                                                                         <div
                                                                             class="d-flex justify-content-between flex-sm-row flex-column gap-3"
                                                                             style="position: relative;">
-                                                                            <div
-                                                                                class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-                                                                                <div class="card-title overflow-hidden">
+                                                                            <div style="max-height: 300px; overflow-y: auto;">
+                                                                                <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                                                                                    <div class="card-title overflow-hidden">
                                                                                     <h5 class="text-nowrap fw-semibold mb-2">
                                                                                         介紹</h5>
                                                                                     <p class="text">@if(!empty($house->introduce))
@@ -240,6 +241,7 @@
                                                                                         @endif</p>
                                                                                 </div>
                                                                             </div>
+                                                                            </div>
                                                                             <div id="profileReportChart"
                                                                                  style="min-height: 80px;">
                                                                             </div>
@@ -248,6 +250,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                     <!-- Total Revenue -->
