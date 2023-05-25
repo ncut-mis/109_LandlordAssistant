@@ -395,9 +395,9 @@
                                             <table class="table">
                                                 <thead>
                                                 <tr>
-                                                    <th scope="col" style="text-align: center;font-size: 18px">標題</th>
-                                                    <th scope="col" style="text-align: center;font-size: 18px">內容</th>
-                                                    <th scope="col" style="text-align: center;font-size: 18px">發布日期</th>
+                                                    <th scope="col" style="text-align: center;width: 20%;font-size: 18px">標題</th>
+                                                    <th scope="col" style="text-align: center;width: 50%;font-size: 18px">內容</th>
+                                                    <th scope="col" style="text-align: center;width: 20%;font-size: 18px">發布日期</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -406,7 +406,7 @@
                                                         <tr>
                                                             {{--                        <td >{{ $location->id }}</td>--}}
                                                             <td style="text-align: center"><a href="{{route('renters.houses.posts.show',[$house->id,$post->id])}}">{{ $post->title }}</td>
-                                                            <td style="text-align: center">{{ Illuminate\Support\Str::limit($post->content, 10) }}</td>
+                                                            <td style="text-align: left">{{ Illuminate\Support\Str::limit($post->content, 90) }}</td>
                                                             <td style="text-align: center" >{{ $post->updated_at }}</td>
                                                     @endforeach
                                                 @endforeach
@@ -1006,21 +1006,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th style="font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
                                                             <th style="text-align: center;font-size: 18px">日期</th>
-                                                            <th style="text-align: right;font-size: 18px">狀態</th>
-                                                            <th style="text-align: right;font-size: 18px">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($unrepair  as $repair)
                                                             <tr>
-                                                                <td>
+                                                                <td style="text-align: center">
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center;padding-right:5px">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary"  data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
@@ -1100,21 +1100,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($inrepair  as $repair)
                                                             <tr>
-                                                                <td>
+                                                                <td style="text-align: center">
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center;padding-right:5px">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->
@@ -1191,21 +1191,21 @@
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
-                                                            <th>標題</th>
-                                                            <th style="text-align: center">日期</th>
-                                                            <th style="text-align: right">狀態</th>
-                                                            <th style="text-align: right">Actions</th>
+                                                            <th style="text-align: center;font-size: 18px">標題</th>
+                                                            <th style="text-align: center;font-size: 18px">日期</th>
+                                                            <th style="text-align: center;font-size: 18px">狀態</th>
+                                                            <th style="text-align: center;font-size: 18px">Actions</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody class="table-border-bottom-0">
                                                         @foreach($finsh  as $repair)
                                                             <tr>
-                                                                <td>
+                                                                <td style="text-align: center">
                                                                     <strong>{{$repair -> title}}</strong></td>
                                                                 <td style="text-align: center">{{$repair -> created_at}}</td>
-                                                                <td style="text-align: right ;padding-right:5px"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
+                                                                <td style="text-align: center"><span class="badge bg-label-primary me-1">{{$repair -> status}}</span>
                                                                 </td>
-                                                                <td style="text-align: right">
+                                                                <td style="text-align: center;padding-right:5px">
                                                                     <div class="dropdown">
                                                                         <button type="button" class="btn btn-secondary" href="{{route('renters.houses.repairs.show',[$repair->id,$house->id])}}" data-target="#myModal{{$repair->id}}" data-toggle="modal">查看內容</button>
                                                                         <!--<button type="button" class="btn btn-info">查看內容</button>-->

@@ -26,7 +26,8 @@
     }
 </style>
 @section('page-content')
-    <div class="container-fluid px-4">
+    <div class="layout-container">
+        <div class="container-fluid px-4">
         <h1 class="mt-4">公告管理</h1>
 		<a class="btn btn-outline-secondary"
 		   href="{{ route('owners.locations.posts.index',$location[0]->id) }}">
@@ -45,9 +46,6 @@
             <form action="{{route('owners.locations.posts.store',$location->pluck('id')->first())}}" method="post" role="form">
                 @method('post')
                 @csrf
-                {{--           <div class="row">--}}
-                {{--               <div class="left-column"><h2>{{ $locations->name }}</h2></div>--}}
-                {{--           </div>--}}
                 <div class="form-group">
                     <label for="title" class="form-label">標題</label>
                     <input id="title" name="title" type="text" class="form-control" value="{{old('title')}}" placeholder="請輸入公告標題">
@@ -65,6 +63,7 @@
                 </div>
             </form>
         @endif
+    </div>
     </div>
 @endsection
 
