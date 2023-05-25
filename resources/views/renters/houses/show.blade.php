@@ -195,19 +195,19 @@
                                                                                         租金</h5>
                                                                                     <span
                                                                                         class="badge bg-label-warning rounded-pill">
-                                                        每@if( $expenses->value('interval') == 12)
+                                                        每@if( $house->value('interval') == 12)
                                                                                             年繳
-                                                                                        @elseif( $expenses->value('interval') == 6)
+                                                                                        @elseif( $house->value('interval') == 6)
                                                                                             半年繳
-                                                                                        @elseif( $expenses->value('interval') == 3)
+                                                                                        @elseif( $house->value('interval') == 3)
                                                                                             季繳
-                                                                                        @elseif( $expenses->value('interval') == 1)
+                                                                                        @elseif( $house->value('interval') == 1)
                                                                                             月繳
                                                                                         @endif一次</span>
                                                                                 </div>
                                                                                 <div class="mt-sm-auto">
                                                                                     <h3 class="mb-0">
-                                                                                        ${{ number_format($expenses->value('amount')) }}</h3>
+                                                                                        ${{ number_format($house->rentals) }}</h3>
                                                                                 </div>
                                                                             </div>
 
