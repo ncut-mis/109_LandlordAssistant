@@ -40,14 +40,14 @@ use App\Models\Repair;
 //費用信件
 Route::get('/sendemail/{expense}', function (Expense $expense) {
 	$subject = $expense->house->name.'房屋的'.$expense->type.'費用提醒'; // 將字串和費用類型拼接成主旨
-//	$text = '<h1>親愛的用戶，您好：</h1>'."\n\n".'您有一筆日期為'."\n\n".$expense->start_date.'~'.$expense->end_date.'的'.$expense->type.'費用'.$expense->amount.'元尚未繳費'."\n\n".'請盡速前往繳費';
+	$mail = $expense->house->owner->user->email;
     $text ='<h1>親愛的用戶，您好：</h1>'."\n\n".
     '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'."\n\n".
     '<p style="font-size: 16px;">您有一筆日期為</p>'."\n\n" .
     '<p style="font-size: 20px;font-weight: bold">'.$expense->start_date.' ~ '.$expense->end_date.' 的 '.$expense->type.' 費用</p>'."\n\n".
     '<p style="font-size: 30px;font-weight: bold;color: red">'.$expense->amount.'元</p>' .'尚未繳費，請盡速前往繳費。';
-    Mail::send([], [], function ($message) use ($subject, $text) {
-        $message->to('3a932117@gm.student.ncut.edu.tw')
+    Mail::send([], [], function ($message) use ($subject, $text ,$mail) {
+        $message->to($mail)
                 ->subject($subject)
                 ->html($text);
     });

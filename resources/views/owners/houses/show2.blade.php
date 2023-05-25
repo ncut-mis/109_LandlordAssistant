@@ -38,7 +38,10 @@
             margin-right: 1rem;
             text-align: right;
         }
-
+        .text {
+            font-size: 18px;
+            white-space: pre-wrap;
+        }
 
     </style>
     @if(session('success'))
@@ -130,13 +133,21 @@
                                                             <div class="row row-bordered g-0">
                                                                 <div class="col-md-8">
                                                                     <h5 class="card-header m-0 me-2 pb-3">圖片</h5>
-                                                                    <div id="totalRevenueChart" class="px-2"
-                                                                         style="min-height: 315px;">
-                                                                        @foreach($house->image as $image)
-                                                                            <img
-                                                                                src="{{ asset('image/'.$image->image) }}"
-                                                                                alt="123" class="img-fluid">
-                                                                        @endforeach
+                                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                                        <div class="carousel-inner">
+                                                                                @foreach($house->image as $index => $image)
+                                                                                <div class="carousel-item {{$index === 0 ? 'active' : ''}}">
+                                                                                    <img src="{{ asset('image/'.$image->image) }}" class="d-block w-100"></div>
+                                                                                @endforeach
+                                                                        </div>
+                                                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                            <span class="visually-hidden">Previous</span>
+                                                                        </button>
+                                                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                            <span class="visually-hidden">Next</span>
+                                                                        </button>
                                                                     </div>
 
                                                                 </div>
