@@ -30,23 +30,31 @@ class PostController extends Controller
 
     public function owners_index($location_id)
     {
-        $location = Location::with(['posts' => function ($query) {
-            $query->orderBy('created_at', 'desc'); // 按照创建时间降序排列帖子
-        }])->findOrFail($location_id);
-        return view('owners.locations.posts.index', [
-            'locations' => collect([$location]),
-            'location' => $location
-        ]);
+        if(Auth::user()){
+            $location = Location::with(['posts' => function ($query) {
+                $query->orderBy('created_at', 'desc'); // 按照创建时间降序排列帖子
+            }])->findOrFail($location_id);
+            return view('owners.locations.posts.index', [
+                'locations' => collect([$location]),
+                'location' => $location
+            ]);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create(Location $location)
     {
-//       dd($location) ;
-        $location = Location::with('posts')->where('id', $location->id)->get();
-        $location_data=['location'=>$location];
-        return view('owners.locations.posts.create', $location_data );
+        if(Auth::user()){
+            //       dd($location) ;
+            $location = Location::with('posts')->where('id', $location->id)->get();
+            $location_data=['location'=>$location];
+            return view('owners.locations.posts.create', $location_data );
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -82,15 +90,19 @@ class PostController extends Controller
      */
     public function show(House $house,Post $post)
     {
-        $post_num=$post->id;
-        $house_num=$house->id;
-        $house=House::find($house_num);
-        $posts = Post::find ($post_num);
-        $view_data = [
-            'posts'=>$posts,
-            'houses'=>$house,
-        ];
-        return view('renters.houses.posts.show',$view_data);
+        if(Auth::user()){
+            $post_num=$post->id;
+            $house_num=$house->id;
+            $house=House::find($house_num);
+            $posts = Post::find ($post_num);
+            $view_data = [
+                'posts'=>$posts,
+                'houses'=>$house,
+            ];
+            return view('renters.houses.posts.show',$view_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -98,8 +110,11 @@ class PostController extends Controller
      */
     public function edit(Location $location, Post $post)
     {
-
-        return view('owners.locations.posts.edit', compact('location', 'post'));
+        if(Auth::user()){
+            return view('owners.locations.posts.edit', compact('location', 'post'));
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**

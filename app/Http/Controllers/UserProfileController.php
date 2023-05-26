@@ -17,23 +17,26 @@ class UserProfileController extends Controller
      */
     public function index($user)
     {
+        if(Auth::user()){
+            $id = Auth::id(); //user id
+            //$id = 1; //user id
+            $users = User::find($id);
+            $data = [
+                'users' => $users
+            ];
 
-        $id = Auth::id(); //user id
-        //$id = 1; //user id
-        $users = User::find($id);
-        $data = [
-            'users' => $users
-        ];
-
-        if (Auth::check()) {
-            $name = Auth::user()->name;
-            return view('users.index', $data,compact('name'));
-        }
-        else
-        {
+            if (Auth::check()) {
+                $name = Auth::user()->name;
+                return view('users.index', $data,compact('name'));
+            }
+            else
+            {
 
 
-            return view('users.index', $data);
+                return view('users.index', $data);
+            }
+        } else{
+            return redirect()->route('home.index');
         }
 
     }
@@ -67,15 +70,19 @@ class UserProfileController extends Controller
      */
     public function edit(User $user)
     {
-        $name = Auth::user()->name;
-        $id = Auth::id(); //user id
-        //$id = '1'; //user id
-        $users = User::find($id);
-        $data = [
-            'users' => $users,
-            'name' => $name
-        ];
-        return view('users.edit', $data);
+        if(Auth::user()){
+            $name = Auth::user()->name;
+            $id = Auth::id(); //user id
+            //$id = '1'; //user id
+            $users = User::find($id);
+            $data = [
+                'users' => $users,
+                'name' => $name
+            ];
+            return view('users.edit', $data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -98,14 +105,17 @@ class UserProfileController extends Controller
             $user->save();
             return redirect()->route('users.index', $user->id)->with('success', '修改成功！');
         }*/
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->account_name = $request->account_name;
-        $user->account = $request->account;
-        $user->save();
-        return redirect()->route('users.index', $user->id)->with('success', '修改成功！');
-
+        if(Auth::user()){
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->account_name = $request->account_name;
+            $user->account = $request->account;
+            $user->save();
+            return redirect()->route('users.index', $user->id)->with('success', '修改成功！');
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**

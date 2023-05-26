@@ -30,22 +30,30 @@ class ExpenseController extends Controller
      */
     public function owners_create($house)
     {
-        $houses = House::find($house);
-        $houses_data = [
-            'houses'=>$houses,
-        ];
+        if(Auth::user()){
+            $houses = House::find($house);
+            $houses_data = [
+                'houses'=>$houses,
+            ];
 
-        return view('owners.locations.houses.expenses.create2',$houses_data);
+            return view('owners.locations.houses.expenses.create2',$houses_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function rentals_create($house)
     {
-        $houses = House::find($house);
-        $houses_data = [
-            'houses'=>$houses,
-        ];
+        if(Auth::user()){
+            $houses = House::find($house);
+            $houses_data = [
+                'houses'=>$houses,
+            ];
 
-        return view('owners.locations.houses.expenses.rentals_create',$houses_data);
+            return view('owners.locations.houses.expenses.rentals_create',$houses_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -53,65 +61,73 @@ class ExpenseController extends Controller
      */
     public function owners_store(Request $request, House $house)
     {
-//        $house = House::find($house);如果是傳單一值(Model $參數)
-        $location = $house->location_id;
-        $house_id = $house-> id;
+        if(Auth::user()){
+    //        $house = House::find($house);如果是傳單一值(Model $參數)
+            $location = $house->location_id;
+            $house_id = $house-> id;
 
-        //驗證資料不為空
-        $amount = $request->amount;
-        $type = $request->type;
-        if (empty($amount)) {
-//            dd('1');
-            return redirect()->route('houses.expenses.create', ['house' => $house_id])->withInput()->with(['error'=> '請填入金額']);
+            //驗證資料不為空
+            $amount = $request->amount;
+            $type = $request->type;
+            if (empty($amount)) {
+    //            dd('1');
+                return redirect()->route('houses.expenses.create', ['house' => $house_id])->withInput()->with(['error'=> '請填入金額']);
 
-            //            return redirect()->back()->withInput()->with(['error'=> '請填入金額'])->withInput(['house' => $house_id]);
+                //            return redirect()->back()->withInput()->with(['error'=> '請填入金額'])->withInput(['house' => $house_id]);
+            }
+            elseif (empty($type)){
+                return redirect()->back()->withInput()->with('error', '請選擇費用類型');
+            }
+
+            $expense = Expense::create([
+                'house_id' => $house_id,
+                'type' => $request->type,
+                'amount' => $request->amount,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'remark' => $request->remark,
+                'house'=>$house,
+                'location'=> $location
+            ]);
+
+            if(isset($_REQUEST['store-and-next'])){
+                $house = House::find($house_id);
+                $data = [
+                    'houses'=>$house
+                ];
+                return view('owners.locations.houses.expenses.create2',['houses' => $house,'success'=>'費用新增成功！']);
+            }
+
+            // 返回頁面或其他操作
+            return redirect()->route('owners.houses.show',['house' => $house_id])->with(['success'=>'費用新增成功！','expense' => '1']);
+        } else{
+            return redirect()->route('home.index');
         }
-        elseif (empty($type)){
-            return redirect()->back()->withInput()->with('error', '請選擇費用類型');
-        }
-
-        $expense = Expense::create([
-            'house_id' => $house_id,
-            'type' => $request->type,
-            'amount' => $request->amount,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'remark' => $request->remark,
-            'house'=>$house,
-            'location'=> $location
-        ]);
-
-        if(isset($_REQUEST['store-and-next'])){
-            $house = House::find($house_id);
-            $data = [
-                'houses'=>$house
-            ];
-            return view('owners.locations.houses.expenses.create2',['houses' => $house,'success'=>'費用新增成功！']);
-        }
-
-        // 返回頁面或其他操作
-        return redirect()->route('owners.houses.show',['house' => $house_id])->with(['success'=>'費用新增成功！','expense' => '1']);
     }
 
     public function rentals_store(Request $request, House $house)
     {
-        $location = $house->location_id;
-        $house_id = $house-> id;
-        $expense = Expense::create([
-            'house_id' => $house_id,
-            'type' => $request->type,
-            'amount' => $request->amount,
-            'interval' => $request->interval,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'remark' => $request->remark,
-            'house'=>$house,
-            'location'=> $location
-        ]);
+        if(Auth::user()){
+            $location = $house->location_id;
+            $house_id = $house-> id;
+            $expense = Expense::create([
+                'house_id' => $house_id,
+                'type' => $request->type,
+                'amount' => $request->amount,
+                'interval' => $request->interval,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'remark' => $request->remark,
+                'house'=>$house,
+                'location'=> $location
+            ]);
 
 
-        // 返回頁面或其他操作
-        return redirect()->route('owners.houses.show',['house' => $house->id])->with(['success', '租金新增成功！','expense' => '1']);
+            // 返回頁面或其他操作
+            return redirect()->route('owners.houses.show',['house' => $house->id])->with(['success', '租金新增成功！','expense' => '1']);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -127,22 +143,27 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        $house_id=$expense->house_id;
-        $data = House::whereHas('expenses',function ($e)use ($house_id){
-            $e ->where('house_id','=',$house_id);
-        })->get();
-//            $houses = House::whereHas('expenses', function ($q){
-//            $q->where('house_id','=',2);
-//        })->get();
-        $houses_data = [
-            'houses' => $data,
-            'expenses'=> $expense,
-        ];
-        return view('owners.locations.houses.expenses.edit2',$houses_data);
+        if(Auth::user()){
+            $house_id=$expense->house_id;
+            $data = House::whereHas('expenses',function ($e)use ($house_id){
+                $e ->where('house_id','=',$house_id);
+            })->get();
+    //            $houses = House::whereHas('expenses', function ($q){
+    //            $q->where('house_id','=',2);
+    //        })->get();
+            $houses_data = [
+                'houses' => $data,
+                'expenses'=> $expense,
+            ];
+            return view('owners.locations.houses.expenses.edit2',$houses_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function rentals_edit(Expense $expense)
     {
+        if(Auth::user()){
         $house_id=$expense->house_id;
         $data = House::whereHas('expenses',function ($e)use ($house_id){
             $e ->where('house_id','=',$house_id);
@@ -155,6 +176,10 @@ class ExpenseController extends Controller
             'expenses'=> $expense,
         ];
         return view('owners.locations.houses.expenses.rentals_edit',$houses_data);
+
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
