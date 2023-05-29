@@ -6,8 +6,8 @@
                 <a href="#">會員中心</a>
                 <ul>
                     <li><a href="{{url('users/{user}')}}" style="text-align: center">個人資料</a></li>
-                    <li><a href="{{url('users/owners/{owner}')}}" style="text-align: center">切換 房東 身分</a></li>
-                    <li><a href="{{url('users/renters/{renter}')}}" style="text-align: center">切換 租客 身分</a></li>
+                    <li><a href="{{url('users/owners/{owner}')}}" style="text-align: center">進入 房東 頁面</a></li>
+                    <li><a href="{{url('users/renters/{renter}')}}" style="text-align: center">進入 租客 頁面</a></li>
                 </ul>
             </li>
         @endif
