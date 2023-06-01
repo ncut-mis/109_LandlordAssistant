@@ -183,13 +183,17 @@ class HouseController extends Controller
      */
     public function create($location)
     {
-        $locations = Location::find($location);
-        $owner_id = $locations->owner->id;
-        $locations_data = [
-            'locations' => $locations,
-            'owner_id' => $owner_id,
-        ];
-        return view('owners.locations.houses.create2',$locations_data);
+        if(Auth::user()){
+            $locations = Location::find($location);
+            $owner_id = $locations->owner->id;
+            $locations_data = [
+                'locations' => $locations,
+                'owner_id' => $owner_id,
+            ];
+            return view('owners.locations.houses.create2',$locations_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function advance_search_create()
@@ -364,25 +368,29 @@ class HouseController extends Controller
      */
     public function show($owner, Location $location)
     {
-		//抓取全部房屋
-		$houses = $location->houses;
-        //抓取出租中房屋
-		$for_rent = $location->houses->where('lease_status', '出租中');
-		//抓取已刊登房屋
-		$listed = $location->houses->where('lease_status', '已刊登');
-		//抓取閒置房屋
-		$vacancy = $location->houses->where('lease_status', '閒置');
+        if(Auth::user()){
+            //抓取全部房屋
+            $houses = $location->houses;
+            //抓取出租中房屋
+            $for_rent = $location->houses->where('lease_status', '出租中');
+            //抓取已刊登房屋
+            $listed = $location->houses->where('lease_status', '已刊登');
+            //抓取閒置房屋
+            $vacancy = $location->houses->where('lease_status', '閒置');
 
 
-		$data = [
-            'owner_id' => $owner,
-            'location' => $location,
-            'houses' => $houses,
-            'for_rent' => $for_rent,
-            'listed' => $listed,
-            'vacancy' => $vacancy,
-        ];
-		return view('owners.locations.houses.show2',$data);
+            $data = [
+                'owner_id' => $owner,
+                'location' => $location,
+                'houses' => $houses,
+                'for_rent' => $for_rent,
+                'listed' => $listed,
+                'vacancy' => $vacancy,
+            ];
+            return view('owners.locations.houses.show2',$data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function advance_search(House $house)
@@ -399,16 +407,21 @@ class HouseController extends Controller
      */
     public function edit(Location $location, House $house)
     {
-        $furnish = $house->furnishings;
-        $feature = $house->features;
-        $locations_data = [
-            'locations' => $location,
-            'houses' => $house,
-            'furnish' => $furnish,
-            'feature' => $feature,
-            'owner_id' => $location->owner_id,
-        ];
-        return view('owners.locations.houses.edit2',$locations_data);
+        if(Auth::user()){
+
+            $furnish = $house->furnishings;
+            $feature = $house->features;
+            $locations_data = [
+                'locations' => $location,
+                'houses' => $house,
+                'furnish' => $furnish,
+                'feature' => $feature,
+                'owner_id' => $location->owner_id,
+            ];
+            return view('owners.locations.houses.edit2',$locations_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function publish_edit(House $house)

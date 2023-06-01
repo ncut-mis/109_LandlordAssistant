@@ -32,19 +32,23 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-                'name' => 'required|max:255',
+        if(Auth::user()){
+            $validatedData = $request->validate([
+                    'name' => 'required|max:255',
+                ]);
+
+            $owner_id = Auth::user()->owner->id;
+            // 建立 Location 資料
+            $location = Location::create([
+                'name' => $validatedData['name'],
+                'owner_id' => $request->owner,
             ]);
 
-        $owner_id = Auth::user()->owner->id;
-        // 建立 Location 資料
-        $location = Location::create([
-            'name' => $validatedData['name'],
-            'owner_id' => $request->owner,
-        ]);
 
-
-        return redirect()->route('owners.home.index',$owner_id)->with('success', '新增成功！');
+            return redirect()->route('owners.home.index',$owner_id)->with('success', '新增成功！');
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -60,13 +64,16 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
+        if(Auth::user()){
+            $locations_data = [
+                'location' => $location,
+                'name' => $location->name,
 
-        $locations_data = [
-            'location' => $location,
-            'name' => $location->name,
-
-        ];
-        return view('owners.locations.edit2',$locations_data);
+            ];
+            return view('owners.locations.edit2',$locations_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -74,16 +81,20 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        $owner_id=Auth::user()->owner->id;
-        //$location = new Location;
+        if(Auth::user()){
+            $owner_id=Auth::user()->owner->id;
+            //$location = new Location;
 
-        $location->owner_id = $owner_id;
-        $location->name = $request->name;
-        $location->save();
-//        $data = $request->name;
-//        $location->update($data);
-//        $location->save($data);
-        return redirect()->route('owners.home.index',$owner_id)->with('success', '修改成功！');
+            $location->owner_id = $owner_id;
+            $location->name = $request->name;
+            $location->save();
+    //        $data = $request->name;
+    //        $location->update($data);
+    //        $location->save($data);
+            return redirect()->route('owners.home.index',$owner_id)->with('success', '修改成功！');
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
@@ -92,9 +103,9 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         $location = Location::findOrFail($location->id);
-		if ($location->houses()->where('lease_status', '出租中')->exists()) {
-			return redirect()->back()->with('error', '該地點下有出租中的房屋，禁止刪除。');
-		}
+        if ($location->houses()->where('lease_status', '出租中')->exists()) {
+            return redirect()->back()->with('error', '該地點下有出租中的房屋，禁止刪除。');
+        }
         $location->delete();
 
         return redirect()->route('owners.home.index', ['owner' => Auth::user()->owner->id])

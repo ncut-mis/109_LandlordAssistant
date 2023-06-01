@@ -212,41 +212,41 @@ Route::patch('owners/locations/{location}/posts/{post}', [PostController::class,
 Route::delete('owners/locations/{location}/posts/{post}', [PostController::class, 'destroy'])->name('owners.locations.posts.destroy');
 
 // 3-9-11 會員(房東)查看管理員
-Route::get('owners/locations/{location}/managers', [AdminController::class, 'index'])->name('owners.locations.managers.index');
+//Route::get('owners/locations/{location}/managers', [AdminController::class, 'index'])->name('owners.locations.managers.index');
 
 // 3-9-12 會員(房東)新增管理員
-Route::get('owners/locations/{location}/managers/create', [AdminController::class, 'create'])->name('owners.locations.managers.create');
-Route::post('owners/locations/{location}/managers', [AdminController::class, 'store'])->name('owners.locations.managers.store');
+//Route::get('owners/locations/{location}/managers/create', [AdminController::class, 'create'])->name('owners.locations.managers.create');
+//Route::post('owners/locations/{location}/managers', [AdminController::class, 'store'])->name('owners.locations.managers.store');
 
 // 3-9-13會員(房東)刪除管理員
-Route::delete('owners/locations/{location}/managers/{manager}', [AdminController::class, 'destroy'])->name('owners.locations.managers.destroy');
+//Route::delete('owners/locations/{location}/managers/{manager}', [AdminController::class, 'destroy'])->name('owners.locations.managers.destroy');
 
 // 3-9-14 會員(房東)刊登房屋(excel顏色不一樣)
-Route::get('owners/houses/publish/{publish}/edit', [HouseController::class, 'publish_edit'])->name('owner.publish.edit');
-Route::patch('owners/houses/publish/{publish}', [HouseController::class, 'publish_update'])->name('owner.publish.update');
+//Route::get('owners/houses/publish/{publish}/edit', [HouseController::class, 'publish_edit'])->name('owner.publish.edit');
+//Route::patch('owners/houses/publish/{publish}', [HouseController::class, 'publish_update'])->name('owner.publish.update');
 
 // 3-9-15 會員(房東)取消刊登房屋(excel顏色不一樣)
-Route::delete('owners/houses/publish/{publish}', [HouseController::class, 'unpublish_update'])->name('owner.publish.destroy');
+//Route::delete('owners/houses/publish/{publish}', [HouseController::class, 'unpublish_update'])->name('owner.publish.destroy');
 
 // 3-9-16 會員(房東)篩選某個狀態所有房屋資訊
-Route::get('houses/by_status/{status}', [HouseController::class, 'by_status'])->name('houses.by_status');
+//Route::get('houses/by_status/{status}', [HouseController::class, 'by_status'])->name('houses.by_status');
 
 // 3-9-17 會員(房東)查看單一房屋資訊
 Route::get('owners/houses/{house}', [OwnerController::class, 'show'])->name('owners.houses.show');
 
 // 3-9-18 會員(房東)新增合約書
-Route::get('owners/houses/{house}/contracts/create', [ContractController::class, 'create'])->name('houses.contracts.create');
-Route::post('owners/houses/{house}/contracts', [ContractController::class, 'store'])->name('houses.contracts.store');
+//Route::get('owners/houses/{house}/contracts/create', [ContractController::class, 'create'])->name('houses.contracts.create');
+//Route::post('owners/houses/{house}/contracts', [ContractController::class, 'store'])->name('houses.contracts.store');
 
 // 3-9-19 會員(房東)刪除合約書
-Route::delete('owners/houses/contracts/{contract}', [ContractController::class, 'destroy'])->name('houses.contracts.destroy');
+//Route::delete('owners/houses/contracts/{contract}', [ContractController::class, 'destroy'])->name('houses.contracts.destroy');
 
 // 3-9-20 會員(房東)查看合約書
-Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'owners_show'])->name('houses.contracts.show');
+//Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'owners_show'])->name('houses.contracts.show');
 
 //--------------------------------
 // 3-9- 會員(房東)查看費用資訊
-Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
+//Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
 
 // 3-9-25 會員(房東)新增費用資訊
 Route::get('owners/houses/{house}/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');

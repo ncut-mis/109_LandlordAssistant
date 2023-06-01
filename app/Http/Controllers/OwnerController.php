@@ -112,74 +112,77 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-        $house_id=$house->id;
-		$location = $house->location;
-		$signatories = $house->signatories; // 取得房屋的目前租客
-		$renters = $signatories->map(function ($signatories) {
-			return $signatories->renter; // 取得每個合約的租客
-		});
-		$renters_data = $renters->map(function ($renter) {
-			return $renter->user; // 取得每個租客的使用者資料
-		});
-        $unrepair = House::whereHas('repairs', function ($q) use ($house) {
-            $q->where('house_id', '=', $house->id);
-        })->with(['repairs' => function ($q) {
-            $q->where('status', '=', '未維修');
-            $q->with('repair_replies');
-        }])->get();
-        $inrepair = House::whereHas('repairs', function ($q) use ($house) {
-            $q->where('house_id', '=', $house->id);
-        })->with(['repairs' => function ($q) {
-            $q->where('status', '=', '維修中');
-            $q->with('repair_replies');
-        }])->get();
-        $finsh = House::whereHas('repairs', function ($q) use ($house) {
-            $q->where('house_id', '=', $house->id);
-        })->with(['repairs' => function ($q) {
-            $q->where('status', '=', '已維修');
-            $q->with('repair_replies');
-        }])->get();
-        $unrepairs = $unrepair->pluck('repairs')->flatten();
-        $inrepairs = $inrepair->pluck('repairs')->flatten();
-        $finshs = $finsh->pluck('repairs')->flatten();
-		$furnishings = $house->furnishings;
-		$features = $house->features;
-		$image = $house->image;
+        if(Auth::user()){
+            $house_id=$house->id;
+            $location = $house->location;
+            $signatories = $house->signatories; // 取得房屋的目前租客
+            $renters = $signatories->map(function ($signatories) {
+                return $signatories->renter; // 取得每個合約的租客
+            });
+            $renters_data = $renters->map(function ($renter) {
+                return $renter->user; // 取得每個租客的使用者資料
+            });
+            $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '未維修');
+                $q->with('repair_replies');
+            }])->get();
+            $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '維修中');
+                $q->with('repair_replies');
+            }])->get();
+            $finsh = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '已維修');
+                $q->with('repair_replies');
+            }])->get();
+            $unrepairs = $unrepair->pluck('repairs')->flatten();
+            $inrepairs = $inrepair->pluck('repairs')->flatten();
+            $finshs = $finsh->pluck('repairs')->flatten();
+            $furnishings = $house->furnishings;
+            $features = $house->features;
+            $image = $house->image;
 
-        //費用
-        $expenses = $house->expenses()->orderBy('updated_at', 'desc')->get();
-        $expenses_w = $house->expenses->where('type','水費')->sortByDesc('updated_at');
-        $expenses_e = $house->expenses->where('type','電費')->sortByDesc('updated_at');
-        $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
-        $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
-        $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
-        $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
+            //費用
+            $expenses = $house->expenses()->orderBy('updated_at', 'desc')->get();
+            $expenses_w = $house->expenses->where('type','水費')->sortByDesc('updated_at');
+            $expenses_e = $house->expenses->where('type','電費')->sortByDesc('updated_at');
+            $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+            $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+            $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+            $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
 
-		$data = [
-            'contract' =>$signatories,
-            'location_id' =>$location->id,
-			'renters_data' => $renters_data,
-            'furnishings' => $furnishings,
-            'features' => $features,
-            'house' => $house,
-            'image' => $image,
-            'unrepair' => $unrepairs,
-            'inrepair' => $inrepairs,
-            'finsh' => $finshs,
-            'expenses' => $expenses,
-            'ex' => request()->query('expense'),
-            'expenses_w' => $expenses_w,
-            'expenses_e' => $expenses_e,
-            'expenses_rentals' => $expenses_rentals,
-            'expenses_other' => $expenses_other,
-            'expenses_payoff' => $expenses_payoff,
-            'expenses_unpay' => $expenses_unpay
-        ];
-//dd($data);
-        return view('owners.houses.show2',$data);
+            $data = [
+                'contract' =>$signatories,
+                'location_id' =>$location->id,
+                'renters_data' => $renters_data,
+                'furnishings' => $furnishings,
+                'features' => $features,
+                'house' => $house,
+                'image' => $image,
+                'unrepair' => $unrepairs,
+                'inrepair' => $inrepairs,
+                'finsh' => $finshs,
+                'expenses' => $expenses,
+                'ex' => request()->query('expense'),
+                'expenses_w' => $expenses_w,
+                'expenses_e' => $expenses_e,
+                'expenses_rentals' => $expenses_rentals,
+                'expenses_other' => $expenses_other,
+                'expenses_payoff' => $expenses_payoff,
+                'expenses_unpay' => $expenses_unpay
+            ];
+    //dd($data);
+            return view('owners.houses.show2',$data);
 
-//        return view('owners.houses.show2',$data);
-
+    //        return view('owners.houses.show2',$data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**
