@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\RepairReply;
+use App\Models\Repair;
+use App\Models\House;
 use App\Http\Requests\StoreRepairReplyRequest;
 use App\Http\Requests\UpdateRepairReplyRequest;
 
@@ -19,17 +21,32 @@ class RepairReplyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Repair $repair)
     {
-        //
+        $houseId = request('house_id');
+        $repair_id = $repair->id;
+        $repair_title = $repair->title;
+        $view_data = [
+            'repair_id' => $repair_id,
+            'repair_title' => $repair_title,
+            'house_id' => $houseId,
+        ];
+        return view('owners.houses.repairs.reply.create', $view_data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRepairReplyRequest $request)
+    public function store(StoreRepairReplyRequest $request,Repair $repair)
     {
-        //
+        if (empty($request->contents)) {
+            return redirect()->back()->with('error', '請輸入內文');
+        }
+        $reply = RepairReply::create([
+            'repair_id' => $request->id,
+            'content' => $request->contents,
+        ]);
+        return redirect()->route('sendemail.repair.reply', $reply->id);
     }
 
     /**
@@ -45,7 +62,25 @@ class RepairReplyController extends Controller
      */
     public function edit(RepairReply $repairReply)
     {
-        //
+        $repairReplies = RepairReply::with('repair.house')->get();
+        $repair_title = '';
+        $houseId = null;
+
+        foreach ($repairReplies as $repairReply) {
+            $repair = $repairReply->repair;
+            if ($repair) {
+                $repair_title = $repair->title;
+                $houseId = $repair->house->id;
+                break; // 如果只需要第一個標題和相應的 house ID，可以使用 break 跳出循環
+            }
+        }
+        $view_data = [
+            'repair_title' => $repair_title,
+            'repairReply' => $repairReply,
+            'house_id' => $houseId,
+            'repair_title'=>$repair_title,
+        ];
+        return view('owners.houses.repairs.reply.edit', $view_data);
     }
 
     /**
@@ -53,7 +88,15 @@ class RepairReplyController extends Controller
      */
     public function update(UpdateRepairReplyRequest $request, RepairReply $repairReply)
     {
-        //
+        $houseId = request('house_id');
+        if (empty($request->input('contents'))) {
+            return redirect()->back()->with('error', '請輸入內文');
+        }
+        $repairReply->update([
+            'content' => $request->input('contents')
+        ]);
+        //要改為跳回房屋詳細資訊
+        return redirect()->route('owners.houses.show',[$houseId])->with('success', '修改成功！');
     }
 
     /**
@@ -61,6 +104,7 @@ class RepairReplyController extends Controller
      */
     public function destroy(RepairReply $repairReply)
     {
-        //
+        $repairReply->delete();
+        return redirect()->back()->with('success', '刪除成功');
     }
 }

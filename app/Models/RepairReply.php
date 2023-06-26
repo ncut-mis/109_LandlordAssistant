@@ -12,4 +12,9 @@ class RepairReply extends Model
     {
         return $this->belongsTo(Repair::class);
     }
+    protected $fillable = [
+        'repair_id',
+        'content',
+        'date',
+    ];
 }

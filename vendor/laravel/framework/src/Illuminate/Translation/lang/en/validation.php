@@ -32,8 +32,8 @@ return [
         'string' => 'The :attribute field must be between :min and :max characters.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'The :attribute field confirmation does not match.',
-    'current_password' => 'The password is incorrect.',
+    'confirmed' => '請確認兩次密碼輸入一致',
+    'current_password' => '密碼不正確',
     'date' => 'The :attribute field must be a valid date.',
     'date_equals' => 'The :attribute field must be a date equal to :date.',
     'date_format' => 'The :attribute field must match the format :format.',
@@ -47,7 +47,7 @@ return [
     'distinct' => 'The :attribute field has a duplicate value.',
     'doesnt_end_with' => 'The :attribute field must not end with one of the following: :values.',
     'doesnt_start_with' => 'The :attribute field must not start with one of the following: :values.',
-    'email' => 'The :attribute field must be a valid email address.',
+    'email' => '必須是有效的電子郵件地址',
     'ends_with' => 'The :attribute field must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
     'exists' => 'The selected :attribute is invalid.',
@@ -97,10 +97,10 @@ return [
     'mimes' => 'The :attribute field must be a file of type: :values.',
     'mimetypes' => 'The :attribute field must be a file of type: :values.',
     'min' => [
-        'array' => 'The :attribute field must have at least :min items.',
-        'file' => 'The :attribute field must be at least :min kilobytes.',
+        'array' => '字段必須至少有 :min 個項目',
+        'file' => '字段必須至少為 :min 千字節',
         'numeric' => 'The :attribute field must be at least :min.',
-        'string' => 'The :attribute field must be at least :min characters.',
+        'string' => '密碼長度至少需要 :min 個字元。',
     ],
     'min_digits' => 'The :attribute field must have at least :min digits.',
     'missing' => 'The :attribute field must be missing.',
@@ -113,11 +113,13 @@ return [
     'not_regex' => 'The :attribute field format is invalid.',
     'numeric' => 'The :attribute field must be a number.',
     'password' => [
-        'letters' => 'The :attribute field must contain at least one letter.',
-        'mixed' => 'The :attribute field must contain at least one uppercase and one lowercase letter.',
-        'numbers' => 'The :attribute field must contain at least one number.',
-        'symbols' => 'The :attribute field must contain at least one symbol.',
+        'letters' => '字段必須至少包含一個字母',
+        'mixed' => '字段必須至少包含一個大寫字母和一個小寫字母',
+        'numbers' => '字段必須至少包含一個數字。',
+        'symbols' => '字段必須至少包含一個符號。',
         'uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
+        'min' => '密碼長度至少需要 :min 個字元。',
+
     ],
     'present' => 'The :attribute field must be present.',
     'prohibited' => 'The :attribute field is prohibited.',
@@ -162,6 +164,7 @@ return [
     |
     */
 
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
@@ -182,3 +185,4 @@ return [
     'attributes' => [],
 
 ];
+

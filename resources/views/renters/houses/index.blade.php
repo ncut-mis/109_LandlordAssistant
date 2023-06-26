@@ -1,5 +1,5 @@
 @extends('layouts.renter_master_index')
-@section('title', '租客頁面')
+@section('title', '租客頁面-首頁')
 @section('page-content')
     @if(Session::has('success'))
         <div class="alert alert-success">
@@ -16,6 +16,44 @@
             {{ session('no') }}
         </div>
     @endif
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    @foreach ($houses as $house)
+        @if (!empty($posts))
+            <script>
+                $(document).ready(function() {
+                    $('#post-{{ $house->id }}').modal('show');
+                });
+            </script>
+                <?php
+                session(['shown_announcement_' . $house->id => true]); ?>
+        @endif
+    @endforeach
+    {{--公告提醒--}}
+    @foreach ($houses as $house)
+        @foreach ($posts as $post)
+            @if($house->location_id == $post->location_id)
+	            <div class="modal" tabindex="-1" id="post-{{ $house->id }}">
+		            <div class="modal-dialog">
+			    <div class="modal-content">
+				    <div class="modal-header">
+					    <h5 class="modal-title">公告提醒</h5>
+					    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				    </div>
+				    <div class="modal-body">
+                        <p>房屋名稱:{{ $house->name }}</p>
+                        <p>標題:{{ $post->title }}</p>
+				    </div>
+				    <div class="modal-footer">
+					    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+					    <a href="{{route('renters.houses.show' ,$house->id)}}" class="btn btn-primary">查看公告</a>
+				    </div>
+			</div>
+		    </div>
+	            </div>
+            @endif
+        @endforeach
+    @endforeach
     <div class="layout-wrapper">
         <div class="layout-container">
             <!-- Menu -->
@@ -32,7 +70,7 @@
                         <!-- Collapse -->
                         <h3>房屋資訊</h3>
                         <div class="row">
-                                <div class="col-4">
+                            <div class="col-4">
                                 <div class="card">
                                     <h5 class="card-header">填寫邀請碼加入房屋</h5>
                                     <div class="card-body">
@@ -53,15 +91,13 @@
                             </div>
                             <p>
                             @foreach ($houses as $key =>$house)
-                                <div class="col-12">
+                                <div class="col-8">
                                     <div class="card mb-4">
                                         <h3 class="card-header">{{ $house->name }}</h3>
                                         <div class="card-body">
                                             <h4 class="card-title text-nowrap mb-2">
-                                                @foreach($house -> expenses as $expense)
-                                                    租金：{{$expense -> amount}}元&emsp;&emsp;
-                                                @endforeach
-                                                地點：{{$house->address}}
+                                                租金：{{$house -> rentals}}元&emsp;&emsp;
+                                                地點：{{$house->county}}{{$house->area}}{{$house->address}}
                                             </h4>
                                             <p class="demo-inline-spacing">
                                                 <a class="btn btn-primary me-1" data-bs-toggle="#houses{{ $key }}"

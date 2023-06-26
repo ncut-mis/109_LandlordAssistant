@@ -5,6 +5,7 @@ use App\Models\Signatory;
 use App\Models\House;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class SignatoryController extends Controller
@@ -38,25 +39,44 @@ class SignatoryController extends Controller
             //房間不存在回傳畫面
             return back()->with('no', '未找到房屋');
         }
+        $renter_id = Auth::user()->renter->id;
+
+
         // 檢查租客是否已經加入了這個房屋
         //auth()->renter()->id //之後有登入要取得租客ID 先用1
-        $existingSignatory = Signatory::where('renter_id', '1')
+        $existingSignatory = Signatory::where('renter_id', $renter_id)
             ->where('house_id', $house->id)
             ->first();
         if ($existingSignatory) {
             // 租客已經加入過這個房屋，回傳畫面
             return back()->with('no', '您已經加入過這個房屋');
         }
+        //	$owner_id 目前登入的使用者的房東ID
+        $owner_id = Auth::user()->owner->id;
+        $current_house_id = $house->owner_id;
+
+        if ($owner_id == $current_house_id) {
+            // 租客已經加入過這個房屋，回傳畫面
+            return back()->with('no', '您不可以加入自己的房屋');
+
+        }
         //將租客與房間關聯
         $house->id;
         $signatory = new Signatory;
-        $signatory->renter_id = '1';//之後有登入要取得租客ID
+        $signatory->renter_id = $renter_id;//之後有登入要取得租客ID
         $signatory->house_id = $house->id;
         $signatory->save();
 
-        $random_str = Str::random(8);
+		if($house->lease_status != '出租中'){
+			$house->lease_status = '出租中'; // 將房屋狀態欄位值修改為 '出租中'
+			$house->save();
+		}
+
+        //$random_str = Str::random(8);
+        $random_str = mt_rand(1000, 9999);
         $house->invitation_code = $random_str;
         $house->save();
+
         //回傳成功畫面
         return back()->with('yes', '您已成功加入房屋');
     }
@@ -91,9 +111,15 @@ class SignatoryController extends Controller
     public function destroy(Signatory $signatory)
     {
         $signatory->delete();
+		$house = $signatory->house;
+		$hasActiveSignatory = $house->signatories()->exists(); //該房屋還有目前租客
+		if (!$hasActiveSignatory) {
+			$house->lease_status = '閒置';
+			$house->save();
+		}
 
         // 刪除成功，重定向到原始頁面，並顯示成功訊息
-        return redirect()->back()->with('success', '已移除租客');
+        return redirect()->back()->with(['success', '已移除租客','signatory'=>'1']);
 
 
 

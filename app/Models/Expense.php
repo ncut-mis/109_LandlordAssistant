@@ -11,16 +11,19 @@ class Expense extends Model
     public function payments(){
         return $this->hasMany(Payment::class);
     }
-    public function houses(){
-        return $this->hasMany(House::class);
+    public function house(){
+        return $this->belongsTo(House::class);
     }
 	protected $fillable = [
         'id',
         'house_id',
         'type',
         'amount',
+        'interval',
         'start_date',
         'end_date',
         'remark',
+        'owner_status',
+        'renter_status',
 	];
 }

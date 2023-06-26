@@ -9,10 +9,13 @@ use App\Http\Requests\UpdateOwnerRequest;
 use App\Models\Contract;
 use App\Models\Renter;
 use App\Models\House;
+use App\Models\Repair;
 use App\Models\Feature;
 use App\Models\Furnish;
 use App\Models\Image;
 use App\Models\Expense;
+use App\Models\RepairReply;
+use Illuminate\Support\Facades\Auth;
 
 class OwnerController extends Controller
 {
@@ -21,29 +24,45 @@ class OwnerController extends Controller
      */
     public function index($owner)
     {
-
+        if (!Auth::check()) {
+            return redirect('/');
+        }
+        $user = Auth::user();
+        if ($user->admin) {
+            return redirect()->route('ad.posts.index');
+        }
+        // 抓取目前登入使用者的 ID
+        $ownerId = Auth::user()->owner->id;
+        // 抓取該使用者擁有的地點
+		$locations = Location::with('houses')->where('owner_id', $ownerId)->get();
         //房東管理頁面首頁
         /*$locations = Location::all();
         $houses = $locations->houses;*/
         //抓取全部地點
-		$locations = Location::with('houses')->get();
+//		$locations = Location::with('houses')->get();
         //抓取出租中地點
-		$for_rent = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '出租中');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '出租中');
+		$for_rent = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '出租中')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '出租中')
+                ->where('owner_id', $ownerId);
         }])->get();
 		//抓取已刊登地點
-		$listed = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '已刊登');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '已刊登');
+		$listed = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '已刊登')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '已刊登')
+                ->where('owner_id', $ownerId);
         }])->get();
 		//抓取閒置地點
-		$vacancy = Location::whereHas('houses', function ($query) {
-            $query->where('lease_status', '閒置');
-        })->with(['houses' => function ($query) {
-            $query->where('lease_status', '閒置');
+		$vacancy = Location::whereHas('houses', function ($query) use ($ownerId){
+            $query->where('lease_status', '閒置')
+                ->where('owner_id', $ownerId);
+        })->with(['houses' => function ($query) use ($ownerId){
+            $query->where('lease_status', '閒置')
+                ->where('owner_id', $ownerId);
         }])->get();
 
 
@@ -52,7 +71,7 @@ class OwnerController extends Controller
             'for_rent' => $for_rent,
             'listed' => $listed,
             'vacancy' => $vacancy,
-            'owner_id' => $owner,
+            'owner_id' => $ownerId,
         ];
         return view('owners.home.index',$locations_data);
     }
@@ -93,36 +112,77 @@ class OwnerController extends Controller
      */
     public function show(House $house)
     {
-		$location = $house->location;
-		$signatories = $house->signatories; // 取得房屋的目前租客
-		$renters = $signatories->map(function ($signatories) {
-			return $signatories->renter; // 取得每個合約的租客
-		});
-		$renters_data = $renters->map(function ($renter) {
-			return $renter->user; // 取得每個租客的使用者資料
-		});
+        if(Auth::user()){
+            $house_id=$house->id;
+            $location = $house->location;
+            $signatories = $house->signatories; // 取得房屋的目前租客
+            $renters = $signatories->map(function ($signatories) {
+                return $signatories->renter; // 取得每個合約的租客
+            });
+            $renters_data = $renters->map(function ($renter) {
+                return $renter->user; // 取得每個租客的使用者資料
+            });
+            $unrepair = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '未維修');
+                $q->with('repair_replies');
+            }])->get();
+            $inrepair = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '維修中');
+                $q->with('repair_replies');
+            }])->get();
+            $finsh = House::whereHas('repairs', function ($q) use ($house) {
+                $q->where('house_id', '=', $house->id);
+            })->with(['repairs' => function ($q) {
+                $q->where('status', '=', '已維修');
+                $q->with('repair_replies');
+            }])->get();
+            $unrepairs = $unrepair->pluck('repairs')->flatten();
+            $inrepairs = $inrepair->pluck('repairs')->flatten();
+            $finshs = $finsh->pluck('repairs')->flatten();
+            $furnishings = $house->furnishings;
+            $features = $house->features;
+            $image = $house->image;
 
-		$furnishings = $house->furnishings;
-		$features = $house->features;
-		$image = $house->image;
-		$expenses = $house->expenses;
-		$data = [
-            'contract' =>$signatories,
-            'location_id' =>$location->id,
-			'renters_data' => $renters_data,
-            'furnishings' => $furnishings,
-            'features' => $features,
-            'house' => $house,
-            'image' => $image,
-            'expenses' => $expenses,
+            //費用
+            $expenses = $house->expenses()->orderBy('updated_at', 'desc')->get();
+            $expenses_w = $house->expenses->where('type','水費')->sortByDesc('updated_at');
+            $expenses_e = $house->expenses->where('type','電費')->sortByDesc('updated_at');
+            $expenses_rentals = $house->expenses->where('type','租金')->sortByDesc('updated_at');
+            $expenses_other = $house->expenses->whereNotIn('type',['水費','電費','租金'])->sortByDesc('updated_at');
+            $expenses_payoff = $house->expenses->where('renter_status','1')->sortByDesc('updated_at');
+            $expenses_unpay  =$house->expenses->where('renter_status','0')->sortByDesc('updated_at');
 
-        ];
+            $data = [
+                'contract' =>$signatories,
+                'location_id' =>$location->id,
+                'renters_data' => $renters_data,
+                'furnishings' => $furnishings,
+                'features' => $features,
+                'house' => $house,
+                'image' => $image,
+                'unrepair' => $unrepairs,
+                'inrepair' => $inrepairs,
+                'finsh' => $finshs,
+                'expenses' => $expenses,
+                'ex' => request()->query('expense'),
+                'expenses_w' => $expenses_w,
+                'expenses_e' => $expenses_e,
+                'expenses_rentals' => $expenses_rentals,
+                'expenses_other' => $expenses_other,
+                'expenses_payoff' => $expenses_payoff,
+                'expenses_unpay' => $expenses_unpay
+            ];
+    //dd($data);
+            return view('owners.houses.show2',$data);
 
-
-        return view('owners.houses.show2',$data);
-
-//        return view('owners.houses.show2',$data);
-
+    //        return view('owners.houses.show2',$data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     /**

@@ -1,0 +1,11 @@
+會員(房東)
+帳號：3a932117@gm.student.ncut.edu.tw
+密碼：12345678
+
+租客
+帳號：3a932045@gm.student.ncut.edu.tw
+密碼：12345678
+
+管理員
+帳號：admin@gmail.com
+密碼：admin12345678

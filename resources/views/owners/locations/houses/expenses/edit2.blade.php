@@ -49,7 +49,7 @@
                                                 <div class="col-md-7">
                                                     <select name="type" class="form-select ">
                                                         <option value="{{$expenses->type}}">{{$expenses->type}}</option>
-                                                        <option value="租金">租金</option>
+{{--                                                        <option value="租金">租金</option>--}}
                                                         <option value="水費">水費</option>
                                                         <option value="電費">電費</option>
                                                         <option value="瓦斯費">瓦斯費</option>

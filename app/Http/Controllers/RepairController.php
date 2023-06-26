@@ -11,6 +11,7 @@ use App\Http\Requests\StoreRepairRequest;
 use App\Http\Requests\UpdateRepairRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RepairController extends Controller
 {
@@ -19,21 +20,22 @@ class RepairController extends Controller
      */
     public function index()
     {
+
         $houses = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with('repairs')->get();
         $unrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '未維修');
         }])->get();
         $inrepair = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '維修中');
         }])->get();
         $finsh = House::whereHas('repairs', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->with(['repairs' => function ($q) {
             $q->where('status', '=', '已維修');
         }])->get();
@@ -73,24 +75,40 @@ class RepairController extends Controller
      */
     public function store(StoreRepairRequest $request)
     {
+        $user = Auth::user();
+        $renter_id=$user->renter->id;
+        if (empty($request->title)) {
+            return redirect()->back()->with('error', '請輸入標題');
+        }
+        elseif (empty($request->contents)){
+            return redirect()->back()->with('error', '請輸入內容');
+        }
         $repair = Repair::create([
-            'renter_id' => 1,
+            'renter_id' => $renter_id,
             'house_id' => $request->id,
             'title' => $request->title,
             'status' => '未維修',
             'content' => $request->contents,
-            'date' => null,
+//            'date' => null,
         ]);
-        return redirect()->route('renters.houses.show',$request->id)->with('success', '申請成功！');
+        return redirect()->route('sendemail.repair', $repair->id);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Repair $repair)
+    public function show(Repair $repair,House $house)
     {
-        //
+        $repair_num=$repair->id;
+        $house_num=$house->id;
+        $house=House::find($house_num);
+        $repairs = Repair::find ($repair_num);
+        $view_data = [
+            'repairs'=>$repairs,
+            'houses'=>$house,
+        ];
+        return view('renters.houses.repairs.show',$view_data);
     }
 
     /**
@@ -100,7 +118,7 @@ class RepairController extends Controller
     {
         $house_id=$repair->id;
         $house = House::whereHas('signatories', function ($q) {
-            $q->where('renter_id', '=', 1);
+            $q->where('renter_id', '=', Auth::user()->renter->id);
         })->get();
         $edit_data = [
             'repairs' => $repair,
@@ -115,18 +133,26 @@ class RepairController extends Controller
      */
     public function update(UpdateRepairRequest $request, Repair $repair)
     {
-        $data = $request->only([
-            //要多一個標題
-            'content'
+        $house_id = $repair->house_id;
+        if (empty($request->input('contents'))) {
+            return redirect()->back()->with('error', '內文不能為空');
+        }
+        $repair->update([
+            'content' => $request->input('contents')
         ]);
-        $repair->update($data);
         //要改為跳回房屋詳細資訊
-        return redirect()->route('renters.houses.index')->with('success', '修改成功！');
+        return redirect()->route('renters.houses.show',[$house_id])->with('success', '修改成功！');
     }
 
     public function update_status(UpdateRepairRequest $request, Repair $repair)
     {
-        //
+        $house_id = $repair->house_id;
+        $repair->update([
+            'status' => $request->input('status')
+        ]);
+        //要改為跳回房屋詳細資訊
+        //return redirect()->route('owners.houses.show',[$house_id])->with('success', '修改成功！');
+        return redirect()->route('sendemail.repair.update', $repair->id);
     }
 
     /**
@@ -135,6 +161,6 @@ class RepairController extends Controller
     public function destroy(Repair $repair)
     {
         $repair->delete();
-        return redirect()->back()->with('success', '刪除成功');
+        return redirect()->back()->with(['success' => '刪除成功', 'repair'=>'1']);
     }
 }

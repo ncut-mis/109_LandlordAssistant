@@ -3,9 +3,12 @@
 @section('title', '報修頁面')
 @section('page-content')
 
-    @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
+    @if(session('error'))
+        <div class="mx-3 my-3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         </div>
     @endif
     <form method="post" action="{{route('renters.houses.repairs.store')}}">
@@ -81,13 +84,6 @@
                 <a href="{{url('/')}}" class="btn btn-danger btn-buy-now">回到租屋網站</a>
                 <!--target="_blank" 改成用新視窗開啟-->
             </div>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">109_LandlordAssistant</div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </form>
 @endsection

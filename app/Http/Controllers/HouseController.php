@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Session;
 use App\Models\House;
 use App\Models\Location;
 use App\Models\Furnish;
@@ -12,6 +11,8 @@ use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+
 
 class HouseController extends Controller
 {
@@ -22,19 +23,177 @@ class HouseController extends Controller
     {
 		//
     }
+    public function search(Request $request)
+    {
 
+//        $furnishings1 = $request->input('furnishings1');
+//        $furnishings2 = $request->input('furnishings2');
+//        $furnishings3 = $request->input('furnishings3');
+//        $furnishings4 = $request->input('furnishings4');
+//
+//        // 取得features1 ~ features5的值
+//        $features1 = $request->input('features1');
+//        $features2 = $request->input('features2');
+//        $features3 = $request->input('features3');
+//        $features4 = $request->input('features4');
+//        $features5 = $request->input('features5');
+//        if (Auth::check()) {
+//            $county = $request->input('county');
+//            $area = $request->input('district');
+//            $selecthouse = $request->input('selecthouse');
+//            if (isset($area)) {
+//                // 執行搜尋邏輯，假設你的房屋模型是 House
+//                $houses = House::where('county', $county)
+//                    ->where('area', $area)
+//                    ->where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//                $name = Auth::user()->name;
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index')->with(compact('name'));
+//            } elseif (isset($county) && !isset($area)) {
+//                // 執行搜尋邏輯，假設你的房屋模型是 House
+//                $houses = House::where('county', $county)
+//                    ->where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//                $name = Auth::user()->name;
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index')->with(compact('name'));
+//            } else {
+//                $houses = House::where('name', 'like', '%' . $selecthouse . '%')
+//                    ->with('image') // 預先載入圖片關聯
+//                    ->get();
+//
+//
+//                // 將搜尋結果存儲到 Session
+//                Session::put('search_result', $houses);
+//
+//                return redirect()->route('home.index');
+//
+//            }
+//        } else {
+//
+//                $county = $request->input('county');
+//                $area = $request->input('district');
+//                $selecthouse = $request->input('selecthouse');
+//                if (isset($area)) {
+//                    // 執行搜尋邏輯，假設你的房屋模型是 House
+//                    $houses = House::where('county', $county)
+//                        ->where('area', $area)
+//                        ->where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+//                } elseif (isset($county) && !isset($area)) {
+//                    // 執行搜尋邏輯，假設你的房屋模型是 House
+//                    $houses = House::where('county', $county)
+//                        ->where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+//                } else {
+//                    $houses = House::where('name', 'like', '%' . $selecthouse . '%')
+//                        ->with('image') // 預先載入圖片關聯
+//                        ->get();
+//
+//
+//
+//                    // 將搜尋結果存儲到 Session
+//                    Session::put('search_result', $houses);
+//
+//                    return redirect()->route('home.index');
+
+//                }
+        $county = $request->input('county');
+        $area = $request->input('district');
+        $selecthouse = $request->input('selecthouse');
+
+        $furnishings1 = $request->input('furnishings1');
+        $furnishings2 = $request->input('furnishings2');
+        $furnishings3 = $request->input('furnishings3');
+        $furnishings4 = $request->input('furnishings4');
+
+        $features1 = $request->input('features1');
+        $features2 = $request->input('features2');
+        $features3 = $request->input('features3');
+        $features4 = $request->input('features4');
+        $features5 = $request->input('features5');
+
+        $query = House::query();
+
+        if (isset($area)) {
+            $query->where('county', $county)
+                ->where('area', $area);
+        } elseif (isset($county) && !isset($area)) {
+            $query->where('county', $county);
+        }
+
+        $query->where('name', 'like', '%' . $selecthouse . '%');
+
+// 應用 furnishings 條件
+        $furnishings = array_filter([$furnishings1, $furnishings2, $furnishings3, $furnishings4]);
+        if (!empty($furnishings)) {
+            $query->whereHas('furnishings', function ($query) use ($furnishings) {
+                $query->whereIn('furnish', $furnishings);
+            });
+        }
+
+// 應用 features 條件
+        $features = array_filter([$features1, $features2, $features3, $features4, $features5]);
+        if (!empty($features)) {
+            $query->whereHas('features', function ($query) use ($features) {
+                $query->whereIn('feature', $features);
+            });
+        }
+
+// 執行搜尋並載入關聯模型
+        $houses = $query->with('image')->get();
+
+// 將搜尋結果存儲到 Session
+        Session::put('search_result', $houses);
+
+        if (Auth::check()) {
+            $name = Auth::user()->name;
+            return redirect()->route('home.index')->with(compact('name'));
+        } else {
+            return redirect()->route('home.index');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create($location)
     {
-        $locations = Location::find($location);
-        $owner_id = $locations->owner->id;
-        $locations_data = [
-            'locations' => $locations,
-            'owner_id' => $owner_id,
-        ];
-        return view('owners.locations.houses.create2',$locations_data);
+        if(Auth::user()){
+            $locations = Location::find($location);
+            $owner_id = $locations->owner->id;
+            $locations_data = [
+                'locations' => $locations,
+                'owner_id' => $owner_id,
+            ];
+            return view('owners.locations.houses.create2',$locations_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function advance_search_create()
@@ -77,7 +236,7 @@ class HouseController extends Controller
                 'area' => 'required',
                 'address' => 'required',
                 'introduce' => 'required',
-                'amount' => 'required',
+                'rentals' => 'required',
                 'interval' => 'required',
                 'num_renter' => 'required',
                 'min_period' => 'required',
@@ -94,7 +253,7 @@ class HouseController extends Controller
                 'area.required' => '請輸入地區。',
                 'address.required' => '請輸入地址。',
                 'introduce.required' => '請輸入介紹。',
-                'amount.required' => '請輸入金額。',
+                'rentals.required' => '請輸入金額。',
                 'interval.required' => '請輸入繳納區間。',
                 'num_renter.required' => '請輸入可住人數。',
                 'min_period.required' => '請輸入最短租期。',
@@ -109,8 +268,10 @@ class HouseController extends Controller
         }else if(isset($_REQUEST['unpublish'])){
             $lease_status = "閒置";
         }
-        $invitation_code=Str::random(8);
+//        $invitation_code=Str::random(8);
         // 建立 House 資料
+        $invitation_code = mt_rand(1000, 9999);
+
         $house = House::create([
             'name' => $validatedData['name'],
             'county' => $validatedData['county'],
@@ -118,6 +279,8 @@ class HouseController extends Controller
             'address' => $validatedData['address'],
             'lease_status' => $lease_status,
             'introduce' => $request->introduce,
+            'rentals' => $request->rentals,
+            'interval' => $request->interval,
             'num_renter' => $request->num_renter,
             'min_period' => $request->min_period,
             'pattern' => $request->pattern,
@@ -138,7 +301,7 @@ class HouseController extends Controller
         if($request->file('image') != null){
             foreach($request->file('image') as $key => $image) {
                 //影像圖檔名稱
-                $file_name = $request->id.'_'.time().'.'.$image->getClientOriginalExtension();
+                $file_name = uniqid().'.'.$image->getClientOriginalExtension();
                 //把檔案存到公開的資料夾
                 $file_path = public_path('image/'.$file_name);
                 move_uploaded_file($image->getPathname(), $file_path);
@@ -150,6 +313,7 @@ class HouseController extends Controller
                     'house_id' => $house->id,
                     'image' => $file_name,
                 ]);
+
                 //dd($imageModel);
                 $house->image()->save($imageModel);
             }
@@ -158,7 +322,7 @@ class HouseController extends Controller
 
 
 
-            // 建立 Expense 資料
+        /*    // 建立 Expense 資料
             $expense = new Expense([
                 'house_id' => $house_id,
                 'type' => "租金",
@@ -166,7 +330,7 @@ class HouseController extends Controller
                 'interval' => $request->interval,
             ]);
             // 透過關聯存取資料庫
-        $house->expenses()->save($expense);
+        $house->expenses()->save($expense);*/
 
 
 
@@ -195,7 +359,8 @@ class HouseController extends Controller
             }
         }
 
-        return redirect()->route('houses.expenses.store',[$owner_id, $location])->with('success', '儲存成功！');
+//        return redirect()->route('owners.houses.show',[$owner_id, $location,$house])->with('success', '儲存成功！');
+        return redirect()->route('owners.houses.show',$house_id)->with('success', '儲存成功！');
     }
 
     /**
@@ -203,25 +368,29 @@ class HouseController extends Controller
      */
     public function show($owner, Location $location)
     {
-		//抓取全部房屋
-		$houses = $location->houses;
-        //抓取出租中房屋
-		$for_rent = $location->houses->where('lease_status', '出租中');
-		//抓取已刊登房屋
-		$listed = $location->houses->where('lease_status', '已刊登');
-		//抓取閒置房屋
-		$vacancy = $location->houses->where('lease_status', '閒置');
+        if(Auth::user()){
+            //抓取全部房屋
+            $houses = $location->houses;
+            //抓取出租中房屋
+            $for_rent = $location->houses->where('lease_status', '出租中');
+            //抓取已刊登房屋
+            $listed = $location->houses->where('lease_status', '已刊登');
+            //抓取閒置房屋
+            $vacancy = $location->houses->where('lease_status', '閒置');
 
 
-		$data = [
-            'owner_id' => $owner,
-            'location' => $location,
-            'houses' => $houses,
-            'for_rent' => $for_rent,
-            'listed' => $listed,
-            'vacancy' => $vacancy,
-        ];
-		return view('owners.locations.houses.show2',$data);
+            $data = [
+                'owner_id' => $owner,
+                'location' => $location,
+                'houses' => $houses,
+                'for_rent' => $for_rent,
+                'listed' => $listed,
+                'vacancy' => $vacancy,
+            ];
+            return view('owners.locations.houses.show2',$data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function advance_search(House $house)
@@ -238,18 +407,21 @@ class HouseController extends Controller
      */
     public function edit(Location $location, House $house)
     {
-        $furnish = $house->furnishings;
-        $amount = $house->expenses;
-        $feature = $house->features;
-        $locations_data = [
-            'locations' => $location,
-            'houses' => $house,
-            'amount' => $amount,
-            'furnish' => $furnish,
-            'feature' => $feature,
-            'owner_id' => $location->owner_id,
-        ];
-        return view('owners.locations.houses.edit2',$locations_data);
+        if(Auth::user()){
+
+            $furnish = $house->furnishings;
+            $feature = $house->features;
+            $locations_data = [
+                'locations' => $location,
+                'houses' => $house,
+                'furnish' => $furnish,
+                'feature' => $feature,
+                'owner_id' => $location->owner_id,
+            ];
+            return view('owners.locations.houses.edit2',$locations_data);
+        } else{
+            return redirect()->route('home.index');
+        }
     }
 
     public function publish_edit(House $house)
@@ -268,6 +440,8 @@ class HouseController extends Controller
             'area',
             'address',
             'introduce',
+			'rentals',
+            'interval',
             'num_renter',
             'min_period',
             'pattern',
@@ -280,6 +454,8 @@ class HouseController extends Controller
             if(isset($_REQUEST['publish'])){
                 $v_house = House::where('id', $house->id)
                     ->whereNotNull('introduce')
+					->whereNotNull('rentals')
+					->whereNotNull('interval')
                     ->whereNotNull('lease_status')
                     ->whereNotNull('num_renter')
                     ->whereNotNull('min_period')
@@ -287,11 +463,6 @@ class HouseController extends Controller
                     ->whereNotNull('size')
                     ->whereNotNull('type')
                     ->whereNotNull('floor')
-                    ->first();
-                $v_expense = $house->expenses
-                    ->whereNotNull('type')
-                    ->whereNotNull('amount')
-                    ->whereNotNull('interval')
                     ->first();
 				$v_image = $house->image
                     ->whereNotNull('image')
@@ -303,7 +474,7 @@ class HouseController extends Controller
                     ->whereNotNull('feature')
                     ->first();
 
-                if ($v_house && $v_expense && $v_furnish && $v_feature && $v_image) {
+                if ($v_house && $v_furnish && $v_feature && $v_image) {
                     // 沒有 NULL 值
                     $lease_status = "已刊登";
                     $data = array_merge(
@@ -357,7 +528,7 @@ class HouseController extends Controller
             foreach ($request->file('image') as $key => $image) {
                 // 不存在照片的設備，可以新增
                 //影像圖檔名稱
-                $file_name = $request->id.'_'.uniqid().'.'.$image->getClientOriginalExtension();
+                $file_name = uniqid().'.'.$image->getClientOriginalExtension();
                 //把檔案存到公開的資料夾
                 $file_path = public_path('image/'.$file_name);
                 //dump($file_name);
@@ -392,13 +563,13 @@ class HouseController extends Controller
 
         // 更新租屋費用信息
 
-        if ($house->expenses !== null) {
+        /*if ($house->expenses !== null) {
             foreach ($house->expenses as $expense) {
                 $expense->amount = $request->amount;
                 $expense->interval = $request->interval;
                 $expense->save();
             }
-        }
+        }*/
 
         // 檢查設備是否需要刪除
 //        dd($request->furnishings);

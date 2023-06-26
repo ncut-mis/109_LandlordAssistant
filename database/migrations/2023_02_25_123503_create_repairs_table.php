@@ -14,12 +14,13 @@ return new class extends Migration
 		Schema::create('repairs', function (Blueprint $table) {
             $table->id(); //編號
             $table->unsignedBigInteger('renter_id');//租客編號
-            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('renter_id')->references('id')->on('renters')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('house_id'); //房屋編號
             $table->foreign('house_id')->references('id')->on('houses')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('title'); //標題
             $table->string('status'); //狀態(未維修、已維修、維修中)
             $table->string('content'); //內容
-            $table->date('date'); //日期
+            $table->date('date')->nullable(); //日期
             $table->timestamps();
         });
 

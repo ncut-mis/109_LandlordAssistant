@@ -2,6 +2,25 @@
 @section('title', '房東頁面-修改房屋')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<style>
+	.my-style-selector select {
+		display: block;
+		width: 100%;
+		padding: 0.4375rem 0.875rem;
+		font-size: 0.9375rem;
+		font-weight: 400;
+		line-height: 1.53;
+		color: #697a8d;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d9dee3;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		border-radius: 0.375rem;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	}
+</style>
 <script>
     function scrollToTop() {
         // 滾動到頁面頂部
@@ -43,12 +62,18 @@
             const imageContainer = $(this).parent();
             imageContainer.remove();
         });
+
         // 刪除新圖片
-        $('.remove-image').click(function() {
+        $(document).on('click', '.remove-image', function() {
             var index = $(this).closest('.image-container').index();
             $(this).closest('.image-container').remove();
             images.splice(index, 1);
         });
+        // $('.remove-image').click(function() {
+        //     var index = $(this).closest('.image-container').index();
+        //     $(this).closest('.image-container').remove();
+        //     images.splice(index, 1);
+        // });
         $('.image-container').on('click', '.remove-image', function() {
             var inputGroup = $(this).parents('.input-group');
             var previewImage = inputGroup.prev('.preview-image');
@@ -189,10 +214,10 @@
                                                         <span class="input-group-text" id="inputGroup-sizing-default">每</span>
                                                         <select class="form-select" id="inputGroupSelect01" name="interval" style="text-align:center">
                                                             <option value="" disabled selected>--選擇區間--</option>
-                                                            <option value="12" {{ $amount->value('interval') == '12' ? 'selected' : '' }}>年繳</option>
-                                                            <option value="6" {{ $amount->value('interval') == '6' ? 'selected' : '' }}>半年繳</option>
-                                                            <option value="3" {{ $amount->value('interval') == '3' ? 'selected' : '' }}>季繳</option>
-                                                            <option value="1" {{ $amount->value('interval') == '1' ? 'selected' : '' }}>月繳</option>
+                                                            <option value="12" {{ $houses->interval == '12' ? 'selected' : '' }}>年繳</option>
+                                                            <option value="6" {{ $houses->interval == '6' ? 'selected' : '' }}>半年繳</option>
+                                                            <option value="3" {{ $houses->interval == '3' ? 'selected' : '' }}>季繳</option>
+                                                            <option value="1" {{ $houses->interval == '1' ? 'selected' : '' }}>月繳</option>
                                                         </select>
                                                         <span class="input-group-text" id="inputGroup-sizing-default">一次</span>
                                                     </div>
@@ -201,7 +226,7 @@
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text" id="inputGroup-sizing-default">租金</span>
                                                         <span class="input-group-text">$</span>
-                                                        <input type="text" class="form-control" name="amount" value="{{ $amount->value('amount') }}"
+                                                        <input type="text" class="form-control" name="rentals" value="{{ $houses->rentals }}"
                                                                aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
                                                     </div>
                                                 </div>

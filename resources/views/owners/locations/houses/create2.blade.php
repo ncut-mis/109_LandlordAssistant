@@ -23,6 +23,23 @@
     font-size: 20px;
     color: #333;
   }
+  .my-style-selector select {
+		display: block;
+		width: 100%;
+		padding: 0.4375rem 0.875rem;
+		font-size: 0.9375rem;
+		font-weight: 400;
+		line-height: 1.53;
+		color: #697a8d;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #d9dee3;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		border-radius: 0.375rem;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	}
 </style>
 <script>
     function scrollToTop() {
@@ -32,6 +49,29 @@
             behavior: 'smooth'
         });
     }
+	
+	//驗證表單
+	function validateAndSubmit() {
+		const inputs = document.querySelectorAll('input, select, textarea');
+		let isValid = true;
+		//驗證每種類型的輸入都有資料
+		inputs.forEach((input) => {
+			if (!input.value) {
+				isValid = false; //有資料未填寫
+			}
+		});
+		//有資料未填寫
+		if (!isValid) {
+			const shouldSubmit = confirm('表單中有未填寫的欄位，確定要送出嗎？');
+			if (shouldSubmit) {
+				document.querySelector('form').submit(); // 送出表單
+			}else{
+				event.preventDefault(); //取消默認行為
+			}
+		} else {//資料都有填寫，則直接送出表單
+		  document.querySelector('form').submit(); // 送出表單
+		}
+	}
 
     $(function() {
         // 設定計數器和圖片陣列
@@ -66,11 +106,16 @@
             imageContainer.remove();
         });
         // 刪除新圖片
-        $('.remove-image').click(function() {
+        $(document).on('click', '.remove-image', function() {
             var index = $(this).closest('.image-container').index();
             $(this).closest('.image-container').remove();
             images.splice(index, 1);
         });
+        // $('.remove-image').click(function() {
+        //     var index = $(this).closest('.image-container').index();
+        //     $(this).closest('.image-container').remove();
+        //     images.splice(index, 1);
+        // });
         $('.image-container').on('click', '.remove-image', function() {
             var inputGroup = $(this).parents('.input-group');
             var previewImage = inputGroup.prev('.preview-image');
@@ -224,7 +269,7 @@
 													<div class="input-group mb-3">
 														<span class="input-group-text" id="inputGroup-sizing-default">租金</span>
 														<span class="input-group-text">$</span>
-														<input type="text" class="form-control" name="amount"
+														<input type="text" class="form-control" name="rentals"
 															aria-describedby="inputGroup-sizing-default" pattern="[0-9]*" title="只能輸入數字">
 													</div>
 												</div>

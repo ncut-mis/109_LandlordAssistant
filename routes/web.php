@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\RepairReply;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,7 +24,9 @@ use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\SystemPostController;
 use App\Http\Controllers\UserProfileController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-
+use Illuminate\Support\Facades\Mail;
+use App\Models\Expense;
+use App\Models\Repair;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +37,78 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//費用信件
+Route::get('/sendemail/{expense}', function (Expense $expense) {
+	$subject = $expense->house->name.'房屋的'.$expense->type.'費用提醒'; // 將字串和費用類型拼接成主旨
+    $signatories = $expense->house->signatories;
+    foreach ($signatories as $signatory) {
+        $renter = $signatory->renter;
+        $mail = $renter->user->email;
+
+//    $mail = $expense->house->signatories->renter->user->email;
+        $text ='<h1>親愛的用戶，您好：</h1>'.
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'.
+        '<p style="font-size: 16px;">您有一筆日期為</p>'.
+        '<p style="font-size: 20px;font-weight: bold">'.$expense->start_date.' ~ '.$expense->end_date.' 的 '.$expense->type.' 費用</p>'.
+        '<p style="font-size: 30px;font-weight: bold;color: red">'.$expense->amount.'元</p>' .'尚未繳費，請盡速前往繳費。';
+        Mail::send([], [], function ($message) use ($subject, $text ,$mail) {
+            $message->to($mail)
+                    ->subject($subject)
+                    ->html($text);
+        });
+    }
+	return redirect()->back()->with(['success' => '已送出費用提醒信件', 'expense' => '1']);
+})->name('sendemail.expense');
+
+//報修信件
+Route::GET('/sendemail/repair/{repair}', function (Repair $repair) {
+    $mail=$repair->house->owner->user->email;
+    $subject = $repair->house->name.'房屋的報修通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'.
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'.
+        '<p style="font-size: 16px;">您有一筆</p>'.
+        '<p style="font-size: 16px;font-weight: bold">'.$repair->title.' 的報修</p>'.
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('renters.houses.show',[$repair->house->id])->with(['success' => '已送出報修通知信件', 'repair' => '1']);
+})->name('sendemail.repair');
+//報修回覆信件
+Route::GET('/sendemail/repair/reply/{repairReply}', function (RepairReply $repairReply) {
+    $mail=$repairReply->repair->renter->user->email;
+    $subject = $repairReply->repair->house->name.'房屋的報修回覆通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'.
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'.
+        '<p style="font-size: 16px;">您有一則關於</p>'.
+        '<p style="font-size: 16px;font-weight: bold">'.$repairReply->repair->title.' 的報修回覆</p>'.
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('owners.houses.show',[$repairReply->repair->house->id])->with(['success' => '已送出回覆通知信件', 'repair' => '1']);
+})->name('sendemail.repair.reply');
+
+//報修狀態更新信件
+Route::GET('/sendemail/repair/update/{repair}', function (Repair $repair) {
+    $mail=$repair->renter->user->email;
+    $subject = $repair->house->name.'房屋的報修狀態更動通知'; // 將字串和費用類型拼接成主旨
+    $text ='<h1>親愛的用戶，您好：</h1>'.
+        '<p style="font-size: 18px;">感謝您選擇使用租屋網的服務。</p>'.
+        '<p style="font-size: 16px;font-weight: bold">您'.$repair->title.' 的報修狀態有更動</p>'.
+        '<p style="font-size: 16px;font-weight: bold;color: red">請至租屋網查看詳細內容</p>';
+    Mail::send([], [], function ($message) use ($subject, $text,$mail) {
+        $message->to($mail)
+            ->subject($subject)
+            ->html($text);
+    });
+    return redirect()->route('owners.houses.show',[$repair->house->id])->with(['success' => '已送出維修狀態更新通知信件', 'repair' => '1']);
+})->name('sendemail.repair.update');
+
 // 3-7-1 訪客/會員瀏覽平台首頁
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
@@ -44,7 +119,7 @@ Route::get('about',[HomeController::class,'about'])->name('home.about');
 Route::get('help',[HomeController::class,'help'])->name('home.help');
 
 // 3-7-2 訪客/會員查詢出租房屋(地區)
-Route::get('houses/search', [HouseController::class, 'search'])->name('houses.search');
+Route::post('houses/search', [HouseController::class, 'search'])->name('houses.search');
 
 // 3-7-3 訪客/會員篩選租屋條件
 Route::get('houses/advance_search/create', [HouseController::class, 'advance_search_create'])->name('houses.advance_search.create');
@@ -52,6 +127,8 @@ Route::get('houses/advance_search', [HouseController::class, 'advance_search'])-
 
 // 3-7-4 訪客/會員查看租屋資訊
 Route::get('houses/{house}', [HomeController::class, 'show'])->name('houses.show');
+
+
 
 // 3-7-6 訪客登入(預設應該已經有)
 //Route::get('login', [AuthenticatedSessionController::class, 'create']);
@@ -78,7 +155,7 @@ Route::get('users/renters/{renter}', [RenterController::class, 'index'])->name('
 Route::get('users/owners/{owner}', [OwnerController::class, 'index'])->name('owners.home.index');
 
 // 3-8-6 會員登出(預設應該已經有)
-Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
+//Route::delete('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 //查看房東首頁
 //Route::get('owners',[HomeController::class,'owners_index'])->name('owners.houses.index');
@@ -119,6 +196,7 @@ Route::post('owners/houses/rts', [SignatoryController::class, 'store'])->name('o
 
 //會員(房東)刪除租客
 Route::delete('owners/houses/rts/{signatory}', [SignatoryController::class, 'destroy'])->name('owners.houses.rts.destroy');
+
 // 3-9-7 會員(房東)查看公告
 Route::get('owners/locations/{location}/posts', [PostController::class, 'owners_index'])->name('owners.locations.posts.index');
 
@@ -134,49 +212,57 @@ Route::patch('owners/locations/{location}/posts/{post}', [PostController::class,
 Route::delete('owners/locations/{location}/posts/{post}', [PostController::class, 'destroy'])->name('owners.locations.posts.destroy');
 
 // 3-9-11 會員(房東)查看管理員
-Route::get('owners/locations/{location}/managers', [AdminController::class, 'index'])->name('owners.locations.managers.index');
+//Route::get('owners/locations/{location}/managers', [AdminController::class, 'index'])->name('owners.locations.managers.index');
 
 // 3-9-12 會員(房東)新增管理員
-Route::get('owners/locations/{location}/managers/create', [AdminController::class, 'create'])->name('owners.locations.managers.create');
-Route::post('owners/locations/{location}/managers', [AdminController::class, 'store'])->name('owners.locations.managers.store');
+//Route::get('owners/locations/{location}/managers/create', [AdminController::class, 'create'])->name('owners.locations.managers.create');
+//Route::post('owners/locations/{location}/managers', [AdminController::class, 'store'])->name('owners.locations.managers.store');
 
 // 3-9-13會員(房東)刪除管理員
-Route::delete('owners/locations/{location}/managers/{manager}', [AdminController::class, 'destroy'])->name('owners.locations.managers.destroy');
+//Route::delete('owners/locations/{location}/managers/{manager}', [AdminController::class, 'destroy'])->name('owners.locations.managers.destroy');
 
 // 3-9-14 會員(房東)刊登房屋(excel顏色不一樣)
-Route::get('owners/houses/publish/{publish}/edit', [HouseController::class, 'publish_edit'])->name('owner.publish.edit');
-Route::patch('owners/houses/publish/{publish}', [HouseController::class, 'publish_update'])->name('owner.publish.update');
+//Route::get('owners/houses/publish/{publish}/edit', [HouseController::class, 'publish_edit'])->name('owner.publish.edit');
+//Route::patch('owners/houses/publish/{publish}', [HouseController::class, 'publish_update'])->name('owner.publish.update');
 
 // 3-9-15 會員(房東)取消刊登房屋(excel顏色不一樣)
-Route::delete('owners/houses/publish/{publish}', [HouseController::class, 'unpublish_update'])->name('owner.publish.destroy');
+//Route::delete('owners/houses/publish/{publish}', [HouseController::class, 'unpublish_update'])->name('owner.publish.destroy');
 
 // 3-9-16 會員(房東)篩選某個狀態所有房屋資訊
-Route::get('houses/by_status/{status}', [HouseController::class, 'by_status'])->name('houses.by_status');
+//Route::get('houses/by_status/{status}', [HouseController::class, 'by_status'])->name('houses.by_status');
 
 // 3-9-17 會員(房東)查看單一房屋資訊
 Route::get('owners/houses/{house}', [OwnerController::class, 'show'])->name('owners.houses.show');
 
 // 3-9-18 會員(房東)新增合約書
-Route::get('owners/houses/{house}/contracts/create', [ContractController::class, 'create'])->name('houses.contracts.create');
-Route::post('owners/houses/{house}/contracts', [ContractController::class, 'store'])->name('houses.contracts.store');
+//Route::get('owners/houses/{house}/contracts/create', [ContractController::class, 'create'])->name('houses.contracts.create');
+//Route::post('owners/houses/{house}/contracts', [ContractController::class, 'store'])->name('houses.contracts.store');
 
 // 3-9-19 會員(房東)刪除合約書
-Route::delete('owners/houses/contracts/{contract}', [ContractController::class, 'destroy'])->name('houses.contracts.destroy');
+//Route::delete('owners/houses/contracts/{contract}', [ContractController::class, 'destroy'])->name('houses.contracts.destroy');
 
 // 3-9-20 會員(房東)查看合約書
-Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'owners_show'])->name('houses.contracts.show');
+//Route::get('owners/houses/contracts/{contract}', [ContractController::class, 'owners_show'])->name('houses.contracts.show');
 
 //--------------------------------
 // 3-9- 會員(房東)查看費用資訊
-Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
+//Route::get('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_index'])->name('houses.expenses.index');
 
 // 3-9-25 會員(房東)新增費用資訊
 Route::get('owners/houses/{house}/expenses/create', [ExpenseController::class, 'owners_create'])->name('houses.expenses.create');
 Route::post('owners/houses/{house}/expenses', [ExpenseController::class, 'owners_store'])->name('houses.expenses.store');
 
+//新增租金
+Route::get('owners/houses/{house}/expenses_rentals/create', [ExpenseController::class, 'rentals_create'])->name('houses.expenses_rentals.create');
+Route::post('owners/houses/{house}/expenses_rentals', [ExpenseController::class, 'rentals_store'])->name('houses.expenses_rentals.store');
+
 // 3-9-26 會員(房東)修改費用資訊
 Route::get('owners/houses/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('houses.expenses.edit');
 Route::patch('owners/houses/expenses/{expense}', [ExpenseController::class, 'update'])->name('houses.expenses.update');
+
+//修改租金
+Route::get('owners/houses/expenses_rentals/{expense}/edit', [ExpenseController::class, 'rentals_edit'])->name('houses.expenses_rentals.edit');
+Route::patch('owners/houses/expenses_rentals/{expense}', [ExpenseController::class, 'rentals_update'])->name('houses.expenses_rentals.update');
 
 // 3-9-27 會員(房東)刪除費用資訊
 Route::delete('owners/houses/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('houses.expenses.destroy');
@@ -190,6 +276,17 @@ Route::get('owners/houses/repairs/{repair}', [RepairController::class, 'show'])-
 
 // 3-9-30 會員(房東)更新報修狀態
 Route::patch('owners/houses/repairs/{repair}', [RepairController::class, 'update_status'])->name('houses.repairs.update');
+
+//會員(房東)新增報修回覆
+Route::get('owners/houses/repairs/{repair}/reply',[RepairReplyController::class,'create'])->name('owners.houses.repairs.reply.create');
+Route::post('owners/houses/repairs/{repair}',[RepairReplyController::class,'store'])->name('owners.houses.repairs.reply.store');
+
+//會員(房東)編輯報修回覆
+Route::get('owners/houses/repairs/reply/{repairReply}/edit', [RepairReplyController::class,'edit'])->name('houses.repairs.reply.edit');
+Route::patch('owners/houses/repairs/reply/{repairReply}', [RepairReplyController::class,'update'])->name('houses.repairs.reply.update');
+
+//會員(房東)刪除報修回覆
+Route::delete('owners/houses/repairs/{repairReply}', [RepairReplyController::class,'destroy'])->name('houses.repairs.reply.destroy');
 
 //會員(租客)查看首頁
 Route::get('renters/houses',[RenterController::class,'index'])->name('renters.houses.index');
@@ -222,10 +319,14 @@ Route::post('renters/houses/repairs', [RepairController::class, 'store'])->name(
 Route::get('renters/houses/repairs/{repair}/edit', [RepairController::class, 'edit'])->name('renters.houses.repairs.edit');
 Route::patch('renters/houses/repairs/{repair}', [RepairController::class, 'update'])->name('renters.houses.repairs.update');
 
+// 會員(租客)查看單一報修訊息
+Route::get('renters/houses/repairs/{repair}/show', [RepairController::class, 'show'])->name('renters.houses.repairs.show');
+
 // 3-10-9 會員(租客)刪除報修訊息
 Route::delete('renters/houses/repairs/{repair}', [RepairController::class, 'destroy'])->name('renters.houses.repairs.destroy');
 // 系統查看公告
 Route::get('ad/posts', [SystemPostController::class, 'index'])->name('ad.posts.index');
+//    ->middleware(AdminMiddleware::class);
 
 // 系統新增公告
 Route::get('ad/posts/create', [SystemPostController::class, 'create'])->name('ad.posts.create');
@@ -238,12 +339,15 @@ Route::patch('ad/posts/{post}', [SystemPostController::class, 'update'])->name('
 // 系統刪除公告
 Route::delete('ad/posts/{post}', [SystemPostController::class, 'destroy'])->name('ad.posts.destroy');
 
+//清除搜尋結果
+Route::get('/clear-search-session', [HomeController::class, 'clearSearchSession'])->name('home.clearSearchSession');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
+        Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 });

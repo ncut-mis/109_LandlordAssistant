@@ -1,6 +1,6 @@
 @extends('layouts.owner_master')
 <link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
-@section('title', '房東管理頁面')
+@section('title', '房東管理頁面-地點')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 

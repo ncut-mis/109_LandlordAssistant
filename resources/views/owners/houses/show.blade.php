@@ -487,16 +487,19 @@
                     <!--租客資料-->
                     <div class="tab-pane fade" id="home-code" role="tabpanel" aria-labelledby="home-code-tab"
                          style="padding: 20px;border: 1px solid #ccc;">
+
                         @if(!$renters_data->isEmpty())
+
                             @foreach($renters_data as $renters_data)
-                        <table class="container">
-                            <thead>
-                            <tr>
-                                <th><h1>租客名稱</h1></th>
-                                <th><h1>電話</h1></th>
-                                <th><h1>行動</h1></th>
-                            </tr>
-                            </thead>
+                                <table class="container">
+                                    <thead>
+                                    <tr>
+                                        <th><h1>租客名稱</h1></th>
+                                        <th><h1>電話</h1></th>
+                                        <th><h1>行動</h1></th>
+                                    </tr>
+                                    </thead>
+
                             <tbody>
                             <tr>
                                 <td>{{ $renters_data->name }}</td>

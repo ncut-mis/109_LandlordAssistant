@@ -1,11 +1,16 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('layouts.renter_master')
 <link href="{{ asset('css/house_index.css') }}" rel="stylesheet">
 @section('title', '公告頁面')
 @section('page-content')
+{{--    不要的頁面--}}
     <div class="container-fluid px-4">
         <h1 class="mt-4">公告一覽</h1>
         <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">{{$houses->first()->name}}的公告</li>
+            @dd($houses)
+                <li class="breadcrumb-item active">{{$houses->name}}的公告</li>
         </ol>
         <table class="table">
             <thead>
@@ -15,7 +20,7 @@
                 <!--<th scope="col">標題</th>-->
                 <th scope="col" style="text-align: left">標題</th>
                 <th scope="col">內容</th>
-                <th scope="col" style="text-align: right;">日期</th>
+                <th scope="col" style="text-align: right;">發布日期</th>
             </tr>
             </thead>
             <tbody>
@@ -26,8 +31,13 @@
                 @foreach($location -> posts as $post)
                 <tr>
                     {{--                        <td >{{ $location->id }}</td>--}}
-                    <td><a href="{{route('renters.houses.posts.show',[$houses->first()->id,$post->id])}}">{{ $post->title }}</td>
-                    <td>{{ $post->content }}</td>
+                    <td>
+                        <a href="{{route('renters.houses.posts.show',[$houses->id,$post->id])}}">
+                        {{ $post->title }}
+                    </td>
+                    <td>
+                        {{ Illuminate\Support\Str::limit($post->content, 3) }}
+                    </td>
                     <td style="text-align: right;" >{{ $post->updated_at }}</td>
                 @endforeach
             @endforeach

@@ -3,9 +3,12 @@
 @section('title', '報修頁面')
 @section('page-content')
 
-    @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
+    @if(session('error'))
+        <div class="mx-3 my-3">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         </div>
     @endif
     <div id="layoutSidenav_content">
@@ -30,8 +33,7 @@
                                           action="{{route('renters.houses.repairs.update',$repairs->id)}}">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="hidden" name="_token"
-                                               value="hqNsD26EYw0jeJ24qgNZpGF0mW6V76t5dQxzLICa">
+                                        <input type="hidden">
                                         <h3 class="my-1 fw-semibold">修改 標題 報修</h3>
                                         <input name="id" value="" style="visibility:hidden">
                                         <div class="col-xl-6">
